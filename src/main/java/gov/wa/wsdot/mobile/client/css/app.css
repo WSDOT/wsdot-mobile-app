@@ -1,0 +1,756 @@
+p {
+	font-size: small;
+	font-weight: normal;
+}
+
+@sprite .logo {
+	gwt-image: "logoPNG";
+	background-repeat: no-repeat;
+	background-size: 113px 25px;
+	margin-left: -57px;
+}
+
+.cameraImage {
+    overflow: hidden;
+    display: inline-block;
+    -webkit-border-radius: 8px;
+}
+
+.cameraImage div {
+	position: relative;
+	max-width: none;
+	height: auto;
+	margin: -2px -2px -6px -2px;
+}
+
+.cameraImageHidden {
+    display: none;
+}
+
+.img {
+    max-width: 100%;
+}
+
+@sprite .videoPlayOverlay {
+    gwt-image: "playOverlayPNG";
+    display: block;
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.colorGreen { color: #008060; }
+.colorRed {	color: red; }
+.colorBlack { color: black; }
+
+.cellImage {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-align: center;
+}
+
+.cellImage > div:nth-child\(3\) {
+	-webkit-box-flex: 1;
+	font-size: medium;
+	font-weight: bold;
+    text-align: right;
+}
+
+.cellDetails {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	margin-left: 10px;
+	max-width: 80%;
+}
+
+.cellDetails2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    margin-left: 10px;
+    max-width: 60%;
+}
+
+.cellDetails3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    max-width: 99%;
+}
+
+.cellDetails  > div:nth-child\(1\),
+.cellDetails2 > div:nth-child\(1\),
+.cellDetails3 > div:nth-child\(1\) {
+	font-size: medium;
+	font-weight: bold;
+	padding-bottom: 7px;
+}
+
+.cellDetails > div:nth-child\(2\),
+.cellDetails2 > div:nth-child\(2\),
+.cellDetails3 > div:nth-child\(2\) {
+	font-size: small;
+	font-weight: normal;
+	word-wrap: break-word;
+	padding-bottom: 7px;
+}
+
+.cellDetails > div:nth-child\(3\),
+.cellDetails2 > div:nth-child\(3\),
+.cellDetails3 > div:nth-child\(3\) {
+	font-size: small;
+	color: #7d7d7d;
+}
+
+/**
+ * Styles for travel times cell.
+ */
+.cellTravelTimes {
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-align: center;
+    margin-right: 8px;
+}
+
+.cellTravelTimes > div:nth-child\(1\) {
+    max-width: 80%;
+}
+
+.cellTravelTimes > div:nth-child\(1\) > div:nth-child\(1\) {
+    font-size: medium;
+    font-weight: bold;
+    padding-bottom: 7px;
+}
+
+.cellTravelTimes > div:nth-child\(1\) > div:nth-child\(2\) {
+    font-size: small;
+    font-weight: normal;
+    padding-bottom: 7px;
+}
+
+.cellTravelTimes > div:nth-child\(1\) > div:nth-child\(3\) {
+    font-size: small;
+    font-weight: normal;
+    color: #7d7d7d;
+}
+
+.cellTravelTimes > div:nth-child\(2\) {
+    -webkit-box-flex: 1;
+    font-size: medium;
+    font-weight: bold;
+    text-align: right;
+}
+
+/**
+ * Styles for ferries route schedules cell.
+ */
+.cellFerriesRouteSchedules {
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-align: center;
+}
+
+.cellFerriesRouteSchedules > div:nth-child\(1\) {
+    max-width: 80%;
+}
+
+.cellFerriesRouteSchedules > div:nth-child\(1\) > div:nth-child\(1\) {
+    font-size: medium;
+    font-weight: bold;
+    padding-bottom: 7px;
+}
+
+.cellFerriesRouteSchedules > div:nth-child\(1\) > div:nth-child\(2\) {
+    font-size: small;
+    font-weight: normal;
+    color: #7d7d7d;
+}
+
+.cellFerriesRouteSchedules > div:nth-child\(2\) {
+    -webkit-box-flex: 1;
+    font-size: medium;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: center;
+    text-align: right;
+    padding-right: 8px;
+}
+
+/*
+ * Styles for dashboard. 
+ */
+.dashboard {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-pack: justify;
+}
+
+.homeButton {
+	width: 71px;
+	margin-bottom: 5px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+
+.homeButton > div:nth-child\(2\) {
+	font-size: small;
+	text-align: center;
+	color: #006f80;
+}
+
+.highImpactAlert {
+	display: -webkit-box;
+    -webkit-box-align: center;
+    width: 100%;
+    padding: 0 2px 0 2px;
+    text-align: center;
+    color: #006f80;
+}
+
+.highImpactAlerts {
+    display: -webkit-box;
+    -webkit-box-align: center;
+    width: 100%;
+    margin-bottom: 23px;
+    padding: 0 2px 0 2px;
+    text-align: center;
+    color: #006f80;
+}
+
+.highImpactAlert > div:nth-child\(1\),
+.highImpactAlerts > div:nth-child\(1\) {
+	-webkit-box-flex: 1;
+}
+
+.sectionHeader {
+    color: black;
+    font-size: medium;
+    font-weight: bold;
+    margin: 10px 20px 0px 20px;
+}
+
+@sprite .highImpactAlert > div:nth-child\(2\) {
+    gwt-image: "disclosurePNG";
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 5px;
+}
+
+@sprite .highImpactAlerts > div:nth-child\(2\) {
+    gwt-image: "disclosurePNG";
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 5px;
+}
+
+
+.noHighImpactAlerts p {
+    width: 100%;
+    padding: 0 2px 0 2px;
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+}
+
+@sprite .borderButton {
+	gwt-image: "borderDefaultPNG";
+	background-repeat: no-repeat;
+	background-size: 70px 64px;
+	width: 70px;
+	height: 64px;
+	display: block;
+}
+
+@sprite .ferriesButton {
+	gwt-image: "ferriesDefaultPNG";
+	background-repeat: no-repeat;
+	background-size: 70px 64px;
+    width: 70px;
+    height: 64px;
+	display: block;
+}
+
+@sprite .passesButton {
+	gwt-image: "passesDefaultPNG";
+	background-repeat: no-repeat;
+	background-size: 70px 64px;
+    width: 70px;
+    height: 64px;
+	display: block;
+}
+
+@sprite .socialButton {
+	gwt-image: "socialDefaultPNG";
+	background-repeat: no-repeat;
+	background-size: 70px 64px;
+	width: 70px;
+    height: 64px;
+	display: block;
+}
+
+@sprite .tollingButton {
+	gwt-image: "tollingDefaultPNG";
+	background-repeat: no-repeat;
+	background-size: 70px 64px;
+    width: 70px;
+    height: 64px;
+	display: block;
+}
+
+@sprite .trafficButton {
+	gwt-image: "trafficDefaultPNG";
+	background-repeat: no-repeat;
+	background-size: 70px 64px;
+    width: 70px;
+    height: 64px;
+	display: block;
+}
+
+@sprite .disclosure {
+	gwt-image: "disclosurePNG";
+	background-repeat: no-repeat;
+	background-position: 100% 50%;
+}
+
+@sprite .starButtonOn {
+	gwt-image: "btnStarOnNormalPNG";
+	background-repeat: no-repeat;
+	display: block;
+}
+
+@sprite .starButtonOff {
+    gwt-image: "btnStarOffNormalPNG";
+    background-repeat: no-repeat;
+    display: block;
+}
+
+/**
+ * Styles for social media icons
+ */
+@sprite .bloggerIcon {
+	gwt-image: "bloggerPNG";
+	background-image: no-repeat;
+	background-size: 32px 32px;
+	width: 32px;
+	height: 32px;
+	display: block;
+}
+
+@sprite .facebookIcon {
+    gwt-image: "facebookPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .feedIcon {
+    gwt-image: "feedPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .flickrIcon {
+    gwt-image: "flickrPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .twitterIcon {
+    gwt-image: "twitterPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .youtubeIcon {
+    gwt-image: "youtubePNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+/**
+ * Styles for highway icons
+ */
+@sprite .i5Icon {
+    gwt-image: "i5PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .i90Icon {
+    gwt-image: "i90PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .sr9Icon {
+    gwt-image: "sr9PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .sr539Icon {
+    gwt-image: "sr539PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .sr543Icon {
+    gwt-image: "sr543PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .us97Icon {
+    gwt-image: "us97PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .bc11Icon {
+    gwt-image: "bc11PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .bc13Icon {
+    gwt-image: "bc13PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .bc15Icon {
+    gwt-image: "bc15PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .bc97Icon {
+    gwt-image: "bc97PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .bc99Icon {
+    gwt-image: "bc99PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+/**
+ * Styles for weather icons
+ */
+@sprite .cloudy_1_nightIcon {
+    gwt-image: "cloudy_1_nightPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_1Icon {
+    gwt-image: "cloudy_1PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_2_nightIcon {
+    gwt-image: "cloudy_2_nightPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_2Icon {
+    gwt-image: "cloudy_2PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_3_nightIcon {
+    gwt-image: "cloudy_3_nightPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_3Icon {
+    gwt-image: "cloudy_3PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_4_nightIcon {
+    gwt-image: "cloudy_4_nightPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_4Icon {
+    gwt-image: "cloudy_4PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .cloudy_5Icon {
+    gwt-image: "cloudy_5PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .fog_nightIcon {
+    gwt-image: "fog_nightPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .fogIcon {
+    gwt-image: "fogPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .hailIcon {
+    gwt-image: "hailPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .light_rainIcon {
+    gwt-image: "light_rainPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .overcastIcon {
+    gwt-image: "overcastPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .shower_3Icon {
+    gwt-image: "shower_3PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .sleetIcon {
+    gwt-image: "sleetPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .snow_4Icon {
+    gwt-image: "snow_4PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .snow_5Icon {
+    gwt-image: "snow_5PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .sunny_nightIcon {
+    gwt-image: "sunny_nightPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .sunnyIcon {
+    gwt-image: "sunnyPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .tstorm_3Icon {
+    gwt-image: "tstorm_3PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .weather_naIcon {
+    gwt-image: "weather_naPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    display: block;
+}
+
+/**
+ * Styles for Twitter account icons
+ */
+@sprite .wsdotFerriesIcon {
+    gwt-image: "wsdotFerriesPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdotGoodToGoIcon {
+    gwt-image: "wsdotGoodToGoPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdotNorthIcon {
+    gwt-image: "wsdotNorthPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdotSnoqualmiePassIcon {
+    gwt-image: "wsdotSnoqualmiePassPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdotSwIcon {
+    gwt-image: "wsdotSwPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdotTacomaIcon {
+    gwt-image: "wsdotTacomaPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdotTrafficIcon {
+    gwt-image: "wsdotTrafficPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdotIcon {
+    gwt-image: "wsdotPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}

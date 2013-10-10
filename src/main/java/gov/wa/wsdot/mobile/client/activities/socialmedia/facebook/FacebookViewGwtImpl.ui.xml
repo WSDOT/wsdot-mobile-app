@@ -1,0 +1,29 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+	<mgwt:LayoutPanel>
+		<mgwt:HeaderPanel>
+			<mgwt:left>
+				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
+			</mgwt:left>
+			<mgwt:center>
+				<g:HTML>Facebook</g:HTML>
+			</mgwt:center>
+		</mgwt:HeaderPanel>
+		
+        <p:PullPanel ui:field="pullToRefresh">
+        	<g:FlowPanel ui:field="flowPanel">
+        	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+            	<mgwt:CellList ui:field="cellList" />
+            </g:FlowPanel>
+        </p:PullPanel>
+		
+	</mgwt:LayoutPanel>
+    
+</ui:UiBinder>

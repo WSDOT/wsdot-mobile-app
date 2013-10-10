@@ -1,0 +1,48 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder">
+
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .videoImage {
+            overflow: hidden;
+            display: inline-block;
+            -webkit-border-radius: 8px;
+        }
+        .videoImage div {
+            position: relative;
+            max-width: none;
+            height: auto;
+            margin: -2px -2px -6px -2px;
+        }
+        .img {
+            max-width: 100%;
+        }
+        .description {
+            font-size: small;
+            font-weight: normal;
+            word-wrap: break-word;
+            padding-top: 7px;
+            padding-bottom: 7px;
+        }
+        .uploaded {
+            font-size: small;
+            color: #7d7d7d;
+        }
+    </ui:style>
+    
+    <ui:with field="thumbnail" type="com.google.gwt.safehtml.shared.SafeUri" />
+    <ui:with field="description" type="java.lang.String" />
+    <ui:with field="uploaded" type="java.lang.String" />
+    
+    <div>
+        <div class="{style.videoImage}">
+            <div>
+                <img class="{style.img}" src="{thumbnail}" />
+            </div>
+        </div>
+        <div class="{style.description}"><ui:text from="{description}" /></div>
+        <div class="{style.uploaded}"><ui:text from="{uploaded}" /></div>
+    </div>
+    
+</ui:UiBinder>

@@ -1,0 +1,158 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .dashboardPanel {
+            margin-top: 10px;
+        }
+        .sectionHeader {
+            color: black;
+            font-size: medium;
+            font-weight: bold;
+            margin: 10px 20px 0px 20px;
+        }
+        .emptyFavorites {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            color: black;
+            font-weight: bold;
+            max-width: 100%;
+            margin: 20px 20px 0px 20px;
+        }
+        .emptyFavorites > div:nth-child\(1\) {
+            text-align: center;
+        }
+        .emptyFavorites > div:nth-child\(2\) {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            font-weight: normal;
+            margin-top: 10px;
+        }
+    </ui:style>
+    
+    <mgwt:LayoutPanel>
+
+        <mgwt:HeaderPanel>
+            <mgwt:center>
+                <g:HTMLPanel styleName="{app.css.logo}" />
+            </mgwt:center>
+            <mgwt:right>
+                <mgwt:HeaderButton ui:field="aboutButton" forwardButton="true" text="About" />
+            </mgwt:right>
+        </mgwt:HeaderPanel>
+
+        <mgwt:tabbar.TabPanel>
+            <mgwt:tabs>
+                <mgwt:tabbar.Tab>
+                    <mgwt:button>
+                        <wsdot:HomeTabBarButton />
+                    </mgwt:button>
+                    <mgwt:widget>
+	                    <mgwt:ScrollPanel scrollingEnabledX="false">
+	                        <g:HTMLPanel styleName="{style.dashboardPanel}">
+		                        <mgwt:RoundPanel>
+		                            <g:HTMLPanel styleName="{app.css.dashboard}">
+		                                
+		                                <g:HTMLPanel styleName="{app.css.homeButton}">
+		                                    <g:HTMLPanel>
+		                                        <mgwt:Button ui:field="trafficButton" styleName="{app.css.trafficButton}" />
+		                                    </g:HTMLPanel>
+		                                    <g:HTMLPanel>Traffic Map</g:HTMLPanel>
+		                                </g:HTMLPanel>
+		
+		                                <g:HTMLPanel styleName="{app.css.homeButton}">
+		                                    <g:HTMLPanel>
+		                                        <mgwt:Button ui:field="ferriesButton" styleName="{app.css.ferriesButton}" />
+		                                    </g:HTMLPanel>
+		                                    <g:HTMLPanel>Ferries</g:HTMLPanel>
+		                                </g:HTMLPanel>
+		        	
+		                                <g:HTMLPanel styleName="{app.css.homeButton}">
+		                                    <g:HTMLPanel>
+		                                        <mgwt:Button ui:field="passesButton" styleName="{app.css.passesButton}" />
+		                                    </g:HTMLPanel>
+		                                    <g:HTMLPanel>Mountain Passes</g:HTMLPanel>
+		                                </g:HTMLPanel>
+		                            
+		                            </g:HTMLPanel>
+		
+		                            <g:HTMLPanel styleName="{app.css.dashboard}">
+		                                
+		                                <g:HTMLPanel styleName="{app.css.homeButton}">
+		                                    <g:HTMLPanel>
+		                                        <mgwt:Button ui:field="socialButton" styleName="{app.css.socialButton}" />
+		                                    </g:HTMLPanel>
+		                                    <g:HTMLPanel>Social Media</g:HTMLPanel>
+		                                </g:HTMLPanel>
+		        	
+			                            <g:HTMLPanel styleName="{app.css.homeButton}">
+			                               <g:HTMLPanel>
+			                                   <mgwt:Button ui:field="tollingButton" styleName="{app.css.tollingButton}" />
+			                               </g:HTMLPanel>
+			                               <g:HTMLPanel>Toll Rates</g:HTMLPanel>
+			                            </g:HTMLPanel>
+		
+			                            <g:HTMLPanel styleName="{app.css.homeButton}">
+			                                 <g:HTMLPanel>
+			                                     <mgwt:Button ui:field="borderButton" styleName="{app.css.borderButton}" />
+			                                 </g:HTMLPanel>
+			                                 <g:HTMLPanel>Border Wait</g:HTMLPanel>
+			                            </g:HTMLPanel>
+			                            
+		                            </g:HTMLPanel>
+		                        </mgwt:RoundPanel>
+
+		                        <mgwt:RoundPanel ui:field="highImpactAlertsPanel">
+		                            <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+		                        </mgwt:RoundPanel>
+                            </g:HTMLPanel>
+	                        	                            
+	                    </mgwt:ScrollPanel>                        
+                    </mgwt:widget>
+                </mgwt:tabbar.Tab>
+            </mgwt:tabs>
+			
+            <mgwt:tabs>
+                <mgwt:tabbar.Tab>
+                    <mgwt:button>
+                        <wsdot:FavoritesTabBarButton></wsdot:FavoritesTabBarButton>
+                    </mgwt:button>
+                    <mgwt:widget>
+				        <p:PullPanel ui:field="pullToRefresh">
+				            <g:FlowPanel ui:field="flowPanel">
+				                <g:HTML ui:field="camerasHeader" styleName="{style.sectionHeader}" visible="false">Cameras</g:HTML>
+				                <mgwt:CellList ui:field="camerasCellList" visible="false" />
+                                <g:HTML ui:field="ferriesHeader" styleName="{style.sectionHeader}" visible="false">Ferries Route Schedules</g:HTML>
+                                <mgwt:CellList ui:field="ferriesCellList" visible="false" />
+                                <g:HTML ui:field="mountainPassesHeader" styleName="{style.sectionHeader}" visible="false">Mountain Passes</g:HTML>
+                                <mgwt:CellList ui:field="mountainPassesCellList" visible="false" />
+                                <g:HTML ui:field="travelTimesHeader" styleName="{style.sectionHeader}" visible="false">Travel Times</g:HTML>
+                                <mgwt:CellList ui:field="travelTimesCellList" visible="false" />
+                                <g:HTMLPanel ui:field="emptyFavorites" styleName="{style.emptyFavorites}" visible="false">
+                                    <g:HTML>No favorites added yet.</g:HTML>
+                                    <g:HTMLPanel>
+	                                    <g:HTML>To add favorites, tap a</g:HTML>
+	                                    <g:Image resource="{app.btnStarOffNormalPNG}" />
+	                                    <g:HTML>icon to turn it blue.</g:HTML>
+                                    </g:HTMLPanel>
+                                </g:HTMLPanel>
+				            </g:FlowPanel>
+				        </p:PullPanel>
+                    </mgwt:widget>
+                </mgwt:tabbar.Tab>
+            </mgwt:tabs>
+    
+        </mgwt:tabbar.TabPanel>
+
+    </mgwt:LayoutPanel>
+    
+</ui:UiBinder>

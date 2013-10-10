@@ -1,0 +1,44 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.buttonbar"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.buttonbar"
+    xmlns:maps="urn:import:com.google.gwt.maps.client">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+	<mgwt:LayoutPanel>
+		<mgwt:HeaderPanel>
+			<mgwt:left>
+				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Home" />
+			</mgwt:left>
+			<mgwt:center>
+				<g:HTML>Traffic Map</g:HTML>
+			</mgwt:center>
+            <mgwt:right>
+                <mgwt:HeaderButton ui:field="locateButton" text="Locate" />
+            </mgwt:right>
+		</mgwt:HeaderPanel>
+		
+       	<g:FlowPanel ui:field="flowPanel">
+       	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+       	</g:FlowPanel>
+		
+       	<b:ButtonBar ui:field="buttonBar">
+            <wsdot:FlagButton ui:field="goToLocationButton" />
+	  	    <b:ButtonBarSpacer></b:ButtonBarSpacer>
+	  	    <wsdot:ClockButton ui:field="travelTimesButton" />
+	  	    <b:ButtonBarSpacer></b:ButtonBarSpacer>
+	  	    <wsdot:PhotoButton ui:field="cameraButton" />
+            <b:ButtonBarSpacer></b:ButtonBarSpacer>
+            <wsdot:WarningButton ui:field="seattleAlertsButton" />
+	  	    <b:ButtonBarSpacer></b:ButtonBarSpacer>
+            <wsdot:FlashButton ui:field="expressLanesButton" />
+       	</b:ButtonBar>
+       	
+	</mgwt:LayoutPanel>
+    
+    
+</ui:UiBinder>

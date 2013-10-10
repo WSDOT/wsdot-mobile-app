@@ -1,0 +1,50 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder">
+
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .cellFerriesRouteDepartures {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+
+        .cellFerriesRouteDepartures > div:nth-child\(1\) {
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            padding-bottom: 7px;
+        }
+
+        .departing {
+            -webkit-box-flex: 1;
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        .arriving {
+            -webkit-box-flex: 1;
+            font-size: medium;
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .annotation {
+            font-size: small;
+            font-weight: normal;
+        }
+
+    </ui:style>
+    
+    <ui:with field="departing" type="java.lang.String" />
+    <ui:with field="arriving" type="java.lang.String" />
+    <ui:with field="annotation" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    
+    <div class="{style.cellFerriesRouteDepartures}">
+        <div>
+            <div class="{style.departing}"><ui:text from="{departing}" /></div>
+            <div class="{style.arriving}"><ui:text from="{arriving}" /></div>
+        </div>
+        <div class="{style.annotation}"><ui:safehtml from="{annotation}" /></div>
+    </div>
+    
+</ui:UiBinder>

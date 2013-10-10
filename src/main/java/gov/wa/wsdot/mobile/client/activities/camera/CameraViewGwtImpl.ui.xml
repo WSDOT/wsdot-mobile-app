@@ -1,0 +1,48 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget"
+    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .headerTitle {
+            width: 180px;
+            margin-left: -85px;
+        }
+        .buttonPanel {
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            -webkit-box-align: center;
+            -webkit-box-pack: end;
+        }
+    </ui:style>
+    
+    <mgwt:LayoutPanel>
+
+        <mgwt:HeaderPanel>
+            <mgwt:left>
+                <mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
+            </mgwt:left>
+            <mgwt:center>
+                <g:HTML ui:field="title" styleName="{style.headerTitle}" />
+            </mgwt:center>
+        </mgwt:HeaderPanel>
+
+        <p:PullPanel ui:field="pullToRefresh">
+			<g:FlowPanel>
+	            <mgwt:RoundPanel>
+	                <g:HTMLPanel styleName="{style.buttonPanel}">
+	                    <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
+	                </g:HTMLPanel>
+	            </mgwt:RoundPanel>
+				<mgwt:CellList ui:field="cameraCellList" />
+			</g:FlowPanel>
+        </p:PullPanel>
+        
+    </mgwt:LayoutPanel>
+
+</ui:UiBinder>

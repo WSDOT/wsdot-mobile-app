@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+	<mgwt:LayoutPanel>
+		<mgwt:HeaderPanel>
+			<mgwt:center>
+				<g:HTML>Travel Times</g:HTML>
+			</mgwt:center>
+            <mgwt:right>
+                <mgwt:HeaderButton ui:field="doneButton" text="Done" />
+            </mgwt:right>
+		</mgwt:HeaderPanel>
+		
+        <p:PullPanel ui:field="pullToRefresh">
+        	<g:FlowPanel ui:field="flowPanel">
+        	    <mgwt:MSearchBox ui:field="searchBox" />
+        	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+            	<mgwt:CellList ui:field="cellList" />
+            </g:FlowPanel>
+        </p:PullPanel>
+		
+	</mgwt:LayoutPanel>
+    
+</ui:UiBinder>
