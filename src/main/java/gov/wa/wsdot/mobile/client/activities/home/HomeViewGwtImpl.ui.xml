@@ -10,13 +10,19 @@
 
     <ui:style>
         .dashboardPanel {
-            margin-top: 10px;
+            background-color: white;
+            padding: 12px;
         }
         .sectionHeader {
             color: black;
             font-size: medium;
             font-weight: bold;
-            margin: 10px 20px 0px 20px;
+            margin: 20px 12px 6px 12px;
+        }
+        .highImpactAlertsPanel {
+            border-top: 1px solid #efeff4;
+            margin-top: 12px;
+            padding-top: 12px;
         }
         .emptyFavorites {
             display: -webkit-box;
@@ -59,61 +65,60 @@
                     <mgwt:widget>
 	                    <mgwt:ScrollPanel scrollingEnabledX="false">
 	                        <g:HTMLPanel styleName="{style.dashboardPanel}">
-		                        <mgwt:RoundPanel>
-		                            <g:HTMLPanel styleName="{app.css.dashboard}">
-		                                
-		                                <g:HTMLPanel styleName="{app.css.homeButton}">
-		                                    <g:HTMLPanel>
-		                                        <mgwt:Button ui:field="trafficButton" styleName="{app.css.trafficButton}" />
-		                                    </g:HTMLPanel>
-		                                    <g:HTMLPanel>Traffic Map</g:HTMLPanel>
-		                                </g:HTMLPanel>
-		
-		                                <g:HTMLPanel styleName="{app.css.homeButton}">
-		                                    <g:HTMLPanel>
-		                                        <mgwt:Button ui:field="ferriesButton" styleName="{app.css.ferriesButton}" />
-		                                    </g:HTMLPanel>
-		                                    <g:HTMLPanel>Ferries</g:HTMLPanel>
-		                                </g:HTMLPanel>
-		        	
-		                                <g:HTMLPanel styleName="{app.css.homeButton}">
-		                                    <g:HTMLPanel>
-		                                        <mgwt:Button ui:field="passesButton" styleName="{app.css.passesButton}" />
-		                                    </g:HTMLPanel>
-		                                    <g:HTMLPanel>Mountain Passes</g:HTMLPanel>
-		                                </g:HTMLPanel>
-		                            
+	                            <g:HTMLPanel styleName="{app.css.dashboard}">
+	                                
+	                                <g:HTMLPanel styleName="{app.css.homeButton}">
+	                                    <g:HTMLPanel>
+	                                        <mgwt:Button ui:field="trafficButton" styleName="{app.css.trafficButton}" />
+	                                    </g:HTMLPanel>
+	                                    <g:HTMLPanel>Traffic Map</g:HTMLPanel>
+	                                </g:HTMLPanel>
+	
+	                                <g:HTMLPanel styleName="{app.css.homeButton}">
+	                                    <g:HTMLPanel>
+	                                        <mgwt:Button ui:field="ferriesButton" styleName="{app.css.ferriesButton}" />
+	                                    </g:HTMLPanel>
+	                                    <g:HTMLPanel>Ferries</g:HTMLPanel>
+	                                </g:HTMLPanel>
+	        	
+	                                <g:HTMLPanel styleName="{app.css.homeButton}">
+	                                    <g:HTMLPanel>
+	                                        <mgwt:Button ui:field="passesButton" styleName="{app.css.passesButton}" />
+	                                    </g:HTMLPanel>
+	                                    <g:HTMLPanel>Mountain Passes</g:HTMLPanel>
+	                                </g:HTMLPanel>
+	                            
+	                            </g:HTMLPanel>
+	
+	                            <g:HTMLPanel styleName="{app.css.dashboard}">
+	                                
+	                                <g:HTMLPanel styleName="{app.css.homeButton}">
+	                                    <g:HTMLPanel>
+	                                        <mgwt:Button ui:field="socialButton" styleName="{app.css.socialButton}" />
+	                                    </g:HTMLPanel>
+	                                    <g:HTMLPanel>Social Media</g:HTMLPanel>
+	                                </g:HTMLPanel>
+	        	
+		                            <g:HTMLPanel styleName="{app.css.homeButton}">
+		                               <g:HTMLPanel>
+		                                   <mgwt:Button ui:field="tollingButton" styleName="{app.css.tollingButton}" />
+		                               </g:HTMLPanel>
+		                               <g:HTMLPanel>Toll Rates</g:HTMLPanel>
 		                            </g:HTMLPanel>
-		
-		                            <g:HTMLPanel styleName="{app.css.dashboard}">
-		                                
-		                                <g:HTMLPanel styleName="{app.css.homeButton}">
-		                                    <g:HTMLPanel>
-		                                        <mgwt:Button ui:field="socialButton" styleName="{app.css.socialButton}" />
-		                                    </g:HTMLPanel>
-		                                    <g:HTMLPanel>Social Media</g:HTMLPanel>
-		                                </g:HTMLPanel>
-		        	
-			                            <g:HTMLPanel styleName="{app.css.homeButton}">
-			                               <g:HTMLPanel>
-			                                   <mgwt:Button ui:field="tollingButton" styleName="{app.css.tollingButton}" />
-			                               </g:HTMLPanel>
-			                               <g:HTMLPanel>Toll Rates</g:HTMLPanel>
-			                            </g:HTMLPanel>
-		
-			                            <g:HTMLPanel styleName="{app.css.homeButton}">
-			                                 <g:HTMLPanel>
-			                                     <mgwt:Button ui:field="borderButton" styleName="{app.css.borderButton}" />
-			                                 </g:HTMLPanel>
-			                                 <g:HTMLPanel>Border Wait</g:HTMLPanel>
-			                            </g:HTMLPanel>
+	
+		                            <g:HTMLPanel styleName="{app.css.homeButton}">
+		                                 <g:HTMLPanel>
+		                                     <mgwt:Button ui:field="borderButton" styleName="{app.css.borderButton}" />
+		                                 </g:HTMLPanel>
+		                                 <g:HTMLPanel>Border Wait</g:HTMLPanel>
+		                            </g:HTMLPanel>
 			                            
-		                            </g:HTMLPanel>
-		                        </mgwt:RoundPanel>
+		                        </g:HTMLPanel>
 
-		                        <mgwt:RoundPanel ui:field="highImpactAlertsPanel">
+		                        <g:HTMLPanel ui:field="highImpactAlertsPanel" styleName="{style.highImpactAlertsPanel}">
 		                            <mgwt:ProgressBar ui:field="progressBar" visible="false" />
-		                        </mgwt:RoundPanel>
+		                        </g:HTMLPanel>
+                            
                             </g:HTMLPanel>
 	                        	                            
 	                    </mgwt:ScrollPanel>                        

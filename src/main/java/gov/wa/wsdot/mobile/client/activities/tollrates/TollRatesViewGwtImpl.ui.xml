@@ -8,7 +8,11 @@
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
     <ui:style>
-        .simplePadding { padding: 12px; }
+        .htmlPanel {
+            background-color: white;
+            padding: 12px;
+        }
+        .simplePadding { padding-bottom: 12px; }
         .simplePadding ul { padding: 12px 24px; }
         .simplePadding li { font-size: small; font-weight: normal; }
         .grid { width: 100%; border-collapse: collapse; border-spacing: 0; font-size: small; font-weight: normal; }
@@ -39,7 +43,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:ScrollPanel scrollingEnabledX="false">
-                            <mgwt:RoundPanel>
+                            <g:HTMLPanel styleName="{style.htmlPanel}">
 
 	                            <g:Grid styleName="{style.grid}">
 	                                <g:row styleName="{style.weekday}">
@@ -149,7 +153,7 @@
                                     </g:row>
 	                            </g:Grid>
 
-                            </mgwt:RoundPanel>
+                            </g:HTMLPanel>
                         </mgwt:ScrollPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
@@ -162,7 +166,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:ScrollPanel scrollingEnabledX="false">
-                            <mgwt:RoundPanel>
+                            <g:HTMLPanel styleName="{style.htmlPanel}">
 
                                 <g:Grid styleName="{style.grid}">
                                     <g:row styleName="{style.weekday}">
@@ -203,7 +207,7 @@
                                     </g:row>
                                 </g:Grid>
                                 
-                            </mgwt:RoundPanel>
+                            </g:HTMLPanel>
                         </mgwt:ScrollPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
@@ -216,7 +220,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:ScrollPanel scrollingEnabledX="false">
-                            <mgwt:RoundPanel>
+                            <g:HTMLPanel styleName="{style.htmlPanel}">
                                 <g:HTML styleName="{style.simplePadding}">
                                     <p>Tolls are collected in both directions.</p>
                                     <ul>
@@ -230,7 +234,7 @@
                                     <p>The toll rate can change based on congestion factors, time of day, traffic volumes, and traffic flow. Customers can anticipate that tolls will be in effect on the SR 167 HOT lanes between 5 a.m. and 7 p.m.</p><br />
                                     <p><em>Good To Go!</em> customers who use the HOT lane should look for the electronic sign above the lane that displays the actual toll rate and make a choice to enter the lane.</p>
                                 </g:HTML>
-                            </mgwt:RoundPanel>
+                            </g:HTMLPanel>
                         </mgwt:ScrollPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>

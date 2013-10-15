@@ -81,7 +81,7 @@ public class GoToFerriesLocationViewGwtImpl extends Composite implements
 			}
 		});	
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 
 		initWidget(uiBinder.createAndBindUi(this));
 		

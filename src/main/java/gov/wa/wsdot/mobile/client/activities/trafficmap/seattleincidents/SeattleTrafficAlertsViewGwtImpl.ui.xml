@@ -12,7 +12,7 @@
 			color: black;
 			font-size: medium;
 			font-weight: bold;
-			margin: 10px 20px 0px 20px;
+			margin: 20px 20px 6px 12px;
 		}
     </ui:style>
     

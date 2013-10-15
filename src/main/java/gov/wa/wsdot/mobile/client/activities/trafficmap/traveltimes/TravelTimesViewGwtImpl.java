@@ -141,7 +141,7 @@ public class TravelTimesViewGwtImpl extends Composite implements
 			
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		
 		searchBox = new MSearchBox();
 		searchBox.setPlaceHolder("Search Travel Times");

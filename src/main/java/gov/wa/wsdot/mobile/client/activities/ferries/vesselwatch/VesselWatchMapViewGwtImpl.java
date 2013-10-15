@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.FlagButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.PhotoButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
@@ -160,7 +161,8 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	    trafficLayer.setMap(mapWidget);
 	    flowPanel.add(mapWidget);
 
-	    mapWidget.setSize(Window.getClientWidth() + "px", (Window.getClientHeight() - 91) + "px");
+        mapWidget.setSize(Window.getClientWidth() + "px",
+                (Window.getClientHeight() - ParserUtils.windowUI()) + "px");
 
 	    Window.addResizeHandler(new ResizeHandler() {
 	        @Override
@@ -173,7 +175,8 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	    mapWidget.addResizeHandler(new ResizeMapHandler() {
 	        @Override
 	        public void onEvent(ResizeMapEvent event) {
-	            mapWidget.setSize(Window.getClientWidth() + "px", (Window.getClientHeight() - 91) + "px");
+                mapWidget.setSize(Window.getClientWidth() + "px",
+                        (Window.getClientHeight() - ParserUtils.windowUI()) + "px");
 	        }
 	    });
 	    

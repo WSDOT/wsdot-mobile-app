@@ -8,6 +8,10 @@
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
     <ui:style>
+        .htmlPanel {
+            background-color: white;
+            padding: 12px;
+        }
         .headerTitle {
             width: 180px;
             margin-left: -85px;
@@ -49,7 +53,7 @@
 		</mgwt:HeaderPanel>
 		
         <mgwt:ScrollPanel scrollingEnabledX="false">
-        	<mgwt:RoundPanel>
+        	<g:HTMLPanel styleName="{style.htmlPanel}">
 				<g:HTMLPanel styleName="{style.horizontalCell}">
 				    <g:HTMLPanel styleName="{style.section}">
 				        <g:HTML>Route:</g:HTML>
@@ -101,7 +105,7 @@
                 <g:HTMLPanel styleName="{style.section}">
                     <mgwt:Button ui:field="vesselButton" addStyleNames="{style.vesselButton}" />
                 </g:HTMLPanel>
-            </mgwt:RoundPanel>
+            </g:HTMLPanel>
         </mgwt:ScrollPanel>
 		
 	</mgwt:LayoutPanel>

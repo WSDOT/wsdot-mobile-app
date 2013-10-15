@@ -8,6 +8,10 @@
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
     <ui:style>
+        .htmlPanel {
+            background-color: white;
+            padding: 12px;
+        }
         .headerTitle {
             width: 180px;
             margin-left: -85px;
@@ -44,6 +48,7 @@
             -webkit-box-orient: horizontal;
             -webkit-box-align: center;
             -webkit-box-pack: end;
+            margin: 20px 20px 12px 20px;
         }
     </ui:style>
     
@@ -66,12 +71,10 @@
 					<mgwt:widget>
 				        <mgwt:ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel">
 			                <g:FlowPanel styleName="{style.flowPanel}">
-				                <mgwt:RoundPanel>
-				                    <g:HTMLPanel styleName="{style.buttonPanel}">
-				                        <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
-				                    </g:HTMLPanel>
-				                </mgwt:RoundPanel> 				        	
-					        	<mgwt:RoundPanel>
+			                    <g:HTMLPanel styleName="{style.buttonPanel}">
+			                        <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
+			                    </g:HTMLPanel>
+					        	<g:HTMLPanel styleName="{style.htmlPanel}">
 					            	<g:HTMLPanel styleName="{style.dateUpdated}">
 					            	   <g:HTML ui:field="dateUpdated" />
 					            	</g:HTMLPanel>
@@ -109,7 +112,7 @@
 	                                    <g:HTML ui:field="restrictionTwoTravelDirection" />
 	                                    <g:HTML ui:field="restrictionTwoText" />
 					            	</g:HTMLPanel>
-					            </mgwt:RoundPanel>
+					            </g:HTMLPanel>
 				            </g:FlowPanel>
 				        </mgwt:ScrollPanel>
 			        </mgwt:widget>

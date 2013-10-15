@@ -127,7 +127,7 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 		});
 		
 		cellList.setGroup(true);
-		cellList.setRound(true);
+		cellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 

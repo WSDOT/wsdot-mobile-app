@@ -127,7 +127,7 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 		});
 		
 		northbound.setGroup(false);
-		northbound.setRound(true);
+		northbound.setRound(false);
 
 		southbound = new CellList<BorderWaitItem>(
 				new BorderWaitCell<BorderWaitItem>() {
@@ -167,7 +167,7 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 		});
 		
 		southbound.setGroup(false);
-		southbound.setRound(true);
+		southbound.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

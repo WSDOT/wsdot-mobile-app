@@ -18,7 +18,7 @@
 				<g:HTML>Traffic Map</g:HTML>
 			</mgwt:center>
             <mgwt:right>
-                <mgwt:HeaderButton ui:field="locateButton" text="Locate" />
+                <mgwt:HeaderButton ui:field="refreshButton" text="Refresh" />
             </mgwt:right>
 		</mgwt:HeaderPanel>
 		
@@ -27,14 +27,16 @@
        	</g:FlowPanel>
 		
        	<b:ButtonBar ui:field="buttonBar">
+       	    <b:LocateButton ui:field="locateButton" />
+       	    <b:ButtonBarSpacer />
             <wsdot:FlagButton ui:field="goToLocationButton" />
-	  	    <b:ButtonBarSpacer></b:ButtonBarSpacer>
+	  	    <b:ButtonBarSpacer />
 	  	    <wsdot:ClockButton ui:field="travelTimesButton" />
-	  	    <b:ButtonBarSpacer></b:ButtonBarSpacer>
+	  	    <b:ButtonBarSpacer />
 	  	    <wsdot:PhotoButton ui:field="cameraButton" />
-            <b:ButtonBarSpacer></b:ButtonBarSpacer>
+            <b:ButtonBarSpacer />
             <wsdot:WarningButton ui:field="seattleAlertsButton" />
-	  	    <b:ButtonBarSpacer></b:ButtonBarSpacer>
+	  	    <b:ButtonBarSpacer />
             <wsdot:FlashButton ui:field="expressLanesButton" />
        	</b:ButtonBar>
        	

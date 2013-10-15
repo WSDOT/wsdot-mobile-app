@@ -107,7 +107,7 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 		});
 		
 		cellList.setGroup(false);
-		cellList.setRound(true);
+		cellList.setRound(false);
 	
 		initWidget(uiBinder.createAndBindUi(this));
 

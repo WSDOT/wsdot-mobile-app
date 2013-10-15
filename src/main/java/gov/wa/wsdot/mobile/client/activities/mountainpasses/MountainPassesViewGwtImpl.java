@@ -111,7 +111,7 @@ public class MountainPassesViewGwtImpl extends Composite implements
 
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 

@@ -103,7 +103,7 @@ public class NewsViewGwtImpl extends Composite implements NewsView {
 
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		cellList.setGroup(true);
 		
 		initWidget(uiBinder.createAndBindUi(this));

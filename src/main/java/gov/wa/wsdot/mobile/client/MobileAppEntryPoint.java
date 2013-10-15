@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
+import gov.wa.wsdot.mobile.client.theme.CustomTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.history.MGWTPlaceHistoryHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.MGWTSettings;
+import com.googlecode.mgwt.ui.client.MGWTStyle;
 import com.googlecode.mgwt.ui.client.MGWTSettings.ViewPort;
 import com.googlecode.mgwt.ui.client.MGWTSettings.ViewPort.DENSITY;
 
@@ -71,6 +73,9 @@ public class MobileAppEntryPoint implements EntryPoint {
 	    		final ClientFactory clientFactory = new ClientFactoryImpl();
 	        	((ClientFactoryImpl) clientFactory).setPhoneGap(phoneGap);
 	        	buildDisplay(clientFactory);
+    	        if (MGWT.getOsDetection().isIOs()) {
+    	            hideSplashScreen(); // For use on iOS with PhoneGap.
+    	        }
 	        }
 	    });	
 	    
@@ -346,7 +351,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 		cameraItems.add(new CameraItem(
 				1137,
 				"Satus Pass on US 97 @ MP 27",
-				"http://images.wsdot.wa.gov/satus/satus1.jpg",
+				"http://images.wsdot.wa.gov/vancouver/097vc02711.jpg",
 				45.98296, -120.65381, 0, "US 97", 0));
 		cameraItems.add(new CameraItem(
 				1161,
@@ -457,6 +462,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
+	    MGWTStyle.setTheme(new CustomTheme());
+	    
 		if (!Database.isSupported()) {
 			Window.alert("HTML 5 Database is NOT supported in this browser!");
 
@@ -485,5 +492,9 @@ public class MobileAppEntryPoint implements EntryPoint {
 		}.schedule(1);
 
 	}
+	
+	private static native void hideSplashScreen() /*-{ 
+        $wnd.navigator.splashscreen.hide(); 
+    }-*/;
 
 }

@@ -21,6 +21,7 @@
             -webkit-box-orient: horizontal;
             -webkit-box-align: center;
             -webkit-box-pack: end;
+            margin: 20px 20px 12px 20px;
         }
     </ui:style>
     
@@ -45,11 +46,9 @@
 						<mgwt:ScrollPanel ui:field="sailingsPanel" scrollingEnabledX="false">        	
 				        	<g:FlowPanel styleName="{style.flowPanel}">
 				        	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
-					            <mgwt:RoundPanel>
-					                <g:HTMLPanel styleName="{style.buttonPanel}">
-					                    <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
-					                </g:HTMLPanel>
-					            </mgwt:RoundPanel>            	
+				                <g:HTMLPanel styleName="{style.buttonPanel}">
+				                    <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
+				                </g:HTMLPanel>
 				            	<mgwt:CellList ui:field="sailingsCellList" />
 				            </g:FlowPanel>
 				        </mgwt:ScrollPanel>

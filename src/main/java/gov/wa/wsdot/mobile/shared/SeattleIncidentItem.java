@@ -24,6 +24,7 @@ public class SeattleIncidentItem {
 	private String description;
 	private Integer category;
 	private Integer guid;
+	private String lastUpdatedTime;
 	
 	public SeattleIncidentItem() {
 	}
@@ -63,4 +64,12 @@ public class SeattleIncidentItem {
 	public void setGuid(Integer guid) {
 		this.guid = guid;
 	}
+
+    public String getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(String lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
+    }
 }

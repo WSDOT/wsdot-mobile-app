@@ -38,6 +38,7 @@ public class SeattleIncidentsFeed extends JavaScriptObject {
 		
 		public final native int getCategory() /*-{ return this.category }-*/;
 		public final native String getDescription() /*-{ return this.description }-*/;
+		public final native String getLastUpdatedTime() /*-{ return this.updated }-*/;
 
 	}
 	

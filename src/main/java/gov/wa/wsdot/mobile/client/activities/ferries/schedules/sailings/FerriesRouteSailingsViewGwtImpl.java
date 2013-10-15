@@ -98,7 +98,7 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 			}
 		});
 		
-		sailingsCellList.setRound(true);
+		sailingsCellList.setRound(false);
 		
 		alertsCellList = new CellList<FerriesRouteAlertItem>(
 				new TitleLastUpdatedCell<FerriesRouteAlertItem>() {
@@ -121,7 +121,7 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 			
 		});
 		
-		alertsCellList.setRound(true);
+		alertsCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

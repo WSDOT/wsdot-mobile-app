@@ -101,7 +101,7 @@ public class FacebookViewGwtImpl extends Composite implements FacebookView {
 
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		cellList.setGroup(true);
 		
 		initWidget(uiBinder.createAndBindUi(this));

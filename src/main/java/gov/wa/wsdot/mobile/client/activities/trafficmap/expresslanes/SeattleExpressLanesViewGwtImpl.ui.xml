@@ -12,7 +12,7 @@
             display: -webkit-box;
             text-align: justify;
             max-width: 100%;
-            margin: 0px 20px 20px 20px;
+            margin: 12px;
         }
     </ui:style>
     
@@ -32,12 +32,12 @@
                 <mgwt:CellList ui:field="cellList" />
                 <g:HTMLPanel styleName="{style.about}">
                     <g:HTML>
-                        WSDOT uses the I-5 and I-90 express lanes to assist the flow of 
+                        <p>WSDOT uses the I-5 and I-90 express lanes to assist the flow of 
                         traffic during busy travel times. These lanes are scheduled to 
                         move in the direction that will relieve the most congestion from 
                         the transportation system. We operate the lanes on a typical 
                         daily schedule that changes on the weekends and occasionally 
-                        for major events.
+                        for major events.</p>
                     </g:HTML>
                 </g:HTMLPanel>
             </g:FlowPanel>

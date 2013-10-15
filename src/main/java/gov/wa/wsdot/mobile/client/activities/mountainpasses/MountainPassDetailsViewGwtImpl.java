@@ -128,8 +128,8 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 			}
 		});
 		
-		cameraCellList.setGroup(false);
-		cameraCellList.setRound(true);
+		cameraCellList.setGroup(true);
+		cameraCellList.setRound(false);
 		
 		forecastCellList = new CellList<ForecastItem>(new CellDetailsWithIcon<ForecastItem>() {
 
@@ -161,7 +161,7 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 		});
 		
 		forecastCellList.setGroup(false);
-		forecastCellList.setRound(true);
+		forecastCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

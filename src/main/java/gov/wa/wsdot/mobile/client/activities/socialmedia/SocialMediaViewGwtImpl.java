@@ -79,7 +79,7 @@ public class SocialMediaViewGwtImpl extends Composite implements
 
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 
 		initWidget(uiBinder.createAndBindUi(this));
 

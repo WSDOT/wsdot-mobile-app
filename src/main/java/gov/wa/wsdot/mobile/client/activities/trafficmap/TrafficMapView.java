@@ -53,6 +53,8 @@ public interface TrafficMapView extends IsWidget {
 		
 		public void onSeattleTrafficAlertsButtonPressed();
 		
+		public void onRefreshMapButtonPressed();
+		
 	}
 	
 	public void showProgressBar();
@@ -84,5 +86,7 @@ public interface TrafficMapView extends IsWidget {
 	public void setMapLocation(double latitude, double longitude, int zoom);
 	
 	public void setMapLocation();
+	
+	public void refreshMap();
 	
 }

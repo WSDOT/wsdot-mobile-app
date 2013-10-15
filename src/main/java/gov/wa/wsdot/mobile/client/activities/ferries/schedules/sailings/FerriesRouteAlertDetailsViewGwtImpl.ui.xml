@@ -8,6 +8,10 @@
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
     <ui:style>
+        .htmlPanel {
+            background-color: white;
+            padding: 12px;
+        }
         .headerTitle {
             width: 180px;
             margin-left: -85px;
@@ -42,11 +46,11 @@
 		</mgwt:HeaderPanel>
 		
         <mgwt:ScrollPanel scrollingEnabledX="false">
-        	<mgwt:RoundPanel>
+        	<g:HTMLPanel styleName="{style.htmlPanel}">
         	    <g:HTML ui:field="publishDate" styleName="{style.publishDate}" />
         	    <g:HTML ui:field="alertTitle" styleName="{style.alertTitle}" />
                 <g:HTML ui:field="alertText" styleName="{style.alertText}" />
-            </mgwt:RoundPanel>
+            </g:HTMLPanel>
         </mgwt:ScrollPanel>
 		
 	</mgwt:LayoutPanel>

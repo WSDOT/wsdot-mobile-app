@@ -130,7 +130,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 			
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		cellList.setGroup(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));

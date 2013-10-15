@@ -1,0 +1,14 @@
+* {
+	
+}
+
+body {
+
+}
+
+@if user.agent safari {
+    body {
+        background-color: #efeff4;
+        background-image: none;
+    }
+}

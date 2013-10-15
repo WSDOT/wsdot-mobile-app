@@ -16,7 +16,7 @@
         .timesHeader {
             display: -webkit-box;
             -webkit-box-orient: horizontal;
-            padding: 0 10px 0 10px;
+            padding: 20px 0 6px 0;
         }
 
         .departingHeader {

@@ -124,7 +124,7 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 		});
 		
 		travelTimeCellList.setGroup(false);
-		travelTimeCellList.setRound(true);
+		travelTimeCellList.setRound(false);
 
 		initWidget(uiBinder.createAndBindUi(this));
 

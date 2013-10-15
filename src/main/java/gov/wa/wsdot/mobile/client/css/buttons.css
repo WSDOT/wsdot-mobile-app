@@ -1,0 +1,31 @@
+/*standard mgwt button*/
+.mgwt-Button {
+}
+
+/*style if button is pressed*/
+.mgwt-Button-active {
+}
+
+/* style for important button*/
+.mgwt-Button-important {
+}
+
+/* style for important button when pressed*/
+.mgwt-Button-important.mgwt-Button-active {
+}
+
+/* style for a confirm button*/
+.mgwt-Button-confirm {
+}
+
+/* style for confirm button pressed*/
+.mgwt-Button-confirm.mgwt-Button-active {
+}
+
+/* style for a small button*/
+.mgwt-Button-small {
+}
+/*style for a round button */
+.mgwt-Button-round {
+
+}

@@ -26,10 +26,12 @@ import gov.wa.wsdot.mobile.shared.SeattleIncidentItem;
 import gov.wa.wsdot.mobile.shared.SeattleIncidentsFeed;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -52,6 +54,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
     private static List<Integer> constructionCategory = new ArrayList<Integer>();
     private static List<Integer> specialCategory = new ArrayList<Integer>();
     private static final String SEATTLE_INCIDENTS_URL = Consts.HOST_URL + "/traveler/api/seattleincidents";
+    private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	
 	public SeattleTrafficAlertsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -157,6 +160,12 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 						
 						item.setCategory(result.getSeattleIncidents().getItems().get(i).getCategory());
 						item.setDescription(result.getSeattleIncidents().getItems().get(i).getDescription());
+                        item.setLastUpdatedTime(dateFormat
+                                .format(new Date(Long.parseLong(result
+                                        .getSeattleIncidents()
+                                        .getItems().get(i)
+                                        .getLastUpdatedTime()
+                                        .substring(6, 19)))));
 						
 						seattleIncidentItems.add(item);
 					}
@@ -173,10 +182,10 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 	
 	private void categorizeAlerts() {
 
-		Stack<String> amberalert = new Stack<String>();
-		Stack<String> blocking = new Stack<String>();
-    	Stack<String> construction = new Stack<String>();
-    	Stack<String> special = new Stack<String>();
+		Stack<SeattleIncidentItem> amberalert = new Stack<SeattleIncidentItem>();
+		Stack<SeattleIncidentItem> blocking = new Stack<SeattleIncidentItem>();
+    	Stack<SeattleIncidentItem> construction = new Stack<SeattleIncidentItem>();
+    	Stack<SeattleIncidentItem> special = new Stack<SeattleIncidentItem>();
     	
     	ArrayList<SeattleIncidentItem> amberAlerts = new ArrayList<SeattleIncidentItem>();
     	ArrayList<SeattleIncidentItem> blockingIncidents = new ArrayList<SeattleIncidentItem>();
@@ -186,22 +195,22 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
     	for (SeattleIncidentItem item : seattleIncidentItems) {
 			// Check if there is an active amber alert
 			if (item.getCategory().equals(24)) {
-				amberalert.push(item.getDescription());
+				amberalert.push(item);
 			}
 			else if (blockingCategory.contains(item.getCategory())) {
-				blocking.push(item.getDescription());
+				blocking.push(item);
 			}
             else if (constructionCategory.contains(item.getCategory())) {
-                construction.push(item.getDescription());
+                construction.push(item);
             }
             else if (specialCategory.contains(item.getCategory())) {
-                special.push(item.getDescription());
+                special.push(item);
             }
     	}
     	
     	if (amberalert != null && amberalert.size() != 0) {
     		while (!amberalert.empty()) {
-    			amberAlerts.add(new SeattleIncidentItem(amberalert.pop()));
+    			amberAlerts.add(amberalert.pop());
     		}
     		view.showAmberAlerts();
     		view.renderAmberAlerts(amberAlerts);
@@ -213,7 +222,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 			blockingIncidents.add(new SeattleIncidentItem("None reported"));
 		} else {
 			while (!blocking.empty()) {
-				blockingIncidents.add(new SeattleIncidentItem(blocking.pop()));
+				blockingIncidents.add(blocking.pop());
 			}					
 		}
 
@@ -223,7 +232,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 			constructionClosures.add(new SeattleIncidentItem("None reported"));
 		} else {
 			while (!construction.empty()) {
-				constructionClosures.add(new SeattleIncidentItem(construction.pop()));
+				constructionClosures.add(construction.pop());
 			}					
 		}
 		
@@ -233,7 +242,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 			specialEvents.add(new SeattleIncidentItem("None reported"));
 		} else {
 			while (!special.empty()) {
-				specialEvents.add(new SeattleIncidentItem(special.pop()));
+				specialEvents.add(special.pop());
 			}					
 		}
 		

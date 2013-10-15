@@ -105,7 +105,7 @@ public class BlogViewGwtImpl extends Composite implements BlogView {
 
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 

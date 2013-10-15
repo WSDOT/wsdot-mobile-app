@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.ClockButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.FlagButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.FlashButton;
@@ -75,6 +76,7 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
+import com.googlecode.mgwt.ui.client.widget.buttonbar.LocateButton;
 
 public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
@@ -119,7 +121,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	FlashButton expressLanesButton;
 	
 	@UiField
-	HeaderButton locateButton;
+	LocateButton locateButton;
+	
+	@UiField
+	HeaderButton refreshButton;
 	
 	private Presenter presenter;
 	private MyMapWidget mapWidget;
@@ -198,9 +203,9 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	    mapWidget = new MyMapWidget(opts);
 	    trafficLayer.setMap(mapWidget);
 	    flowPanel.add(mapWidget);
-
+	    
 		mapWidget.setSize(Window.getClientWidth() + "px",
-				(Window.getClientHeight() - 91) + "px");
+				(Window.getClientHeight() - ParserUtils.windowUI()) + "px");
 
 	    Window.addResizeHandler(new ResizeHandler() {
 	        @Override
@@ -214,7 +219,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	        @Override
 	        public void onEvent(ResizeMapEvent event) {
 				mapWidget.setSize(Window.getClientWidth() + "px",
-						(Window.getClientHeight() - 91) + "px");
+						(Window.getClientHeight() - ParserUtils.windowUI()) + "px");
 	        }
 	    });
 	    
@@ -285,6 +290,13 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		if (presenter != null) {
 			presenter.onLocateButtonPressed();
 		}
+	}
+	
+	@UiHandler("refreshButton")
+	protected void onRefreshMapButtonPressed(TapEvent event) {
+	    if (presenter != null) {
+	        presenter.onRefreshMapButtonPressed();
+	    }
 	}
 	
 	@Override
@@ -470,6 +482,25 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		
 		alertMarkers.clear();
 	}
+
+	/**
+	 * Refresh the map to update the traffic layer.
+	 * 
+	 * Force the traffic layer to update by zooming in and then out
+	 * of the map.
+	 */
+    @Override
+    public void refreshMap() {
+        mapWidget.setZoom(mapWidget.getZoom() + 1);
+        new Timer() {
+
+            @Override
+            public void run() {
+                mapWidget.setZoom(mapWidget.getZoom() - 1);                
+            }
+         }.schedule(1);
+
+    }
 	
 	private static ImageResource getCategoryIcon(
 			HashMap<ImageResource, String[]> eventCategories, String category) {

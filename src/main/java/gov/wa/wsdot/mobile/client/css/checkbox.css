@@ -1,0 +1,38 @@
+/* check box style*/
+.mgwt-CheckBox {
+	
+}
+
+/*style for middle part*/
+.mgwt-CheckBox-middle {
+	
+}
+
+/* content of the middle */
+.mgwt-CheckBox-middle-content {
+	
+}
+
+/* on part of the checkbox */
+.mgwt-CheckBox-on {
+	
+}
+
+/* off part of the checkbox */
+.mgwt-CheckBox-off {
+	
+}
+
+/*important checkbox*/
+.mgwt-CheckBox-important {
+	
+}
+
+/** set on root element if checkbox is not checked*/
+.mgwt-CheckBox-notchecked .mgwt-CheckBox-middle {
+	
+}
+/** set on root element if checkbox is  checked*/
+.mgwt-CheckBox-checked .mgwt-CheckBox-middle {
+	
+}

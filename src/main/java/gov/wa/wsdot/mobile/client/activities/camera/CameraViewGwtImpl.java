@@ -94,7 +94,7 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 		});
 		
 		cameraCellList.setGroup(false);
-		cameraCellList.setRound(true);
+		cameraCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

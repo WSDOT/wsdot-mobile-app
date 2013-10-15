@@ -7,6 +7,13 @@
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
+    <ui:style>
+        .htmlPanel {
+            background-color: white;
+            padding: 12px;
+        }
+    </ui:style>
+    
 	<mgwt:LayoutPanel>
 		<mgwt:HeaderPanel>
 			<mgwt:left>
@@ -18,7 +25,7 @@
 		</mgwt:HeaderPanel>
 		
         <mgwt:ScrollPanel scrollingEnabledX="false">
-        	<mgwt:RoundPanel>
+        	<g:HTMLPanel styleName="{style.htmlPanel}">
             	<g:HTML>
             	    <p>The mission of the Washington State Department of Transportation is 
             	        to keep people and business moving by operating and improving the state's 
@@ -29,9 +36,9 @@
             	        <a href="mailto:webfeedback@wsdot.wa.gov?subject=WSDOT Mobile App">
             	            WSDOT Communications Office</a>.</p>
             	    <br />
-            	    <p style="color:#959595;">App Version: 2.0.3-beta</p>
+            	    <p style="color:#959595;">App Version: 2.0.3</p>
             	</g:HTML>
-            </mgwt:RoundPanel>
+            </g:HTMLPanel>
         </mgwt:ScrollPanel>
 		
 	</mgwt:LayoutPanel>

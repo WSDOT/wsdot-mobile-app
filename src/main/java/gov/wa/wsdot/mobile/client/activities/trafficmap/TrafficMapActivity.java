@@ -434,6 +434,11 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		captureClickEvents();
 		drawCamerasLayer();
 	}
+
+    @Override
+    public void onRefreshMapButtonPressed() {
+        view.refreshMap();
+    }
 	
 	/**
 	 * JSNI method to capture click events and open urls in PhoneGap

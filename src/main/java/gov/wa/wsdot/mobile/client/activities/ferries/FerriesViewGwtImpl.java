@@ -72,7 +72,7 @@ public class FerriesViewGwtImpl extends Composite implements FerriesView {
 			}
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

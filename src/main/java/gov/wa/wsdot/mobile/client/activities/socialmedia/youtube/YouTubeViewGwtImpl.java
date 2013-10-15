@@ -110,7 +110,7 @@ public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 
 		});
 		
-		cellList.setRound(true);
+		cellList.setRound(false);
 		cellList.setGroup(true);
 
 		initWidget(uiBinder.createAndBindUi(this));

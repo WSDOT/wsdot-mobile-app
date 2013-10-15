@@ -95,7 +95,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	Button borderButton;
 	
 	@UiField
-	RoundPanel highImpactAlertsPanel;
+	HTMLPanel highImpactAlertsPanel;
 	
 	@UiField
 	ProgressBar progressBar;
@@ -141,7 +141,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		pullArrowHeader = new PullArrowHeader();
 		pullToRefresh.setHeader(pullArrowHeader);
 		
-		highImpactAlertsPanel = new RoundPanel();
+		highImpactAlertsPanel = new HTMLPanel("");
 		alertsCarousel = new Carousel();
 		alertPanel = new HTMLPanel("");
 		
@@ -154,7 +154,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 		});
 		
-		camerasCellList.setRound(true);
+		camerasCellList.setRound(false);
 		
 		ferriesCellList = new CellList<FerriesRouteItem>(
 				new FerriesRouteSchedulesCell<FerriesRouteItem>() {
@@ -185,7 +185,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 		});
 		
-		ferriesCellList.setRound(true);
+		ferriesCellList.setRound(false);
 
 		mountainPassesCellList = new CellList<MountainPassItem>(
 				new CellDetailsWithIcon<MountainPassItem>() {
@@ -218,7 +218,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 		});
 		
-		mountainPassesCellList.setRound(true);
+		mountainPassesCellList.setRound(false);
 		
 		travelTimesCellList = new CellList<TravelTimesItem>(
 				new TravelTimesCell<TravelTimesItem>() {
@@ -272,7 +272,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			
 		});
 		
-		travelTimesCellList.setRound(true);
+		travelTimesCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 

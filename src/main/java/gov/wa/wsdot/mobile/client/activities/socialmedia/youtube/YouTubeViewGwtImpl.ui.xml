@@ -20,7 +20,7 @@
         <p:PullPanel ui:field="pullToRefresh">
         	<g:FlowPanel ui:field="flowPanel">
         	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
-            	<mgwt:CellList ui:field="cellList" group="false" round="true" />
+            	<mgwt:CellList ui:field="cellList" />
             </g:FlowPanel>
         </p:PullPanel>
 		

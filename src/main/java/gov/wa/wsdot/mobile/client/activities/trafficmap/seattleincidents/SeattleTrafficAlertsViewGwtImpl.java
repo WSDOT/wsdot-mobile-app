@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents;
 
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.SimpleListItem;
 import gov.wa.wsdot.mobile.shared.SeattleIncidentItem;
 
@@ -103,12 +104,17 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 
             @Override
             public String getDisplayLastUpdated(SeattleIncidentItem model) {
-                return "";
+                if (model.getLastUpdatedTime() == null) {
+                    return "";
+                } else {
+                    return ParserUtils.relativeTime(model.getLastUpdatedTime(),
+                            "MMMM d, yyyy h:mm a", false);
+                }
             }
         });
 
 		amberAlertsCellList.setGroup(false);
-		amberAlertsCellList.setRound(true);
+		amberAlertsCellList.setRound(false);
 		
 		blockingCellList = new CellList<SeattleIncidentItem>(new SimpleListItem<SeattleIncidentItem>() {
 
@@ -119,13 +125,18 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 
 			@Override
 			public String getDisplayLastUpdated(SeattleIncidentItem model) {
-				return "";
+			    if (model.getLastUpdatedTime() == null) {
+			        return "";
+			    } else {
+    			    return ParserUtils.relativeTime(model.getLastUpdatedTime(),
+                            "MMMM d, yyyy h:mm a", false);
+			    }
 			}
 
 		});
 		
 		blockingCellList.setGroup(false);
-		blockingCellList.setRound(true);
+		blockingCellList.setRound(false);
 
 		constructionCellList = new CellList<SeattleIncidentItem>(new SimpleListItem<SeattleIncidentItem>() {
 
@@ -136,13 +147,18 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 
 			@Override
 			public String getDisplayLastUpdated(SeattleIncidentItem model) {
-				return "";
+			    if (model.getLastUpdatedTime() == null) {
+			        return "";
+			    } else {
+    			    return ParserUtils.relativeTime(model.getLastUpdatedTime(),
+                            "MMMM d, yyyy h:mm a", false);
+			    }
 			}
 
 		});
 		
 		constructionCellList.setGroup(false);
-		constructionCellList.setRound(true);
+		constructionCellList.setRound(false);
 		
 		specialCellList = new CellList<SeattleIncidentItem>(new SimpleListItem<SeattleIncidentItem>() {
 
@@ -153,13 +169,18 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 
 			@Override
 			public String getDisplayLastUpdated(SeattleIncidentItem model) {
-				return "";
+				if (model.getLastUpdatedTime() == null) {
+				    return "";
+				} else {
+    			    return ParserUtils.relativeTime(model.getLastUpdatedTime(),
+                            "MMMM d, yyyy h:mm a", false);
+				}
 			}
 
 		});
 		
 		specialCellList.setGroup(false);
-		specialCellList.setRound(true);
+		specialCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 

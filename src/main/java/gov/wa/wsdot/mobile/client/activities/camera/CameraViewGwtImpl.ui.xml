@@ -18,6 +18,7 @@
             -webkit-box-orient: horizontal;
             -webkit-box-align: center;
             -webkit-box-pack: end;
+            margin: 12px;
         }
     </ui:style>
     
@@ -34,11 +35,9 @@
 
         <p:PullPanel ui:field="pullToRefresh">
 			<g:FlowPanel>
-	            <mgwt:RoundPanel>
-	                <g:HTMLPanel styleName="{style.buttonPanel}">
-	                    <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
-	                </g:HTMLPanel>
-	            </mgwt:RoundPanel>
+                <g:HTMLPanel styleName="{style.buttonPanel}">
+                    <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
+                </g:HTMLPanel>
 				<mgwt:CellList ui:field="cameraCellList" />
 			</g:FlowPanel>
         </p:PullPanel>

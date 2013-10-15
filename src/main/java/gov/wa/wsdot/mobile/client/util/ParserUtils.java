@@ -22,6 +22,10 @@ import java.util.Date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.user.client.Window;
+import com.googlecode.mgwt.ui.client.MGWT;
 
 
 public class ParserUtils {
@@ -86,5 +90,32 @@ public class ParserUtils {
 
 	    return text.substring(0, end) + "...";
 	}
+	
+    public static int iOSversion() {
+        int version = 0;
+        // supports iOS 2.0 and later: <http://bit.ly/TJjs1V>
+        RegExp regExp = RegExp.compile("OS (\\d+)_(\\d+)_?(\\d+)?");
+        MatchResult matcher = regExp.exec(Window.Navigator.getAppVersion());
+        boolean matchFound = regExp.test(Window.Navigator.getAppVersion());
+
+        if (matchFound) {
+            version = Integer.parseInt(matcher.getGroup(1), 10); // Just get the
+                                                                 // major
+                                                                 // version.
+        }
+
+        return version;
+    }
+    
+    public static int windowUI() {
+        int amount = 91;
+        if (MGWT.getOsDetection().isIOs()) {
+            if (iOSversion() >= 7) {
+                //amount = 111;
+            }
+        }
+        
+        return amount;
+    }
 
 }

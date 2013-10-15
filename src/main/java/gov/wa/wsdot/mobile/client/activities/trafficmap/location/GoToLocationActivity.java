@@ -85,25 +85,34 @@ public class GoToLocationActivity extends MGWTAbstractActivity implements
 			storeMapLocation(47.5990, -122.3350, 12); // Seattle Area
 		}
 		if (index == 8) {
-			storeMapLocation(47.658566, -117.425995, 12); // Spokane Area
+		    storeMapLocation(47.3756596, -121.4195662, 11); // Snoqualmie Pass
 		}
 		if (index == 9) {
-			storeMapLocation(48.22959, -122.34581, 13); // Stanwood
+			storeMapLocation(47.658566, -117.425995, 12); // Spokane Area
 		}
 		if (index == 10) {
-			storeMapLocation(47.86034, -121.812286, 14); // Sultan
+			storeMapLocation(48.22959, -122.34581, 13); // Stanwood
 		}
 		if (index == 11) {
-			storeMapLocation(47.206275, -122.46254, 12); // Tacoma
+			storeMapLocation(47.86034, -121.812286, 14); // Sultan
 		}
 		if (index == 12) {
-			storeMapLocation(48.998775, -119.462714, 15); // US 97 Border
+			storeMapLocation(47.206275, -122.46254, 12); // Tacoma
 		}
 		if (index == 13) {
-			storeMapLocation(45.639968, -122.610512, 12); // Vancouver Area
+		    storeMapLocation(46.2225766, -119.2039748, 11); // Tri-Cities
 		}
 		if (index == 14) {
+			storeMapLocation(48.998775, -119.462714, 15); // US 97 Border
+		}
+		if (index == 15) {
+			storeMapLocation(45.639968, -122.610512, 12); // Vancouver Area
+		}
+		if (index == 16) {
 			storeMapLocation(47.435867, -120.309563, 13); // Wenatchee
+		}
+		if (index == 17) {
+		    storeMapLocation(46.6002534, -120.4885235, 11); // Yakima
 		}
 		
 		onDoneButtonPressed();
@@ -126,13 +135,16 @@ public class GoToLocationActivity extends MGWTAbstractActivity implements
 		list.add(new Topic("Mount Vernon"));
 		list.add(new Topic("Olympia"));
 		list.add(new Topic("Seattle Area"));
+		list.add(new Topic("Snoqualmie Pass"));
 		list.add(new Topic("Spokane Area"));
 		list.add(new Topic("Stanwood"));
 		list.add(new Topic("Sultan"));
 		list.add(new Topic("Tacoma"));
+		list.add(new Topic("Tri-Cities"));
 		list.add(new Topic("US 97 Border"));
 		list.add(new Topic("Vancouver Area"));
 		list.add(new Topic("Wenatchee"));
+		list.add(new Topic("Yakima"));
 		
 		return list;
 	}
