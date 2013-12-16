@@ -36,9 +36,11 @@ import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.CamerasFeed;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+import gov.wa.wsdot.mobile.shared.HighwayAlerts;
 import gov.wa.wsdot.mobile.shared.LatLonItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.code.gwt.database.client.GenericRow;
@@ -47,6 +49,7 @@ import com.google.code.gwt.database.client.service.ListCallback;
 import com.google.code.gwt.database.client.service.RowIdListCallback;
 import com.google.code.gwt.database.client.service.VoidCallback;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
@@ -71,8 +74,11 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
+	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
+	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
 	private Timer timer;
+	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	
 	public TrafficMapActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -87,14 +93,14 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		view.setPresenter(this);
 		view.setMapLocation(); // Set initial map location.
 		
-		createTopicsList(view);
-		drawHighwayAlertsLayer();
+		getCameras(view);
+		getHighwayAlerts();
 
 		panel.setWidget(view);
 
 	}
 
-	private void createTopicsList(final TrafficMapView view) {
+	private void getCameras(final TrafficMapView view) {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -280,6 +286,140 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		
 	}
 	
+    private void getHighwayAlerts() {
+        /** 
+         * Check the cache table for the last time data was downloaded. If we are within
+         * the allowed time period, don't sync, otherwise get fresh data from the server.
+         */
+        dbService.getCacheLastUpdated(Tables.HIGHWAY_ALERTS, new ListCallback<GenericRow>() {
+            
+            @Override
+            public void onFailure(DataServiceException error) {
+            }
+
+            @Override
+            public void onSuccess(List<GenericRow> result) {
+                boolean shouldUpdate = true;
+
+                if (!result.isEmpty()) {
+                    double now = System.currentTimeMillis();
+                    double lastUpdated = result.get(0).getDouble(CachesColumns.CACHE_LAST_UPDATED);
+                    shouldUpdate = (Math.abs(now - lastUpdated) > (5 * 60000)); // Refresh every 5 minutes.
+                }
+
+                if (shouldUpdate) {
+                    try {
+                        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+                        // Set timeout for 30 seconds (30000 milliseconds)
+                        jsonp.setTimeout(30000);
+                        jsonp.requestObject(HIGHWAY_ALERTS_URL, new AsyncCallback<HighwayAlerts>() {
+
+                            @Override
+                            public void onFailure(Throwable caught) {
+                            }
+
+                            @Override
+                            public void onSuccess(HighwayAlerts result) {
+                                highwayAlertItems.clear();
+                                
+                                if (result.getAlerts() != null) {
+                                    HighwayAlertItem item;
+                                    int size = result.getAlerts().getItems().length();
+                                    
+                                    for (int i = 0; i < size; i++) {
+                                        item = new HighwayAlertItem();
+                                        
+                                        item.setAlertId(result.getAlerts().getItems().get(i).getAlertID());
+                                        item.setHeadlineDescription(result.getAlerts().getItems().get(i).getHeadlineDescription());
+                                        item.setEventCategory(result.getAlerts().getItems().get(i).getEventCategory());
+                                        item.setPriority(result.getAlerts().getItems().get(i).getPriority());
+                                        item.setStartLatitude(result.getAlerts().getItems().get(i).getStartRoadwayLocation().getLatitude());
+                                        item.setStartLongitude(result.getAlerts().getItems().get(i).getStartRoadwayLocation().getLongitude());
+                                        item.setStartRoadName(result.getAlerts().getItems().get(i).getStartRoadwayLocation().getRoadName());
+                                        item.setLastUpdatedTime(dateFormat.format(new Date(
+                                                        Long.parseLong(result
+                                                                .getAlerts()
+                                                                .getItems()
+                                                                .get(i)
+                                                                .getLastUpdatedTime()
+                                                                .substring(6, 19)))));
+
+                                        highwayAlertItems.add(item);
+                                    }
+                                    
+                                    // Purge existing highway alerts covered by incoming data
+                                    dbService.deleteHighwayAlerts(new VoidCallback() {
+
+                                        @Override
+                                        public void onFailure(DataServiceException error) {
+                                        }
+
+                                        @Override
+                                        public void onSuccess() {
+                                            // Bulk insert all the new highway alerts
+                                            dbService.insertHighwayAlerts(highwayAlertItems, new RowIdListCallback() {
+
+                                                @Override
+                                                public void onFailure(DataServiceException error) {
+                                                }
+
+                                                @Override
+                                                public void onSuccess(List<Integer> rowIds) {
+                                                    // Update the cache table with the time we did the update
+                                                    List<CacheItem> cacheItems = new ArrayList<CacheItem>();
+                                                    cacheItems.add(new CacheItem(Tables.HIGHWAY_ALERTS, System.currentTimeMillis()));
+                                                    dbService.updateCachesTable(cacheItems, new VoidCallback() {
+
+                                                        @Override
+                                                        public void onFailure(DataServiceException error) {
+                                                        }
+
+                                                        @Override
+                                                        public void onSuccess() {
+                                                            dbService.getHighwayAlerts(new ListCallback<GenericRow>() {
+                                                                
+                                                                @Override
+                                                                public void onFailure(DataServiceException error) {
+                                                                }
+                                            
+                                                                @Override
+                                                                public void onSuccess(List<GenericRow> result) {
+                                                                    drawHighwayAlertsLayer();
+                                                                }
+                                                            });
+                                                        }
+                                                        
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        
+                    } catch (Exception e) {
+
+                    }
+                } else {
+                
+                    dbService.getHighwayAlerts(new ListCallback<GenericRow>() {
+    
+                        @Override
+                        public void onFailure(DataServiceException error) {
+                        }
+    
+                        @Override
+                        public void onSuccess(List<GenericRow> result) {
+                            drawHighwayAlertsLayer();
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+	
 	private void drawHighwayAlertsLayer() {
 		
 		dbService.getHighwayAlerts(new ListCallback<GenericRow>() {
@@ -438,9 +578,10 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
     @Override
     public void onRefreshMapButtonPressed() {
         view.refreshMap();
+        getHighwayAlerts();
     }
-	
-	/**
+
+    /**
 	 * JSNI method to capture click events and open urls in PhoneGap
 	 * InAppBrowser.
 	 * 
