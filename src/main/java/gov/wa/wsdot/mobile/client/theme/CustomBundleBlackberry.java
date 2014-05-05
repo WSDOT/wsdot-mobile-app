@@ -38,7 +38,6 @@ import com.googlecode.mgwt.ui.client.theme.base.ProgressBarCss;
 import com.googlecode.mgwt.ui.client.theme.base.ProgressIndicatorCss;
 import com.googlecode.mgwt.ui.client.theme.base.PullToRefreshCss;
 import com.googlecode.mgwt.ui.client.theme.base.ScrollPanelCss;
-import com.googlecode.mgwt.ui.client.theme.base.SliderCss;
 import com.googlecode.mgwt.ui.client.theme.base.TabBarCss;
 import com.googlecode.mgwt.ui.client.theme.base.UtilCss;
 
@@ -65,9 +64,6 @@ public interface CustomBundleBlackberry extends ClientBundle, MGWTClientBundle {
 
 	@Source({ "com/googlecode/mgwt/ui/client/theme/base/css/header.css", "com/googlecode/mgwt/ui/client/theme/base/css/blackberry/header.css" })
 	HeaderCss getHeaderCss();
-
-	@Source({ "com/googlecode/mgwt/ui/client/theme/base/css/slider.css", "com/googlecode/mgwt/ui/client/theme/base/css/blackberry/slider.css", "gov/wa/wsdot/mobile/client/css/slider.css" })
-	SliderCss getSliderCss();
 
 	@Source({ "com/googlecode/mgwt/ui/client/theme/base/css/carousel.css", "com/googlecode/mgwt/ui/client/theme/base/css/blackberry/carousel.css", "gov/wa/wsdot/mobile/client/css/carousel.css" })
 	CarouselCss getCarouselCss();
