@@ -74,7 +74,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 	        	((ClientFactoryImpl) clientFactory).setPhoneGap(phoneGap);
 	        	buildDisplay(clientFactory);
     	        if (MGWT.getOsDetection().isIOs()) {
-    	            hideSplashScreen(); // For use on iOS with PhoneGap.
+    	            //hideSplashScreen(); // For use on iOS with PhoneGap.
     	        }
 	        }
 	    });	
