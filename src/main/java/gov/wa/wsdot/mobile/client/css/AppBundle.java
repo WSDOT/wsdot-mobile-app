@@ -296,21 +296,38 @@ public interface AppBundle extends ClientBundle {
 	/**
 	 * Highway alert icons 
 	 */
+	@Source("alert_highest.png")
+    ImageResource alertHighestPNG();
+
+	@Source("alert_high.png")
+	ImageResource alertHighPNG();
+	
+	@Source("alert_moderate.png")
+	ImageResource alertModeratePNG();
+	
+	@Source("alert_low.png")
+	ImageResource alertLowPNG();
+
+    @Source("alert_shadow.png")
+    ImageResource alertShadowPNG();
 	
 	@Source("closed.png")
 	ImageResource closedPNG();
 
 	@Source("closed_shadow.png")
 	ImageResource closedShadowPNG();
+
+	@Source("construction_highest.png")
+    ImageResource constructionHighestPNG();
 	
 	@Source("construction_high.png")
 	ImageResource constructionHighPNG();
 	
-	@Source("alert_highest.png")
-	ImageResource alertHighestPNG();
+	@Source("construction_moderate.png")
+	ImageResource constructionModeratePNG();
 	
-	@Source("alert_shadow.png")
-	ImageResource alertShadowPNG();
+	@Source("construction_low.png")
+	ImageResource constructionLowPNG();
 	
 	/**
 	 * Ferry vesselwatch icons and shadows

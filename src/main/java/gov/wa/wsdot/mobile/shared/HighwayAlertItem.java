@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,13 +53,14 @@ public class HighwayAlertItem implements Serializable {
 	 * @param longitude Longitude of alert
 	 */
 	public HighwayAlertItem(int alertId, String category, String description,
-			double latitude, double longitude) {
+			double latitude, double longitude, String priority) {
 		
 		this.alertId = alertId;
 		this.eventCategory = category;
 		this.headlineDescription = description;
 		this.startLatitude = latitude;
 		this.startLongitude = longitude;
+		this.priority = priority;
 	}
 	
 	public HighwayAlertItem(int alertId, String headlineDescription) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,19 +133,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	private static ArrayList<Marker> cameraMarkers = new ArrayList<Marker>();
 	private static ArrayList<Marker> alertMarkers = new ArrayList<Marker>();
 	
-	private static String[] eventConstruction = {"construction", "maintenance"};
-	private static String[] eventClosure = {
-			"bridge closed",
-			"closure",
-			"emergency closure",
-			"hcb closed maint",
-			"hcb closed marine",
-			"hcb closed police",
-			"hcb closed winds",
-			"rocks - closure"
-	};
-	
-	private static HashMap<ImageResource, String[]> eventCategories = new HashMap<ImageResource, String[]>();
 	private static Storage localStorage = Storage.getLocalStorageIfSupported();
 	private static StorageMap storageMap;
 	
@@ -170,9 +157,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 				localStorage.setItem("KEY_MAP_ZOOM", "12");
 			}
 		}
-		
-		eventCategories.put(AppBundle.INSTANCE.closedPNG(), eventClosure);
-		eventCategories.put(AppBundle.INSTANCE.constructionHighPNG(), eventConstruction);
 
 		final TrafficLayer trafficLayer = TrafficLayer.newInstance();
 		
@@ -366,29 +350,27 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	@Override
 	public void drawAlerts(List<HighwayAlertItem> alerts) {
 		
+        // Types of categories which result in one icon or another being displayed. 
+        String[] eventClosure = {"closed", "closure"};
+        String[] eventConstruction = {"construction", "maintenance", "lane closure"};
+
+        HashMap<String, String[]> eventCategories = new HashMap<String, String[]>();
+        eventCategories.put("closure", eventClosure);
+        eventCategories.put("construction", eventConstruction);
+	    
 		deleteAlerts();
 		
 		for (final HighwayAlertItem alert: alerts) {
-			final LatLng loc = LatLng.newInstance(alert.getStartLatitude(), alert.getStartLongitude());
+			LatLng loc = LatLng.newInstance(alert.getStartLatitude(), alert.getStartLongitude());
 		    MarkerOptions options = MarkerOptions.newInstance();
 		    options.setPosition(loc);
 		    
 		    // Determine correct icon for alert type
-		    ImageResource imageResource = getCategoryIcon(eventCategories, alert.getEventCategory());
+            ImageResource imageResource = getCategoryIcon(eventCategories,
+                    alert.getEventCategory(), alert.getPriority());
 		    
 		    MarkerImage icon = MarkerImage.newInstance(imageResource.getSafeUri().asString());
-		    MarkerImage shadow;
-		    
-		    if (imageResource.equals(AppBundle.INSTANCE.closedPNG())) {
-				shadow = MarkerImage.newInstance(AppBundle.INSTANCE
-						.closedShadowPNG().getSafeUri().asString());
-		    } else {
-				shadow = MarkerImage.newInstance(AppBundle.INSTANCE
-						.alertShadowPNG().getSafeUri().asString());
-		    }
-
 		    options.setIcon(icon);
-		    options.setShadow(shadow);
 		    
 		    alertMarker = Marker.newInstance(options);    
 		    alertMarker.addClickHandler(new ClickMapHandler() {
@@ -502,29 +484,75 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
     }
 	
-	private static ImageResource getCategoryIcon(
-			HashMap<ImageResource, String[]> eventCategories, String category) {
+    /**
+     * Get the correct icon given the priority and category of alert.
+     * 
+     * @param eventCategories
+     * @param category
+     * @param priority
+     * @return
+     */
+	private ImageResource getCategoryIcon(
+			HashMap<String, String[]> eventCategories, String category, String priority) {
 		
-		ImageResource image = AppBundle.INSTANCE.alertHighestPNG();
-		Set<Entry<ImageResource, String[]>> set = eventCategories.entrySet();
-		Iterator<Entry<ImageResource, String[]>> i = set.iterator();
+	    ImageResource alertClosed = AppBundle.INSTANCE.closedPNG();
+	    ImageResource alertHighest = AppBundle.INSTANCE.alertHighestPNG();
+	    ImageResource alertHigh = AppBundle.INSTANCE.alertHighPNG();
+	    ImageResource alertMedium = AppBundle.INSTANCE.alertModeratePNG();
+	    ImageResource alertLow = AppBundle.INSTANCE.alertLowPNG();
+	    ImageResource constructionHighest = AppBundle.INSTANCE.constructionHighestPNG();
+	    ImageResource constructionHigh = AppBundle.INSTANCE.constructionHighPNG();
+	    ImageResource constructionMedium = AppBundle.INSTANCE.constructionModeratePNG();
+	    ImageResource constructionLow = AppBundle.INSTANCE.constructionLowPNG();
+	    ImageResource defaultAlertImage = alertHighest;
+	    
+		Set<Entry<String, String[]>> set = eventCategories.entrySet();
+		Iterator<Entry<String, String[]>> i = set.iterator();
 
-		if (category.equals("")) return image;
+		if (category.equals("")) return defaultAlertImage;
 
 		while(i.hasNext()) {
-			Entry<ImageResource, String[]> me = i.next();
+			Entry<String, String[]> me = i.next();
 			for (String phrase: (String[])me.getValue()) {
 				String patternStr = phrase;
 				RegExp pattern = RegExp.compile(patternStr, "i");
 				MatchResult matcher = pattern.exec(category);
 				boolean matchFound = matcher != null;
+                
 				if (matchFound) {
-					image = (ImageResource)me.getKey();
-				}
+                    String keyWord = me.getKey();
+                    
+                    if (keyWord.equalsIgnoreCase("closure")) {
+                        return alertClosed;
+                    } else if (keyWord.equalsIgnoreCase("construction")) {
+                        if (priority.equalsIgnoreCase("highest")) {
+                            return constructionHighest;
+                        } else if (priority.equalsIgnoreCase("high")) {
+                            return constructionHigh;
+                        } else if (priority.equalsIgnoreCase("medium")) {
+                            return constructionMedium;
+                       } else if (priority.equalsIgnoreCase("low")
+                               || priority.equalsIgnoreCase("lowest")) {
+                            return constructionLow;
+                        }
+                    }
+                }
 			}
 		}
 
-		return image;
+		// If we arrive here, it must be an accident or alert item.
+        if (priority.equalsIgnoreCase("highest")) {
+            return alertHighest;
+        } else if (priority.equalsIgnoreCase("high")) {
+            return alertHigh;
+        } else if (priority.equalsIgnoreCase("medium")) {
+            return alertMedium;
+        } else if (priority.equalsIgnoreCase("low")
+                || priority.equalsIgnoreCase("lowest")) {
+            return alertLow;
+        }
+
+		return defaultAlertImage;
 	}
 	
 	/**

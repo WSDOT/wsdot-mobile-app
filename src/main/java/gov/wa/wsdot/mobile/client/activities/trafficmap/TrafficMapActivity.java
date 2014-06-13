@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
-	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
+	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalertstest";
 	private Timer timer;
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	
@@ -93,14 +93,14 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		view.setPresenter(this);
 		view.setMapLocation(); // Set initial map location.
 		
-		getCameras(view);
+		getCameras();
 		getHighwayAlerts();
 
 		panel.setWidget(view);
 
 	}
 
-	private void getCameras(final TrafficMapView view) {
+	private void getCameras() {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -280,7 +280,9 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 					}
 				}
 				
-				view.drawCameras(cameras);
+				if (!result.isEmpty()) {
+				    view.drawCameras(cameras);
+				}
 			}
 		});
 		
@@ -430,15 +432,32 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 			@Override
 			public void onSuccess(List<GenericRow> result) {
-				List<HighwayAlertItem> alerts = new ArrayList<HighwayAlertItem>();
+                LatLngBounds bounds = view.getViewportBounds();
+                LatLng swPoint = bounds.getSouthWest();
+                LatLng nePoint = bounds.getNorthEast();
+
+                ArrayList<LatLonItem> viewableMapArea = new ArrayList<LatLonItem>();
+                viewableMapArea.add(new LatLonItem(nePoint.getLatitude(), swPoint.getLongitude()));
+                viewableMapArea.add(new LatLonItem(nePoint.getLatitude(), nePoint.getLongitude()));
+                viewableMapArea.add(new LatLonItem(swPoint.getLatitude(), nePoint.getLongitude()));
+                viewableMapArea.add(new LatLonItem(swPoint.getLatitude(), swPoint.getLongitude()));
+			    
+			    List<HighwayAlertItem> alerts = new ArrayList<HighwayAlertItem>();
 
 				for (GenericRow alert: result) {
-					alerts.add(new HighwayAlertItem(
-							alert.getInt(HighwayAlertsColumns.HIGHWAY_ALERT_ID),
-							alert.getString(HighwayAlertsColumns.HIGHWAY_ALERT_CATEGORY),
-							alert.getString(HighwayAlertsColumns.HIGHWAY_ALERT_HEADLINE),
-							alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LATITUDE),
-							alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LONGITUDE)));
+                    if (inPolygon(
+                            viewableMapArea,
+                            alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LATITUDE),
+                            alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LONGITUDE))) {
+                        
+	                    alerts.add(new HighwayAlertItem(
+	                            alert.getInt(HighwayAlertsColumns.HIGHWAY_ALERT_ID),
+	                            alert.getString(HighwayAlertsColumns.HIGHWAY_ALERT_CATEGORY),
+	                            alert.getString(HighwayAlertsColumns.HIGHWAY_ALERT_HEADLINE),
+	                            alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LATITUDE),
+	                            alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LONGITUDE),
+	                            alert.getString(HighwayAlertsColumns.HIGHWAY_ALERT_PRIORITY)));				        
+				    }
 				}
 				
 				if (!result.isEmpty()) {
@@ -572,7 +591,8 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onMapIsIdle() {
 		captureClickEvents();
-		drawCamerasLayer();
+        drawCamerasLayer();
+        getHighwayAlerts();
 	}
 
     @Override
