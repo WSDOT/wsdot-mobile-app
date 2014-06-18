@@ -130,13 +130,13 @@
 		<dependency>
 			<groupId>com.googlecode.gwtphonegap</groupId>
 			<artifactId>gwtphonegap</artifactId>
-			<version>2.4.0.0</version>
+			<version>3.5.0.0</version>
 		</dependency>
 		<!-- GWT Maps API V3 -->
 		<dependency>
 		    <groupId>com.github.branflake2267</groupId>
 		    <artifactId>gwt-maps-api</artifactId>
-		    <version>3.10.0-alpha-6</version>
+		    <version>3.10.0-alpha-7</version>
 		</dependency>
 		<!-- Other Google -->
 		<dependency>
