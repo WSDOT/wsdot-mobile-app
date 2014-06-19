@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,8 +88,6 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 		view.setMapLocation(); // Set initial map location.
 		
 		buildFerryIcons();
-		createTopicsList(view);
-		
 		drawVesselsLayer();
 
 		timer = new Timer() {
@@ -163,7 +161,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 		
 	}
 
-	private void createTopicsList(final VesselWatchMapView view) {
+	private void getCameras() {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -298,6 +296,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 				} else {
 					view.hideProgressBar();
+					drawCamerasLayer();
 				}
 			}
 		});
@@ -530,7 +529,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onMapIsIdle() {
 		captureClickEvents();
-		drawCamerasLayer();
+		getCameras();
 	}
 	
 	/**

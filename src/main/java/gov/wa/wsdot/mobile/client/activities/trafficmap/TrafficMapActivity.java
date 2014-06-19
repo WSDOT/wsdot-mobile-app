@@ -92,12 +92,8 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.setMapLocation(); // Set initial map location.
-		
-		getCameras();
-		getHighwayAlerts();
 
 		panel.setWidget(view);
-
 	}
 
 	private void getCameras() {
@@ -236,6 +232,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 				} else {
 					view.hideProgressBar();
+					drawCamerasLayer();
 				}
 			}
 		});
@@ -378,17 +375,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
                                                         @Override
                                                         public void onSuccess() {
-                                                            dbService.getHighwayAlerts(new ListCallback<GenericRow>() {
-                                                                
-                                                                @Override
-                                                                public void onFailure(DataServiceException error) {
-                                                                }
-                                            
-                                                                @Override
-                                                                public void onSuccess(List<GenericRow> result) {
-                                                                    drawHighwayAlertsLayer();
-                                                                }
-                                                            });
+                                                            drawHighwayAlertsLayer();
                                                         }
                                                         
                                                     });
@@ -404,18 +391,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
                     }
                 } else {
-                
-                    dbService.getHighwayAlerts(new ListCallback<GenericRow>() {
-    
-                        @Override
-                        public void onFailure(DataServiceException error) {
-                        }
-    
-                        @Override
-                        public void onSuccess(List<GenericRow> result) {
-                            drawHighwayAlertsLayer();
-                        }
-                    });
+                    drawHighwayAlertsLayer();
                 }
             }
         });
@@ -591,7 +567,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onMapIsIdle() {
 		captureClickEvents();
-        drawCamerasLayer();
+		getCameras();
         getHighwayAlerts();
 	}
 
