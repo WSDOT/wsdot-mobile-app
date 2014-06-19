@@ -76,7 +76,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
-	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalertstest";
+	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
 	private Timer timer;
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	
