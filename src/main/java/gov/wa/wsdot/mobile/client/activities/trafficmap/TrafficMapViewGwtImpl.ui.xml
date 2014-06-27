@@ -27,9 +27,9 @@
        	</g:FlowPanel>
 		
        	<b:ButtonBar ui:field="buttonBar">
-       	    <b:LocateButton ui:field="locateButton" />
+       	    <wsdot:NavigationButton ui:field="navigationButton" />
        	    <b:ButtonBarSpacer />
-            <wsdot:FlagButton ui:field="goToLocationButton" />
+            <wsdot:BookmarkButton ui:field="bookmarkButton" />
 	  	    <b:ButtonBarSpacer />
 	  	    <wsdot:ClockButton ui:field="travelTimesButton" />
 	  	    <b:ButtonBarSpacer />
@@ -41,6 +41,5 @@
        	</b:ButtonBar>
        	
 	</mgwt:LayoutPanel>
-    
-    
+
 </ui:UiBinder>

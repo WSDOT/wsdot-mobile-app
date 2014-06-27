@@ -31,6 +31,11 @@ p {
     max-width: 100%;
 }
 
+video {
+	width: auto;
+	height: 240px;
+}
+
 @sprite .videoPlayOverlay {
     gwt-image: "playOverlayPNG";
     display: block;

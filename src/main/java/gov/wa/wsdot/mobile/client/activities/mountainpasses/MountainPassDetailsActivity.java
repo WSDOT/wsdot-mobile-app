@@ -125,6 +125,7 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 						
 						c.setImageUrl(camera.get("url").isString().stringValue());
 						c.setCameraId(Integer.parseInt(camera.get("id").toString()));
+						c.setHasVideo(0);
 						
 						cameraItems.add(c);						
 					}

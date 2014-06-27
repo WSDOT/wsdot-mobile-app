@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,17 +40,28 @@ public interface CameraView extends IsWidget {
 	}
 	
 	public void renderCamera(List<CameraItem> createCameraList);
+	
+	public void renderVideo(List<CameraItem> createVideoList);
 
 	public void setTitle(String title);
 	
 	public void toggleStarButton(boolean isStarred);
 	
-	public void refresh();
+	public void cameraRefresh();
+	
+	public void videoRefresh();
 
-	public void setHeaderPullHandler(Pullhandler pullHandler);
+	public void setCameraHeaderPullHandler(Pullhandler pullHandler);
 	
-	public PullArrowWidget getPullHeader();
+	public void setVideoHeaderPullHandler(Pullhandler pullHandler);
 	
-	public HasRefresh getPullPanel();
+	public PullArrowWidget getCameraPullHeader();
 	
+	public PullArrowWidget getVideoPullHeader();
+	
+	public HasRefresh getCameraPullPanel();
+	
+	public HasRefresh getVideoPullPanel();
+
+    public void removeTab(int tabIndex);
 }

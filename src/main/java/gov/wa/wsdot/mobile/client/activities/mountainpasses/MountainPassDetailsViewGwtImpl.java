@@ -121,7 +121,7 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 			public String getUrl(CameraItem model) {
 				return model.getImageUrl();
 			}
-
+            
 			@Override
 			public boolean canBeSelected(CameraItem model) {
 				return true;

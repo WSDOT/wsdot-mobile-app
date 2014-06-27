@@ -24,11 +24,11 @@
        	</g:FlowPanel>
 		
        	<b:ButtonBar ui:field="buttonBar">
-	  	    <b:LocateButton ui:field="locateButton" />
+	  	    <wsdot:NavigationButton ui:field="navigationButton" />
 	  	    <b:ButtonBarSpacer />
 	  	    <wsdot:PhotoButton ui:field="cameraButton" />
 	  	    <b:ButtonBarSpacer />
-	  	    <wsdot:FlagButton ui:field="goToLocationButton" />
+	  	    <wsdot:BookmarkButton ui:field="bookmarkButton" />
        	</b:ButtonBar>
        	
 	</mgwt:LayoutPanel>

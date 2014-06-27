@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ public class CameraItem implements Serializable {
 	private static final long serialVersionUID = 7852844361445836316L;
 	private String title;
 	private String imageUrl;
+	private String videoUrl;
 	private String roadName;
 	private Double longitude;
 	private Double latitude;
@@ -150,4 +151,12 @@ public class CameraItem implements Serializable {
 	public void setHasVideo(int hasVideo) {
 		this.hasVideo = hasVideo;
 	}
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
 }

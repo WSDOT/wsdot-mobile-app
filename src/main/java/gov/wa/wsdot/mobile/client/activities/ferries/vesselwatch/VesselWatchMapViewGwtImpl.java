@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@ package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.FlagButton;
+import gov.wa.wsdot.mobile.client.widget.buttonbar.BookmarkButton;
+import gov.wa.wsdot.mobile.client.widget.buttonbar.NavigationButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.PhotoButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.VesselWatchItem;
@@ -66,7 +67,6 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
-import com.googlecode.mgwt.ui.client.widget.buttonbar.LocateButton;
 
 public class VesselWatchMapViewGwtImpl extends Composite implements
 		VesselWatchMapView {
@@ -100,10 +100,10 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	PhotoButton cameraButton;
 	
 	@UiField
-	FlagButton goToLocationButton;
+	BookmarkButton bookmarkButton;
 
 	@UiField
-	LocateButton locateButton;
+	NavigationButton navigationButton;
 	
 	private Presenter presenter;
 	private MyMapWidget mapWidget;
@@ -214,14 +214,14 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 		}
 	}
 	
-	@UiHandler("goToLocationButton")
+	@UiHandler("bookmarkButton")
 	protected void onGoToLocationButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onGoToLocationButtonPressed();
 		}
 	}
 
-	@UiHandler("locateButton")
+	@UiHandler("navigationButton")
 	protected void onLocateButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onLocateButtonPressed();

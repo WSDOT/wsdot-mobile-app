@@ -20,9 +20,10 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.buttonbar.BookmarkButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.ClockButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.FlagButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.FlashButton;
+import gov.wa.wsdot.mobile.client.widget.buttonbar.NavigationButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.PhotoButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.WarningButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
@@ -76,7 +77,6 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
-import com.googlecode.mgwt.ui.client.widget.buttonbar.LocateButton;
 
 public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
@@ -112,7 +112,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	ClockButton travelTimesButton;
 	
 	@UiField
-	FlagButton goToLocationButton;
+	BookmarkButton bookmarkButton;
 
 	@UiField
 	WarningButton seattleAlertsButton;
@@ -121,7 +121,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	FlashButton expressLanesButton;
 	
 	@UiField
-	LocateButton locateButton;
+	NavigationButton navigationButton;
 	
 	@UiField
 	HeaderButton refreshButton;
@@ -248,7 +248,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		}
 	}
 	
-	@UiHandler("goToLocationButton")
+	@UiHandler("bookmarkButton")
 	protected void onGoToLocationButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onGoToLocationButtonPressed();
@@ -269,7 +269,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		}
 	}
 	
-	@UiHandler("locateButton")
+	@UiHandler("navigationButton")
 	protected void onLocateButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onLocateButtonPressed();

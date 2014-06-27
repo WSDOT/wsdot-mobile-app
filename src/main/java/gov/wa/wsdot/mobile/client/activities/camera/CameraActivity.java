@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,9 +72,9 @@ public class CameraActivity extends MGWTAbstractActivity implements
 		}
 		
 		PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
-				view.getPullHeader(), view.getPullPanel());
+				view.getCameraPullHeader(), view.getCameraPullPanel());
 
-		view.getPullHeader().setHTML("pull down");
+		view.getCameraPullHeader().setHTML("pull down");
 		headerHandler.setErrorText("Error");
 		headerHandler.setLoadingText("Loading");
 		headerHandler.setNormalText("pull down");
@@ -88,7 +88,7 @@ public class CameraActivity extends MGWTAbstractActivity implements
 					@Override
 					public void run() {
 						getCamera(view, cameraId);
-						view.refresh();
+						view.cameraRefresh();
 						callback.onSuccess(null);
 						
 					}
@@ -96,7 +96,7 @@ public class CameraActivity extends MGWTAbstractActivity implements
 			}
 		});
 		
-		view.setHeaderPullHandler(headerHandler);
+		view.setCameraHeaderPullHandler(headerHandler);
 		getCamera(view, cameraId);
 		panel.setWidget(view);
 	}	
@@ -111,14 +111,25 @@ public class CameraActivity extends MGWTAbstractActivity implements
 			@Override
 			public void onSuccess(List<GenericRow> result) {
 				cameraItems.clear();
-				CameraItem c;
+				CameraItem c = null;
+				String url = null;
+				String cameraName = null;
+				int slashIndex;
+				int dotIndex;
+				int hasVideo = 0;
 				
 				for (GenericRow camera: result) {
 					c = new CameraItem();
+					url = camera.getString(CamerasColumns.CAMERA_URL);
+					slashIndex = url.lastIndexOf("/");
+					dotIndex = url.lastIndexOf(".");
+					cameraName = url.substring(slashIndex + 1, dotIndex);
+					hasVideo = camera.getInt(CamerasColumns.CAMERA_HAS_VIDEO);
 					
 					c.setCameraId(camera.getInt(CamerasColumns.CAMERA_ID));
 					c.setTitle(camera.getString(CamerasColumns.CAMERA_TITLE));
-					c.setImageUrl(camera.getString(CamerasColumns.CAMERA_URL));
+				    c.setImageUrl(url);
+					c.setHasVideo(hasVideo);
 					c.setIsStarred(camera.getInt(CamerasColumns.CAMERA_IS_STARRED));
 
 					cameraItems.add(c);						
@@ -129,8 +140,15 @@ public class CameraActivity extends MGWTAbstractActivity implements
 				view.setTitle(cameraItems.get(0).getTitle());				
 				view.toggleStarButton(isStarred);
 				view.renderCamera(cameraItems);
-				view.refresh();
-
+				view.cameraRefresh();
+				
+                if (hasVideo == 0) {
+                    view.removeTab(1);
+                } else {
+                    c.setVideoUrl("http://images.wsdot.wa.gov/nwvideo/" + cameraName + ".mp4");
+                    view.renderVideo(cameraItems);
+                    view.videoRefresh();
+                }
 			}
 		});
 	}

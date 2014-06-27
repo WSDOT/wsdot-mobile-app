@@ -147,65 +147,68 @@ public interface AppBundle extends ClientBundle {
 	ImageResource weather_naPNG();
 	
 	/**
-	 * Custom tab icons for iOS
+	 * Custom button bar icons for iOS
 	 */
 	@Source("wsdot_logo.png")
 	ImageResource logoPNG();
 	
-	@Source("86-camera.png")
-	ImageResource tabBarCameraImage();
-	
-	@Source("warning.png")
-	ImageResource tabBarWarningImage();
-	
-	@Source("179-notepad.png")
-	ImageResource tabBarNotepadImage();
-	
-	@Source("25-weather.png")
-	ImageResource tabBarWeatherImage();
-	
-	@Source("28-star.png")
-	ImageResource tabBarStarImage();
-	
-	@Source("53-house.png")
-	ImageResource tabBarHouseImage();
-
-	@Source("sr520-tab.png")
-	ImageResource tabBarSR520Image();
-	
-	@Source("sr16-tab.png")
-	ImageResource tabBarSR16Image();
-	
-	@Source("sr167-tab.png")
-	ImageResource tabBarSR167Image();
-	
-	@Source("clock.png")
+	@Source("iconmonstr-time-icon-24.png")
 	ImageResource buttonBarClockImage();
-	
-	@Source("goto.png")
-	ImageResource buttonBarGoToImage();
-	
-	@Source("arrow_down_24.png")
-	ImageResource tabBarArrowDownPNG();
-	
-	@Source("arrow_up_24.png")
-	ImageResource tabBarArrowUpPNG();
 	
 	@Source("flash_24.png")
 	ImageResource buttonBarFlashImagePNG();
 	
-	@Source("warning_24.png")
+	@Source("iconmonstr-warning-icon-24.png")
 	ImageResource buttonBarWarningImagePNG();
 	
-	@Source("flag1_24.png")
-	ImageResource buttonBarFlagImagePNG();
+	@Source("iconmonstr-bookmark-icon-24.png")
+	ImageResource buttonBarBookmarkIcon();
 	
-	@Source("photo_24.png")
+	@Source("iconmonstr-photo-camera-icon-24.png")
 	ImageResource buttonBarPhotoImagePNG();
 	
-	@Source("clock_24.png")
-	ImageResource buttonBarClockImagePNG();
+	@Source("iconmonstr-navigation-icon-24.png")
+	ImageResource buttonBarNavigationIcon();
 	
+    /**
+     * Custom tab bar icons for iOS
+     */	
+	@Source("iconmonstr-photo-camera-icon-32.png")
+	ImageResource tabBarCameraImage();
+	
+	@Source("iconmonstr-video-camera-icon-32.png")
+	ImageResource tabBarVideoCameraImage();
+	
+    @Source("iconmonstr-home-icon-32.png")
+    ImageResource tabBarHouseImage();
+    
+    @Source("iconmonstr-star-icon-32.png")
+    ImageResource tabBarStarImage(); 
+	
+    @Source("iconmonstr-info-icon-32.png")
+    ImageResource tabBarNotepadImage();
+    
+    @Source("iconmonstr-warning-icon-32.png")
+    ImageResource tabBarWarningImage();
+    
+    @Source("iconmonstr-cloud-icon-32.png")
+    ImageResource tabBarWeatherImage();
+    
+    @Source("iconmonstr-arrow-down-icon-32.png")
+    ImageResource tabBarArrowDownPNG();
+    
+    @Source("iconmonstr-arrow-up-icon-32.png")
+    ImageResource tabBarArrowUpPNG();
+    
+    @Source("WA-520-32.png")
+    ImageResource tabBarSR520Image();
+    
+    @Source("WA-16-32.png")
+    ImageResource tabBarSR16Image();
+    
+    @Source("WA-167-32.png")
+    ImageResource tabBarSR167Image();
+    
 	/**
 	 * Highway icons
 	 */

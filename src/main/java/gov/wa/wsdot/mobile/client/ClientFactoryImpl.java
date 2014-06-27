@@ -329,9 +329,9 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public CameraView getCameraView() {
-		if (cameraView == null) {
+		//if (cameraView == null) {
 			cameraView = new CameraViewGwtImpl();
-		}
+		//}
 		return cameraView;
 	}
 

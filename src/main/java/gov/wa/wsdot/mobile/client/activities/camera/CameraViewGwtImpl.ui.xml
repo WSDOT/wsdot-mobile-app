@@ -3,7 +3,7 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar"
     xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
@@ -33,7 +33,16 @@
             </mgwt:center>
         </mgwt:HeaderPanel>
 
-        <p:PullPanel ui:field="pullToRefresh">
+        <mgwt:tabbar.TabPanel ui:field="tabPanel">
+            <mgwt:tabs>
+                <mgwt:tabbar.Tab>
+                    <mgwt:button>
+                        <wsdot:CameraTabBarButton />
+                    </mgwt:button>
+                    <mgwt:widget>
+        
+        
+        <p:PullPanel ui:field="cameraPullToRefresh">
 			<g:FlowPanel>
                 <g:HTMLPanel styleName="{style.buttonPanel}">
                     <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
@@ -42,6 +51,29 @@
 			</g:FlowPanel>
         </p:PullPanel>
         
+                    </mgwt:widget>
+                </mgwt:tabbar.Tab>
+            </mgwt:tabs>
+
+            <mgwt:tabs>
+                <mgwt:tabbar.Tab>
+                    <mgwt:button>
+                        <wsdot:VideoTabBarButton />
+                    </mgwt:button>
+                    <mgwt:widget>
+
+         <p:PullPanel ui:field="videoPullToRefresh">
+            <g:FlowPanel>
+                <mgwt:CellList ui:field="videoCellList" />
+            </g:FlowPanel>
+        </p:PullPanel>                       
+                        
+                    </mgwt:widget>
+                </mgwt:tabbar.Tab>
+            </mgwt:tabs>
+            
+        </mgwt:tabbar.TabPanel>
+            
     </mgwt:LayoutPanel>
 
 </ui:UiBinder>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class CameraViewGwtImpl extends Composite implements CameraView {
 
@@ -64,21 +65,35 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 	@UiField
 	Button starButton;
 	
+	@UiField
+	TabPanel tabPanel;
+	
 	@UiField(provided = true)
-	PullPanel pullToRefresh;
+	PullPanel cameraPullToRefresh;
 
-	private PullArrowHeader pullArrowHeader;
+    @UiField(provided = true)
+    PullPanel videoPullToRefresh;
+	
+	private PullArrowHeader cameraPullArrowHeader;
+	private PullArrowHeader videoPullArrowHeader;
 	
 	@UiField(provided = true)
 	CellList<CameraItem> cameraCellList;
+	
+	@UiField(provided = true)
+	CellList<CameraItem> videoCellList;
 	
 	private Presenter presenter;
 	
 	public CameraViewGwtImpl() {
 
-		pullToRefresh = new PullPanel();
-		pullArrowHeader = new PullArrowHeader();
-		pullToRefresh.setHeader(pullArrowHeader);
+		cameraPullToRefresh = new PullPanel();
+		cameraPullArrowHeader = new PullArrowHeader();
+		cameraPullToRefresh.setHeader(cameraPullArrowHeader);
+		
+		videoPullToRefresh = new PullPanel();
+		videoPullArrowHeader = new PullArrowHeader();
+		videoPullToRefresh.setHeader(videoPullArrowHeader);
 		
 		cameraCellList = new CellList<CameraItem>(new CameraCell<CameraItem>() {
 
@@ -95,6 +110,28 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 		
 		cameraCellList.setGroup(false);
 		cameraCellList.setRound(false);
+		
+        videoCellList = new CellList<CameraItem>(new VideoCell<CameraItem>() {
+
+            @Override
+            public String getUrl(CameraItem model) {
+                return model.getImageUrl();
+            }
+
+            @Override
+            public String getVideoUrl(CameraItem model) {
+                return model.getVideoUrl();
+            }
+            
+            @Override
+            public boolean canBeSelected(CameraItem model) {
+                return false;
+            }
+
+        });
+        
+        videoCellList.setGroup(false);
+        videoCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		
@@ -123,6 +160,11 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 	public void renderCamera(List<CameraItem> createCameraList) {
 		cameraCellList.render(createCameraList);		
 	}
+
+    @Override
+    public void renderVideo(List<CameraItem> createVideoList) {
+        videoCellList.render(createVideoList);
+    }
 	
 	@Override
 	public void setTitle(String title) {
@@ -130,25 +172,55 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 	}
 
 	@Override
-	public void refresh() {
-		pullToRefresh.refresh();
+	public void cameraRefresh() {
+		cameraPullToRefresh.refresh();
+	}
+
+    @Override
+    public void videoRefresh() {
+        videoPullToRefresh.refresh();
+    }
+	
+	@SuppressWarnings("deprecation")
+    @Override
+	public void setCameraHeaderPullHandler(Pullhandler pullHandler) {
+		cameraPullToRefresh.setHeaderPullhandler(pullHandler);		
 	}
 
 	@Override
-	public void setHeaderPullHandler(Pullhandler pullHandler) {
-		pullToRefresh.setHeaderPullhandler(pullHandler);		
+	public PullArrowWidget getCameraPullHeader() {
+		return cameraPullArrowHeader;
 	}
 
 	@Override
-	public PullArrowWidget getPullHeader() {
-		return pullArrowHeader;
+	public HasRefresh getCameraPullPanel() {
+		return cameraPullToRefresh;
 	}
 
-	@Override
-	public HasRefresh getPullPanel() {
-		return pullToRefresh;
-	}
 
+    @Override
+    public void setVideoHeaderPullHandler(Pullhandler pullHandler) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public PullArrowWidget getVideoPullHeader() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public HasRefresh getVideoPullPanel() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void removeTab(int tabIndex) {
+        this.tabPanel.remove(tabIndex);
+    }
+    
 	@Override
 	public void toggleStarButton(boolean isStarred) {
 		if (isStarred) {

@@ -16,16 +16,24 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.widget.buttonbar;
+package gov.wa.wsdot.mobile.client.widget.tabbar;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 
-import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBarButtonBase;
+import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.MGWTStyle;
+import com.googlecode.mgwt.ui.client.theme.base.TabBarCss;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 
-public class GoToButton extends ButtonBarButtonBase {
+public class CameraTabBarButton extends TabBarButton {
 
-	public GoToButton() {
-		super(AppBundle.INSTANCE.buttonBarGoToImage());
+	public CameraTabBarButton() {
+		this(MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss());
 	}
 
+	public CameraTabBarButton(TabBarCss css) {
+		super(css, MGWT.getOsDetection().isIOs()
+				|| MGWT.getOsDetection().isDesktop() ? AppBundle.INSTANCE.tabBarCameraImage() : null);
+		setText("Camera");
+	}
 }
