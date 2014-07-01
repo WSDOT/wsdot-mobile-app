@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ public final class Consts {
 	/**
 	 * Current version number and build of the app.
 	 */
-	public static final String APP_VERSION = "2.1.0";
+	public static final String APP_VERSION = "2.2.0";
 	
 	/**
 	 * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,
