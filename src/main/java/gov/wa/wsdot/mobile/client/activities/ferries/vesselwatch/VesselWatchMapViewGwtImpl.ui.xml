@@ -28,7 +28,7 @@
 	  	    <b:ButtonBarSpacer />
 	  	    <wsdot:PhotoButton ui:field="cameraButton" />
 	  	    <b:ButtonBarSpacer />
-	  	    <wsdot:BookmarkButton ui:field="bookmarkButton" />
+	  	    <wsdot:LocationButton ui:field="locationButton" />
        	</b:ButtonBar>
        	
 	</mgwt:LayoutPanel>

@@ -20,9 +20,9 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.BookmarkButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.ClockButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.FlashButton;
+import gov.wa.wsdot.mobile.client.widget.buttonbar.LocationButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.NavigationButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.PhotoButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.WarningButton;
@@ -112,7 +112,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	ClockButton travelTimesButton;
 	
 	@UiField
-	BookmarkButton bookmarkButton;
+	LocationButton locationButton;
 
 	@UiField
 	WarningButton seattleAlertsButton;
@@ -248,7 +248,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		}
 	}
 	
-	@UiHandler("bookmarkButton")
+	@UiHandler("locationButton")
 	protected void onGoToLocationButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onGoToLocationButtonPressed();

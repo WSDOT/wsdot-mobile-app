@@ -29,7 +29,7 @@
        	<b:ButtonBar ui:field="buttonBar">
        	    <wsdot:NavigationButton ui:field="navigationButton" />
        	    <b:ButtonBarSpacer />
-            <wsdot:BookmarkButton ui:field="bookmarkButton" />
+            <wsdot:LocationButton ui:field="locationButton" />
 	  	    <b:ButtonBarSpacer />
 	  	    <wsdot:ClockButton ui:field="travelTimesButton" />
 	  	    <b:ButtonBarSpacer />

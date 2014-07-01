@@ -161,14 +161,14 @@ public interface AppBundle extends ClientBundle {
 	@Source("iconmonstr-warning-icon-24.png")
 	ImageResource buttonBarWarningImagePNG();
 	
-	@Source("iconmonstr-bookmark-icon-24.png")
-	ImageResource buttonBarBookmarkIcon();
-	
 	@Source("iconmonstr-photo-camera-icon-24.png")
 	ImageResource buttonBarPhotoImagePNG();
 	
 	@Source("iconmonstr-navigation-icon-24.png")
 	ImageResource buttonBarNavigationIcon();
+	
+	@Source("iconmonstr-location-icon-24.png")
+	ImageResource buttonBarLocationIcon();
 	
     /**
      * Custom tab bar icons for iOS

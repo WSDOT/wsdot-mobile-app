@@ -20,7 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.BookmarkButton;
+import gov.wa.wsdot.mobile.client.widget.buttonbar.LocationButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.NavigationButton;
 import gov.wa.wsdot.mobile.client.widget.buttonbar.PhotoButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
@@ -100,7 +100,7 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	PhotoButton cameraButton;
 	
 	@UiField
-	BookmarkButton bookmarkButton;
+	LocationButton locationButton;
 
 	@UiField
 	NavigationButton navigationButton;
@@ -214,7 +214,7 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 		}
 	}
 	
-	@UiHandler("bookmarkButton")
+	@UiHandler("locationButton")
 	protected void onGoToLocationButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onGoToLocationButtonPressed();

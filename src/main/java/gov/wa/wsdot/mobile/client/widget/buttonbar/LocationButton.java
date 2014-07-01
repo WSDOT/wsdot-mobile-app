@@ -22,10 +22,10 @@ import gov.wa.wsdot.mobile.client.css.AppBundle;
 
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBarButtonBase;
 
-public class BookmarkButton extends ButtonBarButtonBase {
+public class LocationButton extends ButtonBarButtonBase {
 
-	public BookmarkButton() {
-		super(AppBundle.INSTANCE.buttonBarBookmarkIcon());
+	public LocationButton() {
+		super(AppBundle.INSTANCE.buttonBarLocationIcon());
 	}
 
 }
