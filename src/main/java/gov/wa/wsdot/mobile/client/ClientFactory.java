@@ -27,6 +27,7 @@ import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSched
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.FerriesRouteDeparturesView;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteAlertDetailsView;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsView;
+import gov.wa.wsdot.mobile.client.activities.ferries.terminals.FerriesTerminalsView;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapView;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationView;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsView;
@@ -86,6 +87,7 @@ public interface ClientFactory {
 	public FerriesRouteSchedulesView getFerriesRouteSchedulesView();
 	public FerriesRouteSailingsView getFerriesRouteSailingsView();
 	public FerriesRouteDeparturesView getFerriesRouteDeparturesView();
+	public FerriesTerminalsView getFerriesTerminalsView();
 	public CameraView getCameraView();
 	public AlertView getAlertView();
 	public PhoneGap getPhoneGap();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace.AlertPlaceTokenize
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitPlace.BorderWaitPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace.CameraPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace.FerriesPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.ferries.terminals.FerriesTerminalsPlace.FerriesTerminalsPlaceTokenzier;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace.FerriesRouteSchedulesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.FerriesRouteDeparturesPlace.FerriesRouteDeparturesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteAlertDetailsPlace.FerriesRouteAlertDetailsPlaceTokenizer;
@@ -65,6 +66,6 @@ import com.google.gwt.place.shared.WithTokenizers;
 		SeattleTrafficAlertsPlaceTokenizer.class, GoToFerriesLocationPlaceTokenizer.class,
 		VesselWatchMapPlaceTokenizer.class, NewsDetailsPlaceTokenizer.class,
 		VesselDetailsPlaceTokenizer.class, BlogDetailsPlaceTokenizer.class, YouTubeDetailsPlaceTokenizer.class,
-		TravelTimeDetailsPlaceTokenizer.class, FerriesRouteAlertDetailsPlaceTokenizer.class })
+		TravelTimeDetailsPlaceTokenizer.class, FerriesRouteAlertDetailsPlaceTokenizer.class, FerriesTerminalsPlaceTokenzier.class })
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }
