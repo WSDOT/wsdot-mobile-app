@@ -30,14 +30,14 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 
 public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 
@@ -126,9 +126,6 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 
 		});
 		
-		northbound.setGroup(false);
-		northbound.setRound(false);
-
 		southbound = new CellList<BorderWaitItem>(
 				new BorderWaitCell<BorderWaitItem>() {
 
@@ -165,9 +162,6 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 			}
 
 		});
-		
-		southbound.setGroup(false);
-		southbound.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		
@@ -215,12 +209,12 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 
 	@Override
 	public void setNorthboundHeaderPullHandler(Pullhandler pullHandler) {
-		northboundPullToRefresh.setHeaderPullhandler(pullHandler);
+		northboundPullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override
 	public void setSouthboundHeaderPullHandler(Pullhandler pullHandler) {
-		southboundPullToRefresh.setHeaderPullhandler(pullHandler);
+		southboundPullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override

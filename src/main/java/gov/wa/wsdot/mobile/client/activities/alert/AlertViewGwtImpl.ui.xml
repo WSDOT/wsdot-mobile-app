@@ -12,10 +12,6 @@
             background-color: white;
             padding: 12px;
         }
-        .headerTitle {
-            width: 180px;
-            margin-left: -85px;
-        }
         
         .headlineDescription {
             font-size: small;
@@ -38,17 +34,13 @@
         }
     </ui:style>
     
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML ui:field="title" styleName="{style.headerTitle}" />
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:header.HeaderButton ui:field="backButton" backButton="true" text="Back" />
+			<mgwt:header.HeaderTitle ui:field="title" />
+		</mgwt:header.HeaderPanel>
 		
-		<mgwt:ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
+		<mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
             <g:HTMLPanel styleName="{style.htmlPanel}">
 	            <g:HTMLPanel styleName="{style.headlineDescription}">
 	               <g:HTML ui:field="headlineDescription" />
@@ -60,8 +52,7 @@
 	                <g:Image ui:field="staticMapImage" styleName="{style.staticMapImage}" />
 	            </g:HTMLPanel>
             </g:HTMLPanel>
-        </mgwt:ScrollPanel>
-		
-	</mgwt:LayoutPanel>
+        </mgwt:panel.scroll.ScrollPanel>
+	</mgwt:panel.flex.RootFlexPanel>
 	
 </ui:UiBinder>

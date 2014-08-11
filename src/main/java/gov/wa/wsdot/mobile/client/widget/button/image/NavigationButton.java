@@ -16,13 +16,13 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.widget.buttonbar;
+package gov.wa.wsdot.mobile.client.widget.button.image;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 
-import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBarButtonBase;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
 
-public class NavigationButton extends ButtonBarButtonBase {
+public class NavigationButton extends ImageButton {
 
 	public NavigationButton() {
 		super(AppBundle.INSTANCE.buttonBarNavigationIcon());

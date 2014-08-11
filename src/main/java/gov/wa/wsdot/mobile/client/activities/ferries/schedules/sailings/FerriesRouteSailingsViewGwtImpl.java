@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,13 +34,14 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
-import com.googlecode.mgwt.ui.client.widget.celllist.BasicCell;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressBar;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.BasicCell;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 
 public class FerriesRouteSailingsViewGwtImpl extends Composite
 		implements FerriesRouteSailingsView {
@@ -72,7 +73,7 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	HeaderButton backButton;
 	
 	@UiField
-	HTML title;
+	HeaderTitle title;
 	
 	@UiField
 	Button starButton;
@@ -98,8 +99,6 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 			}
 		});
 		
-		sailingsCellList.setRound(false);
-		
 		alertsCellList = new CellList<FerriesRouteAlertItem>(
 				new TitleLastUpdatedCell<FerriesRouteAlertItem>() {
 
@@ -120,8 +119,6 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 			}
 			
 		});
-		
-		alertsCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

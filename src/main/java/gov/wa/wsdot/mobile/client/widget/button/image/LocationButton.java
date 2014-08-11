@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.widget.buttonbar;
+package gov.wa.wsdot.mobile.client.widget.button.image;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 
-import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBarButtonBase;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
 
-public class FlashButton extends ButtonBarButtonBase {
+public class LocationButton extends ImageButton {
 
-	public FlashButton() {
-		super(AppBundle.INSTANCE.buttonBarFlashImagePNG());
+	public LocationButton() {
+		super(AppBundle.INSTANCE.buttonBarLocationIcon());
 	}
 
 }

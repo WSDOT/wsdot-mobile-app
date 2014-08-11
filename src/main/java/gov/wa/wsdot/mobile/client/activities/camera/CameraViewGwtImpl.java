@@ -28,17 +28,17 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class CameraViewGwtImpl extends Composite implements CameraView {
@@ -60,7 +60,7 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 	HeaderButton backButton;
 	
 	@UiField
-	HTML title;
+	HeaderTitle title;
 	
 	@UiField
 	Button starButton;
@@ -107,10 +107,7 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 				return false;
 			}
 		});
-		
-		cameraCellList.setGroup(false);
-		cameraCellList.setRound(false);
-		
+	
         videoCellList = new CellList<CameraItem>(new VideoCell<CameraItem>() {
 
             @Override
@@ -130,9 +127,6 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 
         });
         
-        videoCellList.setGroup(false);
-        videoCellList.setRound(false);
-		
 		initWidget(uiBinder.createAndBindUi(this));
 		
 	}
@@ -184,7 +178,7 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 	@SuppressWarnings("deprecation")
     @Override
 	public void setCameraHeaderPullHandler(Pullhandler pullHandler) {
-		cameraPullToRefresh.setHeaderPullhandler(pullHandler);		
+		cameraPullToRefresh.setHeaderPullHandler(pullHandler);		
 	}
 
 	@Override
@@ -218,7 +212,7 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 
     @Override
     public void removeTab(int tabIndex) {
-        this.tabPanel.remove(tabIndex);
+        //this.tabPanel.remove(tabIndex);
     }
     
 	@Override

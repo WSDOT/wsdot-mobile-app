@@ -2,29 +2,24 @@
 <ui:UiBinder
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
-    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:center>
-				<g:HTML>Travel Times</g:HTML>
-			</mgwt:center>
-            <mgwt:right>
-                <mgwt:HeaderButton ui:field="doneButton" text="Done" />
-            </mgwt:right>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:header.HeaderTitle>Travel Times</mgwt:header.HeaderTitle>
+	        <mgwt:header.HeaderButton ui:field="doneButton" text="Done" />
+		</mgwt:header.HeaderPanel>
 		
-        <p:PullPanel ui:field="pullToRefresh">
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
         	<g:FlowPanel ui:field="flowPanel">
-        	    <mgwt:MSearchBox ui:field="searchBox" />
-        	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
-            	<mgwt:CellList ui:field="cellList" />
+        	    <mgwt:input.search.MSearchBox ui:field="searchBox" />
+        	    <mgwt:progress.ProgressBar ui:field="progressBar" visible="false" />
+            	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>
-        </p:PullPanel>
+        </mgwt:panel.pull.PullPanel>
 		
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,14 +35,14 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.MListBox;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
+import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressBar;
 
 public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		implements FerriesRouteDeparturesView {
@@ -71,7 +71,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	HeaderButton backButton;
 	
 	@UiField
-	HTML title;
+	HeaderTitle title;
 	
 	@UiField
 	ProgressBar progressBar;
@@ -129,9 +129,6 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 			}
 			
 		});
-		
-		cellList.setRound(false);
-		cellList.setGroup(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

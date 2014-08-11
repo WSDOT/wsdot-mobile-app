@@ -12,10 +12,6 @@
             background-color: white;
             padding: 12px;
         }
-        .headerTitle {
-            width: 180px;
-            margin-left: -85px;
-        }
         .dateUpdated {
             font-size: small;
             font-weight: normal;
@@ -52,15 +48,11 @@
         }
     </ui:style>
     
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML ui:field="title" styleName="{style.headerTitle}" />
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:header.HeaderButton ui:field="backButton" backButton="true" text="Back" />
+			<mgwt:header.HeaderTitle ui:field="title" />
+		</mgwt:header.HeaderPanel>
 		
 		<mgwt:tabbar.TabPanel ui:field="tabPanel">
 			<mgwt:tabs>
@@ -69,10 +61,10 @@
 						<wsdot:ReportTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
-				        <mgwt:ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel">
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel">
 			                <g:FlowPanel styleName="{style.flowPanel}">
 			                    <g:HTMLPanel styleName="{style.buttonPanel}">
-			                        <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
+			                        <mgwt:button.Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
 			                    </g:HTMLPanel>
 					        	<g:HTMLPanel styleName="{style.htmlPanel}">
 					            	<g:HTMLPanel styleName="{style.dateUpdated}">
@@ -114,7 +106,7 @@
 					            	</g:HTMLPanel>
 					            </g:HTMLPanel>
 				            </g:FlowPanel>
-				        </mgwt:ScrollPanel>
+				        </mgwt:panel.scroll.ScrollPanel>
 			        </mgwt:widget>
 				</mgwt:tabbar.Tab>
 			</mgwt:tabs>
@@ -125,11 +117,11 @@
 						<wsdot:CamerasTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
-				        <mgwt:ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
 				        	<g:FlowPanel ui:field="cameraPanel">
-			            	   <mgwt:CellList ui:field="cameraCellList" />
+			            	   <mgwt:list.celllist.CellList ui:field="cameraCellList" />
 				            </g:FlowPanel>
-				        </mgwt:ScrollPanel>
+				        </mgwt:panel.scroll.ScrollPanel>
 					</mgwt:widget>
 				</mgwt:tabbar.Tab>
 			</mgwt:tabs>
@@ -140,17 +132,17 @@
 						<wsdot:ForecastTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
-				        <mgwt:ScrollPanel scrollingEnabledX="false" ui:field="forecastScrollPanel">
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="forecastScrollPanel">
 				        	<g:FlowPanel ui:field="forecastPanel">
-				            	<mgwt:CellList ui:field="forecastCellList" />
+				            	<mgwt:list.celllist.CellList ui:field="forecastCellList" />
 				            </g:FlowPanel>
-				        </mgwt:ScrollPanel>
+				        </mgwt:panel.scroll.ScrollPanel>
 					</mgwt:widget>
 				</mgwt:tabbar.Tab>
 			</mgwt:tabs>
 						
 		</mgwt:tabbar.TabPanel>
 		
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>

@@ -12,10 +12,6 @@
             background-color: white;
             padding: 12px;
         }
-        .headerTitle {
-            width: 180px;
-            margin-left: -85px;
-        }
         .publishDate {
             font-size: small;
             font-weight: normal;
@@ -35,25 +31,20 @@
         }
     </ui:style>
     
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML ui:field="title" styleName="{style.headerTitle}" />
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:header.HeaderButton ui:field="backButton" backButton="true" text="Back" />
+			<mgwt:header.HeaderTitle ui:field="title" />
+		</mgwt:header.HeaderPanel>
 		
-        <mgwt:ScrollPanel scrollingEnabledX="false">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
         	<g:HTMLPanel styleName="{style.htmlPanel}">
         	    <g:HTML ui:field="publishDate" styleName="{style.publishDate}" />
         	    <g:HTML ui:field="alertTitle" styleName="{style.alertTitle}" />
                 <g:HTML ui:field="alertText" styleName="{style.alertText}" />
             </g:HTMLPanel>
-        </mgwt:ScrollPanel>
+        </mgwt:panel.scroll.ScrollPanel>
 		
-	</mgwt:LayoutPanel>
-    
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>

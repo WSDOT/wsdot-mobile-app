@@ -12,9 +12,14 @@
 	<!-- set the user agent to safari -> only webkit -->
 	<set-property name="user.agent" value="safari" />
 	
-	<!--  here you can set mgwt.os to a specific platform -->
-	<!-- <set-property name="mgwt.os" value="iphone, blackberry, android, desktop" /> -->
-	<set-property name="mgwt.os" value="iphone" />
+	<!-- Uncomment to use platform themes -->
+	<inherits name="com.googlecode.mgwt.ui.client.theme.platform.Platform" />
+	<!-- mgwt.os is only available when using the platform theme -->
+	<!-- <set-property name="mgwt.os" value="android, ios" /> -->
+	<set-property name="mgwt.os" value="ios" />
+	  
+	<!-- <set-property name="mgwt.formfactor" value="phone" /> -->
+	<!-- <set-property name="mgwt.density" value="xhigh" /> -->	
 	
 	<!-- here you can turn off css obfuscation -->
 	<!-- <set-configuration-property name="mgwt.css" value="pretty" /> -->
@@ -22,6 +27,7 @@
 	<entry-point class="gov.wa.wsdot.mobile.client.MobileAppEntryPoint" />
 	
 	<!-- <add-linker name="permutationmaplinker" /> -->
+	<add-linker name="xsiframe" />
 
 	<!-- <extend-configuration-property name="html5manifestlinker_files" value="./" /> -->
 	<!-- <extend-configuration-property name="html5manifestlinker_files" value="index.html" /> -->

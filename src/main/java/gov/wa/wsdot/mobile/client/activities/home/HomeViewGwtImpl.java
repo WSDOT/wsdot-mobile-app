@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,18 +46,17 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ImageResourceRenderer;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.Carousel;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
-import com.googlecode.mgwt.ui.client.widget.RoundPanel;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 
@@ -154,8 +153,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 		});
 		
-		camerasCellList.setRound(false);
-		
 		ferriesCellList = new CellList<FerriesRouteItem>(
 				new FerriesRouteSchedulesCell<FerriesRouteItem>() {
 
@@ -184,8 +181,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 
 		});
-		
-		ferriesCellList.setRound(false);
 
 		mountainPassesCellList = new CellList<MountainPassItem>(
 				new CellDetailsWithIcon<MountainPassItem>() {
@@ -217,8 +212,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			}
 
 		});
-		
-		mountainPassesCellList.setRound(false);
 		
 		travelTimesCellList = new CellList<TravelTimesItem>(
 				new TravelTimesCell<TravelTimesItem>() {
@@ -271,8 +264,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			}
 			
 		});
-		
-		travelTimesCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
@@ -439,7 +430,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 	@Override
 	public void setHeaderPullHandler(Pullhandler pullHandler) {
-		pullToRefresh.setHeaderPullhandler(pullHandler);
+		pullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override

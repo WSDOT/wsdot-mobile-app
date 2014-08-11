@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,9 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
 public class AlertViewGwtImpl extends Composite implements AlertView {
 
@@ -52,7 +53,7 @@ public class AlertViewGwtImpl extends Composite implements AlertView {
 	HeaderButton backButton;
 	
 	@UiField
-	HTML title;
+	HeaderTitle title;
 	
 	@UiField
 	ScrollPanel scrollPanel;

@@ -30,9 +30,9 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 
 public class FerriesTerminalsViewGwtImpl extends Composite implements
         FerriesTerminalsView {
@@ -71,8 +71,6 @@ public class FerriesTerminalsViewGwtImpl extends Composite implements
                 return true;
             }
         });
-        
-        cellList.setRound(false);
         
         initWidget(uiBinder.createAndBindUi(this));
     }

@@ -52,7 +52,8 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDe
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
 
 import com.google.gwt.place.shared.Place;
-import com.googlecode.mgwt.mvp.client.Animation;
+import com.googlecode.mgwt.ui.client.widget.animation.Animation;
+import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 import com.googlecode.mgwt.mvp.client.AnimationMapper;
 
 public class PhoneAnimationMapper implements AnimationMapper {
@@ -60,202 +61,202 @@ public class PhoneAnimationMapper implements AnimationMapper {
 	@Override
 	public Animation getAnimation(Place oldPlace, Place newPlace) {
 		if (oldPlace instanceof AboutPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof FerriesPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof FerriesRouteSchedulesPlace && newPlace instanceof FerriesPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof VesselWatchMapPlace && newPlace instanceof FerriesPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
         
         if (oldPlace instanceof FerriesTerminalsPlace && newPlace instanceof FerriesPlace) {
-            return Animation.SLIDE_REVERSE;
+            return Animations.SLIDE_REVERSE;
         }		
 		
 		if (oldPlace instanceof FerriesRouteSailingsPlace
 				&& newPlace instanceof FerriesRouteSchedulesPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof FerriesRouteSailingsPlace
 				&& newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof MountainPassDetailsPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof FerriesRouteDeparturesPlace
 				&& newPlace instanceof FerriesRouteSailingsPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 
 		if (oldPlace instanceof MountainPassesPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TravelTimeDetailsPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof MountainPassDetailsPlace && newPlace instanceof MountainPassesPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof SocialMediaPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 
 		if (oldPlace instanceof BlogPlace && newPlace instanceof SocialMediaPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 
 		if (oldPlace instanceof FacebookPlace && newPlace instanceof SocialMediaPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TwitterPlace && newPlace instanceof SocialMediaPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 
 		if (oldPlace instanceof YouTubePlace && newPlace instanceof SocialMediaPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof NewsPlace && newPlace instanceof SocialMediaPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof NewsDetailsPlace && newPlace instanceof NewsPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TollRatesPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 
 		if (oldPlace instanceof BorderWaitPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof TravelTimesPlace) {
-			return Animation.SLIDE_UP;
+			return Animations.SLIDE_UP;
 		}
 
 		if (oldPlace instanceof TravelTimesPlace && newPlace instanceof TrafficMapPlace) {
-			return Animation.SLIDE_UP_REVERSE;
+			return Animations.SLIDE_UP_REVERSE;
 		}
 		
 		if (oldPlace instanceof TravelTimeDetailsPlace && newPlace instanceof TravelTimesPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof GoToLocationPlace) {
-			return Animation.SLIDE_UP;
+			return Animations.SLIDE_UP;
 		}
 		
 		if (oldPlace instanceof GoToLocationPlace && newPlace instanceof TrafficMapPlace) {
-			return Animation.SLIDE_UP_REVERSE;
+			return Animations.SLIDE_UP_REVERSE;
 		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof CameraPlace) {
-			return Animation.FLIP;
+			return Animations.FLIP;
 		}
 		
 		if (oldPlace instanceof CameraPlace && newPlace instanceof TrafficMapPlace) {
-			return Animation.FLIP_REVERSE;
+			return Animations.FLIP_REVERSE;
 		}
 
 		if (oldPlace instanceof AlertPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof AlertPlace) {
-			return Animation.FLIP;
+			return Animations.FLIP;
 		}
 		
 		if (oldPlace instanceof AlertPlace && newPlace instanceof TrafficMapPlace) {
-			return Animation.FLIP_REVERSE;
+			return Animations.FLIP_REVERSE;
 		}
 
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof SeattleExpressLanesPlace) {
-			return Animation.SLIDE_UP;
+			return Animations.SLIDE_UP;
 		}
 		
 		if (oldPlace instanceof SeattleExpressLanesPlace && newPlace instanceof TrafficMapPlace) {
-			return Animation.SLIDE_UP_REVERSE;
+			return Animations.SLIDE_UP_REVERSE;
 		}
 
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof SeattleTrafficAlertsPlace) {
-			return Animation.SLIDE_UP;
+			return Animations.SLIDE_UP;
 		}
 		
 		if (oldPlace instanceof SeattleTrafficAlertsPlace && newPlace instanceof TrafficMapPlace) {
-			return Animation.SLIDE_UP_REVERSE;
+			return Animations.SLIDE_UP_REVERSE;
 		}
 		
 		if (oldPlace instanceof VesselWatchMapPlace && newPlace instanceof GoToFerriesLocationPlace) {
-			return Animation.SLIDE_UP;
+			return Animations.SLIDE_UP;
 		}
 		
 		if (oldPlace instanceof GoToFerriesLocationPlace && newPlace instanceof VesselWatchMapPlace) {
-			return Animation.SLIDE_UP_REVERSE;
+			return Animations.SLIDE_UP_REVERSE;
 		}
 		
 		if (oldPlace instanceof VesselWatchMapPlace && newPlace instanceof CameraPlace) {
-			return Animation.FLIP;
+			return Animations.FLIP;
 		}
 		
 		if (oldPlace instanceof CameraPlace && newPlace instanceof VesselWatchMapPlace) {
-			return Animation.FLIP_REVERSE;
+			return Animations.FLIP_REVERSE;
 		}
 		
 		if (oldPlace instanceof VesselWatchMapPlace && newPlace instanceof VesselDetailsPlace) {
-			return Animation.FLIP;
+			return Animations.FLIP;
 		}
 		
 		if (oldPlace instanceof VesselDetailsPlace && newPlace instanceof VesselWatchMapPlace) {
-			return Animation.FLIP_REVERSE;
+			return Animations.FLIP_REVERSE;
 		}
 		
 		if (oldPlace instanceof CameraPlace && newPlace instanceof MountainPassDetailsPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof BlogDetailsPlace && newPlace instanceof BlogPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof YouTubeDetailsPlace && newPlace instanceof YouTubePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof CameraPlace && newPlace instanceof HomePlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof FerriesRouteAlertDetailsPlace
 				&& newPlace instanceof FerriesRouteSailingsPlace) {
-			return Animation.SLIDE_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace == null && newPlace instanceof HomePlace) {
-			return Animation.FADE;
+			return Animations.FADE;
 		}
 		
-		return Animation.SLIDE;
+		return Animations.SLIDE;
 	}
 
 }

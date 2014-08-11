@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,6 @@ import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -36,16 +34,16 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.MSearchBox;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressBar;
 
 public class TravelTimesViewGwtImpl extends Composite implements
 		TravelTimesView {
@@ -141,10 +139,10 @@ public class TravelTimesViewGwtImpl extends Composite implements
 			
 		});
 		
-		cellList.setRound(false);
-		
 		searchBox = new MSearchBox();
 		searchBox.setPlaceHolder("Search Travel Times");
+		
+		/*
 		searchBox.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override
@@ -155,6 +153,7 @@ public class TravelTimesViewGwtImpl extends Composite implements
 			}
 
 		});
+		*/
 		
 		searchBox.addValueChangeHandler(new ValueChangeHandler<String>() {
 
@@ -213,7 +212,7 @@ public class TravelTimesViewGwtImpl extends Composite implements
 
 	@Override
 	public void setHeaderPullHandler(Pullhandler pullHandler) {
-		pullToRefresh.setHeaderPullhandler(pullHandler);
+		pullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override
