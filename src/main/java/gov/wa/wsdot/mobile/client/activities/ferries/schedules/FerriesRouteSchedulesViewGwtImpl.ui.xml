@@ -2,28 +2,23 @@
 <ui:UiBinder
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
-    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML>Route Schedules</g:HTML>
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:header.HeaderButton ui:field="backButton" backButton="true" text="Back" />
+			<mgwt:header.HeaderTitle>Route Schedules</mgwt:header.HeaderTitle>
+		</mgwt:header.HeaderPanel>
 		
-        <p:PullPanel ui:field="pullToRefresh">
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
         	<g:FlowPanel ui:field="flowPanel">
-        	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
-            	<mgwt:CellList ui:field="cellList" />
+        	    <mgwt:progress.ProgressBar ui:field="progressBar" visible="false" />
+            	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>
-        </p:PullPanel>
+        </mgwt:panel.pull.PullPanel>
 		
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>

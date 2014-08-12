@@ -20,12 +20,12 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.ClockButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.FlashButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.LocationButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.NavigationButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.PhotoButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.WarningButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.ClockButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.FlashButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.LocationButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.NavigationButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.PhotoButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.WarningButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
 
@@ -74,8 +74,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 
 public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {

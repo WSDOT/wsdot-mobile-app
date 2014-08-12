@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,18 +21,18 @@ package gov.wa.wsdot.mobile.client.widget.tabbar;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 
 import com.googlecode.mgwt.ui.client.MGWT;
-import com.googlecode.mgwt.ui.client.MGWTStyle;
-import com.googlecode.mgwt.ui.client.theme.base.TabBarCss;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarAppearance;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class WarningTabBarButton extends TabBarButton {
 
 	public WarningTabBarButton() {
-		this(MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss());
+		this(TabPanel.DEFAULT_APPEARANCE);
 	}
 	
-	public WarningTabBarButton(TabBarCss css) {
-		super(css, MGWT.getOsDetection().isIOs()
+	public WarningTabBarButton(TabBarAppearance defaultAppearance) {
+		super(defaultAppearance, MGWT.getOsDetection().isIOs()
 				|| MGWT.getOsDetection().isDesktop() ? AppBundle.INSTANCE.tabBarWarningImage() : null);
 		setText("Route Alerts");
 	}

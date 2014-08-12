@@ -21,18 +21,18 @@ package gov.wa.wsdot.mobile.client.widget.tabbar;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 
 import com.googlecode.mgwt.ui.client.MGWT;
-import com.googlecode.mgwt.ui.client.MGWTStyle;
-import com.googlecode.mgwt.ui.client.theme.base.TabBarCss;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarAppearance;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class VideoTabBarButton extends TabBarButton {
 
 	public VideoTabBarButton() {
-		this(MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss());
+		this(TabPanel.DEFAULT_APPEARANCE);
 	}
 
-	public VideoTabBarButton(TabBarCss css) {
-		super(css, MGWT.getOsDetection().isIOs()
+	public VideoTabBarButton(TabBarAppearance defaultAppearance) {
+		super(defaultAppearance, MGWT.getOsDetection().isIOs()
 				|| MGWT.getOsDetection().isDesktop() ? AppBundle.INSTANCE.tabBarVideoCameraImage() : null);
 		setText("Video");
 	}

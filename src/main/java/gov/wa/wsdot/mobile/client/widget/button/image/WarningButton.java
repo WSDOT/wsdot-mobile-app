@@ -16,16 +16,16 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.widget.buttonbar;
+package gov.wa.wsdot.mobile.client.widget.button.image;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 
-import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBarButtonBase;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
 
-public class LocationButton extends ButtonBarButtonBase {
+public class WarningButton extends ImageButton {
 
-	public LocationButton() {
-		super(AppBundle.INSTANCE.buttonBarLocationIcon());
+	public WarningButton() {
+		super(AppBundle.INSTANCE.buttonBarWarningImagePNG());
 	}
 
 }

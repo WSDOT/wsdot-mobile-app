@@ -3,16 +3,11 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base"
     xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
     <ui:style>
-        .headerTitle {
-            width: 180px;
-            margin-left: -85px;
-        }
         .flowPanel {
             margin-top: 10px;
         }
@@ -25,15 +20,11 @@
         }
     </ui:style>
     
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML ui:field="title" styleName="{style.headerTitle}" />
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:header.HeaderButton ui:field="backButton" backButton="true" text="Back" />
+			<mgwt:header.HeaderTitle ui:field="title" />
+		</mgwt:header.HeaderPanel>
 		
         <mgwt:tabbar.TabPanel ui:field="tabPanel">
             <mgwt:tabs>
@@ -43,15 +34,15 @@
                     </mgwt:button>
                     <mgwt:widget>
                         
-						<mgwt:ScrollPanel ui:field="sailingsPanel" scrollingEnabledX="false">        	
+						<mgwt:panel.scroll.ScrollPanel ui:field="sailingsPanel" scrollingEnabledX="false">        	
 				        	<g:FlowPanel styleName="{style.flowPanel}">
-				        	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+				        	    <mgwt:progress.ProgressBar ui:field="progressBar" visible="false" />
 				                <g:HTMLPanel styleName="{style.buttonPanel}">
-				                    <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
+				                    <mgwt:button.Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
 				                </g:HTMLPanel>
-				            	<mgwt:CellList ui:field="sailingsCellList" />
+				            	<mgwt:list.celllist.CellList ui:field="sailingsCellList" />
 				            </g:FlowPanel>
-				        </mgwt:ScrollPanel>
+				        </mgwt:panel.scroll.ScrollPanel>
 				        
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
@@ -62,15 +53,15 @@
                         <wsdot:WarningTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:ScrollPanel ui:field="alertsPanel" scrollingEnabledX="false">         
-                            <mgwt:CellList ui:field="alertsCellList" />
-                        </mgwt:ScrollPanel>
+                        <mgwt:panel.scroll.ScrollPanel ui:field="alertsPanel" scrollingEnabledX="false">         
+                            <mgwt:list.celllist.CellList ui:field="alertsCellList" />
+                        </mgwt:panel.scroll.ScrollPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
                         
         </mgwt:tabbar.TabPanel>
                         
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>

@@ -6,22 +6,18 @@
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:center>
-				<g:HTML>GoTo Location</g:HTML>
-			</mgwt:center>
-            <mgwt:right>
-                <mgwt:HeaderButton ui:field="doneButton" text="Done" />
-            </mgwt:right>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:header.HeaderTitle>GoTo Location</mgwt:header.HeaderTitle>
+	        <mgwt:header.HeaderButton ui:field="doneButton" text="Done" />
+		</mgwt:header.HeaderPanel>
 		
-        <mgwt:ScrollPanel ui:field="scrollPanel" scrollingEnabledX="false">
+        <mgwt:panel.scroll.ScrollPanel ui:field="scrollPanel" scrollingEnabledX="false">
         	<g:FlowPanel ui:field="flowPanel">
-            	<mgwt:CellList ui:field="cellList" />
+            	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>
-        </mgwt:ScrollPanel>
+        </mgwt:panel.scroll.ScrollPanel>
 		
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>

@@ -3,7 +3,6 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base"
     xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
@@ -45,16 +44,12 @@
         }
     </ui:style>
     
-    <mgwt:LayoutPanel>
+    <mgwt:panel.flex.RootFlexPanel>
 
-        <mgwt:HeaderPanel>
-            <mgwt:center>
-                <g:HTMLPanel styleName="{app.css.logo}" />
-            </mgwt:center>
-            <mgwt:right>
-                <mgwt:HeaderButton ui:field="aboutButton" forwardButton="true" text="About" />
-            </mgwt:right>
-        </mgwt:HeaderPanel>
+        <mgwt:header.HeaderPanel>
+            <g:HTMLPanel styleName="{app.css.logo}" />
+            <mgwt:header.HeaderButton ui:field="aboutButton" forwardButton="true" text="About" />
+        </mgwt:header.HeaderPanel>
 
         <mgwt:tabbar.TabPanel>
             <mgwt:tabs>
@@ -63,27 +58,27 @@
                         <wsdot:HomeTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-	                    <mgwt:ScrollPanel scrollingEnabledX="false">
+	                    <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
 	                        <g:HTMLPanel styleName="{style.dashboardPanel}">
 	                            <g:HTMLPanel styleName="{app.css.dashboard}">
 	                                
 	                                <g:HTMLPanel styleName="{app.css.homeButton}">
 	                                    <g:HTMLPanel>
-	                                        <mgwt:Button ui:field="trafficButton" styleName="{app.css.trafficButton}" />
+	                                        <mgwt:button.Button ui:field="trafficButton" styleName="{app.css.trafficButton}" />
 	                                    </g:HTMLPanel>
 	                                    <g:HTMLPanel>Traffic Map</g:HTMLPanel>
 	                                </g:HTMLPanel>
 	
 	                                <g:HTMLPanel styleName="{app.css.homeButton}">
 	                                    <g:HTMLPanel>
-	                                        <mgwt:Button ui:field="ferriesButton" styleName="{app.css.ferriesButton}" />
+	                                        <mgwt:button.Button ui:field="ferriesButton" styleName="{app.css.ferriesButton}" />
 	                                    </g:HTMLPanel>
 	                                    <g:HTMLPanel>Ferries</g:HTMLPanel>
 	                                </g:HTMLPanel>
 	        	
 	                                <g:HTMLPanel styleName="{app.css.homeButton}">
 	                                    <g:HTMLPanel>
-	                                        <mgwt:Button ui:field="passesButton" styleName="{app.css.passesButton}" />
+	                                        <mgwt:button.Button ui:field="passesButton" styleName="{app.css.passesButton}" />
 	                                    </g:HTMLPanel>
 	                                    <g:HTMLPanel>Mountain Passes</g:HTMLPanel>
 	                                </g:HTMLPanel>
@@ -94,21 +89,21 @@
 	                                
 	                                <g:HTMLPanel styleName="{app.css.homeButton}">
 	                                    <g:HTMLPanel>
-	                                        <mgwt:Button ui:field="socialButton" styleName="{app.css.socialButton}" />
+	                                        <mgwt:button.Button ui:field="socialButton" styleName="{app.css.socialButton}" />
 	                                    </g:HTMLPanel>
 	                                    <g:HTMLPanel>Social Media</g:HTMLPanel>
 	                                </g:HTMLPanel>
 	        	
 		                            <g:HTMLPanel styleName="{app.css.homeButton}">
 		                               <g:HTMLPanel>
-		                                   <mgwt:Button ui:field="tollingButton" styleName="{app.css.tollingButton}" />
+		                                   <mgwt:button.Button ui:field="tollingButton" styleName="{app.css.tollingButton}" />
 		                               </g:HTMLPanel>
 		                               <g:HTMLPanel>Toll Rates</g:HTMLPanel>
 		                            </g:HTMLPanel>
 	
 		                            <g:HTMLPanel styleName="{app.css.homeButton}">
 		                                 <g:HTMLPanel>
-		                                     <mgwt:Button ui:field="borderButton" styleName="{app.css.borderButton}" />
+		                                     <mgwt:button.Button ui:field="borderButton" styleName="{app.css.borderButton}" />
 		                                 </g:HTMLPanel>
 		                                 <g:HTMLPanel>Border Wait</g:HTMLPanel>
 		                            </g:HTMLPanel>
@@ -116,12 +111,12 @@
 		                        </g:HTMLPanel>
 
 		                        <g:HTMLPanel ui:field="highImpactAlertsPanel" styleName="{style.highImpactAlertsPanel}">
-		                            <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+		                            <mgwt:progress.ProgressBar ui:field="progressBar" visible="false" />
 		                        </g:HTMLPanel>
                             
                             </g:HTMLPanel>
 	                        	                            
-	                    </mgwt:ScrollPanel>                        
+	                    </mgwt:panel.scroll.ScrollPanel>                
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
@@ -132,16 +127,16 @@
                         <wsdot:FavoritesTabBarButton></wsdot:FavoritesTabBarButton>
                     </mgwt:button>
                     <mgwt:widget>
-				        <p:PullPanel ui:field="pullToRefresh">
+				        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
 				            <g:FlowPanel ui:field="flowPanel">
 				                <g:HTML ui:field="camerasHeader" styleName="{style.sectionHeader}" visible="false">Cameras</g:HTML>
-				                <mgwt:CellList ui:field="camerasCellList" visible="false" />
+				                <mgwt:list.celllist.CellList ui:field="camerasCellList" visible="false" />
                                 <g:HTML ui:field="ferriesHeader" styleName="{style.sectionHeader}" visible="false">Ferries Route Schedules</g:HTML>
-                                <mgwt:CellList ui:field="ferriesCellList" visible="false" />
+                                <mgwt:list.celllist.CellList ui:field="ferriesCellList" visible="false" />
                                 <g:HTML ui:field="mountainPassesHeader" styleName="{style.sectionHeader}" visible="false">Mountain Passes</g:HTML>
-                                <mgwt:CellList ui:field="mountainPassesCellList" visible="false" />
+                                <mgwt:list.celllist.CellList ui:field="mountainPassesCellList" visible="false" />
                                 <g:HTML ui:field="travelTimesHeader" styleName="{style.sectionHeader}" visible="false">Travel Times</g:HTML>
-                                <mgwt:CellList ui:field="travelTimesCellList" visible="false" />
+                                <mgwt:list.celllist.CellList ui:field="travelTimesCellList" visible="false" />
                                 <g:HTMLPanel ui:field="emptyFavorites" styleName="{style.emptyFavorites}" visible="false">
                                     <g:HTML>No favorites added yet.</g:HTML>
                                     <g:HTMLPanel>
@@ -151,13 +146,13 @@
                                     </g:HTMLPanel>
                                 </g:HTMLPanel>
 				            </g:FlowPanel>
-				        </p:PullPanel>
+				        </mgwt:panel.pull.PullPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
     
         </mgwt:tabbar.TabPanel>
 
-    </mgwt:LayoutPanel>
+    </mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>
