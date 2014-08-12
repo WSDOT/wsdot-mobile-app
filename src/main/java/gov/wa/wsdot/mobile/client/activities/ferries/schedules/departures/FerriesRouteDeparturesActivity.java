@@ -355,7 +355,7 @@ public class FerriesRouteDeparturesActivity extends
         JSONValue value = JSONParser.parseStrict(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_DEPARTING_SPACES));
         JSONArray departingSpaces = value.isArray();
         List<FerriesScheduleTimesItem> times = scheduleDateItems.get(view.getDayOfWeekSelected()).getFerriesTerminalItem().get(sailingsIndex).getScheduleTimes();
-        DateTimeFormat dateFormat = DateTimeFormat.getFormat("hh:mm a");
+        DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
         final TimeZoneConstants timeZoneConstants = GWT.create(TimeZoneConstants.class);
         final TimeZone usPacific = TimeZone.createTimeZone(TimeZoneInfo.buildTimeZoneData(timeZoneConstants.americaLosAngeles()));
 
