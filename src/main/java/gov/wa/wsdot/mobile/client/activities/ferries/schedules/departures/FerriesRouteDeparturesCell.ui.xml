@@ -3,7 +3,7 @@
 
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-    <ui:style>
+    <ui:style field="cellStyle" type="gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.FerriesRouteDeparturesCell.CellStyle">
         .cellFerriesRouteDepartures {
             display: -webkit-box;
             -webkit-box-orient: vertical;
@@ -33,18 +33,65 @@
             font-weight: normal;
         }
 
+        /* CSS3 Background Radial Progress Bars
+         * http://codepen.io/geedmo/pen/InFfd
+         *
+         * -------------------------------------
+         * Bar container
+         * ------------------------------------- */
+        .progress-radial {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            background-color: #d7d7d7;
+        }
+        
+        /* -------------------------------------
+         * Optional centered circle w/text
+         * ------------------------------------- */
+        .progress-radial .overlay {
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          background-color: #ffffff;
+          border-radius: 50%;
+          margin-left: 20px;
+          margin-top: 20px;
+          text-align: center;
+          line-height: 60px;
+          font-size: 16px;
+        }
+
+        .hideDriveUpSpaces {
+            display: none;
+        }
+
+        .showDriveUpSpaces {
+            display: block;
+        }
     </ui:style>
     
     <ui:with field="departing" type="java.lang.String" />
     <ui:with field="arriving" type="java.lang.String" />
     <ui:with field="annotation" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    <ui:with field="driveUpSpaces" type="java.lang.String" />
+    <ui:with field="driveUpSpacesDisplayStyle" type="java.lang.String" />
+    <ui:with field="progress" type="java.lang.String" />
     
-    <div class="{style.cellFerriesRouteDepartures}">
+    <div class="{cellStyle.cellFerriesRouteDepartures}">
         <div>
-            <div class="{style.departing}"><ui:text from="{departing}" /></div>
-            <div class="{style.arriving}"><ui:text from="{arriving}" /></div>
+            <div class="{cellStyle.departing}"><ui:text from="{departing}" /></div>
+            <div class="{cellStyle.arriving}"><ui:text from="{arriving}" /></div>
         </div>
-        <div class="{style.annotation}"><ui:safehtml from="{annotation}" /></div>
+        <div class="{cellStyle.annotation}"><ui:safehtml from="{annotation}" /></div>
+        
+	    <div class="{driveUpSpacesDisplayStyle}">
+		    <div class="{cellStyle.progress-radial}" style="{progress}">
+		        <div class="{cellStyle.overlay}"><ui:text from="{driveUpSpaces}" /></div>
+		    </div>
+	    </div>
     </div>
     
 </ui:UiBinder>

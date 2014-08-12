@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,17 @@ public class FerriesScheduleTimesItem implements Serializable {
 	private String departingTime;
 	private String arrivingTime;
 	private String annotations;
+    private int reservableSpaceCount;
+    private int driveUpSpaceCount;
+    private int maxSpaceCount;
+    private String lastUpdated;
 	
+    public FerriesScheduleTimesItem() {
+        this.reservableSpaceCount = -1;
+        this.driveUpSpaceCount = -1;
+        this.maxSpaceCount = -1;
+    }
+    
 	public String getDepartingTime() {
 		return departingTime;
 	}
@@ -50,5 +60,37 @@ public class FerriesScheduleTimesItem implements Serializable {
 	public void setAnnotations(String annotations) {
 		this.annotations = annotations;
 	}
+
+    public int getReservableSpaceCount() {
+        return reservableSpaceCount;
+    }
+
+    public void setReservableSpaceCount(int reservableSpaceCount) {
+        this.reservableSpaceCount = reservableSpaceCount;
+    }
+
+    public int getDriveUpSpaceCount() {
+        return driveUpSpaceCount;
+    }
+
+    public void setDriveUpSpaceCount(int driveUpSpaceCount) {
+        this.driveUpSpaceCount = driveUpSpaceCount;
+    }
+
+    public int getMaxSpaceCount() {
+        return maxSpaceCount;
+    }
+
+    public void setMaxSpaceCount(int maxSpaceCount) {
+        this.maxSpaceCount = maxSpaceCount;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 
 }

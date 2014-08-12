@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,6 +127,16 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 			public boolean canBeSelected(FerriesScheduleTimesItem model) {
 				return false;
 			}
+
+            @Override
+            public String getDriveUpSpaces(FerriesScheduleTimesItem model) {
+                return String.valueOf(model.getDriveUpSpaceCount());
+            }
+
+            @Override
+            public String getMaxSpaceCount(FerriesScheduleTimesItem model) {
+                return String.valueOf(model.getMaxSpaceCount());
+            }
 			
 		});
 		
