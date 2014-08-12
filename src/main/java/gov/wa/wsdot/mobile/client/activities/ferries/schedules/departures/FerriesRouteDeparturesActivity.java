@@ -352,31 +352,33 @@ public class FerriesRouteDeparturesActivity extends
     }
 
     private void getFerryTerminalSailingSpaces(List<GenericRow> result) {
-        JSONValue value = JSONParser.parseStrict(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_DEPARTING_SPACES));
-        JSONArray departingSpaces = value.isArray();
-        List<FerriesScheduleTimesItem> times = scheduleDateItems.get(view.getDayOfWeekSelected()).getFerriesTerminalItem().get(sailingsIndex).getScheduleTimes();
-        DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
-        final TimeZoneConstants timeZoneConstants = GWT.create(TimeZoneConstants.class);
-        final TimeZone usPacific = TimeZone.createTimeZone(TimeZoneInfo.buildTimeZoneData(timeZoneConstants.americaLosAngeles()));
-
-        for (int i = 0; i < departingSpaces.size(); i++) {
-            JSONObject spaces = departingSpaces.get(i).isObject();
-            String departure = dateFormat.format(new Date(Long.parseLong(spaces.get("Departure").toString().substring(7, 20))));
-            JSONArray spaceForArrivalTerminals = spaces.get("SpaceForArrivalTerminals").isArray();
-            
-            for (int j=0; j < spaceForArrivalTerminals.size(); j++) {
-                JSONObject terminals = spaceForArrivalTerminals.get(j).isObject();
-                if (Integer.parseInt(terminals.get("TerminalID").toString()) != scheduleDateItems.get(view.getDayOfWeekSelected()).getFerriesTerminalItem().get(sailingsIndex).getArrivingTerminalID()) {
-                    continue;
-                } else {
-                    int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
-                    int maxSpaceCount = Integer.parseInt(terminals.get("MaxSpaceCount").toString());
-                    
-                    for (FerriesScheduleTimesItem time: times) {
-                        if (dateFormat.format(new Date(Long.parseLong(time.getDepartingTime()))).equals(departure)) {
-                            time.setDriveUpSpaceCount(driveUpSpaceCount);
-                            time.setMaxSpaceCount(maxSpaceCount);
-                            time.setLastUpdated(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED));
+        if (result.size() != 0) {
+            JSONValue value = JSONParser.parseStrict(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_DEPARTING_SPACES));
+            JSONArray departingSpaces = value.isArray();
+            List<FerriesScheduleTimesItem> times = scheduleDateItems.get(view.getDayOfWeekSelected()).getFerriesTerminalItem().get(sailingsIndex).getScheduleTimes();
+            DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
+            final TimeZoneConstants timeZoneConstants = GWT.create(TimeZoneConstants.class);
+            final TimeZone usPacific = TimeZone.createTimeZone(TimeZoneInfo.buildTimeZoneData(timeZoneConstants.americaLosAngeles()));
+    
+            for (int i = 0; i < departingSpaces.size(); i++) {
+                JSONObject spaces = departingSpaces.get(i).isObject();
+                String departure = dateFormat.format(new Date(Long.parseLong(spaces.get("Departure").toString().substring(7, 20))));
+                JSONArray spaceForArrivalTerminals = spaces.get("SpaceForArrivalTerminals").isArray();
+                
+                for (int j=0; j < spaceForArrivalTerminals.size(); j++) {
+                    JSONObject terminals = spaceForArrivalTerminals.get(j).isObject();
+                    if (Integer.parseInt(terminals.get("TerminalID").toString()) != scheduleDateItems.get(view.getDayOfWeekSelected()).getFerriesTerminalItem().get(sailingsIndex).getArrivingTerminalID()) {
+                        continue;
+                    } else {
+                        int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
+                        int maxSpaceCount = Integer.parseInt(terminals.get("MaxSpaceCount").toString());
+                        
+                        for (FerriesScheduleTimesItem time: times) {
+                            if (dateFormat.format(new Date(Long.parseLong(time.getDepartingTime()))).equals(departure)) {
+                                time.setDriveUpSpaceCount(driveUpSpaceCount);
+                                time.setMaxSpaceCount(maxSpaceCount);
+                                time.setLastUpdated(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED));
+                            }
                         }
                     }
                 }
