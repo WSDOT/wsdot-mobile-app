@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 import java.util.Date;
@@ -136,6 +137,16 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
             @Override
             public String getMaxSpaceCount(FerriesScheduleTimesItem model) {
                 return String.valueOf(model.getMaxSpaceCount());
+            }
+
+            @Override
+            public String getLastUpdated(FerriesScheduleTimesItem model) {
+                if (model.getLastUpdated() != null) {
+                    return ParserUtils.relativeTime(model.getLastUpdated(),
+                            "MMMM d, yyyy h:mm a", false);
+                } else {
+                    return "";
+                }
             }
 			
 		});

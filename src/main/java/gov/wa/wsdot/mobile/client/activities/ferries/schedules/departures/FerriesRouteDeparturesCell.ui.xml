@@ -33,6 +33,13 @@
             font-weight: normal;
         }
 
+        .lastUpdated {
+            font-size: small;
+            font-weight: normal;
+            color: #7d7d7d;
+            margin-top: 7px;
+        }
+
         /* CSS3 Background Radial Progress Bars
          * http://codepen.io/geedmo/pen/InFfd
          *
@@ -46,6 +53,7 @@
             border-radius: 50%;
             border: 2px solid #ffffff;
             background-color: #d7d7d7;
+            margin-right: 5px;
         }
         
         /* -------------------------------------
@@ -71,6 +79,12 @@
         .showDriveUpSpaces {
             display: block;
         }
+
+        .driveUpSpacesContainer {
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            -webkit-box-align: center;
+        }
     </ui:style>
     
     <ui:with field="departing" type="java.lang.String" />
@@ -79,6 +93,7 @@
     <ui:with field="driveUpSpaces" type="java.lang.String" />
     <ui:with field="driveUpSpacesDisplayStyle" type="java.lang.String" />
     <ui:with field="progress" type="java.lang.String" />
+    <ui:with field="lastUpdated" type="java.lang.String" />
     
     <div class="{cellStyle.cellFerriesRouteDepartures}">
         <div>
@@ -88,10 +103,15 @@
         <div class="{cellStyle.annotation}"><ui:safehtml from="{annotation}" /></div>
         
 	    <div class="{driveUpSpacesDisplayStyle}">
-		    <div class="{cellStyle.progress-radial}" style="{progress}">
-		        <div class="{cellStyle.overlay}"><ui:text from="{driveUpSpaces}" /></div>
+	        <div class="{cellStyle.driveUpSpacesContainer}">
+			    <div class="{cellStyle.progress-radial}" style="{progress}">
+			        <div class="{cellStyle.overlay}"><ui:text from="{driveUpSpaces}" /></div>
+			    </div>
+			    <div>Drive-up spaces</div>
 		    </div>
+		    <div class="{cellStyle.lastUpdated}"><ui:text from="{lastUpdated}" /></div>
 	    </div>
+
     </div>
     
 </ui:UiBinder>

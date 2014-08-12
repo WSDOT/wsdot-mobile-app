@@ -34,7 +34,7 @@ public abstract class FerriesRouteDeparturesCell<T> implements Cell<T> {
 	    CellStyle getCellStyle();
 	    
 	    public void render(SafeHtmlBuilder safeHtmlBuilder, String departing,
-				String arriving, SafeHtml annotation, String driveUpSpaces, String driveUpSpacesDisplayStyle, String progress);
+				String arriving, SafeHtml annotation, String driveUpSpaces, String driveUpSpacesDisplayStyle, String progress, String lastUpdated);
 		
 	}
 	
@@ -65,11 +65,11 @@ public abstract class FerriesRouteDeparturesCell<T> implements Cell<T> {
 	    
 	    if (getDriveUpSpaces(model).equals("-1")) {
 	        renderer.render(sb, getDeparting(model), getArriving(model),
-	                getAnnotation(model), getDriveUpSpaces(model), renderer.getCellStyle().hideDriveUpSpaces(), "");
+	                getAnnotation(model), getDriveUpSpaces(model), renderer.getCellStyle().hideDriveUpSpaces(), "", getLastUpdated(model));
 
 	    } else {
             renderer.render(sb, getDeparting(model), getArriving(model),
-                    getAnnotation(model), getDriveUpSpaces(model), renderer.getCellStyle().showDriveUpSpaces(), backgroundImage);
+                    getAnnotation(model), getDriveUpSpaces(model), renderer.getCellStyle().showDriveUpSpaces(), backgroundImage, getLastUpdated(model));
 	    }
 
 	}
@@ -83,6 +83,8 @@ public abstract class FerriesRouteDeparturesCell<T> implements Cell<T> {
 	public abstract String getDriveUpSpaces(T model);
 	
 	public abstract String getMaxSpaceCount(T model);
+	
+	public abstract String getLastUpdated(T model);
 
 	@Override
 	public boolean canBeSelected(T model) {
