@@ -27,7 +27,6 @@ import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSched
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.FerriesRouteDeparturesPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteAlertDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsPlace;
-import gov.wa.wsdot.mobile.client.activities.ferries.terminals.FerriesTerminalsPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsPlace;
@@ -78,10 +77,6 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		if (oldPlace instanceof VesselWatchMapPlace && newPlace instanceof FerriesPlace) {
 			return Animation.SLIDE_REVERSE;
 		}
-        
-        if (oldPlace instanceof FerriesTerminalsPlace && newPlace instanceof FerriesPlace) {
-            return Animation.SLIDE_REVERSE;
-        }		
 		
 		if (oldPlace instanceof FerriesRouteSailingsPlace
 				&& newPlace instanceof FerriesRouteSchedulesPlace) {
