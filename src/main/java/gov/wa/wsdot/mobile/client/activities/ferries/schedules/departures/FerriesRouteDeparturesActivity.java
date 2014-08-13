@@ -54,10 +54,13 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
 
 public class FerriesRouteDeparturesActivity extends
 		MGWTAbstractActivity implements
@@ -83,12 +86,41 @@ public class FerriesRouteDeparturesActivity extends
 		dbService = clientFactory.getDbService();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
+
+        view.getPullHeader().setHTML("pull down");
+        
+        PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
+                view.getPullHeader(), view.getPullPanel());
+        
+        headerHandler.setErrorText("Error");
+        headerHandler.setLoadingText("Loading");
+        headerHandler.setNormalText("pull down");
+        headerHandler.setPulledText("release to load");
+        headerHandler.setPullActionHandler(new PullActionHandler() {
+        
+            @Override
+            public void onPullAction(final AsyncCallback<Void> callback) {
+        
+                new Timer() {
+        
+                    @Override
+                    public void run() {
+                        createTopicsList(routeId, 0, sailingsIndex);                         
+                        view.refresh();
+                        callback.onSuccess(null);
+                    }
+                    
+                }.schedule(1);
+            }
+            
+        });
 		
 		Place place = clientFactory.getPlaceController().getWhere();
 		if (place instanceof FerriesRouteDeparturesPlace) {
             FerriesRouteDeparturesPlace ferriesRouteSchedulesDayDeparturesPlace = (FerriesRouteDeparturesPlace) place;
 			routeId = ferriesRouteSchedulesDayDeparturesPlace.getId();
 			sailingsIndex = ferriesRouteSchedulesDayDeparturesPlace.getIndex();
+            view.setHeaderPullHandler(headerHandler);
 			createTopicsList(routeId, 0, sailingsIndex);
 			panel.setWidget(view);
 		}

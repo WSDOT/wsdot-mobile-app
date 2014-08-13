@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,9 @@ import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
 
 public interface FerriesRouteDeparturesView extends IsWidget {
 	
@@ -51,5 +54,11 @@ public interface FerriesRouteDeparturesView extends IsWidget {
 	public void hideProgressBar();
 	
 	public void refresh();
+	
+    public void setHeaderPullHandler(Pullhandler pullHandler);
+    
+    public PullArrowWidget getPullHeader();
+    
+    public HasRefresh getPullPanel();
 	
 }
