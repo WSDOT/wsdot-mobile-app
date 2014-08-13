@@ -57,10 +57,13 @@ public abstract class FerriesRouteDeparturesCell<T> implements Cell<T> {
 	    
 	    if (capacity < 50) {
 	        nextDeg = String.valueOf(90 + (3.6 * capacity)) + "deg";
-	        backgroundImage = "background-image: linear-gradient(90deg, #d7d7d7 50%, transparent 50%, transparent), linear-gradient(" + nextDeg + ", #006f80 50%, #d7d7d7 50%, #d7d7d7)";
+            backgroundImage = "background-image: linear-gradient(90deg, #d7d7d7 50%, transparent 50%, transparent), linear-gradient("
+                    + nextDeg + ", #006f80 50%, #d7d7d7 50%, #d7d7d7)";
 	    } else {
 	        nextDeg = String.valueOf(-90 + (3.6 * (capacity - 50))) + "deg";
-	        backgroundImage = "background-image: linear-gradient(" + nextDeg + ", #006f80 50%, transparent 50%, transparent), linear-gradient(270deg, #006f80 50%, #d7d7d7 50%, #d7d7d7)";
+            backgroundImage = "background-image: linear-gradient("
+                    + nextDeg
+                    + ", #006f80 50%, transparent 50%, transparent), linear-gradient(270deg, #006f80 50%, #d7d7d7 50%, #d7d7d7)";
 	    }
 	    
 	    if (getDriveUpSpaces(model).equals("-1")) {
