@@ -26,6 +26,7 @@ import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesTerminalSailingSpaceColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.FerriesAnnotationsItem;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleDateItem;
@@ -75,6 +76,7 @@ public class FerriesRouteDeparturesActivity extends
     private static List<FerriesTerminalSailingSpaceItem> ferriesTerminalSailingSpaceItems = new ArrayList<FerriesTerminalSailingSpaceItem>();
 	private String routeId;
 	private int sailingsIndex;
+	private static final String TERMINAL_SAILING_SPACE_URL = Consts.HOST_URL + "/traveler/api/ferries/terminalsailingspace";
 	
 	public FerriesRouteDeparturesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -246,8 +248,6 @@ public class FerriesRouteDeparturesActivity extends
 	}
 
 	protected void createFerryTerminalSailingSpaces() {
-	    final String TERMINAL_SAILING_SPACE_URL = "http://www.wsdot.wa.gov/ferries/api/terminals/rest/terminalsailingspace?"
-	            + "apiaccesscode={API_ACCESS_CODE}&callback";
         /** 
          * Check the cache table for the last time data was downloaded. If we are within
          * the allowed time period, don't sync, otherwise get fresh data from the server.
