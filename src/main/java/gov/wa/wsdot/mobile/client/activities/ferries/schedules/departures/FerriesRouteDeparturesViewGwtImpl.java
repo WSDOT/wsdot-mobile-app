@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 import java.util.Date;
@@ -42,7 +43,11 @@ import com.googlecode.mgwt.ui.client.widget.CellList;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.MListBox;
 import com.googlecode.mgwt.ui.client.widget.ProgressBar;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
 
 public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		implements FerriesRouteDeparturesView {
@@ -61,14 +66,14 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 			.create(FerriesRouteDeparturesViewGwtImplUiBinder.class);	
 
 	
-	@UiField
-	ScrollPanel scrollPanel;
-	
 	@UiField(provided = true)
 	CellList<FerriesScheduleTimesItem> cellList;
 	
 	@UiField
 	HeaderButton backButton;
+    
+	@UiField(provided = true)
+    PullPanel pullToRefresh;	
 	
 	@UiField
 	HTML title;
@@ -80,6 +85,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	MListBox daysOfWeek;
 	
 	private Presenter presenter;
+	private PullArrowHeader pullArrowHeader;
 	private DateTimeFormat dateFormat = DateTimeFormat.getFormat("hh:mm a");
 	private DateTimeFormat dayOfWeekFormat = DateTimeFormat.getFormat("EEEE");
 	
@@ -89,6 +95,10 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	
 	public FerriesRouteDeparturesViewGwtImpl() {
 		
+        pullToRefresh = new PullPanel();
+        pullArrowHeader = new PullArrowHeader();
+        pullToRefresh.setHeader(pullArrowHeader);
+	    
 		daysOfWeek = new MListBox();
 		
 		cellList = new CellList<FerriesScheduleTimesItem>(
@@ -127,6 +137,26 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 			public boolean canBeSelected(FerriesScheduleTimesItem model) {
 				return false;
 			}
+
+            @Override
+            public String getDriveUpSpaces(FerriesScheduleTimesItem model) {
+                return String.valueOf(model.getDriveUpSpaceCount());
+            }
+
+            @Override
+            public String getMaxSpaceCount(FerriesScheduleTimesItem model) {
+                return String.valueOf(model.getMaxSpaceCount());
+            }
+
+            @Override
+            public String getLastUpdated(FerriesScheduleTimesItem model) {
+                if (model.getLastUpdated() != null) {
+                    return ParserUtils.relativeTime(model.getLastUpdated(),
+                            "MMMM d, yyyy h:mm a", false);
+                } else {
+                    return "";
+                }
+            }
 			
 		});
 		
@@ -179,7 +209,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 
 	@Override
 	public void refresh() {
-		scrollPanel.refresh();
+		pullToRefresh.refresh();
 	}
 
 	@Override
@@ -201,5 +231,20 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
                     .parseLong(day))));
 		}
 	}
+
+    @Override
+    public void setHeaderPullHandler(Pullhandler pullHandler) {
+        pullToRefresh.setHeaderPullhandler(pullHandler);
+    }
+
+    @Override
+    public PullArrowWidget getPullHeader() {
+        return pullArrowHeader;
+    }
+
+    @Override
+    public HasRefresh getPullPanel() {
+        return pullToRefresh;
+    }
 
 }

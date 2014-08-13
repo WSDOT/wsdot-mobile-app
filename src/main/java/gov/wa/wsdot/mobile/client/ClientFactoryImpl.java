@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,6 @@ import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesR
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteAlertDetailsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsView;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsViewGwtImpl;
-import gov.wa.wsdot.mobile.client.activities.ferries.terminals.FerriesTerminalsView;
-import gov.wa.wsdot.mobile.client.activities.ferries.terminals.FerriesTerminalsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapView;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationView;
@@ -127,7 +125,6 @@ public class ClientFactoryImpl implements ClientFactory {
 	private YouTubeDetailsViewGwtImpl youTubeDetailsView;
 	private TravelTimeDetailsViewGwtImpl travelTimeDetailsView;
 	private FerriesRouteAlertDetailsViewGwtImpl ferriesRouteAlertDetailsView;
-	private FerriesTerminalsViewGwtImpl ferriesTerminalsView;
 
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -419,13 +416,5 @@ public class ClientFactoryImpl implements ClientFactory {
 		}
 		return ferriesRouteAlertDetailsView;
 	}
-
-    @Override
-    public FerriesTerminalsView getFerriesTerminalsView() {
-        if (ferriesTerminalsView == null) {
-            ferriesTerminalsView = new FerriesTerminalsViewGwtImpl();
-        }
-        return ferriesTerminalsView;
-    }
 
 }
