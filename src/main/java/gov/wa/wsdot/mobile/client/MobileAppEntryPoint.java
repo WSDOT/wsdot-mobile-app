@@ -20,6 +20,7 @@ package gov.wa.wsdot.mobile.client;
 
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
@@ -133,10 +134,15 @@ public class MobileAppEntryPoint implements EntryPoint {
 	}
 	
 	private void createDatabaseTables(final ClientFactory clientFactory) {
+	    
+	    final String VER_1 = "1.0";
+	    final String VER_2 = "1.1";
+	    final String VER_3 = "3";
+	    final String DATABASE_VERSION = VER_3;
 
 	    if (clientFactory.getDbService().getDatabase().getVersion().equals("")) {
 	        clientFactory.getDbService().getDatabase()
-	                .changeVersion("", "1.0", new TransactionCallback() {
+	                .changeVersion("", DATABASE_VERSION, new TransactionCallback() {
 
                 @Override
                 public void onTransactionStart(SQLTransaction transaction) {
@@ -235,6 +241,17 @@ public class MobileAppEntryPoint implements EntryPoint {
 
                     });
                     
+                    clientFactory.getDbService().createFerriesTerminalSailingSpaceTable(new VoidCallback() {
+
+                        @Override
+                        public void onFailure(DataServiceException error) {
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                        }
+                    });
+                    
                     clientFactory.getDbService().createBorderWaitTable(new VoidCallback() {
 
                         @Override
@@ -251,26 +268,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 
                 @Override
                 public void onTransactionSuccess() {
-                    clientFactory.getDbService().getDatabase()
-                            .changeVersion("1.0", "1.1", new TransactionCallback() {
-
-                        @Override
-                        public void onTransactionStart(SQLTransaction transaction) {
-                            transaction.executeSql("ALTER TABLE " + Tables.HIGHWAY_ALERTS
-                                    + " ADD COLUMN " + HighwayAlertsColumns.HIGHWAY_ALERT_LAST_UPDATED + " TEXT", null);
-                            
-                        }
-
-                        @Override
-                        public void onTransactionSuccess() {
-                        }
-
-                        @Override
-                        public void onTransactionFailure(SQLError error) {
-                        }
-                        
-                    });
-                    
+                    GWT.log("Database at version " + DATABASE_VERSION);
                 }
 
                 @Override
@@ -280,9 +278,9 @@ public class MobileAppEntryPoint implements EntryPoint {
             });
 	    }
 	    
-	    if (clientFactory.getDbService().getDatabase().getVersion().equals("1.0")) {
+	    if (clientFactory.getDbService().getDatabase().getVersion().equals(VER_1)) {
             clientFactory.getDbService().getDatabase()
-                    .changeVersion("1.0", "1.1", new TransactionCallback() {
+                    .changeVersion(VER_1, VER_2, new TransactionCallback() {
 
                 @Override
                 public void onTransactionStart(SQLTransaction transaction) {
@@ -293,6 +291,40 @@ public class MobileAppEntryPoint implements EntryPoint {
 
                 @Override
                 public void onTransactionSuccess() {
+                    GWT.log("Successfully upgraded database from version 1.0 to 1.1");
+                    
+                    clientFactory.getDbService().getDatabase()
+                            .changeVersion(VER_2, VER_3, new TransactionCallback() {
+
+                        @Override
+                        public void onTransactionStart(SQLTransaction transaction) {
+                            clientFactory.getDbService().createFerriesTerminalSailingSpaceTable(new VoidCallback() {
+        
+                                @Override
+                                public void onFailure(DataServiceException error) {
+                                }
+        
+                                @Override
+                                public void onSuccess() {
+                                }
+                            });
+                            
+                            transaction.executeSql("INSERT INTO " + Tables.CACHES
+                                    + " (" + CachesColumns.CACHE_TABLE_NAME + ","
+                                    + CachesColumns.CACHE_LAST_UPDATED + ") values ('"
+                                    + Tables.FERRIES_TERMINAL_SAILING_SPACE + "', 0)", null);
+                        }
+        
+                        @Override
+                        public void onTransactionSuccess() {
+                            GWT.log("Successfully upgraded database from version 1.1 to 3");
+                        }
+        
+                        @Override
+                        public void onTransactionFailure(SQLError error) {
+                        }
+                    });                    
+                    
                 }
 
                 @Override
@@ -301,7 +333,88 @@ public class MobileAppEntryPoint implements EntryPoint {
                 
             });
 	    }
-	
+	    
+	    if (clientFactory.getDbService().getDatabase().getVersion().equals(VER_2)) {
+            clientFactory.getDbService().getDatabase()
+                    .changeVersion(VER_2, VER_3, new TransactionCallback() {
+
+                @Override
+                public void onTransactionStart(SQLTransaction transaction) {
+                    clientFactory.getDbService().createFerriesTerminalSailingSpaceTable(new VoidCallback() {
+
+                        @Override
+                        public void onFailure(DataServiceException error) {
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                        }
+                    });
+                    
+                    transaction.executeSql("INSERT INTO " + Tables.CACHES
+                            + " (" + CachesColumns.CACHE_TABLE_NAME + ","
+                            + CachesColumns.CACHE_LAST_UPDATED + ") values ('"
+                            + Tables.FERRIES_TERMINAL_SAILING_SPACE + "', 0)", null);
+                }
+
+                @Override
+                public void onTransactionSuccess() {
+                    GWT.log("Successfully upgraded database from version 1.1 to 3");
+                }
+
+                @Override
+                public void onTransactionFailure(SQLError error) {
+                }
+	        });
+	    }
+        
+	    /*
+        if (!clientFactory.getDbService().getDatabase().getVersion().equals(DATABASE_VERSION)) {
+            clientFactory.getDbService().getDatabase().transaction(new TransactionCallback() {
+
+                @Override
+                public void onTransactionStart(SQLTransaction transaction) {
+                    GWT.log("Destroying old data during upgrade");
+                    
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.CACHES, null);
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.CAMERAS, null);
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.HIGHWAY_ALERTS, null);
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.MOUNTAIN_PASSES, null);
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.TRAVEL_TIMES, null);
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.FERRIES_SCHEDULES, null);
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.FERRIES_TERMINAL_SAILING_SPACE, null);
+                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.BORDER_WAIT, null);                    
+                }
+
+                @Override
+                public void onTransactionSuccess() {
+                    String version = clientFactory.getDbService().getDatabase().getVersion();
+                    
+                    clientFactory.getDbService().getDatabase()
+                            .changeVersion(version, "", new TransactionCallback() {
+
+                                @Override
+                                public void onTransactionStart(SQLTransaction transaction) {
+                                    createDatabaseTables(clientFactory);
+                                }
+
+                                @Override
+                                public void onTransactionSuccess() {
+                                    GWT.log("Successfully recreated database. Now at version " + DATABASE_VERSION);
+                                }
+
+                                @Override
+                                public void onTransactionFailure(SQLError error) {
+                                }
+                            });
+                }
+
+                @Override
+                public void onTransactionFailure(SQLError error) {
+                }
+            });
+        }
+        */
 	}
 	
 	private void initCachesTable(ClientFactory clientFactory) {
@@ -312,6 +425,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 		cacheItems.add(new CacheItem("mountain_passes", 0));
 		cacheItems.add(new CacheItem("travel_times", 0));
 		cacheItems.add(new CacheItem("ferries_schedules", 0));
+		cacheItems.add(new CacheItem("ferries_terminal_sailing_space", 0));
 		cacheItems.add(new CacheItem("border_wait", 0));
 		
 		clientFactory.getDbService().initCachesTable(cacheItems, new RowIdListCallback() {

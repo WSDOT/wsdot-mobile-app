@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,16 @@ public interface WSDOTContract {
 		String FERRIES_SCHEDULE_UPDATED = "updated";
 		String FERRIES_SCHEDULE_IS_STARRED = "is_starred";
 	}
+	
+    interface FerriesTerminalSailingSpaceColumns {
+        String _ID = "_ID";
+        String TERMINAL_ID = "id";
+        String TERMINAL_NAME = "name";
+        String TERMINAL_ABBREV = "abbrev";
+        String TERMINAL_DEPARTING_SPACES = "departing_spaces";
+        String TERMINAL_LAST_UPDATED = "last_updated";
+        String TERMINAL_IS_STARRED = "is_starred";
+    }
 	
 	interface BorderWaitColumns {
 		String _ID = "_ID";

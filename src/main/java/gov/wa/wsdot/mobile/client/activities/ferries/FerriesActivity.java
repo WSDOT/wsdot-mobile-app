@@ -20,7 +20,6 @@ package gov.wa.wsdot.mobile.client.activities.ferries;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace;
-import gov.wa.wsdot.mobile.client.activities.ferries.terminals.FerriesTerminalsPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.shared.Topic;
@@ -72,16 +71,12 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 			clientFactory.getPlaceController().goTo(new FerriesRouteSchedulesPlace());
 			return;
 		}
-        if (index == 1) {
-            clientFactory.getPlaceController().goTo(new FerriesTerminalsPlace());
-            return;
-        }
-		if (index == 2) {
+		if (index == 1) {
             inAppBrowser.open("http://www.wsdot.wa.gov/ferries/reservations",
                     "", "enableViewportScale=yes");
             return;
 		}
-		if (index == 3) {
+		if (index == 2) {
 			clientFactory.getPlaceController().goTo(new VesselWatchMapPlace());
 			return;
 		}		
@@ -96,7 +91,6 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 		ArrayList<Topic> list = new ArrayList<Topic>();
 		
 		list.add(new Topic("Route Schedules"));
-		list.add(new Topic("Terminal Information"));
 		list.add(new Topic("Vehicle Reservations"));
 		list.add(new Topic("VesselWatch"));
 		

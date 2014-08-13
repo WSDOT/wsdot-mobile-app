@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.service.WSDOTContract.BorderWaitColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesTerminalSailingSpaceColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
@@ -29,6 +30,7 @@ import gov.wa.wsdot.mobile.shared.BorderWaitItem;
 import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
+import gov.wa.wsdot.mobile.shared.FerriesTerminalSailingSpaceItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
 import gov.wa.wsdot.mobile.shared.MountainPassItem;
 import gov.wa.wsdot.mobile.shared.TravelTimesItem;
@@ -55,6 +57,7 @@ public interface WSDOTDataService extends DataService {
         String MOUNTAIN_PASSES = "mountain_passes";
         String TRAVEL_TIMES = "travel_times";
         String FERRIES_SCHEDULES = "ferries_schedules";
+        String FERRIES_TERMINAL_SAILING_SPACE = "ferries_terminal_sailing_space";
         String BORDER_WAIT  = "border_wait";
     }
 	
@@ -89,7 +92,8 @@ public interface WSDOTDataService extends DataService {
 	    + HighwayAlertsColumns.HIGHWAY_ALERT_LONGITUDE + " REAL,"
 	    + HighwayAlertsColumns.HIGHWAY_ALERT_CATEGORY + " TEXT,"
 	    + HighwayAlertsColumns.HIGHWAY_ALERT_PRIORITY + " TEXT,"
-	    + HighwayAlertsColumns.HIGHWAY_ALERT_ROAD_NAME + " TEXT)")
+	    + HighwayAlertsColumns.HIGHWAY_ALERT_ROAD_NAME + " TEXT,"
+	    + HighwayAlertsColumns.HIGHWAY_ALERT_LAST_UPDATED + " TEXT)")
 	void createHighwayAlertsTable(VoidCallback callback);
 	
 	@Update("CREATE TABLE IF NOT EXISTS " + Tables.MOUNTAIN_PASSES + " ("
@@ -132,6 +136,16 @@ public interface WSDOTDataService extends DataService {
 	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_UPDATED + " TEXT,"
 	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_IS_STARRED + " INTEGER NOT NULL default 0)")
 	void createFerriesSchedulesTable(VoidCallback callback);
+	
+    @Update("CREATE TABLE " + Tables.FERRIES_TERMINAL_SAILING_SPACE + " ("
+            + FerriesTerminalSailingSpaceColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_ID + " INTEGER,"
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_NAME + " TEXT,"
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_ABBREV + " TEXT,"
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_DEPARTING_SPACES + " TEXT,"
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED + " TEXT,"
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_IS_STARRED + " INTEGER NOT NULL default 0)")
+    void createFerriesTerminalSailingSpaceTable(VoidCallback callback);
 	
 	@Update("CREATE TABLE IF NOT EXISTS " + Tables.BORDER_WAIT + " ("
 		+ BorderWaitColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -391,6 +405,51 @@ public interface WSDOTDataService extends DataService {
 			+ " WHERE " + FerriesSchedulesColumns.FERRIES_SCHEDULE_ID + " = {_.getRouteID()}", foreach="items")
 	void updateStarredFerriesSchedules(List<FerriesRouteItem> items, VoidCallback callback);	
 	
+	/**
+     * Delete all rows from ferries terminal sailing space
+     * 
+     * @param callback
+     */
+    @Update("DELETE FROM " + Tables.FERRIES_TERMINAL_SAILING_SPACE)
+    void deleteFerriesTerminalSailingSpace(VoidCallback callback);
+    
+    /**
+     * Insert ferries terminal sailing space items into table.
+     * 
+     * @param ferriesTerminalSailingSpaceItems
+     * @param callback
+     */
+    @Update(sql="INSERT INTO " + Tables.FERRIES_TERMINAL_SAILING_SPACE + " ("
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_ID + ", "	
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_NAME + ", "
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_ABBREV + ", "
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_DEPARTING_SPACES + ", "
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED + ", "
+            + FerriesTerminalSailingSpaceColumns.TERMINAL_IS_STARRED + ") "
+            + "VALUES "
+            + "({_.getTerminalId()}, {_.getTerminalName()}, {_.getTerminalAbbrev()}, {_.getTerminalDepartingSpaces()}, "
+            + "{_.getLastUpdated()}, {_.getIsStarred()})", foreach="ferriesTerminalSailingSpaceItems")
+    void insertFerriesTerminalSailingSpace(List<FerriesTerminalSailingSpaceItem> ferriesTerminalSailingSpaceItems, RowIdListCallback callback);
+    
+    /**
+     * Retrieve ferries terminal sailing spaces from table.
+     * 
+     * @param callback
+     */
+    @Select("SELECT * FROM " + Tables.FERRIES_TERMINAL_SAILING_SPACE)
+    void getFerriesTerminalSailingSpaces(ListCallback<GenericRow> callback);
+    
+    /**
+     * Retrieve ferries terminal sailing spaces for a specific terminal.
+     * 
+     * @param terminalId
+     * @param callback
+     */
+    @Select("SELECT * FROM " + Tables.FERRIES_TERMINAL_SAILING_SPACE
+            + " WHERE " + FerriesTerminalSailingSpaceColumns.TERMINAL_ID
+            + " = {terminalId}")
+    void getFerriesTerminalSailingSpace(String terminalId, ListCallback<GenericRow> callback);
+    
 	/** 
 	 * Returns rows from mountain passes table which have been starred as favorites.
 	 * 
