@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,6 @@ import com.googlecode.mgwt.ui.client.widget.Carousel;
 import com.googlecode.mgwt.ui.client.widget.CellList;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.ProgressBar;
-import com.googlecode.mgwt.ui.client.widget.RoundPanel;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
@@ -423,8 +422,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	@Override
 	public void clear() {
 		alertsCarousel.clear();
-		alertsCarousel.refresh();
 		alertPanel.clear();
+	    alertsCarousel.removeFromParent();
+	    alertPanel.removeFromParent();
 	}
 	
 	@Override
