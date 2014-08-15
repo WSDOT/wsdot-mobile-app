@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -315,7 +315,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	}
 
 	private void getHighestPriorityHighwayAlerts(List<GenericRow> result) {
-		ArrayList<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
+	    highwayAlertItems.clear();
 		HighwayAlertItem item;
 		int numResults = result.size();
 		
@@ -1034,7 +1034,8 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 	}
 	
-	private static String makeImage(ImageResource resource) {
+	@SuppressWarnings("unused")
+    private static String makeImage(ImageResource resource) {
 		AbstractImagePrototype image = AbstractImagePrototype.create(resource);
 		String html = image.getHTML();
 		

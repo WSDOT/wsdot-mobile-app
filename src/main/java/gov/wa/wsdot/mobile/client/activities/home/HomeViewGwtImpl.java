@@ -422,8 +422,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	@Override
 	public void clear() {
 		alertsCarousel.clear();
-		alertsCarousel.refresh();
 		alertPanel.clear();
+	    alertsCarousel.removeFromParent();
+	    alertPanel.removeFromParent();
 	}
 	
 	@Override
