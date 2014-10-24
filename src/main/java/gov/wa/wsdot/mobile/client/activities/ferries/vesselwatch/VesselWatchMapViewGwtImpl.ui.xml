@@ -3,35 +3,47 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.buttonbar"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.buttonbar"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.button.image"
     xmlns:maps="urn:import:com.google.gwt.maps.client">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML>VesselWatch</g:HTML>
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+    <ui:style>
+        .progressIndicatorPanel {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            max-width: 100%;
+        }
+        .progressIndicator {
+            width: 0px;
+            padding: 30px 0 20px 0;
+        }
+    </ui:style>
+    
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:header.HeaderTitle>VesselWatch</mgwt:header.HeaderTitle>
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:panel.flex.FixedSpacer />
+		</mgwt:header.HeaderPanel>
 		
        	<g:FlowPanel ui:field="flowPanel">
-       	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+	        <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+	            <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+	        </g:HTMLPanel>
        	</g:FlowPanel>
 		
-       	<b:ButtonBar ui:field="buttonBar">
-	  	    <wsdot:NavigationButton ui:field="navigationButton" />
-	  	    <b:ButtonBarSpacer />
-	  	    <wsdot:PhotoButton ui:field="cameraButton" />
-	  	    <b:ButtonBarSpacer />
-	  	    <wsdot:LocationButton ui:field="locationButton" />
-       	</b:ButtonBar>
+       	<mgwt:buttonbar.ButtonBar ui:field="buttonBar">
+	  	    <wsdot:NavigationImageButton ui:field="navigationButton" />
+	  	    <mgwt:panel.flex.FlexSpacer />
+	  	    <wsdot:CameraImageButton ui:field="cameraButton" />
+	  	    <mgwt:panel.flex.FlexSpacer />
+	  	    <wsdot:LocationImageButton ui:field="locationButton" />
+       	</mgwt:buttonbar.ButtonBar>
        	
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
     
     
 </ui:UiBinder>

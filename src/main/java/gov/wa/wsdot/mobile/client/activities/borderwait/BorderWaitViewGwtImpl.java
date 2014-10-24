@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,14 +30,14 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 
@@ -55,7 +55,7 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 			.create(BorderWaitViewGwtImplUiBinder.class);
 
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 	
 	@UiField(provided =  true)
 	PullPanel northboundPullToRefresh;
@@ -70,10 +70,10 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 	CellList<BorderWaitItem> southbound;
 	
 	@UiField
-	ProgressBar northboundProgressBar;
+	ProgressIndicator northboundProgressIndicator;
 	
 	@UiField
-	ProgressBar southboundProgressBar;
+	ProgressIndicator southboundProgressIndicator;
 	
 	private Presenter presenter;
 	private PullArrowHeader northboundPullArrowHeader;
@@ -126,9 +126,6 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 
 		});
 		
-		northbound.setGroup(false);
-		northbound.setRound(false);
-
 		southbound = new CellList<BorderWaitItem>(
 				new BorderWaitCell<BorderWaitItem>() {
 
@@ -166,9 +163,6 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 
 		});
 		
-		southbound.setGroup(false);
-		southbound.setRound(false);
-		
 		initWidget(uiBinder.createAndBindUi(this));
 		
 	}
@@ -202,25 +196,25 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 	}
 
 	@Override
-	public void showProgressBar() {
-		northboundProgressBar.setVisible(true);
-		southboundProgressBar.setVisible(true);
+	public void showProgressIndicator() {
+		northboundProgressIndicator.setVisible(true);
+		southboundProgressIndicator.setVisible(true);
 	}
 
 	@Override
-	public void hideProgressBar() {
-		northboundProgressBar.setVisible(false);
-		southboundProgressBar.setVisible(false);
+	public void hideProgressIndicator() {
+		northboundProgressIndicator.setVisible(false);
+		southboundProgressIndicator.setVisible(false);
 	}
 
 	@Override
 	public void setNorthboundHeaderPullHandler(Pullhandler pullHandler) {
-		northboundPullToRefresh.setHeaderPullhandler(pullHandler);
+		northboundPullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override
 	public void setSouthboundHeaderPullHandler(Pullhandler pullHandler) {
-		southboundPullToRefresh.setHeaderPullhandler(pullHandler);
+		southboundPullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override

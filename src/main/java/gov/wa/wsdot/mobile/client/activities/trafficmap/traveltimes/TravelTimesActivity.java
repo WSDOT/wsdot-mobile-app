@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,8 +46,8 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 public class TravelTimesActivity extends MGWTAbstractActivity implements
 		TravelTimesView.Presenter {
@@ -127,7 +127,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 					shouldUpdate = (Math.abs(now - lastUpdated) > (5 * 60000)); // Refresh every 5 minutes.
 				}
 
-				view.showProgressBar();
+				view.showProgressIndicator();
 				
 				if (shouldUpdate) {
 					/**
@@ -158,7 +158,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		
 								@Override
 								public void onFailure(Throwable caught) {
-									view.hideProgressBar();
+									view.hideProgressIndicator();
 									phoneGap.getNotification()
 									.alert("Can't load data. Check your connection.",
 											new AlertCallback() {
@@ -294,7 +294,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 			
 		}
 		
-		view.hideProgressBar();
+		view.hideProgressIndicator();
 		view.render(travelTimesItems);
 		view.refresh();		
 	}

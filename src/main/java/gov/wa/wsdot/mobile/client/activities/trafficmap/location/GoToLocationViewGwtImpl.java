@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
 public class GoToLocationViewGwtImpl extends Composite implements
 		GoToLocationView {
@@ -56,7 +56,7 @@ public class GoToLocationViewGwtImpl extends Composite implements
 	CellList<Topic> cellList;
 	
 	@UiField
-	HeaderButton doneButton;
+	Button doneButton;
 	
 	@UiField
 	ScrollPanel scrollPanel;
@@ -80,8 +80,6 @@ public class GoToLocationViewGwtImpl extends Composite implements
 				return false;
 			}
 		});	
-		
-		cellList.setRound(false);
 
 		initWidget(uiBinder.createAndBindUi(this));
 		

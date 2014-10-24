@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,8 +52,8 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWaitView.Presenter {
 
@@ -165,7 +165,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 					shouldUpdate = (Math.abs(now - lastUpdated) > (15 * 60000)); // Refresh every 15 minutes.
 				}
 
-				view.showProgressBar();
+				view.showProgressIndicator();
 				
 				if (shouldUpdate) {
 					/**
@@ -195,7 +195,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 
 								@Override
 								public void onFailure(Throwable caught) {
-									view.hideProgressBar();
+									view.hideProgressIndicator();
 									phoneGap.getNotification()
 											.alert("Can't load data. Check your connection.",
 													new AlertCallback() {
@@ -336,7 +336,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 			}
 		}
 		
-		view.hideProgressBar();
+		view.hideProgressIndicator();
 		view.renderNorthbound(northboundBorderWaitItems);
 		view.renderSouthbound(southboundBorderWaitItems);
 		view.refresh();

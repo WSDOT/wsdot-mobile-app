@@ -18,22 +18,22 @@
 
 package gov.wa.wsdot.mobile.client.widget.tabbar;
 
-import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalTabBarImageHolder;
 
-import com.googlecode.mgwt.ui.client.MGWT;
-import com.googlecode.mgwt.ui.client.MGWTStyle;
-import com.googlecode.mgwt.ui.client.theme.base.TabBarCss;
+import com.google.gwt.dom.client.Style.Unit;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarAppearance;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class VideoTabBarButton extends TabBarButton {
 
 	public VideoTabBarButton() {
-		this(MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss());
+		this(TabPanel.DEFAULT_APPEARANCE);
 	}
 
-	public VideoTabBarButton(TabBarCss css) {
-		super(css, MGWT.getOsDetection().isIOs()
-				|| MGWT.getOsDetection().isDesktop() ? AppBundle.INSTANCE.tabBarVideoCameraImage() : null);
-		setText("Video");
+	public VideoTabBarButton(TabBarAppearance appearance) {
+        super(appearance, LocalTabBarImageHolder.get().video());
+        setText("Video");
+        text.getStyle().setTop(1, Unit.PX);
 	}
 }

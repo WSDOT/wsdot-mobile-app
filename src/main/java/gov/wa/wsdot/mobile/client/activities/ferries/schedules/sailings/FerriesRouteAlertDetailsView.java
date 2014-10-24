@@ -30,8 +30,6 @@ public interface FerriesRouteAlertDetailsView extends IsWidget {
 		
 	}
 	
-	public void setTitle(String title);
-	
 	public void setPublishDate(String publishDate);
 	
 	public void setAlertTitle(String alertTitle);

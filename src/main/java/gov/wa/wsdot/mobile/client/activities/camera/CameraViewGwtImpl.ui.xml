@@ -3,54 +3,37 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar"
-    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
     <ui:style>
-        .headerTitle {
-            width: 180px;
-            margin-left: -85px;
-        }
-        .buttonPanel {
-            display: -webkit-box;
-            -webkit-box-orient: horizontal;
-            -webkit-box-align: center;
-            -webkit-box-pack: end;
-            margin: 12px;
-        }
     </ui:style>
     
-    <mgwt:LayoutPanel>
+    <mgwt:panel.flex.RootFlexPanel>
 
-        <mgwt:HeaderPanel>
-            <mgwt:left>
-                <mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-            </mgwt:left>
-            <mgwt:center>
-                <g:HTML ui:field="title" styleName="{style.headerTitle}" />
-            </mgwt:center>
-        </mgwt:HeaderPanel>
+        <mgwt:header.HeaderPanel>
+	        <mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+	        <mgwt:panel.flex.FlexSpacer />
+	        <mgwt:header.HeaderTitle>Camera</mgwt:header.HeaderTitle>
+	        <mgwt:panel.flex.FlexSpacer />
+	        <mgwt:button.image.NotimportantImageButton ui:field="starButton" />
+        </mgwt:header.HeaderPanel>
 
-        <mgwt:tabbar.TabPanel ui:field="tabPanel">
+        <mgwt:tabbar.TabPanel ui:field="tabPanel" height="100%">
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
                         <wsdot:CameraTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-        
-        
-        <p:PullPanel ui:field="cameraPullToRefresh">
-			<g:FlowPanel>
-                <g:HTMLPanel styleName="{style.buttonPanel}">
-                    <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
-                </g:HTMLPanel>
-				<mgwt:CellList ui:field="cameraCellList" />
-			</g:FlowPanel>
-        </p:PullPanel>
-        
+                        <mgwt:panel.flex.RootFlexPanel>
+				        <mgwt:panel.pull.PullPanel ui:field="cameraPullToRefresh">
+							<g:FlowPanel>
+								<mgwt:list.celllist.CellList ui:field="cameraCellList" />
+							</g:FlowPanel>
+				        </mgwt:panel.pull.PullPanel>
+				        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
@@ -61,19 +44,19 @@
                         <wsdot:VideoTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-
-         <p:PullPanel ui:field="videoPullToRefresh">
-            <g:FlowPanel>
-                <mgwt:CellList ui:field="videoCellList" />
-            </g:FlowPanel>
-        </p:PullPanel>                       
-                        
+                        <mgwt:panel.flex.RootFlexPanel>
+				        <mgwt:panel.pull.PullPanel ui:field="videoPullToRefresh">
+				           <g:FlowPanel>
+				               <mgwt:list.celllist.CellList ui:field="videoCellList" />
+				           </g:FlowPanel>
+				        </mgwt:panel.pull.PullPanel>
+				        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
             
         </mgwt:tabbar.TabPanel>
             
-    </mgwt:LayoutPanel>
+    </mgwt:panel.flex.RootFlexPanel>
 
 </ui:UiBinder>

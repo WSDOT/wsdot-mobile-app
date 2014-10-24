@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,16 +32,16 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.MListBox;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class TwitterViewGwtImpl extends Composite implements TwitterView {
 
@@ -62,16 +62,17 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 	CellList<TwitterItem> cellList;
 	
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 
 	@UiField(provided = true)
+    static
 	PullPanel pullToRefresh;
 	
 	@UiField
 	FlowPanel flowPanel;
 	
 	@UiField
-	ProgressBar progressBar;
+	ProgressIndicator progressIndicator;
 	
 	@UiField(provided = true)
 	MListBox twitterAccounts;
@@ -96,6 +97,8 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 		twitterAccounts.addItem("WSDOT Southwest");
 		twitterAccounts.addItem("WSDOT Tacoma");
 		twitterAccounts.addItem("WSDOT Traffic");
+		
+		handleOnLoad();
 		
 		cellList = new CellList<TwitterItem>(new TwitterCell<TwitterItem>() {
 			
@@ -126,12 +129,27 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 
 		});
 		
-		cellList.setGroup(true);
-		cellList.setRound(false);
-		
 		initWidget(uiBinder.createAndBindUi(this));
 
 	}
+	
+    /**
+     * ScrollPanel doesn't allow scrolling to the bottom if it contains a CellList with images.
+     * 
+     * See: https://code.google.com/p/mgwt/issues/detail?id=276
+     * 
+     * ScrollPanel.refresh() must be explicitly called after the images are loaded.
+     * Since the onload event of images is not bubbling up, the LoadHandler can't be attached
+     * to the CellList. Instead, the onload event needs to be captured at the <img>, and directly
+     * trigger the ScrollPanel.refresh() from there.
+     */
+    private native void handleOnLoad() /*-{
+        $wnd.refreshPanel = @gov.wa.wsdot.mobile.client.activities.socialmedia.twitter.TwitterViewGwtImpl::refreshPanel();
+    }-*/;
+        
+    public static void refreshPanel() {
+        pullToRefresh.refresh();
+    }
 	
 	@UiHandler("cellList")
 	protected void onCellSelected(CellSelectedEvent event) {
@@ -162,13 +180,13 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 	}
 
 	@Override
-	public void showProgressBar() {
-		progressBar.setVisible(true);
+	public void showProgressIndicator() {
+		progressIndicator.setVisible(true);
 	}
 
 	@Override
-	public void hideProgressBar() {
-		progressBar.setVisible(false);
+	public void hideProgressIndicator() {
+		progressIndicator.setVisible(false);
 	}
 
 	@Override
@@ -188,7 +206,7 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 	
 	@Override
 	public void setHeaderPullHandler(Pullhandler pullHandler) {
-		pullToRefresh.setHeaderPullhandler(pullHandler);
+		pullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override

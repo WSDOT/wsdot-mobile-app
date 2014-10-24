@@ -49,7 +49,6 @@ public class FerriesRouteAlertDetailsActivity extends MGWTAbstractActivity imple
 		if (place instanceof FerriesRouteAlertDetailsPlace) {
 			FerriesRouteAlertDetailsPlace ferriesRouteAlertDetailsPlace = (FerriesRouteAlertDetailsPlace) place;
 			
-			view.setTitle(ferriesRouteAlertDetailsPlace.getFerriesRouteAlertItem().getAlertFullTitle());
 			view.setPublishDate(ferriesRouteAlertDetailsPlace.getFerriesRouteAlertItem().getPublishDate());
 			view.setAlertTitle(ferriesRouteAlertDetailsPlace.getFerriesRouteAlertItem().getAlertFullTitle());
 			view.setAlertText(ferriesRouteAlertDetailsPlace.getFerriesRouteAlertItem().getAlertFullText());

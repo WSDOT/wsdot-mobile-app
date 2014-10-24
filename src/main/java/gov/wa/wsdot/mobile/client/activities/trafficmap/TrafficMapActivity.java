@@ -118,7 +118,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 					shouldUpdate = (Math.abs(now - lastUpdated) > (7 * 86400000)); // Refresh every 7 days.
 				}
 				
-				view.showProgressBar();
+				view.showProgressIndicator();
 				
 				if (shouldUpdate) {
 					/**
@@ -148,7 +148,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 								@Override
 								public void onFailure(Throwable caught) {
-									view.hideProgressBar();
+									view.hideProgressIndicator();
 									phoneGap.getNotification()
 									.alert("Can't load data. Check your connection.",
 											new AlertCallback() {
@@ -216,7 +216,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 															@Override
 															public void onSuccess() {
-																view.hideProgressBar();
+																view.hideProgressIndicator();
 																drawCamerasLayer();
 															}
 														});
@@ -231,7 +231,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 					});
 
 				} else {
-					view.hideProgressBar();
+					view.hideProgressIndicator();
 					drawCamerasLayer();
 				}
 			}

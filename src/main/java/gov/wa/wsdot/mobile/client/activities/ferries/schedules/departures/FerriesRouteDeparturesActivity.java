@@ -60,8 +60,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 public class FerriesRouteDeparturesActivity extends
 		MGWTAbstractActivity implements
@@ -153,7 +153,7 @@ public class FerriesRouteDeparturesActivity extends
 				FerriesScheduleTimesItem timesItem;
 				Date now = new Date();
 				
-				view.showProgressBar();
+				view.showProgressIndicator();
 				
 				JSONValue value = JSONParser.parseStrict(result.get(0).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_DATE));
 				JSONArray dates = value.isArray();
@@ -222,13 +222,13 @@ public class FerriesRouteDeparturesActivity extends
 				}
 				
 				String terminalTitle = scheduleDateItems.get(0)
-						.getFerriesTerminalItem().get(sailingsIndex)
-						.getDepartingTerminalName()
-						+ " to "
-						+ scheduleDateItems.get(0)
-								.getFerriesTerminalItem()
-								.get(sailingsIndex)
-								.getArrivingTerminalName(); 
+				        .getFerriesTerminalItem().get(sailingsIndex)
+				        .getDepartingTerminalName()
+				        + " to "
+				        + scheduleDateItems.get(0)
+				        .getFerriesTerminalItem()
+				        .get(sailingsIndex)
+				        .getArrivingTerminalName();
 				
 				int numItems = scheduleDateItems.size();
 				
@@ -417,7 +417,7 @@ public class FerriesRouteDeparturesActivity extends
             }
         }
         
-        view.hideProgressBar();
+        view.hideProgressIndicator();
         view.render(scheduleDateItems
                 .get(view.getDayOfWeekSelected())
                 .getFerriesTerminalItem().get(sailingsIndex)

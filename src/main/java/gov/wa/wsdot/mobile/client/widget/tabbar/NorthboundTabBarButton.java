@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +18,23 @@
 
 package gov.wa.wsdot.mobile.client.widget.tabbar;
 
-import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalTabBarImageHolder;
 
-import com.googlecode.mgwt.ui.client.MGWT;
-import com.googlecode.mgwt.ui.client.MGWTStyle;
-import com.googlecode.mgwt.ui.client.theme.base.TabBarCss;
+import com.google.gwt.dom.client.Style.Unit;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarAppearance;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class NorthboundTabBarButton extends TabBarButton {
 
 	public NorthboundTabBarButton() {
-		this(MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss());
+		this(TabPanel.DEFAULT_APPEARANCE);
 	}
 	
-	public NorthboundTabBarButton(TabBarCss css) {
-		super(css, MGWT.getOsDetection().isIOs()
-				|| MGWT.getOsDetection().isDesktop() ? AppBundle.INSTANCE
-				.tabBarArrowUpPNG() : null);
-		setText("Northbound");
+	public NorthboundTabBarButton(TabBarAppearance appearance) {
+        super(appearance, LocalTabBarImageHolder.get().arrowUp());
+        setText("Northbound");
+        text.getStyle().setTop(1, Unit.PX);
 	}
 	
 }

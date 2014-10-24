@@ -135,9 +135,12 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public HomeView getHomeView() {
-		if (homeView == null) {
-			homeView = new HomeViewGwtImpl();
-		}
+        /**
+         * Instantiating a new View is a temporary measure until
+         * I can figure out why Views which use tabs throw NPEs
+         * on a device configuration change.
+         */
+	    homeView = new HomeViewGwtImpl();
 		
 		return homeView;
 	}	
@@ -313,9 +316,13 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public FerriesRouteSailingsView getFerriesRouteSailingsView() {
-		if (ferriesRouteSailingsView == null) {
-			ferriesRouteSailingsView = new FerriesRouteSailingsViewGwtImpl();
-		}
+        /**
+         * Instantiating a new View is a temporary measure until
+         * I can figure out why Views which use tabs throw NPEs
+         * on a device configuration change.
+         */
+		ferriesRouteSailingsView = new FerriesRouteSailingsViewGwtImpl();
+
 		return ferriesRouteSailingsView;
 	}
 
@@ -329,9 +336,14 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public CameraView getCameraView() {
-		//if (cameraView == null) {
-			cameraView = new CameraViewGwtImpl();
-		//}
+        /**
+         * Because we are modifying the layout of the view by removing tabs
+         * if there is no video component we need to re-create
+         * it each time. Otherwise we try and reference tabs which no longer
+         * exist in the layout.
+         */
+        cameraView = new CameraViewGwtImpl();
+
 		return cameraView;
 	}
 

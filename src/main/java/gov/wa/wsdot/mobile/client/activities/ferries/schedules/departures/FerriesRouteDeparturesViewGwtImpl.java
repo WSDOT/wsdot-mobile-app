@@ -39,15 +39,15 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.MListBox;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		implements FerriesRouteDeparturesView {
@@ -70,16 +70,16 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	CellList<FerriesScheduleTimesItem> cellList;
 	
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
     
 	@UiField(provided = true)
     PullPanel pullToRefresh;	
 	
 	@UiField
-	HTML title;
+    HTML title;
 	
 	@UiField
-	ProgressBar progressBar;
+	ProgressIndicator progressIndicator;
 	
 	@UiField(provided = true)
 	MListBox daysOfWeek;
@@ -160,9 +160,6 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 			
 		});
 		
-		cellList.setRound(false);
-		cellList.setGroup(false);
-		
 		initWidget(uiBinder.createAndBindUi(this));
 		
 	}
@@ -187,24 +184,24 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		this.presenter = presenter;
 	}
 	
-	@Override
-	public void setTitle(String title) {
-		this.title.setText(title);
-	}
-
+    @Override
+    public void setTitle(String title) {
+        this.title.setHTML(title);
+    }
+	
 	@Override
 	public void render(List<FerriesScheduleTimesItem> createTopicsList) {
 		cellList.render(createTopicsList);
 	}
 	
 	@Override
-	public void showProgressBar() {
-		progressBar.setVisible(true);
+	public void showProgressIndicator() {
+		progressIndicator.setVisible(true);
 	}
 
 	@Override
-	public void hideProgressBar() {
-		progressBar.setVisible(false);
+	public void hideProgressIndicator() {
+		progressIndicator.setVisible(false);
 	}
 
 	@Override
@@ -234,7 +231,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 
     @Override
     public void setHeaderPullHandler(Pullhandler pullHandler) {
-        pullToRefresh.setHeaderPullhandler(pullHandler);
+        pullToRefresh.setHeaderPullHandler(pullHandler);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 
 public class NewsDetailsViewGwtImpl extends Composite implements
 		NewsDetailsView {
@@ -45,10 +46,10 @@ public class NewsDetailsViewGwtImpl extends Composite implements
 			.create(NewsDetailsViewGwtImplUiBinder.class);
 
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 	
 	@UiField
-	HTML title;
+	HeaderTitle title;
 	
 	@UiField
 	HTML content;

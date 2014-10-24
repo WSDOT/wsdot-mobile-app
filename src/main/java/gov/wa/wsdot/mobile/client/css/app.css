@@ -113,7 +113,7 @@ video {
     display: -webkit-box;
     -webkit-box-orient: horizontal;
     -webkit-box-align: center;
-    margin-right: 8px;
+    margin-right: 14px;
 }
 
 .cellTravelTimes > div:nth-child\(1\) {
@@ -210,18 +210,7 @@ video {
     color: #006f80;
 }
 
-.highImpactAlerts {
-    display: -webkit-box;
-    -webkit-box-align: center;
-    width: 100%;
-    margin-bottom: 23px;
-    padding: 0 2px 0 2px;
-    text-align: center;
-    color: #006f80;
-}
-
-.highImpactAlert > div:nth-child\(1\),
-.highImpactAlerts > div:nth-child\(1\) {
+.highImpactAlert > div:nth-child\(1\) {
 	-webkit-box-flex: 1;
 }
 
@@ -239,13 +228,14 @@ video {
     margin-left: 5px;
 }
 
+/*
 @sprite .highImpactAlerts > div:nth-child\(2\) {
     gwt-image: "disclosurePNG";
     background-repeat: no-repeat;
     background-position: center;
     margin-left: 5px;
 }
-
+*/
 
 .noHighImpactAlerts p {
     width: 100%;

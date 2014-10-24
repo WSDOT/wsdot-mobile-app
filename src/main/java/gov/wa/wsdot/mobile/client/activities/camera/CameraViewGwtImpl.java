@@ -18,7 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.camera;
 
-import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 
 import java.util.List;
@@ -28,17 +27,17 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class CameraViewGwtImpl extends Composite implements CameraView {
@@ -57,18 +56,16 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 			.create(CameraViewGwtImplUiBinder.class);
 
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 	
-	@UiField
-	HTML title;
-	
-	@UiField
-	Button starButton;
+	@UiField(provided = true)
+	NotimportantImageButton starButton;
 	
 	@UiField
 	TabPanel tabPanel;
 	
 	@UiField(provided = true)
+    static
 	PullPanel cameraPullToRefresh;
 
     @UiField(provided = true)
@@ -95,6 +92,10 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 		videoPullArrowHeader = new PullArrowHeader();
 		videoPullToRefresh.setHeader(videoPullArrowHeader);
 		
+		starButton = new NotimportantImageButton();
+		
+		handleOnLoad();
+		
 		cameraCellList = new CellList<CameraItem>(new CameraCell<CameraItem>() {
 
 			@Override
@@ -107,10 +108,7 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 				return false;
 			}
 		});
-		
-		cameraCellList.setGroup(false);
-		cameraCellList.setRound(false);
-		
+	
         videoCellList = new CellList<CameraItem>(new VideoCell<CameraItem>() {
 
             @Override
@@ -130,12 +128,27 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 
         });
         
-        videoCellList.setGroup(false);
-        videoCellList.setRound(false);
-		
 		initWidget(uiBinder.createAndBindUi(this));
 		
 	}
+	
+    /**
+     * PullPanel doesn't allow scrolling to the bottom if it contains a CellList with images.
+     * 
+     * See: https://code.google.com/p/mgwt/issues/detail?id=276
+     * 
+     * PullPanel.refresh() must be explicitly called after the images are loaded.
+     * Since the onload event of images is not bubbling up, the LoadHandler can't be attached
+     * to the CellList. Instead, the onload event needs to be captured at the <img>, and directly
+     * trigger the PullPanel.refresh() from there.
+     */
+    private native void handleOnLoad() /*-{
+        $wnd.refreshPanel = @gov.wa.wsdot.mobile.client.activities.camera.CameraViewGwtImpl::refreshPanel();
+    }-*/;
+        
+    public static void refreshPanel() {
+        cameraPullToRefresh.refresh();
+    }
 	
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
@@ -167,11 +180,6 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
     }
 	
 	@Override
-	public void setTitle(String title) {
-		this.title.setText(title);
-	}
-
-	@Override
 	public void cameraRefresh() {
 		cameraPullToRefresh.refresh();
 	}
@@ -181,10 +189,9 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
         videoPullToRefresh.refresh();
     }
 	
-	@SuppressWarnings("deprecation")
-    @Override
+	@Override
 	public void setCameraHeaderPullHandler(Pullhandler pullHandler) {
-		cameraPullToRefresh.setHeaderPullhandler(pullHandler);		
+		cameraPullToRefresh.setHeaderPullHandler(pullHandler);		
 	}
 
 	@Override
@@ -200,33 +207,30 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 
     @Override
     public void setVideoHeaderPullHandler(Pullhandler pullHandler) {
-        // TODO Auto-generated method stub
-        
+        videoPullToRefresh.setHeaderPullHandler(pullHandler);
     }
 
     @Override
     public PullArrowWidget getVideoPullHeader() {
-        // TODO Auto-generated method stub
-        return null;
+        return videoPullArrowHeader;
     }
 
     @Override
     public HasRefresh getVideoPullPanel() {
-        // TODO Auto-generated method stub
-        return null;
+        return videoPullToRefresh;
     }
 
     @Override
     public void removeTab(int tabIndex) {
-        this.tabPanel.remove(tabIndex);
+        this.tabPanel.tabBar.remove(tabIndex);
     }
     
 	@Override
 	public void toggleStarButton(boolean isStarred) {
 		if (isStarred) {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOn());
+			starButton.setIcon(ImageHolder.get().important());
 		} else {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOff());
+			starButton.setIcon(ImageHolder.get().notImportant());
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.inappbrowser.InAppBrowser;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 public class BlogActivity extends MGWTAbstractActivity implements
 		BlogView.Presenter {
@@ -114,7 +114,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 	
 	private void createBlogList(final BlogView view) {
 		blogItems.clear();
-		view.showProgressBar();
+		view.showProgressIndicator();
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		// Set timeout for 30 seconds (30000 milliseconds)
 		jsonp.setTimeout(30000);
@@ -122,7 +122,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 
 			@Override
 			public void onFailure(Throwable caught) {
-				view.hideProgressBar();
+				view.hideProgressIndicator();
 				phoneGap.getNotification()
 				.alert("Can't load data. Check your connection.",
 						new AlertCallback() {
@@ -152,7 +152,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 						blogItems.add(item);
 					}
 					
-					view.hideProgressBar();
+					view.hideProgressIndicator();
 					view.render(blogItems);
 					view.refresh();
 				}

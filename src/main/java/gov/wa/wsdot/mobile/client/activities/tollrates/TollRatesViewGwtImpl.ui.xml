@@ -24,25 +24,24 @@
         .weekend { background-color: #d6d6d6; font-weight: bold; }
     </ui:style>
     
-    <mgwt:LayoutPanel>
-
-        <mgwt:HeaderPanel>
-            <mgwt:left>
-                <mgwt:HeaderButton ui:field="backButton" backButton="true" text="Home" />
-            </mgwt:left>
-            <mgwt:center>
-                <g:HTML>Toll Rates</g:HTML>
-            </mgwt:center>
-        </mgwt:HeaderPanel>
+    <mgwt:panel.flex.RootFlexPanel>
+        <mgwt:header.HeaderPanel>
+	        <mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+	        <mgwt:panel.flex.FlexSpacer />
+	        <mgwt:header.HeaderTitle>Toll Rates</mgwt:header.HeaderTitle>
+	        <mgwt:panel.flex.FlexSpacer />
+	        <mgwt:panel.flex.FixedSpacer />
+        </mgwt:header.HeaderPanel>
         
-        <mgwt:tabbar.TabPanel>
+        <mgwt:tabbar.TabPanel height="100%">
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
                         <wsdot:SR520TabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:ScrollPanel scrollingEnabledX="false">
+                        <mgwt:panel.flex.RootFlexPanel>
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
 	                            <g:Grid styleName="{style.grid}">
@@ -154,7 +153,8 @@
 	                            </g:Grid>
 
                             </g:HTMLPanel>
-                        </mgwt:ScrollPanel>
+                        </mgwt:panel.scroll.ScrollPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
@@ -165,7 +165,8 @@
                         <wsdot:SR16TabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:ScrollPanel scrollingEnabledX="false">
+                        <mgwt:panel.flex.RootFlexPanel>
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
                                 <g:Grid styleName="{style.grid}">
@@ -208,7 +209,8 @@
                                 </g:Grid>
                                 
                             </g:HTMLPanel>
-                        </mgwt:ScrollPanel>
+                        </mgwt:panel.scroll.ScrollPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
@@ -219,7 +221,8 @@
                         <wsdot:SR167TabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:ScrollPanel scrollingEnabledX="false">
+                        <mgwt:panel.flex.RootFlexPanel>
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
                                 <g:HTML styleName="{style.simplePadding}">
                                     <p>Tolls are collected in both directions.</p>
@@ -235,12 +238,13 @@
                                     <p><em>Good To Go!</em> customers who use the HOT lane should look for the electronic sign above the lane that displays the actual toll rate and make a choice to enter the lane.</p>
                                 </g:HTML>
                             </g:HTMLPanel>
-                        </mgwt:ScrollPanel>
+                        </mgwt:panel.scroll.ScrollPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>            
         </mgwt:tabbar.TabPanel>
         
-    </mgwt:LayoutPanel>
+    </mgwt:panel.flex.RootFlexPanel>
 
 </ui:UiBinder>

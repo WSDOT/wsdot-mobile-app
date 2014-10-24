@@ -12,10 +12,6 @@
             background-color: white;
             padding: 12px;
         }
-        .headerTitle {
-            width: 180px;
-            margin-left: -85px;
-        }
         .section {
             font-size: normal;
             font-weight: normal;
@@ -42,17 +38,16 @@
         }
     </ui:style>
     
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML ui:field="title" styleName="{style.headerTitle}" />
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:header.HeaderTitle ui:field="title" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:panel.flex.FixedSpacer />
+		</mgwt:header.HeaderPanel>
 		
-        <mgwt:ScrollPanel scrollingEnabledX="false">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
         	<g:HTMLPanel styleName="{style.htmlPanel}">
 				<g:HTMLPanel styleName="{style.horizontalCell}">
 				    <g:HTMLPanel styleName="{style.section}">
@@ -103,12 +98,11 @@
                     </g:HTMLPanel>
                 </g:HTMLPanel>
                 <g:HTMLPanel styleName="{style.section}">
-                    <mgwt:Button ui:field="vesselButton" addStyleNames="{style.vesselButton}" />
+                    <mgwt:button.Button ui:field="vesselButton" addStyleNames="{style.vesselButton}" />
                 </g:HTMLPanel>
             </g:HTMLPanel>
-        </mgwt:ScrollPanel>
+        </mgwt:panel.scroll.ScrollPanel>
 		
-	</mgwt:LayoutPanel>
-    
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>
