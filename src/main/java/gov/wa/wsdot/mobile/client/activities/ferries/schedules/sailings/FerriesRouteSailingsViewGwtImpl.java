@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
-import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.TitleLastUpdatedCell;
 import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
@@ -31,16 +30,16 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
-import com.googlecode.mgwt.ui.client.widget.celllist.BasicCell;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.BasicCell;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class FerriesRouteSailingsViewGwtImpl extends Composite
 		implements FerriesRouteSailingsView {
@@ -62,6 +61,9 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	@UiField
 	ScrollPanel sailingsPanel;
 	
+	@UiField
+	ScrollPanel alertsPanel;
+	
 	@UiField(provided = true)
 	CellList<FerriesTerminalItem> sailingsCellList;
 	
@@ -69,20 +71,19 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	CellList<FerriesRouteAlertItem> alertsCellList;
 	
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
+	
+	@UiField(provided = true)
+	NotimportantImageButton starButton;
 	
 	@UiField
-	HTML title;
-	
-	@UiField
-	Button starButton;
-	
-	@UiField
-	ProgressBar progressBar;
+	ProgressIndicator progressIndicator;
 	
 	private Presenter presenter;
 	
 	public FerriesRouteSailingsViewGwtImpl() {
+	    
+	    starButton = new NotimportantImageButton();
 		
 		sailingsCellList = new CellList<FerriesTerminalItem>(
 				new BasicCell<FerriesTerminalItem>() {
@@ -97,8 +98,6 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 				return true;
 			}
 		});
-		
-		sailingsCellList.setRound(false);
 		
 		alertsCellList = new CellList<FerriesRouteAlertItem>(
 				new TitleLastUpdatedCell<FerriesRouteAlertItem>() {
@@ -120,8 +119,6 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 			}
 			
 		});
-		
-		alertsCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		
@@ -163,11 +160,6 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	}
 	
 	@Override
-	public void setTitle(String title) {
-		this.title.setText(title);
-	}
-
-	@Override
 	public void render(List<FerriesTerminalItem> createTopicsList) {
 		sailingsCellList.render(createTopicsList);
 	}
@@ -185,27 +177,28 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	}
 	
 	@Override
-	public void showProgressBar() {
-		progressBar.setVisible(true);
+	public void showProgressIndicator() {
+		progressIndicator.setVisible(true);
 	}
 
 	@Override
-	public void hideProgressBar() {
-		progressBar.setVisible(false);
+	public void hideProgressIndicator() {
+		progressIndicator.setVisible(false);
 	}
 
 	@Override
 	public void refresh() {
 		sailingsPanel.refresh();
+		alertsPanel.refresh();
 	}
 
 	@Override
 	public void toggleStarButton(boolean isStarred) {
-		if (isStarred) {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOn());
-		} else {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOff());
-		}
+        if (isStarred) {
+            starButton.setIcon(ImageHolder.get().important());
+        } else {
+            starButton.setIcon(ImageHolder.get().notImportant());
+        }
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.ForecastItem;
@@ -34,11 +33,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class MountainPassDetailsViewGwtImpl extends Composite implements
@@ -58,14 +58,14 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 			.create(MountainPassDetailsViewGwtImplUiBinder.class);
 	
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 	
-	@UiField
-	HTML title;
-	
-	@UiField
-	Button starButton;
-	
+    @UiField(provided = true)
+    NotimportantImageButton starButton;
+    
+    @UiField
+    HTML title;
+    
 	@UiField
 	HTML dateUpdated;
 	
@@ -106,6 +106,7 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	ScrollPanel reportScrollPanel;
 	
 	@UiField
+    static
 	ScrollPanel cameraScrollPanel;
 	
 	@UiField
@@ -114,7 +115,11 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	private Presenter presenter;
 	
 	public MountainPassDetailsViewGwtImpl() {
+	    
+	    starButton = new NotimportantImageButton();
 
+	    handleOnLoad();
+	       
 		cameraCellList = new CellList<CameraItem>(new CameraCell<CameraItem>() {
 
 			@Override
@@ -127,9 +132,6 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 				return true;
 			}
 		});
-		
-		cameraCellList.setGroup(true);
-		cameraCellList.setRound(false);
 		
 		forecastCellList = new CellList<ForecastItem>(new CellDetailsWithIcon<ForecastItem>() {
 
@@ -160,13 +162,28 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 		});
 		
-		forecastCellList.setGroup(false);
-		forecastCellList.setRound(false);
-		
 		initWidget(uiBinder.createAndBindUi(this));
 		
 	}
 	
+	/**
+	 * ScrollPanel doesn't allow scrolling to the bottom if it contains a CellList with images.
+	 * 
+	 * See: https://code.google.com/p/mgwt/issues/detail?id=276
+	 * 
+	 * ScrollPanel.refresh() must be explicitly called after the images are loaded.
+	 * Since the onload event of images is not bubbling up, the LoadHandler can't be attached
+	 * to the CellList. Instead, the onload event needs to be captured at the <img>, and directly
+	 * trigger the ScrollPanel.refresh() from there.
+	 */
+    private native void handleOnLoad() /*-{
+	    $wnd.refreshPanel = @gov.wa.wsdot.mobile.client.activities.mountainpasses.MountainPassDetailsViewGwtImpl::refreshPanel();
+    }-*/;
+		
+	public static void refreshPanel() {
+	    cameraScrollPanel.refresh();
+	}
+
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {
@@ -196,7 +213,7 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void setTitle(String title) {
-		this.title.setText(title);
+		this.title.setHTML(title);
 	}
 
 	@Override
@@ -250,7 +267,7 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void removeTab(int tabIndex) {
-		this.tabPanel.remove(tabIndex);
+		this.tabPanel.tabBar.remove(tabIndex);
 	}
 
 	@Override
@@ -270,11 +287,11 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void toggleStarButton(boolean isStarred) {
-		if (isStarred) {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOn());
-		} else {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOff());
-		}		
+        if (isStarred) {
+            starButton.setIcon(ImageHolder.get().important());
+        } else {
+            starButton.setIcon(ImageHolder.get().notImportant());
+        }	
 	}
 
 	@Override

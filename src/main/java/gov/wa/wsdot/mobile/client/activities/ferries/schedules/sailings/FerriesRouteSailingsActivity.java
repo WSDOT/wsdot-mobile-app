@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 				FerriesTerminalItem terminal;
 				FerriesRouteAlertItem routeAlert;
 				
-				view.showProgressBar();
+				view.showProgressIndicator();
 				
 				isStarred = result.get(0).getInt(FerriesSchedulesColumns.FERRIES_SCHEDULE_IS_STARRED) != 0;
 				
@@ -107,7 +107,6 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 						result.get(0)
 								.getInt(FerriesSchedulesColumns.FERRIES_SCHEDULE_IS_STARRED)));
 				
-				String scheduleTitle = result.get(0).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_TITLE);				
 				JSONValue scheduleDateValue = JSONParser.parseStrict(result.get(0).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_DATE));
 				JSONArray dates = scheduleDateValue.isArray();
 				JSONValue routeAlertValue = JSONParser.parseStrict(result.get(0).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_ALERT));
@@ -161,8 +160,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 					routeAlertItems.add(routeAlert);
 				}
 
-				view.hideProgressBar();
-				view.setTitle(scheduleTitle);
+				view.hideProgressIndicator();
 				view.toggleStarButton(isStarred);
 				view.render(scheduleDateItems.get(0).getFerriesTerminalItem());
 				view.renderRouteAlerts(routeAlertItems);

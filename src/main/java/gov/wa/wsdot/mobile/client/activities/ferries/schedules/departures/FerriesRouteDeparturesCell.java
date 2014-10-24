@@ -24,7 +24,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiRenderer;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.googlecode.mgwt.ui.client.widget.celllist.Cell;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.Cell;
 
 public abstract class FerriesRouteDeparturesCell<T> implements Cell<T> {
 	

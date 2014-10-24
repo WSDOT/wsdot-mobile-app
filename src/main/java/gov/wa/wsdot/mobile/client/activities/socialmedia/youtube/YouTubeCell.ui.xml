@@ -38,7 +38,7 @@
     <div>
         <div class="{style.videoImage}">
             <div>
-                <img class="{style.img}" src="{thumbnail}" />
+                <img class="{style.img}" src="{thumbnail}" onload="refreshPanel();" />
             </div>
         </div>
         <div class="{style.description}"><ui:text from="{description}" /></div>

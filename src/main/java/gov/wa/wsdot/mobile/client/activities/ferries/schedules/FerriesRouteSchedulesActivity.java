@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,8 +50,8 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		implements FerriesRouteSchedulesView.Presenter {
@@ -144,7 +144,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 					shouldUpdate = (Math.abs(now - lastUpdated) > (30 * 60000)); // Refresh every 30 minutes.
 				}
 
-				view.showProgressBar();
+				view.showProgressIndicator();
 				
 				if (shouldUpdate) {
 					/**
@@ -176,7 +176,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 								@Override
 								public void onFailure(Throwable caught) {
-									view.hideProgressBar();
+									view.hideProgressIndicator();
 									phoneGap.getNotification()
 									.alert("Can't load data. Check your connection.",
 											new AlertCallback() {
@@ -312,7 +312,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 		}
 		
-		view.hideProgressBar();
+		view.hideProgressIndicator();
 		view.render(ferriesRouteItems);
 		view.refresh();
 		

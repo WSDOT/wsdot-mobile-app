@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 
 public class FerriesRouteAlertDetailsViewGwtImpl extends Composite implements
 		FerriesRouteAlertDetailsView {
@@ -45,10 +45,7 @@ public class FerriesRouteAlertDetailsViewGwtImpl extends Composite implements
 			.create(FerriesRouteAlertDetailsViewGwtImplUiBinder.class);
 
 	@UiField
-	HeaderButton backButton;
-	
-	@UiField
-	HTML title;
+	PreviousitemImageButton backButton;
 	
 	@UiField
 	HTML publishDate;
@@ -72,11 +69,6 @@ public class FerriesRouteAlertDetailsViewGwtImpl extends Composite implements
 		if (presenter != null) {
 			presenter.onBackButtonPressed();
 		}
-	}
-	
-	@Override
-	public void setTitle(String title) {
-		this.title.setText(title);
 	}
 	
 	@Override

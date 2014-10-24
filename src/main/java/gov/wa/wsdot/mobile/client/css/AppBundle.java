@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface AppBundle extends ClientBundle {
-	public static final AppBundle INSTANCE = GWT.create(AppBundle.class);
+	
+    public static final AppBundle INSTANCE = GWT.create(AppBundle.class);
 	
 	@Source("app.css")
 	public Styles css();
@@ -152,63 +153,6 @@ public interface AppBundle extends ClientBundle {
 	@Source("wsdot_logo.png")
 	ImageResource logoPNG();
 	
-	@Source("iconmonstr-time-icon-24.png")
-	ImageResource buttonBarClockImage();
-	
-	@Source("flash_24.png")
-	ImageResource buttonBarFlashImagePNG();
-	
-	@Source("iconmonstr-warning-icon-24.png")
-	ImageResource buttonBarWarningImagePNG();
-	
-	@Source("iconmonstr-photo-camera-icon-24.png")
-	ImageResource buttonBarPhotoImagePNG();
-	
-	@Source("iconmonstr-navigation-icon-24.png")
-	ImageResource buttonBarNavigationIcon();
-	
-	@Source("iconmonstr-location-icon-24.png")
-	ImageResource buttonBarLocationIcon();
-	
-    /**
-     * Custom tab bar icons for iOS
-     */	
-	@Source("iconmonstr-photo-camera-icon-32.png")
-	ImageResource tabBarCameraImage();
-	
-	@Source("iconmonstr-video-camera-icon-32.png")
-	ImageResource tabBarVideoCameraImage();
-	
-    @Source("iconmonstr-home-icon-32.png")
-    ImageResource tabBarHouseImage();
-    
-    @Source("iconmonstr-star-icon-32.png")
-    ImageResource tabBarStarImage(); 
-	
-    @Source("iconmonstr-info-icon-32.png")
-    ImageResource tabBarNotepadImage();
-    
-    @Source("iconmonstr-warning-icon-32.png")
-    ImageResource tabBarWarningImage();
-    
-    @Source("iconmonstr-cloud-icon-32.png")
-    ImageResource tabBarWeatherImage();
-    
-    @Source("iconmonstr-arrow-down-icon-32.png")
-    ImageResource tabBarArrowDownPNG();
-    
-    @Source("iconmonstr-arrow-up-icon-32.png")
-    ImageResource tabBarArrowUpPNG();
-    
-    @Source("WA-520-32.png")
-    ImageResource tabBarSR520Image();
-    
-    @Source("WA-16-32.png")
-    ImageResource tabBarSR16Image();
-    
-    @Source("WA-167-32.png")
-    ImageResource tabBarSR167Image();
-    
 	/**
 	 * Highway icons
 	 */
@@ -287,9 +231,6 @@ public interface AppBundle extends ClientBundle {
 	@Source("camera_video.png")
 	ImageResource cameraVideoPNG();
 	
-	@Source("camera_shadow.png")
-	ImageResource cameraShadowPNG();
-	
 	@Source("disclosure.png")
 	ImageResource disclosurePNG();
 	
@@ -310,15 +251,9 @@ public interface AppBundle extends ClientBundle {
 	
 	@Source("alert_low.png")
 	ImageResource alertLowPNG();
-
-    @Source("alert_shadow.png")
-    ImageResource alertShadowPNG();
 	
 	@Source("closed.png")
 	ImageResource closedPNG();
-
-	@Source("closed_shadow.png")
-	ImageResource closedShadowPNG();
 
 	@Source("construction_highest.png")
     ImageResource constructionHighestPNG();
@@ -333,85 +268,46 @@ public interface AppBundle extends ClientBundle {
 	ImageResource constructionLowPNG();
 	
 	/**
-	 * Ferry vesselwatch icons and shadows
+	 * Ferry vesselwatch icons
 	 */
 	@Source("ferry_0.png")
 	ImageResource ferry0();
-
-	@Source("ferry_0_shadow.png")
-	ImageResource ferry0Shadow();
 	
 	@Source("ferry_30.png")
 	ImageResource ferry30();
-
-	@Source("ferry_30_shadow.png")
-	ImageResource ferry30Shadow();
 	
 	@Source("ferry_60.png")
 	ImageResource ferry60();
-
-	@Source("ferry_60_shadow.png")
-	ImageResource ferry60Shadow();
 	
 	@Source("ferry_90.png")
 	ImageResource ferry90();
-
-	@Source("ferry_90_shadow.png")
-	ImageResource ferry90Shadow();
 	
 	@Source("ferry_120.png")
 	ImageResource ferry120();
-
-	@Source("ferry_120_shadow.png")
-	ImageResource ferry120Shadow();
 	
 	@Source("ferry_150.png")
 	ImageResource ferry150();
-
-	@Source("ferry_150_shadow.png")
-	ImageResource ferry150Shadow();
 	
 	@Source("ferry_180.png")
 	ImageResource ferry180();
-
-	@Source("ferry_180_shadow.png")
-	ImageResource ferry180Shadow();
 	
 	@Source("ferry_210.png")
 	ImageResource ferry210();
-
-	@Source("ferry_210_shadow.png")
-	ImageResource ferry210Shadow();
 	
 	@Source("ferry_240.png")
 	ImageResource ferry240();
-
-	@Source("ferry_240_shadow.png")
-	ImageResource ferry240Shadow();
 	
 	@Source("ferry_270.png")
 	ImageResource ferry270();
-
-	@Source("ferry_270_shadow.png")
-	ImageResource ferry270Shadow();
 	
 	@Source("ferry_300.png")
 	ImageResource ferry300();
-
-	@Source("ferry_300_shadow.png")
-	ImageResource ferry300Shadow();
 	
 	@Source("ferry_330.png")
 	ImageResource ferry330();
-
-	@Source("ferry_330_shadow.png")
-	ImageResource ferry330Shadow();
 	
 	@Source("ferry_360.png")
 	ImageResource ferry360();
-
-	@Source("ferry_360_shadow.png")
-	ImageResource ferry360Shadow();
 	
 	public interface Styles extends CssResource {
 		String cellImage();
@@ -422,7 +318,6 @@ public interface AppBundle extends ClientBundle {
 		String dashboard();
 		String homeButton();
 		String highImpactAlert();
-		String highImpactAlerts();
 		String noHighImpactAlerts();
 		
 		String borderButton();

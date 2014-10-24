@@ -3,35 +3,49 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar"
-    xmlns:p="urn:import:com.googlecode.mgwt.ui.client.widget.base">
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-    <mgwt:LayoutPanel>
+    <ui:style>
+        .progressIndicatorPanel {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            max-width: 100%;
+        }
+        .progressIndicator {
+            width: 0px;
+            padding: 30px 0 20px 0;
+        }
+    </ui:style>
+    
+    <mgwt:panel.flex.RootFlexPanel>
 
-        <mgwt:HeaderPanel>
-            <mgwt:left>
-                <mgwt:HeaderButton ui:field="backButton" backButton="true" text="Home" />
-            </mgwt:left>
-            <mgwt:center>
-                <g:HTML>Border Wait</g:HTML>
-            </mgwt:center>
-        </mgwt:HeaderPanel>
+        <mgwt:header.HeaderPanel>
+	        <mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+	        <mgwt:panel.flex.FlexSpacer />
+	        <mgwt:header.HeaderTitle>Border Wait</mgwt:header.HeaderTitle>
+	        <mgwt:panel.flex.FlexSpacer />
+	        <mgwt:panel.flex.FixedSpacer />
+        </mgwt:header.HeaderPanel>
         
-        <mgwt:tabbar.TabPanel>
+        <mgwt:tabbar.TabPanel height="100%">
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
                         <wsdot:NorthboundTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-                        <p:PullPanel ui:field="northboundPullToRefresh">
+                        <mgwt:panel.flex.RootFlexPanel>
+                        <mgwt:panel.pull.PullPanel ui:field="northboundPullToRefresh">
 	                        <g:FlowPanel>
-	                            <mgwt:ProgressBar ui:field="northboundProgressBar" visible="false" />
-	                            <mgwt:CellList ui:field="northbound" />
+                                <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+                                    <mgwt:progress.ProgressIndicator ui:field="northboundProgressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+                                </g:HTMLPanel>
+	                            <mgwt:list.celllist.CellList ui:field="northbound" />
 	                        </g:FlowPanel>
-                        </p:PullPanel>
+                        </mgwt:panel.pull.PullPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
@@ -42,17 +56,21 @@
                         <wsdot:SouthboundTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-                        <p:PullPanel ui:field="southboundPullToRefresh">
+                        <mgwt:panel.flex.RootFlexPanel>
+                        <mgwt:panel.pull.PullPanel ui:field="southboundPullToRefresh">
 	                        <g:FlowPanel>
-	                            <mgwt:ProgressBar ui:field="southboundProgressBar" visible="false" />
-	                            <mgwt:CellList ui:field="southbound" />
+                                <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+                                    <mgwt:progress.ProgressIndicator ui:field="southboundProgressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+                                </g:HTMLPanel>
+	                            <mgwt:list.celllist.CellList ui:field="southbound" />
 	                        </g:FlowPanel>
-                        </p:PullPanel>
+                        </mgwt:panel.pull.PullPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>
         </mgwt:tabbar.TabPanel>
         
-    </mgwt:LayoutPanel>
+    </mgwt:panel.flex.RootFlexPanel>
 
 </ui:UiBinder>

@@ -83,8 +83,8 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 public class HomeActivity extends MGWTAbstractActivity implements
 		HomeView.Presenter {
@@ -102,7 +102,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private static List<MountainPassItem> mountainPassItems = new ArrayList<MountainPassItem>();
 	private static List<TravelTimesItem> travelTimesItems = new ArrayList<TravelTimesItem>();
 	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
-	private Timer timer;
+	private static Timer timer;
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
@@ -188,7 +188,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 					shouldUpdate = (Math.abs(now - lastUpdated) > (5 * 60000)); // Refresh every 5 minutes.
 				}
 
-				view.showProgressBar();
+				view.showProgressIndicator();
 				view.clear();
 				
 				if (shouldUpdate) {
@@ -202,7 +202,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 							public void onFailure(Throwable caught) {
 								highwayAlertItems.clear();
 								highwayAlertItems.add(new HighwayAlertItem(-1, "Can't load data. Check your connection."));
-								view.hideProgressBar();
+								view.hideProgressIndicator();
 								view.render(highwayAlertItems);
 								view.refresh();
 							}
@@ -252,7 +252,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 												public void onFailure(DataServiceException error) {
 					                                highwayAlertItems.clear();
 					                                highwayAlertItems.add(new HighwayAlertItem(-1, error.getMessage()));
-					                                view.hideProgressBar();
+					                                view.hideProgressIndicator();
 					                                view.render(highwayAlertItems);
 					                                view.refresh();
 												}
@@ -332,15 +332,15 @@ public class HomeActivity extends MGWTAbstractActivity implements
 			highwayAlertItems.add(new HighwayAlertItem(-1, "No highest impact travel alerts"));
 		}
 		
-		view.hideProgressBar();
+		view.hideProgressIndicator();
 		view.render(highwayAlertItems);
 		view.refresh();
 	}
 	
 	@Override
 	public void onStop() {
-		view.setPresenter(null);
-		timer.cancel();
+        timer.cancel();
+	    view.setPresenter(null);
 	}
 	
 	@Override

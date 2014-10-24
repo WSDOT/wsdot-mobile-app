@@ -20,9 +20,9 @@ package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.LocationButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.NavigationButton;
-import gov.wa.wsdot.mobile.client.widget.buttonbar.PhotoButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.CameraImageButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.LocationImageButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.NavigationImageButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.VesselWatchItem;
 
@@ -64,9 +64,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class VesselWatchMapViewGwtImpl extends Composite implements
 		VesselWatchMapView {
@@ -85,25 +85,25 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 			.create(TrafficMapViewGwtImplUiBinder.class);
 
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 	
 	@UiField
 	FlowPanel flowPanel;
 	
 	@UiField
-	ProgressBar progressBar;
+	ProgressIndicator progressIndicator;
 	
 	@UiField
 	ButtonBar buttonBar;
 	
 	@UiField
-	PhotoButton cameraButton;
+	CameraImageButton cameraButton;
 	
 	@UiField
-	LocationButton locationButton;
+	LocationImageButton locationButton;
 
 	@UiField
-	NavigationButton navigationButton;
+	NavigationImageButton navigationButton;
 	
 	private Presenter presenter;
 	private MyMapWidget mapWidget;
@@ -229,13 +229,13 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	}
 	
 	@Override
-	public void showProgressBar() {
-		progressBar.setVisible(true);
+	public void showProgressIndicator() {
+		progressIndicator.setVisible(true);
 	}
 
 	@Override
-	public void hideProgressBar() {
-		progressBar.setVisible(false);
+	public void hideProgressIndicator() {
+		progressIndicator.setVisible(false);
 	}
 	
 	@Override
@@ -267,11 +267,8 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 				icon = MarkerImage.newInstance(AppBundle.INSTANCE
 						.cameraPNG().getSafeUri().asString());
 		    }
-		    
-			MarkerImage shadow = MarkerImage.newInstance(AppBundle.INSTANCE
-					.cameraShadowPNG().getSafeUri().asString());
+
 		    options.setIcon(icon);
-		    options.setShadow(shadow);
 		    
 		    cameraMarker = Marker.newInstance(options);    
 		    cameraMarker.addClickHandler(new ClickMapHandler() {

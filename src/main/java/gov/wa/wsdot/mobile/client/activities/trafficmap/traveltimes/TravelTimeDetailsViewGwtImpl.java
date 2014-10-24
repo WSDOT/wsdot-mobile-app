@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,23 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
 
-import java.util.List;
-
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
+import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 
 public class TravelTimeDetailsViewGwtImpl extends Composite implements
 		TravelTimeDetailsView {
@@ -53,13 +53,10 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 			.create(TravelTimeDetailsViewGwtImplUiBinder.class);
 
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 	
-	@UiField
-	HTML title;
-	
-	@UiField
-	Button starButton;
+    @UiField(provided = true)
+    NotimportantImageButton starButton;
 	
 	@UiField(provided = true)
 	CellList<TravelTimesItem> travelTimeCellList;
@@ -67,6 +64,8 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 	private Presenter presenter;
 	
 	public TravelTimeDetailsViewGwtImpl() {
+	    
+	    starButton = new NotimportantImageButton();
 		
 		travelTimeCellList = new CellList<TravelTimesItem>(new TravelTimesCell<TravelTimesItem>() {
 
@@ -122,9 +121,6 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 			}
 			
 		});
-		
-		travelTimeCellList.setGroup(false);
-		travelTimeCellList.setRound(false);
 
 		initWidget(uiBinder.createAndBindUi(this));
 
@@ -145,11 +141,6 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 	}
 	
 	@Override
-	public void setTitle(String title) {
-		this.title.setText(title);
-	}
-	
-	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
@@ -161,11 +152,11 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void toggleStarButton(boolean isStarred) {
-		if (isStarred) {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOn());
-		} else {
-			starButton.setStyleName(AppBundle.INSTANCE.css().starButtonOff());
-		}		
+        if (isStarred) {
+            starButton.setIcon(ImageHolder.get().important());
+        } else {
+            starButton.setIcon(ImageHolder.get().notImportant());
+        }		
 	}
 
 }

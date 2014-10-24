@@ -24,8 +24,8 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 
 public interface FerriesRouteDeparturesView extends IsWidget {
 	
@@ -49,9 +49,9 @@ public interface FerriesRouteDeparturesView extends IsWidget {
 	
 	public void setDayOfWeekSelected(int index);
 	
-	public void showProgressBar();
+	public void showProgressIndicator();
 	
-	public void hideProgressBar();
+	public void hideProgressIndicator();
 	
 	public void refresh();
 	

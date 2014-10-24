@@ -12,14 +12,15 @@
             background-color: white;
             padding: 12px;
         }
-        .headerTitle {
-            width: 180px;
-            margin-left: -85px;
+        .title {
+            font-size: medium;
+            font-weight: bold;
+            padding: 0 0 15px 0;
         }
         .dateUpdated {
             font-size: small;
             font-weight: normal;
-            padding: 0 0 15px 0;
+            padding: 15px 0 0 0;
         }
         .section {
             font-size: small;
@@ -40,81 +41,70 @@
         .horizontalCell .section > div:nth-child\(2\) {
             padding: 0px;
         }
-        .flowPanel {
-            margin-top: 10px;
-        }
-        .buttonPanel {
-            display: -webkit-box;
-            -webkit-box-orient: horizontal;
-            -webkit-box-align: center;
-            -webkit-box-pack: end;
-            margin: 20px 20px 12px 20px;
-        }
     </ui:style>
     
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Back" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML ui:field="title" styleName="{style.headerTitle}" />
-			</mgwt:center>
-		</mgwt:HeaderPanel>
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:header.HeaderTitle>Mountain Pass</mgwt:header.HeaderTitle>
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:button.image.NotimportantImageButton ui:field="starButton" />
+		</mgwt:header.HeaderPanel>
 		
-		<mgwt:tabbar.TabPanel ui:field="tabPanel">
+		<mgwt:tabbar.TabPanel ui:field="tabPanel" height="100%">
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
 						<wsdot:ReportTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
-				        <mgwt:ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel">
-			                <g:FlowPanel styleName="{style.flowPanel}">
-			                    <g:HTMLPanel styleName="{style.buttonPanel}">
-			                        <mgwt:Button ui:field="starButton" styleName="{app.css.starButtonOff}" />
-			                    </g:HTMLPanel>
-					        	<g:HTMLPanel styleName="{style.htmlPanel}">
-					            	<g:HTMLPanel styleName="{style.dateUpdated}">
-					            	   <g:HTML ui:field="dateUpdated" />
-					            	</g:HTMLPanel>
-					            	
-					            	<g:HTMLPanel styleName="{style.section}">
-						            	<g:HTML>Weather:</g:HTML>
-						            	<g:HTML ui:field="weatherCondition" />
-					            	</g:HTMLPanel>
-					            	
-	                                <g:HTMLPanel styleName="{style.horizontalCell}">
-					            	   <g:HTMLPanel styleName="{style.section}">
-	                                        <g:HTML>Temperature:</g:HTML>
-	                                        <g:HTML ui:field="temperatureInFahrenheit" />
-	                                    </g:HTMLPanel>
-	                                </g:HTMLPanel>	
-	
-	                                <g:HTMLPanel styleName="{style.horizontalCell}">
-	                                    <g:HTMLPanel styleName="{style.section}">
-	                                        <g:HTML>Elevation:</g:HTML>
-	                                        <g:HTML ui:field="elevationInFeet" />
-	                                    </g:HTMLPanel>
-	                                </g:HTMLPanel>
-					            	
-					            	<g:HTMLPanel styleName="{style.section}">
-					            	   <g:HTML>Conditions:</g:HTML>
-					            	   <g:HTML ui:field="roadCondition" />
-					            	</g:HTMLPanel>
-					            	
-					            	<g:HTMLPanel styleName="{style.section}">
-					            	   <g:HTML ui:field="restrictionOneTravelDirection" />
-					            	   <g:HTML ui:field="restrictionOneText" />
-					            	</g:HTMLPanel>
-					            	
-					            	<g:HTMLPanel styleName="{style.section}">
-	                                    <g:HTML ui:field="restrictionTwoTravelDirection" />
-	                                    <g:HTML ui:field="restrictionTwoText" />
-					            	</g:HTMLPanel>
-					            </g:HTMLPanel>
-				            </g:FlowPanel>
-				        </mgwt:ScrollPanel>
+					    <mgwt:panel.flex.RootFlexPanel>
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel">
+				        	<g:HTMLPanel styleName="{style.htmlPanel}">
+				            	<g:HTMLPanel styleName="{style.title}">
+				            	   <g:HTML ui:field="title" />
+				            	</g:HTMLPanel>
+				            	
+				            	<g:HTMLPanel styleName="{style.section}">
+					            	<g:HTML>Weather:</g:HTML>
+					            	<g:HTML ui:field="weatherCondition" />
+				            	</g:HTMLPanel>
+				            	
+                                <g:HTMLPanel styleName="{style.horizontalCell}">
+				            	   <g:HTMLPanel styleName="{style.section}">
+                                        <g:HTML>Temperature:</g:HTML>
+                                        <g:HTML ui:field="temperatureInFahrenheit" />
+                                    </g:HTMLPanel>
+                                </g:HTMLPanel>	
+
+                                <g:HTMLPanel styleName="{style.horizontalCell}">
+                                    <g:HTMLPanel styleName="{style.section}">
+                                        <g:HTML>Elevation:</g:HTML>
+                                        <g:HTML ui:field="elevationInFeet" />
+                                    </g:HTMLPanel>
+                                </g:HTMLPanel>
+				            	
+				            	<g:HTMLPanel styleName="{style.section}">
+				            	   <g:HTML>Conditions:</g:HTML>
+				            	   <g:HTML ui:field="roadCondition" />
+				            	</g:HTMLPanel>
+				            	
+				            	<g:HTMLPanel styleName="{style.section}">
+				            	   <g:HTML ui:field="restrictionOneTravelDirection" />
+				            	   <g:HTML ui:field="restrictionOneText" />
+				            	</g:HTMLPanel>
+				            	
+				            	<g:HTMLPanel styleName="{style.section}">
+                                    <g:HTML ui:field="restrictionTwoTravelDirection" />
+                                    <g:HTML ui:field="restrictionTwoText" />
+				            	</g:HTMLPanel>
+                                <g:HTMLPanel styleName="{style.dateUpdated}">
+                                   <g:HTML ui:field="dateUpdated" />
+                                </g:HTMLPanel>				            	
+				            </g:HTMLPanel>
+				        </mgwt:panel.scroll.ScrollPanel>
+				        </mgwt:panel.flex.RootFlexPanel>
 			        </mgwt:widget>
 				</mgwt:tabbar.Tab>
 			</mgwt:tabs>
@@ -122,14 +112,16 @@
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
-						<wsdot:CamerasTabBarButton />
+						<wsdot:CameraTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
-				        <mgwt:ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
+					    <mgwt:panel.flex.RootFlexPanel>
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
 				        	<g:FlowPanel ui:field="cameraPanel">
-			            	   <mgwt:CellList ui:field="cameraCellList" />
+			            	   <mgwt:list.celllist.CellList ui:field="cameraCellList" />
 				            </g:FlowPanel>
-				        </mgwt:ScrollPanel>
+				        </mgwt:panel.scroll.ScrollPanel>
+				        </mgwt:panel.flex.RootFlexPanel>
 					</mgwt:widget>
 				</mgwt:tabbar.Tab>
 			</mgwt:tabs>
@@ -140,17 +132,19 @@
 						<wsdot:ForecastTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
-				        <mgwt:ScrollPanel scrollingEnabledX="false" ui:field="forecastScrollPanel">
+					    <mgwt:panel.flex.RootFlexPanel>
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="forecastScrollPanel">
 				        	<g:FlowPanel ui:field="forecastPanel">
-				            	<mgwt:CellList ui:field="forecastCellList" />
+				            	<mgwt:list.celllist.CellList ui:field="forecastCellList" />
 				            </g:FlowPanel>
-				        </mgwt:ScrollPanel>
+				        </mgwt:panel.scroll.ScrollPanel>
+				        </mgwt:panel.flex.RootFlexPanel>
 					</mgwt:widget>
 				</mgwt:tabbar.Tab>
 			</mgwt:tabs>
 						
 		</mgwt:tabbar.TabPanel>
 		
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>

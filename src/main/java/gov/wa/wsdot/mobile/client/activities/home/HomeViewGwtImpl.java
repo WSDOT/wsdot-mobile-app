@@ -46,17 +46,17 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ImageResourceRenderer;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.Button;
-import com.googlecode.mgwt.ui.client.widget.Carousel;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
+import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 
@@ -73,7 +73,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			.create(HomeViewGwtImplUiBinder.class);
 	
 	@UiField
-	HeaderButton aboutButton;
+	AboutImageButton aboutButton;
 	
 	@UiField
 	Button trafficButton;
@@ -97,7 +97,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	HTMLPanel highImpactAlertsPanel;
 	
 	@UiField
-	ProgressBar progressBar;
+	ProgressIndicator progressIndicator;
 	
 	@UiField(provided = true)
 	PullPanel pullToRefresh;
@@ -129,9 +129,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	@UiField(provided = true)
 	CellList<TravelTimesItem> travelTimesCellList;
 	
+	@UiField(provided = true)
+	Carousel alertsCarousel;
+	
 	private Presenter presenter;
-	private Carousel alertsCarousel;
-	private HTMLPanel alertPanel;
 	private PullArrowHeader pullArrowHeader;
 
 	public HomeViewGwtImpl() {
@@ -139,10 +140,8 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		pullToRefresh = new PullPanel();
 		pullArrowHeader = new PullArrowHeader();
 		pullToRefresh.setHeader(pullArrowHeader);
-		
-		highImpactAlertsPanel = new HTMLPanel("");
+
 		alertsCarousel = new Carousel();
-		alertPanel = new HTMLPanel("");
 		
 		camerasCellList = new CellList<CameraItem>(new BasicCell<CameraItem>() {
 
@@ -151,9 +150,12 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 				return model.getTitle();
 			}
 
+            @Override
+            public boolean canBeSelected(CameraItem model) {
+                return true;
+            }
+
 		});
-		
-		camerasCellList.setRound(false);
 		
 		ferriesCellList = new CellList<FerriesRouteItem>(
 				new FerriesRouteSchedulesCell<FerriesRouteItem>() {
@@ -183,8 +185,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 
 		});
-		
-		ferriesCellList.setRound(false);
 
 		mountainPassesCellList = new CellList<MountainPassItem>(
 				new CellDetailsWithIcon<MountainPassItem>() {
@@ -216,8 +216,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			}
 
 		});
-		
-		mountainPassesCellList.setRound(false);
 		
 		travelTimesCellList = new CellList<TravelTimesItem>(
 				new TravelTimesCell<TravelTimesItem>() {
@@ -270,8 +268,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			}
 			
 		});
-		
-		travelTimesCellList.setRound(false);
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
@@ -364,54 +360,55 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	}
 
 	@Override
-	public void render(List<HighwayAlertItem> createAlertsList) {
-		highImpactAlertsPanel.add(buildAlerts(createAlertsList));
-	}
-
-	private Widget buildAlerts(List<HighwayAlertItem> alerts) {
-		int length = alerts.size();
-		
-		if (!alerts.isEmpty()) {
-			for (final HighwayAlertItem alert: alerts) {
-				String text = alert.getHeadlineDescription();
-				String shortenedAlert = ParserUtils.ellipsis(text, 128);
-				HTML html = new HTML("<div><p>" + shortenedAlert + "</p></div><div></div>");
-				
-				if (length == 1) {
-				    if (alert.getAlertId() == -1) {
-						html.addStyleName(AppBundle.INSTANCE.css().noHighImpactAlerts());
-					} else {
-						html.addStyleName(AppBundle.INSTANCE.css().highImpactAlert());
-						
-						if (alert.getAlertId() != -1) {
-    						html.addClickHandler(new ClickHandler() {
+	public void render(List<HighwayAlertItem> alerts) {
+        int length = alerts.size();
+        
+        if (!alerts.isEmpty()) {
+            for (final HighwayAlertItem alert: alerts) {
+                HTMLPanel alertPanel = new HTMLPanel("");
+                String text = alert.getHeadlineDescription();
+                String shortenedAlert = ParserUtils.ellipsis(text, 128);
+                HTML html = new HTML("<div><p>" + shortenedAlert + "</p></div><div></div>");
+                
+                if (length == 1) {
+                    alertsCarousel.setShowCarouselIndicator(false);
+                    if (alert.getAlertId() == -1) {
+                        html.addStyleName(AppBundle.INSTANCE.css().noHighImpactAlerts());
+                    } else {
+                        html.addStyleName(AppBundle.INSTANCE.css().highImpactAlert());
+                        
+                        if (alert.getAlertId() != -1) {
+                            html.addClickHandler(new ClickHandler() {
     
-    							@Override
-    							public void onClick(ClickEvent event) {
-    								presenter.onHighImpactAlertSelected(alert.getAlertId());
-    							}
-    						});
-						}
-					}
-					
-					alertPanel.add(html);
-					return alertPanel;
-				}
-				
-				html.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						presenter.onHighImpactAlertSelected(alert.getAlertId());
-					}
-				});
-				
-				html.addStyleName(AppBundle.INSTANCE.css().highImpactAlerts());
-				alertsCarousel.add(html);
-			}
-		}
-
-		return alertsCarousel;
+                                @Override
+                                public void onClick(ClickEvent event) {
+                                    presenter.onHighImpactAlertSelected(alert.getAlertId());
+                                }
+                            });
+                        }
+                    }
+                    
+                    alertPanel.add(html);
+                    alertsCarousel.add(alertPanel);
+                } else {
+                    alertsCarousel.setShowCarouselIndicator(true);
+                    html.addClickHandler(new ClickHandler() {
+    
+                        @Override
+                        public void onClick(ClickEvent event) {
+                            presenter.onHighImpactAlertSelected(alert.getAlertId());
+                        }
+                    });
+                    
+                    html.addStyleName(AppBundle.INSTANCE.css().highImpactAlert());
+                    alertPanel.add(html);
+                    alertsCarousel.add(alertPanel);
+                }
+            }
+            
+            alertsCarousel.setHeight("75px");
+            alertsCarousel.refresh();
+        }
 	}
 	
 	@Override
@@ -422,24 +419,23 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	@Override
 	public void clear() {
 		alertsCarousel.clear();
-		alertPanel.clear();
-	    alertsCarousel.removeFromParent();
-	    alertPanel.removeFromParent();
+	    alertsCarousel.refresh();
+	    alertsCarousel.setHeight("0px");
 	}
 	
 	@Override
-	public void showProgressBar() {
-		progressBar.setVisible(true);
+	public void showProgressIndicator() {
+	    progressIndicator.setVisible(true);
 	}
 
 	@Override
-	public void hideProgressBar() {
-		progressBar.setVisible(false);
+	public void hideProgressIndicator() {
+	    progressIndicator.setVisible(false);
 	}
 
 	@Override
 	public void setHeaderPullHandler(Pullhandler pullHandler) {
-		pullToRefresh.setHeaderPullhandler(pullHandler);
+		pullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override

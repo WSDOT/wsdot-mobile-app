@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,15 +32,15 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.ProgressBar;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.base.PullPanel.Pullhandler;
-import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class BlogViewGwtImpl extends Composite implements BlogView {
 
@@ -60,7 +60,7 @@ public class BlogViewGwtImpl extends Composite implements BlogView {
 	CellList<BlogItem> cellList;
 	
 	@UiField
-	HeaderButton backButton;
+	PreviousitemImageButton backButton;
 
 	@UiField(provided = true)
 	PullPanel pullToRefresh;
@@ -69,7 +69,7 @@ public class BlogViewGwtImpl extends Composite implements BlogView {
 	FlowPanel flowPanel;
 	
 	@UiField
-	ProgressBar progressBar;
+	ProgressIndicator progressIndicator;
 	
 	private Presenter presenter;
 	private PullArrowHeader pullArrowHeader;
@@ -105,8 +105,6 @@ public class BlogViewGwtImpl extends Composite implements BlogView {
 
 		});
 		
-		cellList.setRound(false);
-		
 		initWidget(uiBinder.createAndBindUi(this));
 
 	}
@@ -132,13 +130,13 @@ public class BlogViewGwtImpl extends Composite implements BlogView {
 	}
 
 	@Override
-	public void showProgressBar() {
-		progressBar.setVisible(true);
+	public void showProgressIndicator() {
+		progressIndicator.setVisible(true);
 	}
 
 	@Override
-	public void hideProgressBar() {
-		progressBar.setVisible(false);
+	public void hideProgressIndicator() {
+		progressIndicator.setVisible(false);
 	}
 
 	@Override
@@ -158,7 +156,7 @@ public class BlogViewGwtImpl extends Composite implements BlogView {
 	
 	@Override
 	public void setHeaderPullHandler(Pullhandler pullHandler) {
-		pullToRefresh.setHeaderPullhandler(pullHandler);
+		pullToRefresh.setHeaderPullHandler(pullHandler);
 	}
 
 	@Override

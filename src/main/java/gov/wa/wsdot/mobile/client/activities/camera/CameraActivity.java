@@ -38,8 +38,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler.PullActionHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 public class CameraActivity extends MGWTAbstractActivity implements
 		CameraView.Presenter {
@@ -96,7 +96,33 @@ public class CameraActivity extends MGWTAbstractActivity implements
 			}
 		});
 		
+        PullArrowStandardHandler headerHandler2 = new PullArrowStandardHandler(
+                view.getVideoPullHeader(), view.getVideoPullPanel());
+
+        view.getVideoPullHeader().setHTML("pull down");
+        headerHandler2.setErrorText("Error");
+        headerHandler2.setLoadingText("Loading");
+        headerHandler2.setNormalText("pull down");
+        headerHandler2.setPulledText("release to load");
+        headerHandler2.setPullActionHandler(new PullActionHandler() {
+
+            @Override
+            public void onPullAction(final AsyncCallback<Void> callback) {
+                new Timer() {
+
+                    @Override
+                    public void run() {
+                        getCamera(view, cameraId);
+                        view.videoRefresh();;
+                        callback.onSuccess(null);
+                        
+                    }
+                }.schedule(1);
+            }
+        });
+		
 		view.setCameraHeaderPullHandler(headerHandler);
+		view.setVideoHeaderPullHandler(headerHandler2);
 		getCamera(view, cameraId);
 		panel.setWidget(view);
 	}	
@@ -137,13 +163,16 @@ public class CameraActivity extends MGWTAbstractActivity implements
 				
 				isStarred = cameraItems.get(0).getIsStarred() != 0;
 
-				view.setTitle(cameraItems.get(0).getTitle());				
 				view.toggleStarButton(isStarred);
 				view.renderCamera(cameraItems);
 				view.cameraRefresh();
 				
                 if (hasVideo == 0) {
-                    view.removeTab(1);
+                    try {
+                        view.removeTab(1);
+                    } catch (IndexOutOfBoundsException e) {
+                        // Tab has already been removed. Move along.
+                    }
                 } else {
                     c.setVideoUrl("http://images.wsdot.wa.gov/nwvideo/" + cameraName + ".mp4");
                     view.renderVideo(cameraItems);

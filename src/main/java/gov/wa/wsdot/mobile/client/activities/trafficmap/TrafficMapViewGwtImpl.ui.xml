@@ -3,43 +3,52 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.buttonbar"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.buttonbar"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.button.image"
     xmlns:maps="urn:import:com.google.gwt.maps.client">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-	<mgwt:LayoutPanel>
-		<mgwt:HeaderPanel>
-			<mgwt:left>
-				<mgwt:HeaderButton ui:field="backButton" backButton="true" text="Home" />
-			</mgwt:left>
-			<mgwt:center>
-				<g:HTML>Traffic Map</g:HTML>
-			</mgwt:center>
-            <mgwt:right>
-                <mgwt:HeaderButton ui:field="refreshButton" text="Refresh" />
-            </mgwt:right>
-		</mgwt:HeaderPanel>
+    <ui:style>
+        .progressIndicatorPanel {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            max-width: 100%;
+        }
+        .progressIndicator {
+            width: 0px;
+            padding: 30px 0 20px 0;
+        }
+    </ui:style>
+    
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:header.HeaderTitle>Traffic Map</mgwt:header.HeaderTitle>
+			<mgwt:panel.flex.FlexSpacer />
+	        <mgwt:button.image.RefreshImageButton ui:field="refreshButton" />
+		</mgwt:header.HeaderPanel>
 		
        	<g:FlowPanel ui:field="flowPanel">
-       	    <mgwt:ProgressBar ui:field="progressBar" visible="false" />
+	        <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+	            <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+	        </g:HTMLPanel>
        	</g:FlowPanel>
 		
-       	<b:ButtonBar ui:field="buttonBar">
-       	    <wsdot:NavigationButton ui:field="navigationButton" />
-       	    <b:ButtonBarSpacer />
-            <wsdot:LocationButton ui:field="locationButton" />
-	  	    <b:ButtonBarSpacer />
-	  	    <wsdot:ClockButton ui:field="travelTimesButton" />
-	  	    <b:ButtonBarSpacer />
-	  	    <wsdot:PhotoButton ui:field="cameraButton" />
-            <b:ButtonBarSpacer />
-            <wsdot:WarningButton ui:field="seattleAlertsButton" />
-	  	    <b:ButtonBarSpacer />
-            <wsdot:FlashButton ui:field="expressLanesButton" />
-       	</b:ButtonBar>
+       	<mgwt:buttonbar.ButtonBar ui:field="buttonBar">
+       	    <wsdot:NavigationImageButton ui:field="navigationButton" />
+       	    <mgwt:panel.flex.FlexSpacer />
+            <wsdot:LocationImageButton ui:field="locationButton" />
+            <mgwt:panel.flex.FlexSpacer />
+	  	    <wsdot:TimeImageButton ui:field="travelTimesButton" />
+	  	    <mgwt:panel.flex.FlexSpacer />
+	  	    <wsdot:CameraImageButton ui:field="cameraButton" />
+	  	    <mgwt:panel.flex.FlexSpacer />
+            <wsdot:WarningImageButton ui:field="seattleAlertsButton" />
+            <mgwt:panel.flex.FlexSpacer />
+            <wsdot:RocketImageButton ui:field="expressLanesButton" />
+       	</mgwt:buttonbar.ButtonBar>
        	
-	</mgwt:LayoutPanel>
+	</mgwt:panel.flex.RootFlexPanel>
 
 </ui:UiBinder>

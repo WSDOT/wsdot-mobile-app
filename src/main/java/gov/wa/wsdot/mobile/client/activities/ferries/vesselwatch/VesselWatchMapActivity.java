@@ -70,7 +70,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
 	private static final String VESSEL_WATCH_URL = Consts.HOST_URL + "/traveler/api/vesselwatch";
 	private static ArrayList<VesselWatchItem> vesselWatchItems = new ArrayList<VesselWatchItem>();
-	private static HashMap<Integer, String[]> ferryIcons;
+	private static HashMap<Integer, String> ferryIcons;
 	private Timer timer;
 	private PhoneGap phoneGap;
 	
@@ -105,60 +105,21 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 	private void buildFerryIcons() {
 
-		ferryIcons = new HashMap<Integer, String[]>();
+		ferryIcons = new HashMap<Integer, String>();
 
-		ferryIcons.put(0, new String[] {
-				AppBundle.INSTANCE.ferry0().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry0Shadow().getSafeUri().asString() });
-		
-		ferryIcons.put(30, new String[] {
-				AppBundle.INSTANCE.ferry30().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry30Shadow().getSafeUri().asString() });
-		
-		ferryIcons.put(60, new String[] {
-				AppBundle.INSTANCE.ferry60().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry60Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(90, new String[] {
-				AppBundle.INSTANCE.ferry90().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry90Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(120, new String[] {
-				AppBundle.INSTANCE.ferry120().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry120Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(150, new String[] {
-				AppBundle.INSTANCE.ferry150().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry150Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(180, new String[] {
-				AppBundle.INSTANCE.ferry180().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry180Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(210, new String[] {
-				AppBundle.INSTANCE.ferry210().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry210Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(240, new String[] {
-				AppBundle.INSTANCE.ferry240().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry240Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(270, new String[] {
-				AppBundle.INSTANCE.ferry270().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry270Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(300, new String[] {
-				AppBundle.INSTANCE.ferry300().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry300Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(330, new String[] {
-				AppBundle.INSTANCE.ferry330().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry330Shadow().getSafeUri().asString() });
-
-		ferryIcons.put(360, new String[] {
-				AppBundle.INSTANCE.ferry360().getSafeUri().asString(),
-				AppBundle.INSTANCE.ferry360Shadow().getSafeUri().asString() });
-		
+		ferryIcons.put(0, AppBundle.INSTANCE.ferry0().getSafeUri().asString());
+		ferryIcons.put(30, AppBundle.INSTANCE.ferry30().getSafeUri().asString());
+		ferryIcons.put(60, AppBundle.INSTANCE.ferry60().getSafeUri().asString());
+		ferryIcons.put(90, AppBundle.INSTANCE.ferry90().getSafeUri().asString());
+		ferryIcons.put(120, AppBundle.INSTANCE.ferry120().getSafeUri().asString());
+		ferryIcons.put(150, AppBundle.INSTANCE.ferry150().getSafeUri().asString());
+		ferryIcons.put(180, AppBundle.INSTANCE.ferry180().getSafeUri().asString());
+		ferryIcons.put(210, AppBundle.INSTANCE.ferry210().getSafeUri().asString());
+		ferryIcons.put(240, AppBundle.INSTANCE.ferry240().getSafeUri().asString());
+		ferryIcons.put(270, AppBundle.INSTANCE.ferry270().getSafeUri().asString());
+		ferryIcons.put(300, AppBundle.INSTANCE.ferry300().getSafeUri().asString());
+		ferryIcons.put(330, AppBundle.INSTANCE.ferry330().getSafeUri().asString());
+		ferryIcons.put(360, AppBundle.INSTANCE.ferry360().getSafeUri().asString());		
 	}
 
 	private void getCameras() {
@@ -183,7 +144,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 					shouldUpdate = (Math.abs(now - lastUpdated) > (7 * 86400000)); // Refresh every 7 days.
 				}
 				
-				view.showProgressBar();
+				view.showProgressIndicator();
 				
 				if (shouldUpdate) {
 					JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
@@ -193,7 +154,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 						@Override
 						public void onFailure(Throwable caught) {
-							view.hideProgressBar();
+							view.hideProgressIndicator();
 							phoneGap.getNotification()
 							.alert("Can't load data. Check your connection.",
 									new AlertCallback() {
@@ -280,7 +241,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 															@Override
 															public void onSuccess() {
-																view.hideProgressBar();
+																view.hideProgressIndicator();
 																drawCamerasLayer();
 															}
 														});
@@ -295,7 +256,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 					});
 
 				} else {
-					view.hideProgressBar();
+					view.hideProgressIndicator();
 					drawCamerasLayer();
 				}
 			}
@@ -358,7 +319,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 			@Override
 			public void onFailure(Throwable caught) {
-				view.hideProgressBar();
+				view.hideProgressIndicator();
 				phoneGap.getNotification()
 				.alert("Can't load data. Check your connection.",
 						new AlertCallback() {
@@ -402,8 +363,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 						int nearest = (result.getVesselList().get(i)
 								.getHead() + 30 / 2) / 30 * 30;
 						
-						item.setIcon(ferryIcons.get(nearest)[0]);
-						item.setIconShadow(ferryIcons.get(nearest)[1]);
+						item.setIcon(ferryIcons.get(nearest));
 						item.setLat(result.getVesselList().get(i).getLat());
 						item.setLon(result.getVesselList().get(i).getLon());						
 						

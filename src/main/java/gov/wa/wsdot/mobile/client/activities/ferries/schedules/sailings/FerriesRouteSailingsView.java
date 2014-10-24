@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,13 +47,11 @@ public interface FerriesRouteSailingsView extends IsWidget {
 	
 	public void setSelected(int lastIndex, boolean b);
 	
-	public void setTitle(String title);
-	
 	public void toggleStarButton(boolean isStarred);
 	
-	public void showProgressBar();
+	public void showProgressIndicator();
 	
-	public void hideProgressBar();
+	public void hideProgressIndicator();
 	
 	public void refresh();
 	
