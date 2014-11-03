@@ -35,7 +35,7 @@
             	        <a href="mailto:webfeedback@wsdot.wa.gov?subject=WSDOT Mobile App">
             	            WSDOT Communications Office</a>.</p>
             	    <br />
-            	    <p style="color:#959595;">App Version: 3.0.0</p>
+            	    <p style="color:#959595;">App Version: 3.0.1</p>
             	</g:HTML>
             </g:HTMLPanel>
         </mgwt:panel.scroll.ScrollPanel>

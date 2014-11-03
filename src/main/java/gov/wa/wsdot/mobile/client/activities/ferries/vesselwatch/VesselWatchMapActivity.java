@@ -460,7 +460,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 			@Override
 			public void onFailure(PositionError error) {
 				switch (error.getCode()) {
-					case PositionError.POSITION_UNAVAILABLE:
+					case PositionError.PERMISSION_DENIED:
 						phoneGap.getNotification()
 							.alert("You can turn Location Services on at Settings > Privacy > Location Services.",
 									new AlertCallback() {
