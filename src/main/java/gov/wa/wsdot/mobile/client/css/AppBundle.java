@@ -60,8 +60,14 @@ public interface AppBundle extends ClientBundle {
 	@Source("wsdot_goodtogo.png")
 	ImageResource wsdotGoodToGoPNG();
 	
-	@Source("wsdot_north.png")
-	ImageResource wsdotNorthPNG();
+	@Source("wsdot_east.png")
+	ImageResource wsdotEastPNG();
+	
+	@Source("wsdot_520.png")
+	ImageResource wsdot520PNG();
+
+	@Source("BerthaDigsSR99.png")
+	ImageResource berthaDigsSR99PNG();
 	
 	@Source("wsdot_snoqualmie_pass.png")
 	ImageResource wsdotSnoqualmiePassPNG();
@@ -385,11 +391,13 @@ public interface AppBundle extends ClientBundle {
 		
 		String wsdotFerriesIcon();
 		String wsdotGoodToGoIcon();
-		String wsdotNorthIcon();
 		String wsdotSnoqualmiePassIcon();
 		String wsdotSwIcon();
 		String wsdotTacomaIcon();
 		String wsdotTrafficIcon();
 		String wsdotIcon();
+		String wsdotEastIcon();
+		String wsdot520Icon();
+		String berthaDigsSR99Icon();
 	}
 }

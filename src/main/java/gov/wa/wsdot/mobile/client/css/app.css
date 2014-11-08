@@ -696,8 +696,26 @@ video {
     display: block;
 }
 
-@sprite .wsdotNorthIcon {
-    gwt-image: "wsdotNorthPNG";
+@sprite .wsdotEastIcon {
+    gwt-image: "wsdotEastPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .wsdot520Icon {
+    gwt-image: "wsdot520PNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@sprite .berthaDigsSR99Icon {
+    gwt-image: "berthaDigsSR99PNG";
     background-image: no-repeat;
     background-size: 32px 32px;
     width: 32px;
