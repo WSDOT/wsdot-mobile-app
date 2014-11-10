@@ -20,6 +20,9 @@ package gov.wa.wsdot.mobile.client;
 
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace.AboutPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace.AlertPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace.AmtrakCascadesPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesPlace.AmtrakCascadesSchedulesPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace.AmtrakCascadesSchedulesDetailsPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitPlace.BorderWaitPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace.CameraPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace.FerriesPlaceTokenizer;
@@ -65,6 +68,7 @@ import com.google.gwt.place.shared.WithTokenizers;
 		SeattleTrafficAlertsPlaceTokenizer.class, GoToFerriesLocationPlaceTokenizer.class,
 		VesselWatchMapPlaceTokenizer.class, NewsDetailsPlaceTokenizer.class,
 		VesselDetailsPlaceTokenizer.class, BlogDetailsPlaceTokenizer.class, YouTubeDetailsPlaceTokenizer.class,
-		TravelTimeDetailsPlaceTokenizer.class, FerriesRouteAlertDetailsPlaceTokenizer.class })
+		TravelTimeDetailsPlaceTokenizer.class, FerriesRouteAlertDetailsPlaceTokenizer.class, AmtrakCascadesPlaceTokenizer.class,
+		AmtrakCascadesSchedulesPlaceTokenizer.class, AmtrakCascadesSchedulesDetailsPlaceTokenizer.class})
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }

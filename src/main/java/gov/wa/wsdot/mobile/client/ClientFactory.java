@@ -20,6 +20,9 @@ package gov.wa.wsdot.mobile.client;
 
 import gov.wa.wsdot.mobile.client.activities.about.AboutView;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertView;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesView;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesView;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsView;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitView;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraView;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesView;
@@ -97,4 +100,7 @@ public interface ClientFactory {
 	public YouTubeDetailsView getYouTubeDetailsView();
 	public TravelTimeDetailsView getTravelTimeDetailsView();
 	public FerriesRouteAlertDetailsView getFerriesRouteAlertDetailsView();
+	public AmtrakCascadesView getAmtrakCascadesView();
+	public AmtrakCascadesSchedulesView getAmtrakCascadesSchedulesView();
+    public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesSchedulesDetailsView();
 }

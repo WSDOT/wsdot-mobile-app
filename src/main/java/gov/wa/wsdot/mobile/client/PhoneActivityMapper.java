@@ -22,6 +22,12 @@ import gov.wa.wsdot.mobile.client.activities.about.AboutActivity;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertActivity;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesActivity;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesActivity;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesPlace;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsActivity;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitActivity;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraActivity;
@@ -219,6 +225,18 @@ public class PhoneActivityMapper implements ActivityMapper {
 			return new FerriesRouteAlertDetailsActivity(clientFactory);
 		}
 		
+		if (place instanceof AmtrakCascadesPlace) {
+		    return new AmtrakCascadesActivity(clientFactory);
+		}
+
+        if (place instanceof AmtrakCascadesSchedulesPlace) {
+            return new AmtrakCascadesSchedulesActivity(clientFactory);
+        }
+		
+        if (place instanceof AmtrakCascadesSchedulesDetailsPlace) {
+            return new AmtrakCascadesSchedulesDetailsActivity(clientFactory);
+        }
+        
 		return new HomeActivity(clientFactory);
 	}
 }

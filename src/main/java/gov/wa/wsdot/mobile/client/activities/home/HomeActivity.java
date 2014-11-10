@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.Analytics;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace;
@@ -398,6 +399,14 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		}
 		clientFactory.getPlaceController().goTo(new BorderWaitPlace());
 	}
+
+    @Override
+    public void onAmtrakButtonPressed() {
+        if (Consts.ANALYTICS_ENABLED) {
+            Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Amtrak Cascades");
+        }
+        clientFactory.getPlaceController().goTo(new AmtrakCascadesPlace());
+    }
 
 	@Override
 	public void onHighImpactAlertSelected(int alertId) {

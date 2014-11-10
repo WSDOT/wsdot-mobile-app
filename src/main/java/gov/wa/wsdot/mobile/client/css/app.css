@@ -299,6 +299,15 @@ video {
 	display: block;
 }
 
+@sprite .amtrakButton {
+    gwt-image: "amtrakDefaultPNG";
+    background-repeat: no-repeat;
+    background-size: 70px 64px;
+    width: 70px;
+    height: 64px;
+    display: block;
+}
+
 @sprite .disclosure {
 	gwt-image: "disclosurePNG";
 	background-repeat: no-repeat;

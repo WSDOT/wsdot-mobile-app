@@ -1,0 +1,63 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .title {
+            font-size: medium;
+            font-weight: bold;
+            padding: 12px 12px 15px 12px;
+            text-align: center;
+        }
+        .timesHeader {
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            padding: 0px 0 6px 0;
+        }
+
+        .departingHeader {
+            -webkit-box-flex: 1;
+            font-size: small;
+            font-weight: bold;
+            padding-left: 12px;
+        }
+
+        .arrivingHeader {
+            -webkit-box-flex: 1;
+            font-size: small;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 12px;
+        }
+    </ui:style>
+    
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:header.HeaderTitle>Train Schedules</mgwt:header.HeaderTitle>
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:panel.flex.FixedSpacer />
+		</mgwt:header.HeaderPanel>
+		
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+        	<g:FlowPanel>
+				<g:HTMLPanel styleName="{style.title}">
+				   <g:HTML ui:field="title" />
+				</g:HTMLPanel>        	    
+                <g:HTMLPanel styleName="{style.timesHeader}">
+                    <div class="{style.departingHeader}">Departing</div>
+                    <div class="{style.arrivingHeader}">Arriving</div>
+                </g:HTMLPanel>
+                
+            	<mgwt:list.celllist.CellList ui:field="cellList" />
+            </g:FlowPanel>
+        </mgwt:panel.scroll.ScrollPanel>
+		
+	</mgwt:panel.flex.RootFlexPanel>
+    
+</ui:UiBinder>

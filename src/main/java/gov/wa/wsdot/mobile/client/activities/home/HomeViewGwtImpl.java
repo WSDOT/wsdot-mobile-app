@@ -94,6 +94,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	Button borderButton;
 	
 	@UiField
+	Button amtrakButton;
+	
+	@UiField
 	HTMLPanel highImpactAlertsPanel;
 	
 	@UiField
@@ -321,6 +324,13 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			presenter.onBorderWaitButtonPressed();
 		}
 	}
+
+    @UiHandler("amtrakButton")
+    protected void onAmtrakButtonPressed(TapEvent event) {
+        if (presenter != null) {
+            presenter.onAmtrakButtonPressed();
+        }
+    }
 	
 	@UiHandler("camerasCellList")
 	protected void onCameraCellSelected(CellSelectedEvent event) {

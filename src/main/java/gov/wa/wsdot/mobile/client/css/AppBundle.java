@@ -215,6 +215,9 @@ public interface AppBundle extends ClientBundle {
 
 	@Source("home_btn_traffic_default.png")
 	ImageResource trafficDefaultPNG();
+	
+	@Source("home_btn_amtrak_default.png")
+	ImageResource amtrakDefaultPNG();
 
 	/**
 	 * Other images
@@ -332,6 +335,7 @@ public interface AppBundle extends ClientBundle {
 		String socialButton();
 		String tollingButton();
 		String trafficButton();
+		String amtrakButton();
 		
 		String cellTravelTimes();
 		String colorGreen();

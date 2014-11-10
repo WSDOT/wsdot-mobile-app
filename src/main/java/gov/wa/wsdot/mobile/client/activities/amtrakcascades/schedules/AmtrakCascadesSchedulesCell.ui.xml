@@ -1,0 +1,84 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder">
+
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style field="cellStyle">
+        .cellAmtrakCascadesSchedulesStatus {
+            display: -webkit-flex;
+            -webkit-flex-direction: column;
+        }
+        .cellAmtrakCascadesSchedulesStatus > div:nth-child\(1\) {
+            display: -webkit-flex;
+            -webkit-flex-direction: row;
+            padding-bottom: 7px;
+        }
+        .cellAmtrakCascadesSchedulesStatus > div:nth-child\(2\) {
+            display: -webkit-flex;
+            -webkit-flex-direction: row;
+            -webkit-justify-content: space-between;
+            padding-bottom: 7px;
+        }
+        .scheduledDeparture {
+            -webkit-flex: 1 0 auto;
+            font-size: medium;
+            font-weight: bold;
+        }
+        .scheduledArrival {
+            -webkit-flex: 1 0 auto;
+            font-size: medium;
+            font-weight: bold;
+            text-align: right;
+        }
+        .departureComment {
+            -webkit-flex: 1 0 1px;
+            font-size: small;
+            font-weight: bold;
+            color: #7d7d7d;
+            padding-bottom: 7px;
+            margin-right: 5px;
+        }
+        .arrivalComment {
+            -webkit-flex: 1 0 1px;
+            font-size: small;
+            font-weight: bold;
+            color: #7d7d7d;
+            padding-bottom: 7px;
+            text-align: right;
+            margin-left: 5px;
+        }
+        .annotation {
+            font-size: small;
+            font-weight: normal;
+            color: #7d7d7d;
+            padding-bottom: 7px;
+        }
+        .lastUpdated {
+            font-size: small;
+            font-weight: normal;
+            color: #7d7d7d;
+            margin-top: 10px;
+        }
+    </ui:style>
+    
+    <ui:with field="scheduledDeparture" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    <ui:with field="scheduledArrival" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    <ui:with field="departureComment" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    <ui:with field="arrivalComment" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    <ui:with field="trainName" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    <ui:with field="lastUpdated" type="com.google.gwt.safehtml.shared.SafeHtml" />
+    
+    <div class="{cellStyle.cellAmtrakCascadesSchedulesStatus}">
+        <div>
+            <div class="{cellStyle.scheduledDeparture}"><ui:safehtml from="{scheduledDeparture}" /></div>
+            <div class="{cellStyle.scheduledArrival}"><ui:safehtml from="{scheduledArrival}" /></div>
+        </div>
+        <div>
+            <div class="{cellStyle.departureComment}"><ui:safehtml from="{departureComment}" /></div>
+            <div class="{cellStyle.arrivalComment}"><ui:safehtml from="{arrivalComment}" /></div>
+        </div>
+        <div class="{cellStyle.annotation}"><ui:safehtml from="{trainName}" /></div>
+        <div class="{cellStyle.lastUpdated}"><ui:safehtml from="{lastUpdated}" /></div>
+    </div>
+    
+</ui:UiBinder>
