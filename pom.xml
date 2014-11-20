@@ -80,7 +80,6 @@
 				<version>${gwt.version}</version>
 				<configuration>
 					<strict>true</strict>
-
 					<testTimeOut>180</testTimeOut>
 					<mode>htmlunit</mode>
 					<!-- Switch to a suite to run tests faster -->
