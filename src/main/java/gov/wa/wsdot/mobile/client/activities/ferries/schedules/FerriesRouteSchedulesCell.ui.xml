@@ -34,7 +34,6 @@
     
     <ui:with field="description" type="java.lang.String" />
     <ui:with field="lastUpdated" type="java.lang.String" />
-    <ui:with field='starImage' type='com.google.gwt.safehtml.shared.SafeHtml'/>
     <ui:with field='alertImage' type='com.google.gwt.safehtml.shared.SafeHtml'/>
     
     <div class="{style.cellFerriesRouteSchedules}">
