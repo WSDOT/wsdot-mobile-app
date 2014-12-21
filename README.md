@@ -10,19 +10,12 @@ ferry locations. It also contains many of our social media feeds.
 The application is built using:
 
   * [Google Web Toolkit (GWT)](http://www.gwtproject.org/)
-  * [mgwt - Mobile GWT](https://code.google.com/p/mgwt/)
+  * [mGWT - Mobile GWT](https://github.com/mgwt/mgwt)
   * [GWT-PhoneGap](https://code.google.com/p/gwt-phonegap/)
   * [GWT-Maps-V3-Api](https://github.com/branflake2267/GWT-Maps-V3-Api)
-  * [GWT-Mobile-WebKit](https://code.google.com/p/gwt-mobile-webkit/) for the Web SQL database
+  * [GWT-HTML5-Database](https://github.com/WSDOT/gwt-html5-database) for the Web SQL database
 
 The app is written in Java using the <a href="http://www.eclipse.org/">Eclipse IDE</a>.
-
-In order to use the Database API of GWT-Mobile-Webkit you need to configure your build path to use
-its source. For the link folder location, it should point to
-
-`gwt-mobile-webkit/gwt-mobile-webkit/database/database/src`
-
-and for the folder name call it `html5database_src`
 
 The code is not meant to illustrate best practices nor is it necessarily bug
 free. It is by no means static and is actively being updated and improved upon 
