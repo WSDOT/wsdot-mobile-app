@@ -6,3 +6,4 @@ target/
 .gwt/
 .buildpath
 bin/
+/target

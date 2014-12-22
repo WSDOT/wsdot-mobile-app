@@ -10,18 +10,39 @@
 	<name>WSDOT Mobile App</name>
 	<description>A GWT based HTML5 Web application targeting WebKit based browsers</description>
 
+	<properties>
+		<!-- GWT -->
+		<gwt.version>2.7.0</gwt.version>
+		<gwt.style>OBF</gwt.style>
+
+		<!-- Maven -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>sonatype snapshots</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
-	
-	<properties>
-		<gwtversion>2.6.1</gwtversion>
-	</properties>
 
 	<build>
+		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+			    <directory>src/main/java</directory>
+			        <includes>
+			            <include>**/client/**</include> 
+				        <include>**/*.gwt.xml</include>
+				    </includes>
+            </resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -32,91 +53,62 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+
+			<!-- Skips the GWTTestCases during Junit Testing -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.8</version>
-
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12</version>
 				<configuration>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>false</downloadJavadocs>
-					<buildOutputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</buildOutputDirectory>
-					<projectnatures>
-						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
-						<projectnature>com.google.gdt.eclipse.core.webAppNature</projectnature>
-
-						<nature>com.google.gwt.eclipse.core.gwtNature</nature>
-					</projectnatures>
-					<buildcommands>
-						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
-						<buildcommand>com.google.gdt.eclipse.core.webAppProjectValidator</buildcommand>
-
-						<buildcommand>com.google.appengine.eclipse.core.projectValidator</buildcommand>
-						<buildcommand>com.google.gwt.eclipse.core.gwtProjectValidator</buildcommand>
-					</buildcommands>
-					<classpathContainers>
-						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
-
-						<classpathContainer>com.google.gwt.eclipse.core.GWT_CONTAINER</classpathContainer>
-					</classpathContainers>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
 					<excludes>
-						<exclude>com.google.gwt:gwt-servlet</exclude>
-						<exclude>com.google.gwt:gwt-user</exclude>
-						<exclude>com.google.gwt:gwt-dev</exclude>
-						<exclude>javax.validation:validation-api</exclude>
+						<exclude>**/*GwtTest.java</exclude>
 					</excludes>
-
-
 				</configuration>
 			</plugin>
+
+			<!-- GWT -->
+			<!-- 'mvn gwt:run' -->
+			<!-- 'mvn gwt:debug' -->
+			<!-- 'mvn gwt:compile' -->
+			<!-- 'mvn gwt:test' or 'mvn integration-test' -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.6.1</version>
-				<executions>
+				<version>${gwt.version}</version>
+				<configuration>
+					<strict>true</strict>
 
+					<testTimeOut>180</testTimeOut>
+					<mode>htmlunit</mode>
+					<!-- Switch to a suite to run tests faster -->
+					<!-- <includes>**/*GwtTestSuite.java</includes> -->
+					<!-- <excludes>**/*GwtTest.java</excludes> -->
+					<includes>**/*GwtTest.java</includes>
+
+					<extraJvmArgs>-Xss1024K -Xmx1024M -XX:MaxPermSize=256M</extraJvmArgs>
+					<logLevel>INFO</logLevel>
+					<style>${gwt.style}</style>
+
+					<copyWebapp>true</copyWebapp>
+					<hostedWebapp>${webappDirectory}</hostedWebapp>
+
+					<runTarget>index.html</runTarget>
+					<module>gov.wa.wsdot.mobile.MobileApp</module>
+				</configuration>
+				<executions>
 					<execution>
-						<id>compile gwt</id>
 						<goals>
 							<goal>compile</goal>
-
-						</goals>
-					</execution>
-
-				</executions>
-				
-				<configuration>
-				   <runTarget>index.html</runTarget>
-				 </configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>assemble</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
+							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/clientcode.xml</descriptor>
-					</descriptors>
-				</configuration>
 			</plugin>
 
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/client/**</include>
-					<include>**/*.gwt.xml</include>
-				</includes>
-			</resource>
-		</resources>
 	</build>
 
 	<dependencies>
@@ -127,11 +119,11 @@
 			<version>2.0.0</version>
 		</dependency>
 		<!-- HTML5 database -->
-        <dependency>
-            <groupId>com.google.code.gwt.database</groupId>
-            <artifactId>gwt-html5-database</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>com.google.code.gwt.database</groupId>
+			<artifactId>gwt-html5-database</artifactId>
+			<version>1.5.1-SNAPSHOT</version>
+		</dependency>
 		<!-- gwtphonegap dependency -->
 		<dependency>
 			<groupId>com.googlecode.gwtphonegap</groupId>
@@ -140,33 +132,38 @@
 		</dependency>
 		<!-- GWT Maps API V3 -->
 		<dependency>
-		    <groupId>com.github.branflake2267</groupId>
-		    <artifactId>gwt-maps-api</artifactId>
-		    <version>3.10.0-alpha-7</version>
+			<groupId>com.github.branflake2267</groupId>
+			<artifactId>gwt-maps-api</artifactId>
+			<version>3.10.0-alpha-7</version>
+			<!-- Exclude outdated gwt-dev that breaks compile -->
+			<exclusions>
+				<exclusion>
+					<artifactId>gwt-dev</artifactId>
+					<groupId>com.google.gwt</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- Other Google -->
 		<dependency>
-		    <groupId>com.google.gwt.google-apis</groupId>
-		    <artifactId>gwt-ajaxloader</artifactId>
-		    <version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<type>jar</type>
-			<scope>test</scope>
+			<groupId>com.google.gwt.google-apis</groupId>
+			<artifactId>gwt-ajaxloader</artifactId>
+			<version>1.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>${gwtversion}</version>
+			<version>${gwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
-			<version>${gwtversion}</version>
+			<version>${gwt.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-codeserver</artifactId>
+			<version>${gwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -179,8 +176,13 @@
 			<version>1.0.0.GA</version>
 			<classifier>sources</classifier>
 		</dependency>
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-
-
 
 </project>

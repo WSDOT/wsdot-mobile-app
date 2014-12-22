@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0.3//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.0.3/distro-source/core/src/gwt-module.dtd">
 <module rename-to="MobileApp">
+    
+    <!-- Required by PhoneGap -->
+    <define-property name="gwt.logging.firebugHandler" values="ENABLED, DISABLED"/>
+    <define-property name="gwt.logging.popupHandler" values="ENABLED, DISABLED"/>
+    
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name="com.googlecode.mgwt.MGWT"/>
@@ -24,6 +29,21 @@
 	<set-property name="mgwt.formfactor" value="phone" />
 	<set-property name="mgwt.density" value="mid,high,xhigh" />	
 	
+    <!-- values for logging properties -->
+    <set-property name="gwt.logging.logLevel" value="INFO"/>
+    <set-property name="gwt.logging.enabled" value="TRUE"/>
+    <set-property name="gwt.logging.consoleHandler" value="ENABLED"/>
+    <set-property name="gwt.logging.developmentModeHandler" value="ENABLED"/>
+    <set-property name="gwt.logging.firebugHandler" value="DISABLED"/>
+    <set-property name="gwt.logging.hasWidgetsHandler" value="DISABLED"/>
+    <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
+    <set-property name="gwt.logging.systemHandler" value="DISABLED"/>
+    <set-property name="gwt.logging.simpleRemoteHandler" value="DISABLED"/>
+	
+    <!-- e.g. Wire up the logger in a class and then do some logging -->
+    <!-- private static final Logger logger = Logger.getLogger("Origin_Identifier"); -->
+    <!-- logger.info("Output me in the browser dev console in SDM"); -->
+    
 	<!-- here you can turn off css obfuscation -->
 	<!-- <set-configuration-property name="mgwt.css" value="pretty" /> -->
 
@@ -31,10 +51,6 @@
 	
 	<!-- <add-linker name="permutationmaplinker" /> -->
 	<add-linker name="xsiframe" />
-
-	<!-- <extend-configuration-property name="html5manifestlinker_files" value="./" /> -->
-	<!-- <extend-configuration-property name="html5manifestlinker_files" value="index.html" /> -->
-	<!-- <extend-configuration-property name="html5manifestlinker_files" value="logo.png" /> -->
 	
 	<source path="client"/>
 	<source path="shared"/>
