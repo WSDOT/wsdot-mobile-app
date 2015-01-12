@@ -18,12 +18,14 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesScheduleItem;
+import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
 
 import java.util.List;
-import java.util.Map;
 
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 
 public interface AmtrakCascadesSchedulesDetailsView extends IsWidget {
     
@@ -33,12 +35,28 @@ public interface AmtrakCascadesSchedulesDetailsView extends IsWidget {
         
         public void onBackButtonPressed();
         
+        public void onItemSelected(int index);
+        
     }
     
-    public void render(List<Map<String, AmtrakCascadesScheduleItem>> item);
+    public void render(List<AmtrakCascadesServiceItem> createTopicsList);
+    
+    public void setSelected(int lastIndex, boolean b);
+    
+    public void showProgressIndicator();
+    
+    public void hideProgressIndicator();
     
     public void setTitle(String title);
     
     public void refresh();
+    
+    public void setHeaderPullHandler(Pullhandler pullHandler);
+    
+    public PullArrowWidget getPullHeader();
+    
+    public HasRefresh getPullPanel();
+    
+    public void setFromToLocation(String fromLocation, String toLocation);
 
 }

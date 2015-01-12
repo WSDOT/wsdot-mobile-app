@@ -2,27 +2,10 @@
 <ui:UiBinder
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
-    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
-    <ui:style>
-        .htmlPanel {
-            background-color: white;
-            padding: 12px;
-        }
-        .progressIndicatorPanel {
-            display: -webkit-box;
-            -webkit-box-pack: center;
-            max-width: 100%;
-        }
-        .progressIndicator {
-            width: 0px;
-            padding: 30px 0 20px 0;
-        }
-    </ui:style>
-    
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
 			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
@@ -33,27 +16,8 @@
 		</mgwt:header.HeaderPanel>
 		
         <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
-            <g:FlowPanel ui:field="flowPanel">
-                <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
-                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
-                </g:HTMLPanel>
-                
-                <mgwt:list.widgetlist.WidgetList ui:field="daysOfWeekList" round="true">
-                   <mgwt:input.listbox.MListBox ui:field="daysOfWeek" />
-                </mgwt:list.widgetlist.WidgetList>
-
-                <mgwt:list.widgetlist.WidgetList ui:field="fromLocationList" round="true">
-                   <mgwt:input.listbox.MListBox ui:field="fromLocation" />
-                </mgwt:list.widgetlist.WidgetList>
-                
-                <mgwt:list.widgetlist.WidgetList ui:field="toLocationList" round="true">
-                   <mgwt:input.listbox.MListBox ui:field="toLocation" />
-                </mgwt:list.widgetlist.WidgetList>
-
-                <mgwt:panel.flex.FlexPanel alignment="CENTER">
-                    <mgwt:button.Button ui:field="checkSchedules">Check Schedules</mgwt:button.Button>
-                </mgwt:panel.flex.FlexPanel>
-                
+        	<g:FlowPanel>
+            	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>
         </mgwt:panel.scroll.ScrollPanel>
 		

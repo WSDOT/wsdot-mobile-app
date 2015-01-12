@@ -102,5 +102,5 @@ public interface ClientFactory {
 	public FerriesRouteAlertDetailsView getFerriesRouteAlertDetailsView();
 	public AmtrakCascadesView getAmtrakCascadesView();
 	public AmtrakCascadesSchedulesView getAmtrakCascadesSchedulesView();
-    public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesSchedulesDetailsView();
+    public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesDeparturesView();
 }

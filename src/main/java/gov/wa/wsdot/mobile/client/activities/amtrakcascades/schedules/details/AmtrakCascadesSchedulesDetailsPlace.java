@@ -18,51 +18,53 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesScheduleItem;
-
-import java.util.List;
-import java.util.Map;
-
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class AmtrakCascadesSchedulesDetailsPlace extends Place {
 	
-    private static List<Map<String, AmtrakCascadesScheduleItem>> item;
-    private String token;
-
+    private static String statusDate;
+    private String fromLocation;
+    private static String toLocation;
+    
     /**
-     * 
-     * @param token 
-     * @param token 
-     * @param list
+     *  
+     * @param statusDate
+     * @param fromLocation
+     * @param toLocation
      */
-    public AmtrakCascadesSchedulesDetailsPlace(String token, List<Map<String, AmtrakCascadesScheduleItem>> item) {
-        this.token = token;
-        AmtrakCascadesSchedulesDetailsPlace.item = item;
-    }
-
-    public String getToken() {
-        return token;
-    }
-    
-    public List<Map<String, AmtrakCascadesScheduleItem>> getItem() {
-        return item;
-    }
-    
-	public static class AmtrakCascadesSchedulesDetailsPlaceTokenizer implements
-			PlaceTokenizer<AmtrakCascadesSchedulesDetailsPlace> {
+	public AmtrakCascadesSchedulesDetailsPlace(String statusDate, String fromLocation,
+            String toLocation) {
 	    
+	    AmtrakCascadesSchedulesDetailsPlace.statusDate = statusDate;
+	    this.fromLocation = fromLocation;
+	    AmtrakCascadesSchedulesDetailsPlace.toLocation = toLocation;
+    }
+	
+	public String getStatusDate() {
+	    return statusDate;
+	}
+	
+	public String getFromLocation() {
+	    return fromLocation;
+	}
+	
+	public String getToLocation() {
+	    return toLocation;
+	}
+
+    public static class AmtrakCascadesSchedulesDetailsPlaceTokenizer implements
+			PlaceTokenizer<AmtrakCascadesSchedulesDetailsPlace> {
+
 		@Override
 		public AmtrakCascadesSchedulesDetailsPlace getPlace(String token) {
-			return new AmtrakCascadesSchedulesDetailsPlace(token, item);
+			return new AmtrakCascadesSchedulesDetailsPlace(token, statusDate, toLocation);
 		}
 
 		@Override
 		public String getToken(AmtrakCascadesSchedulesDetailsPlace place) {
-			return place.getToken();
+			return place.getFromLocation();
 		}
 
 	}
-
 }

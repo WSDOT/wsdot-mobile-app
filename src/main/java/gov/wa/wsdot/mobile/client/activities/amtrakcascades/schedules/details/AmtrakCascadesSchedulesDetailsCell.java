@@ -16,7 +16,7 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules;
+package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -25,9 +25,9 @@ import com.google.gwt.uibinder.client.UiRenderer;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.Cell;
 
-public abstract class AmtrakCascadesSchedulesCell<T> implements Cell<T> {
+public abstract class AmtrakCascadesSchedulesDetailsCell<T> implements Cell<T> {
 	
-	@UiTemplate("AmtrakCascadesSchedulesCell.ui.xml")
+	@UiTemplate("AmtrakCascadesDeparturesCell.ui.xml")
 	public interface Renderer extends UiRenderer {
 	    
         public void render(SafeHtmlBuilder safeHtmlBuilder,

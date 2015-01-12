@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2013 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class AmtrakCascadesPlace extends Place {
-	
+
 	public static class AmtrakCascadesPlaceTokenizer implements
 			PlaceTokenizer<AmtrakCascadesPlace> {
 
@@ -37,4 +37,5 @@ public class AmtrakCascadesPlace extends Place {
 		}
 
 	}
+
 }

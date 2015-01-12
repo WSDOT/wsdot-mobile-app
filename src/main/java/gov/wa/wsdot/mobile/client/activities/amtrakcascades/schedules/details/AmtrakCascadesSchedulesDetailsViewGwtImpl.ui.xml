@@ -33,6 +33,15 @@
             text-align: right;
             padding-right: 12px;
         }
+        .progressIndicatorPanel {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            max-width: 100%;
+        }
+        .progressIndicator {
+            width: 0px;
+            padding: 30px 0 20px 0;
+        }
     </ui:style>
     
 	<mgwt:panel.flex.RootFlexPanel>
@@ -44,8 +53,11 @@
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
         	<g:FlowPanel>
+               <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+                   <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+               </g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.title}">
 				   <g:HTML ui:field="title" />
 				</g:HTMLPanel>        	    
@@ -56,7 +68,7 @@
                 
             	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>
-        </mgwt:panel.scroll.ScrollPanel>
+        </mgwt:panel.pull.PullPanel>
 		
 	</mgwt:panel.flex.RootFlexPanel>
     

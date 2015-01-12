@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2013 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades;
 
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
+import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.List;
 
@@ -30,28 +30,14 @@ public interface AmtrakCascadesView extends IsWidget {
 	
 	public interface Presenter {
 		
-		public void onBackButtonPressed();
+		public void onItemSelected(int index);
 		
-		public void onSubmitButtonPressed();
+		public void onBackButtonPressed();
 		
 	}
 	
-    public void showProgressIndicator();
-
-    public void hideProgressIndicator();
+	public void render(List<Topic> createTopicsList);
 	
-	public void renderDaysOfWeek(List<String> days);
+	public void setSelected(int lastIndex, boolean b);
 	
-	public String getDayOfWeekSelected();
-	
-    public void renderFromLocation(List<AmtrakCascadesStationItem> stations);
-    
-	public void renderToLocation(List<AmtrakCascadesStationItem> stations);
-	
-	public String getFromLocationSelected();
-	
-	public String getToLocationSelected();
-	
-	public void setLocationEnabled(boolean locationEnabled);
-    
 }

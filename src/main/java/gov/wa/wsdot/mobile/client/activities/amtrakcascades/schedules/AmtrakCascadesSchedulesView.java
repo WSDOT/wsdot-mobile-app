@@ -18,45 +18,40 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules;
 
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
+import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 
 import java.util.List;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 
 public interface AmtrakCascadesSchedulesView extends IsWidget {
-    
-    public void setPresenter(Presenter presenter);
-
-    public interface Presenter {
-        
-        public void onBackButtonPressed();
-        
-        public void onItemSelected(int index);
-        
-    }
-    
-    public void render(List<AmtrakCascadesServiceItem> createTopicsList);
-    
-    public void setSelected(int lastIndex, boolean b);
-    
+	
+	public void setPresenter(Presenter presenter);
+	
+	public interface Presenter {
+		
+		public void onBackButtonPressed();
+		
+		public void onSubmitButtonPressed();
+		
+	}
+	
     public void showProgressIndicator();
-    
-    public void hideProgressIndicator();
-    
-    public void setTitle(String title);
-    
-    public void refresh();
-    
-    public void setHeaderPullHandler(Pullhandler pullHandler);
-    
-    public PullArrowWidget getPullHeader();
-    
-    public HasRefresh getPullPanel();
-    
-    public void setFromToLocation(String fromLocation, String toLocation);
 
+    public void hideProgressIndicator();
+	
+	public void renderDaysOfWeek(List<String> days);
+	
+	public String getDayOfWeekSelected();
+	
+    public void renderFromLocation(List<AmtrakCascadesStationItem> stations);
+    
+	public void renderToLocation(List<AmtrakCascadesStationItem> stations);
+	
+	public String getFromLocationSelected();
+	
+	public String getToLocationSelected();
+	
+	public void setLocationEnabled(boolean locationEnabled);
+    
 }

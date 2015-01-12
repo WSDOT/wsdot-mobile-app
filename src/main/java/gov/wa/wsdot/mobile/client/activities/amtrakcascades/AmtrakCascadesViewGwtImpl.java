@@ -18,24 +18,21 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades;
 
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
+import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
+import gov.wa.wsdot.mobile.shared.Topic;
 
-import java.util.Collections;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.SelectElement;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
-import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
-import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 
 public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascadesView {
 
@@ -45,46 +42,46 @@ public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascad
 	interface AmtrakCascadesViewGwtImplUiBinder extends
 			UiBinder<Widget, AmtrakCascadesViewGwtImpl> {
 	}
-
+	
 	/**
 	 * The UiBinder used to generate the view.
 	 */
 	private static AmtrakCascadesViewGwtImplUiBinder uiBinder = GWT
 			.create(AmtrakCascadesViewGwtImplUiBinder.class);
 	
-
+	@UiField(provided = true)
+	CellList<Topic> cellList;
+	
 	@UiField
 	PreviousitemImageButton backButton;
 	
-    @UiField
-    ProgressIndicator progressIndicator;
-    
-    @UiField(provided = true)
-    MListBox daysOfWeek;
-    
-    @UiField(provided = true)
-    MListBox fromLocation;
-    
-    @UiField(provided = true)
-    MListBox toLocation;
-    
-    @UiField
-    Button checkSchedules;
-	
 	private Presenter presenter;
-	private DateTimeFormat dayOfWeekFormat = DateTimeFormat.getFormat("EEEE");
-	private DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
-	private DateTimeFormat statusDateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
-	private boolean locationEnabled = false;
 	
 	public AmtrakCascadesViewGwtImpl() {
-	    
-	    daysOfWeek = new MListBox();
-	    fromLocation = new MListBox();
-	    toLocation = new MListBox();
-	
-		initWidget(uiBinder.createAndBindUi(this));
+		
+		cellList = new CellList<Topic>(new BasicCell<Topic>() {
 
+			@Override
+			public String getDisplayString(Topic model) {
+				return model.getName();
+			}
+
+			@Override
+			public boolean canBeSelected(Topic model) {
+				return true;
+			}
+		});
+		
+		initWidget(uiBinder.createAndBindUi(this));
+		
+	}
+
+	@UiHandler("cellList")
+	protected void onCellSelected(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(index);
+		}
 	}
 
 	@UiHandler("backButton")
@@ -93,116 +90,20 @@ public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascad
 			presenter.onBackButtonPressed();
 		}
 	}
-	
-	@UiHandler("checkSchedules")
-	protected void onClick(TapEvent event) {
-	    if (presenter != null) {
-	        presenter.onSubmitButtonPressed();
-	    }
-	}
-	
+
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
 
-    @Override
-    public void showProgressIndicator() {
-        progressIndicator.setVisible(true);
-    }
+	@Override
+	public void render(List<Topic> createTopicsList) {
+		cellList.render(createTopicsList);
+	}
 
-    @Override
-    public void hideProgressIndicator() {
-        progressIndicator.setVisible(false);
-    }
-
-    @Override
-    public void renderDaysOfWeek(List<String> days) {
-        daysOfWeek.clear();
-        
-        for (String day: days) {
-            daysOfWeek.addItem(dayOfWeekFormat.format(dateFormat.parse(day)),
-                    statusDateFormat.format(dateFormat.parse(day)));
-        }        
-    }
-
-    @Override
-    public String getDayOfWeekSelected() {
-        return daysOfWeek.getValue(daysOfWeek.getSelectedIndex());
-    }
-
-    @Override
-    public void renderFromLocation(List<AmtrakCascadesStationItem> stations) {
-        fromLocation.clear();
-        
-        if (!isLocationEnabled()) {
-            fromLocation.addItem("Select your point of origin");
-            fromLocation.getElement().<SelectElement>cast().getOptions().getItem(0).setDisabled(true);
-        }
-
-        for (AmtrakCascadesStationItem station: stations) {
-            fromLocation.addItem(station.getStationName(), station.getStationCode());
-        }
-        
-        int stationIndex = 0;
-        if (isLocationEnabled()) {
-            Collections.sort(stations, AmtrakCascadesStationItem.stationDistanceComparator);
-            AmtrakCascadesStationItem closestStation = stations.get(0);
-            Collections.sort(stations, AmtrakCascadesStationItem.stationNameComparator);
-            stationIndex = stations.indexOf(closestStation);
-        }
-        
-        fromLocation.setSelectedIndex(stationIndex);
-    }
-    
-    @Override
-    public void renderToLocation(List<AmtrakCascadesStationItem> stations) {
-        toLocation.clear();
-        toLocation.addItem("Select your destination (Optional)");
-        toLocation.getElement().<SelectElement>cast().getOptions().getItem(0).setDisabled(true);
-        
-        for (AmtrakCascadesStationItem station: stations) {
-            toLocation.addItem(station.getStationName(), station.getStationCode());
-        }
-        
-        toLocation.setSelectedIndex(0);
-    }
-
-    @Override
-    public String getFromLocationSelected() {
-        int selectedIndex = fromLocation.getSelectedIndex();
-        if (isLocationEnabled()) {
-            if (selectedIndex == -1) {
-                return "NA";
-            } else {
-                return fromLocation.getValue(selectedIndex);
-            }
-        } else {
-            if (selectedIndex == 0 || selectedIndex == -1) {
-                return "NA";
-            } else {
-                return fromLocation.getValue(selectedIndex);
-            }            
-        }
-    }
-
-    @Override
-    public String getToLocationSelected() {
-        int selectedIndex = toLocation.getSelectedIndex();
-        if (selectedIndex == 0 || selectedIndex == -1) {
-            return "NA";
-        } else {
-            return toLocation.getValue(selectedIndex);
-        }
-    }
-
-    public boolean isLocationEnabled() {
-        return locationEnabled;
-    }
-
-    @Override
-    public void setLocationEnabled(boolean locationEnabled) {
-        this.locationEnabled = locationEnabled;
-    }
+	@Override
+	public void setSelected(int lastIndex, boolean b) {
+		cellList.setSelectedIndex(lastIndex, b);
+	}
 
 }

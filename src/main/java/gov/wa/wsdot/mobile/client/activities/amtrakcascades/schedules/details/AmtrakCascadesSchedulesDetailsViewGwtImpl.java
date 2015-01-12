@@ -18,13 +18,11 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 
-import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesCell;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesScheduleItem;
+import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -40,8 +38,15 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 		implements AmtrakCascadesSchedulesDetailsView {
@@ -61,36 +66,49 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 
 	
 	@UiField(provided = true)
-	CellList<AmtrakCascadesScheduleItem> cellList;
+	CellList<AmtrakCascadesServiceItem> cellList;
 	
 	@UiField
 	PreviousitemImageButton backButton;
     
+	@UiField(provided = true)
+    PullPanel pullToRefresh;	
+	
 	@UiField
     HTML title;
 	
+	@UiField
+	ProgressIndicator progressIndicator;
+	
 	private Presenter presenter;
+	private PullArrowHeader pullArrowHeader;
 	private DateTimeFormat dateFormat = DateTimeFormat.getFormat("hh:mm a");
 	private DateTimeFormat updateDateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 		
 	private final TimeZoneConstants timeZoneConstants = GWT.create(TimeZoneConstants.class);
     private final TimeZone usPacific = TimeZone.createTimeZone(TimeZoneInfo
             .buildTimeZoneData(timeZoneConstants.americaLosAngeles()));	
-    private String fromLocation = "VAC";
-    private String toLocation = "TAC";
+    private String fromLocation;
+    private String toLocation;
 	
 	public AmtrakCascadesSchedulesDetailsViewGwtImpl() {
-
-	    cellList = new CellList<AmtrakCascadesScheduleItem>(
-				new AmtrakCascadesSchedulesCell<AmtrakCascadesScheduleItem>() {
+		
+        pullToRefresh = new PullPanel();
+        pullArrowHeader = new PullArrowHeader();
+        pullToRefresh.setHeader(pullArrowHeader);
+		
+		cellList = new CellList<AmtrakCascadesServiceItem>(
+				new AmtrakCascadesSchedulesDetailsCell<AmtrakCascadesServiceItem>() {
 			
 			@Override
-			public SafeHtml getScheduledDeparture(AmtrakCascadesScheduleItem model) {
-                String schedDepartureTime = model.getScheduledDepartureTime();
+			public SafeHtml getScheduledDeparture(AmtrakCascadesServiceItem model) {
+                String schedDepartureTime = model.getLocation().get(0).get(fromLocation).getScheduledDepartureTime();
 
                 if (schedDepartureTime != null) {
                     Date scheduledDepartureTime = new Date(Long
-                            .parseLong(model.getScheduledDepartureTime()));
+                            .parseLong(model.getLocation().get(0)
+                                    .get(fromLocation)
+                                    .getScheduledDepartureTime()));
                     
                     return SafeHtmlUtils.fromString(dateFormat.format(
                             scheduledDepartureTime, usPacific));
@@ -101,9 +119,9 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 			}
 
 			@Override
-			public SafeHtml getScheduledArrival(AmtrakCascadesScheduleItem model) {
-                String schedDepartureTime = model.getScheduledDepartureTime();
-                String schedArrivalTime = model.getScheduledArrivalTime();
+			public SafeHtml getScheduledArrival(AmtrakCascadesServiceItem model) {
+                String schedDepartureTime = model.getLocation().get(0).get(fromLocation).getScheduledDepartureTime();
+                String schedArrivalTime = model.getLocation().get(0).get(toLocation).getScheduledArrivalTime();
                 
                 if ((fromLocation.equalsIgnoreCase(toLocation))
                         && (schedDepartureTime != null && schedArrivalTime != null)) {
@@ -112,7 +130,9 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
                 } else {
                     if (schedArrivalTime != null) {
                         Date scheduledArrivalTime = new Date(Long
-                                .parseLong(model.getScheduledArrivalTime()));                   
+                                .parseLong(model.getLocation().get(0)
+                                        .get(toLocation)
+                                        .getScheduledArrivalTime()));                   
                         
                         return SafeHtmlUtils.fromString(dateFormat.format(
                                 scheduledArrivalTime, usPacific));
@@ -124,7 +144,9 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
                          * time as the scheduled arrival time so we'll do the same thing for the app.
                          */ 
                         Date scheduledArrivalTime = new Date(Long
-                                .parseLong(model.getScheduledDepartureTime()));
+                                .parseLong(model.getLocation().get(0)
+                                        .get(toLocation)
+                                        .getScheduledDepartureTime()));
     
                         return SafeHtmlUtils.fromString(dateFormat.format(
                                 scheduledArrivalTime, usPacific));
@@ -136,10 +158,12 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 			}
 
             @Override
-            public SafeHtml getLastUpdated(AmtrakCascadesScheduleItem model) {
-                if (model.getUpdateTime() != null) {
+            public SafeHtml getLastUpdated(AmtrakCascadesServiceItem model) {
+                if (model.getLocation().get(0).get(fromLocation).getUpdateTime() != null) {
                     String updateTime = updateDateFormat
-                            .format(new Date(Long.parseLong(model.getUpdateTime())));
+                            .format(new Date(Long.parseLong(model
+                                    .getLocation().get(0)
+                                    .get(fromLocation).getUpdateTime())));
                     
                     return SafeHtmlUtils.fromString(ParserUtils
                             .relativeTime(updateTime,
@@ -150,23 +174,27 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
             }
 
             @Override
-            public SafeHtml getTrain(AmtrakCascadesScheduleItem model) {
-                if (model.getTrainMessage() == null) {
-                    return SafeHtmlUtils.fromString(model.getTrainName());
+            public SafeHtml getTrain(AmtrakCascadesServiceItem model) {
+                if (model.getLocation().get(0).get(fromLocation).getTrainMessage() == null) {
+                    return SafeHtmlUtils.fromString(model.getLocation()
+                            .get(0).get(fromLocation).getTrainName());
                 } else {
-                    return SafeHtmlUtils.fromString(model.getTrainName()
+                    return SafeHtmlUtils.fromString(model.getLocation()
+                            .get(0).get(fromLocation).getTrainName()
                             + " - "
-                            + model.getTrainMessage());
+                            + model.getLocation().get(0)
+                                    .get(fromLocation)
+                                    .getTrainMessage());
                 }
             }
 
             @Override
-            public SafeHtml getDepartureComment(AmtrakCascadesScheduleItem model) {
-                if (model.getDepartureTime() != null) {
-                    Date departureTime = new Date(Long.parseLong(model.getDepartureTime()));
-                    Date scheduledDepartureTime = new Date(Long.parseLong(model.getScheduledDepartureTime()));
+            public SafeHtml getDepartureComment(AmtrakCascadesServiceItem model) {
+                if (model.getLocation().get(0).get(fromLocation).getDepartureTime() != null) {
+                    Date departureTime = new Date(Long.parseLong(model.getLocation().get(0).get(fromLocation).getDepartureTime()));
+                    Date scheduledDepartureTime = new Date(Long.parseLong(model.getLocation().get(0).get(fromLocation).getScheduledDepartureTime()));
                     int minutesDiff = (int) (((departureTime.getTime() - scheduledDepartureTime.getTime()) / 1000) / 60);
-                    String scheduleType = model.getDepartureScheduleType();
+                    String scheduleType = model.getLocation().get(0).get(fromLocation).getDepartureScheduleType();
                     String timelyType = "on time";
                     if (minutesDiff < 0) {
                         timelyType = " early ";
@@ -200,17 +228,17 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
             }
 
             @Override
-            public SafeHtml getArrivalComment(AmtrakCascadesScheduleItem model) {
-                String schedDepartureTime = model.getScheduledDepartureTime();
-                String schedArrivalTime = model.getScheduledArrivalTime();
+            public SafeHtml getArrivalComment(AmtrakCascadesServiceItem model) {
+                String schedDepartureTime = model.getLocation().get(0).get(fromLocation).getScheduledDepartureTime();
+                String schedArrivalTime = model.getLocation().get(0).get(toLocation).getScheduledArrivalTime();
                 
                 if ((fromLocation.equalsIgnoreCase(toLocation))
                         && (schedDepartureTime != null && schedArrivalTime != null)) {
                     
                     return SafeHtmlUtils.fromString("");
                 } else {
-                    if (model.getArrivalTime() != null) {
-                        Date arrivalTime = new Date(Long.parseLong(model.getArrivalTime()));
+                    if (model.getLocation().get(0).get(toLocation).getArrivalTime() != null) {
+                        Date arrivalTime = new Date(Long.parseLong(model.getLocation().get(0).get(toLocation).getArrivalTime()));
                         Date scheduledArrivalTime;
 
                         if (schedArrivalTime != null) {
@@ -226,14 +254,18 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
                                  * time as the scheduled arrival time so we'll do the same thing for the app.
                                  */ 
                                 scheduledArrivalTime = new Date(
-                                        Long.parseLong(model.getScheduledDepartureTime()));
+                                        Long.parseLong(model
+                                                .getLocation()
+                                                .get(0)
+                                                .get(toLocation)
+                                                .getScheduledDepartureTime()));
                             } else {
                                 return SafeHtmlUtils.fromString("");
                             }
                         }
                         
                         int minutesDiff = (int) (((arrivalTime.getTime() - scheduledArrivalTime.getTime()) / 1000) / 60);
-                        String scheduleType = model.getArrivalScheduleType();
+                        String scheduleType = model.getLocation().get(0).get(toLocation).getArrivalScheduleType();
                         String timelyType = "on time";
                         if (minutesDiff < 0) {
                             timelyType = " early ";
@@ -269,7 +301,14 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
             }
             
             @Override
-            public boolean canBeSelected(AmtrakCascadesScheduleItem model) {
+            public boolean canBeSelected(AmtrakCascadesServiceItem model) {
+                /*
+                if (model.getLocation().get(0).size() > 2) {
+                    return true;
+                } else {
+                    return false;
+                }
+                */
                 return false;
             }
 
@@ -314,6 +353,14 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 			presenter.onBackButtonPressed();
 		}
 	}
+
+    @UiHandler("cellList")
+    protected void onCellSelected(CellSelectedEvent event) {
+        if (presenter != null) {
+            int index = event.getIndex();
+            presenter.onItemSelected(index);
+        }
+    }
 	
 	@Override
 	public void setPresenter(Presenter presenter) {
@@ -324,16 +371,51 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
     public void setTitle(String title) {
         this.title.setHTML(title);
     }
+	
+	@Override
+	public void render(List<AmtrakCascadesServiceItem> createTopicsList) {
+		cellList.render(createTopicsList);
+	}
+	
+	@Override
+	public void showProgressIndicator() {
+		progressIndicator.setVisible(true);
+	}
+
+	@Override
+	public void hideProgressIndicator() {
+		progressIndicator.setVisible(false);
+	}
+
+	@Override
+	public void refresh() {
+		pullToRefresh.refresh();
+	}
 
     @Override
-    public void render(List<Map<String, AmtrakCascadesScheduleItem>> item) {
-        cellList.render((List<AmtrakCascadesScheduleItem>) item.get(0));
+    public void setHeaderPullHandler(Pullhandler pullHandler) {
+        pullToRefresh.setHeaderPullHandler(pullHandler);
     }
 
     @Override
-    public void refresh() {
-        // TODO Auto-generated method stub
-        
+    public PullArrowWidget getPullHeader() {
+        return pullArrowHeader;
+    }
+
+    @Override
+    public HasRefresh getPullPanel() {
+        return pullToRefresh;
+    }
+
+    @Override
+    public void setFromToLocation(String fromLocation, String toLocation) {
+        this.fromLocation = fromLocation;
+        this.toLocation = toLocation;
+    }
+
+    @Override
+    public void setSelected(int lastIndex, boolean b) {
+        cellList.setSelectedIndex(lastIndex, b);
     }
 
 }

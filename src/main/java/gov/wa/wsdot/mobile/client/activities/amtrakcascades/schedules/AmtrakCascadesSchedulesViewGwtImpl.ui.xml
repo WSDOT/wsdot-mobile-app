@@ -2,36 +2,15 @@
 <ui:UiBinder
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
-    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget">
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
     <ui:style>
-        .title {
-            font-size: medium;
-            font-weight: bold;
-            padding: 12px 12px 15px 12px;
-            text-align: center;
-        }
-        .timesHeader {
-            display: -webkit-box;
-            -webkit-box-orient: horizontal;
-            padding: 0px 0 6px 0;
-        }
-
-        .departingHeader {
-            -webkit-box-flex: 1;
-            font-size: small;
-            font-weight: bold;
-            padding-left: 12px;
-        }
-
-        .arrivingHeader {
-            -webkit-box-flex: 1;
-            font-size: small;
-            font-weight: bold;
-            text-align: right;
-            padding-right: 12px;
+        .htmlPanel {
+            background-color: white;
+            padding: 12px;
         }
         .progressIndicatorPanel {
             display: -webkit-box;
@@ -48,27 +27,35 @@
 		<mgwt:header.HeaderPanel>
 			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer />
-			<mgwt:header.HeaderTitle>Train Schedules</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle>Find Schedules</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
-        	<g:FlowPanel>
-               <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
-                   <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
-               </g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.title}">
-				   <g:HTML ui:field="title" />
-				</g:HTMLPanel>        	    
-                <g:HTMLPanel styleName="{style.timesHeader}">
-                    <div class="{style.departingHeader}">Departing</div>
-                    <div class="{style.arrivingHeader}">Arriving</div>
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+            <g:FlowPanel ui:field="flowPanel">
+                <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
                 </g:HTMLPanel>
                 
-            	<mgwt:list.celllist.CellList ui:field="cellList" />
+                <mgwt:list.widgetlist.WidgetList ui:field="daysOfWeekList" round="true">
+                   <mgwt:input.listbox.MListBox ui:field="daysOfWeek" />
+                </mgwt:list.widgetlist.WidgetList>
+
+                <mgwt:list.widgetlist.WidgetList ui:field="fromLocationList" round="true">
+                   <mgwt:input.listbox.MListBox ui:field="fromLocation" />
+                </mgwt:list.widgetlist.WidgetList>
+                
+                <mgwt:list.widgetlist.WidgetList ui:field="toLocationList" round="true">
+                   <mgwt:input.listbox.MListBox ui:field="toLocation" />
+                </mgwt:list.widgetlist.WidgetList>
+
+                <mgwt:panel.flex.FlexPanel alignment="CENTER">
+                    <mgwt:button.Button ui:field="checkSchedules">Check Schedules</mgwt:button.Button>
+                </mgwt:panel.flex.FlexPanel>
+                
             </g:FlowPanel>
-        </mgwt:panel.pull.PullPanel>
+        </mgwt:panel.scroll.ScrollPanel>
 		
 	</mgwt:panel.flex.RootFlexPanel>
     

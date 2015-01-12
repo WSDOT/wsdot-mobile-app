@@ -133,7 +133,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private FerriesRouteAlertDetailsViewGwtImpl ferriesRouteAlertDetailsView;
 	private AmtrakCascadesViewGwtImpl amtrakCascadesView;
 	private AmtrakCascadesSchedulesViewGwtImpl amtrakCascadesSchedulesView;
-	private AmtrakCascadesSchedulesDetailsViewGwtImpl amtrakCascadesSchedulesDetailsView;
+    private AmtrakCascadesSchedulesDetailsViewGwtImpl amtrakCascadesDeparturesView;
 
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -455,11 +455,11 @@ public class ClientFactoryImpl implements ClientFactory {
     }
 
     @Override
-    public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesSchedulesDetailsView() {
-        if (amtrakCascadesSchedulesDetailsView == null) {
-            amtrakCascadesSchedulesDetailsView = new AmtrakCascadesSchedulesDetailsViewGwtImpl();
+    public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesDeparturesView() {
+        if (amtrakCascadesDeparturesView == null) {
+            amtrakCascadesDeparturesView = new AmtrakCascadesSchedulesDetailsViewGwtImpl();
         }
-        return amtrakCascadesSchedulesDetailsView;
+        return amtrakCascadesDeparturesView;
     }
 
 }

@@ -228,15 +228,15 @@ public class PhoneActivityMapper implements ActivityMapper {
 		if (place instanceof AmtrakCascadesPlace) {
 		    return new AmtrakCascadesActivity(clientFactory);
 		}
-
-        if (place instanceof AmtrakCascadesSchedulesPlace) {
-            return new AmtrakCascadesSchedulesActivity(clientFactory);
-        }
 		
+		if (place instanceof AmtrakCascadesSchedulesPlace) {
+		    return new AmtrakCascadesSchedulesActivity(clientFactory);
+		}
+
         if (place instanceof AmtrakCascadesSchedulesDetailsPlace) {
             return new AmtrakCascadesSchedulesDetailsActivity(clientFactory);
         }
-        
+		
 		return new HomeActivity(clientFactory);
 	}
 }

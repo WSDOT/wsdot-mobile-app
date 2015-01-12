@@ -23,47 +23,17 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class AmtrakCascadesSchedulesPlace extends Place {
 	
-    private static String statusDate;
-    private String fromLocation;
-    private static String toLocation;
-    
-    /**
-     *  
-     * @param statusDate
-     * @param fromLocation
-     * @param toLocation
-     */
-	public AmtrakCascadesSchedulesPlace(String statusDate, String fromLocation,
-            String toLocation) {
-	    
-	    AmtrakCascadesSchedulesPlace.statusDate = statusDate;
-	    this.fromLocation = fromLocation;
-	    AmtrakCascadesSchedulesPlace.toLocation = toLocation;
-    }
-	
-	public String getStatusDate() {
-	    return statusDate;
-	}
-	
-	public String getFromLocation() {
-	    return fromLocation;
-	}
-	
-	public String getToLocation() {
-	    return toLocation;
-	}
-
-    public static class AmtrakCascadesSchedulesPlaceTokenizer implements
+	public static class AmtrakCascadesSchedulesPlaceTokenizer implements
 			PlaceTokenizer<AmtrakCascadesSchedulesPlace> {
 
 		@Override
 		public AmtrakCascadesSchedulesPlace getPlace(String token) {
-			return new AmtrakCascadesSchedulesPlace(token, statusDate, toLocation);
+			return new AmtrakCascadesSchedulesPlace();
 		}
 
 		@Override
 		public String getToken(AmtrakCascadesSchedulesPlace place) {
-			return place.getFromLocation();
+			return "";
 		}
 
 	}

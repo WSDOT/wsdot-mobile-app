@@ -249,15 +249,15 @@ public class PhoneAnimationMapper implements AnimationMapper {
 				&& newPlace instanceof FerriesRouteSailingsPlace) {
 			return Animations.SLIDE_REVERSE;
 		}
-		
+
         if (oldPlace instanceof AmtrakCascadesPlace && newPlace instanceof HomePlace) {
             return Animations.SLIDE_REVERSE;
         }
-        
+		
         if (oldPlace instanceof AmtrakCascadesSchedulesPlace && newPlace instanceof AmtrakCascadesPlace) {
             return Animations.SLIDE_REVERSE;
         }
-		
+        
         if (oldPlace instanceof AmtrakCascadesSchedulesDetailsPlace && newPlace instanceof AmtrakCascadesSchedulesPlace) {
             return Animations.SLIDE_REVERSE;
         }

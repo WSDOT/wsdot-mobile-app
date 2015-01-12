@@ -19,501 +19,204 @@
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesScheduleFeed;
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesScheduleItem;
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
+import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.jsonp.client.JsonpRequestBuilder;
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.googlecode.gwtphonegap.client.PhoneGap;
+import com.googlecode.gwtphonegap.client.geolocation.GeolocationCallback;
+import com.googlecode.gwtphonegap.client.geolocation.Position;
+import com.googlecode.gwtphonegap.client.geolocation.PositionError;
+import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
-public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity
-        implements AmtrakCascadesSchedulesView.Presenter {
+public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implements
+    AmtrakCascadesSchedulesView.Presenter {
 
-    private ClientFactory clientFactory;
-    private AmtrakCascadesSchedulesView view;
-    private EventBus eventBus;
-    private String statusDate;
-    private static Map<String, AmtrakCascadesScheduleItem> stationItems;
-    private static List<Map<String, AmtrakCascadesScheduleItem>> locationItems;
-    private static List<AmtrakCascadesServiceItem> serviceItems = new ArrayList<AmtrakCascadesServiceItem>();
-    private static Map<Integer, String> trainNumberMap = new HashMap<Integer, String>();
-    private static Map<String, String> amtrakStations = new HashMap<String, String>();
-    private static final String AMTRAK_CASCADES_SCHEDULE_URL = Consts.HOST_URL + "/traveler/api/amtrakcascades/schedule";
-    
-    public AmtrakCascadesSchedulesActivity(ClientFactory clientFactory) {
-        this.clientFactory = clientFactory;
-    }
-    
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        view = clientFactory.getAmtrakCascadesSchedulesView();
-        this.eventBus = eventBus;
-        view.setPresenter(this);
-        final Place place = clientFactory.getPlaceController().getWhere();
-        
-        getTrainNumbers();
-        getAmtrakStations();
-        
-        view.getPullHeader().setHTML("pull down");
-        PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
-                view.getPullHeader(), view.getPullPanel());
-        
-        headerHandler.setErrorText("Error");
-        headerHandler.setLoadingText("Loading");
-        headerHandler.setNormalText("pull down");
-        headerHandler.setPulledText("release to load");
-        headerHandler.setPullActionHandler(new PullActionHandler() {
-        
-            @Override
-            public void onPullAction(final AsyncCallback<Void> callback) {
-        
-                new Timer() {
-        
-                    @Override
-                    public void run() {
-                        if (place instanceof AmtrakCascadesSchedulesPlace) {
-                            AmtrakCascadesSchedulesPlace amtrakCascadesSchedulesPlace = (AmtrakCascadesSchedulesPlace) place;
-                            statusDate = amtrakCascadesSchedulesPlace.getStatusDate();
-                            String fromLocation = amtrakCascadesSchedulesPlace.getFromLocation();
-                            String toLocation = amtrakCascadesSchedulesPlace.getToLocation();
+	private ClientFactory clientFactory;
+	private AmtrakCascadesSchedulesView view;
+	private EventBus eventBus;
+	private PhoneGap phoneGap;
+    private List<AmtrakCascadesStationItem> amtrakStationItems = new ArrayList<AmtrakCascadesStationItem>();
+    private DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
+	
+	public AmtrakCascadesSchedulesActivity(ClientFactory clientFactory) {
+		this.clientFactory = clientFactory;
+	}
 
-                            createTopicsList(statusDate, fromLocation, toLocation);
-                        }
-                        view.refresh();
-                        callback.onSuccess(null);
-                    }                    
-                }.schedule(1);
-            }
-            
-        });
-
-        if (place instanceof AmtrakCascadesSchedulesPlace) {
-            AmtrakCascadesSchedulesPlace amtrakCascadesSchedulesPlace = (AmtrakCascadesSchedulesPlace) place;
-            statusDate = amtrakCascadesSchedulesPlace.getStatusDate();
-            String fromLocation = amtrakCascadesSchedulesPlace.getFromLocation();
-            String toLocation = amtrakCascadesSchedulesPlace.getToLocation();
-
-            view.setHeaderPullHandler(headerHandler);
-            createTopicsList(statusDate, fromLocation, toLocation);
-            
-            panel.setWidget(view);
-        }
-    }
-
-    private void getTrainNumbers() {
-        trainNumberMap.put(7, "Empire Builder Train");
-        trainNumberMap.put(8, "Empire Builder Train");
-        trainNumberMap.put(11, "Coast Starlight Train");
-        trainNumberMap.put(14, "Coast Starlight Train");
-        trainNumberMap.put(27, "Empire Builder Train");
-        trainNumberMap.put(28, "Empire Builder Train");
-        trainNumberMap.put(500, "Amtrak Cascades Train");
-        trainNumberMap.put(501, "Amtrak Cascades Train");
-        trainNumberMap.put(503, "Amtrak Cascades Train");
-        trainNumberMap.put(505, "Amtrak Cascades Train");
-        trainNumberMap.put(506, "Amtrak Cascades Train");
-        trainNumberMap.put(507, "Amtrak Cascades Train");
-        trainNumberMap.put(508, "Amtrak Cascades Train");
-        trainNumberMap.put(509, "Amtrak Cascades Train");
-        trainNumberMap.put(510, "Amtrak Cascades Train");
-        trainNumberMap.put(511, "Amtrak Cascades Train");
-        trainNumberMap.put(513, "Amtrak Cascades Train");
-        trainNumberMap.put(516, "Amtrak Cascades Train");
-        trainNumberMap.put(517, "Amtrak Cascades Train");
-    }
-    
-    private void getAmtrakStations() {
-        amtrakStations.put("VAC", "Vancouver, BC");
-        amtrakStations.put("BEL", "Bellingham, WA");
-        amtrakStations.put("MVW", "Mount Vernon, WA");
-        amtrakStations.put("STW", "Stanwood, WA");
-        amtrakStations.put("EVR", "Everett, WA");
-        amtrakStations.put("EDM", "Edmonds, WA");
-        amtrakStations.put("SEA", "Seattle, WA");
-        amtrakStations.put("TUK", "Tukwila, WA");
-        amtrakStations.put("TAC", "Tacoma, WA");
-        amtrakStations.put("OLW", "Olympia/Lacey, WA");
-        amtrakStations.put("CTL", "Centralia, WA");
-        amtrakStations.put("KEL", "Kelso/Longview, WA");
-        amtrakStations.put("VAN", "Vancouver, WA");
-        amtrakStations.put("PDX", "Portland, OR");
-        amtrakStations.put("ORC", "Oregon City, OR");
-        amtrakStations.put("SLM", "Salem, OR");
-        amtrakStations.put("ALY", "Albany, OR");
-        amtrakStations.put("EUG", "Eugene, OR");
-    }
-
-    /**
-     * Check URL parameters and decide which way we are accessing the API.
-     *
-     * @param scheduleDate date of requested schedule
-     * @param fromLocation departing station name
-     * @param toLocation arriving station name
-     */
-    private void createTopicsList(String scheduleDate, final String fromLocation, final String toLocation) {
-        String url = AMTRAK_CASCADES_SCHEDULE_URL + "/" + scheduleDate + "/-1/" + fromLocation + "/" + toLocation;
-
+	@Override
+	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
+		view = clientFactory.getAmtrakCascadesSchedulesView();
+		this.eventBus = eventBus;
+		phoneGap = clientFactory.getPhoneGap();
+		view.setPresenter(this);
+		
         view.showProgressIndicator();
-        
-        if (!toLocation.equalsIgnoreCase("NA")) {
-            getDepartingArrivingTrains(url, fromLocation, toLocation);
-        } else {
-            getDepartingTrains(url, fromLocation, toLocation);
-        }
+		getDaysOfWeek();
+		getAmtrakStations();
+		getCurrentLocation();
+
+		panel.setWidget(view);
+
+	}
+
+	private void getDaysOfWeek() {
+	    List<String> daysOfWeek = new ArrayList<String>();
+	    
+	    Date startDate = new Date();
+	    
+	    for (int i = 0; i < 7; i++) {
+	        Date nextDay = new Date(startDate.getTime() + i * 24 * 3600 * 1000);
+	        daysOfWeek.add(dateFormat.format(nextDay));
+	    }
+	    
+	    view.renderDaysOfWeek(daysOfWeek);
     }
 
-    /**
-     * Get train schedules for those with a departing and arriving station.
-     * 
-     * @param url URL of the Web services API
-     * @param toLocation arriving station name
-     * @param fromLocation departing station name
-     */
-    private void getDepartingArrivingTrains(String url, final String fromLocation, final String toLocation) {
-        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-        jsonp.setTimeout(30000); // Set timeout for 30 seconds
-        jsonp.requestObject(url, new AsyncCallback<AmtrakCascadesScheduleFeed>() {
+    private void getAmtrakStations() {
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("VAC", "Vancouver, BC", 1, 49.2737293, -123.0979175));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("BEL", "Bellingham, WA", 2, 48.720423, -122.5109386));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("MVW", "Mount Vernon, WA", 3, 48.4185923, -122.334973));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("STW", "Stanwood, WA", 4, 48.2417732, -122.3495322));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("EVR", "Everett, WA", 5, 47.975512, -122.197854));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("EDM", "Edmonds, WA", 6, 47.8111305, -122.3841639));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("SEA", "Seattle, WA", 7, 47.6001899, -122.3314322));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("TUK", "Tukwila, WA", 8, 47.461079, -122.242693));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("TAC", "Tacoma, WA", 9, 47.2419939, -122.4205623));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("OLW", "Olympia/Lacey, WA", 10, 46.9913576, -122.793982));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("CTL", "Centralia, WA", 11, 46.7177596, -122.9528291));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("KEL", "Kelso/Longview, WA", 12, 46.1422504, -122.9132438));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("VAN", "Vancouver, WA", 13, 45.6294472, -122.685568));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("PDX", "Portland, OR", 14, 45.528639, -122.676284));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("ORC", "Oregon City, OR", 15, 45.3659422, -122.5960671));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("SLM", "Salem, OR", 16, 44.9323665, -123.0281591));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("ALY", "Albany, OR", 17, 44.6300975, -123.1041787));
+	    amtrakStationItems.add(new AmtrakCascadesStationItem("EUG", "Eugene, OR", 18, 44.055506, -123.094523));
+
+	    Collections.sort(amtrakStationItems, AmtrakCascadesStationItem.stationNameComparator);
+    }
+
+    private void getCurrentLocation() {
+        phoneGap.getGeolocation().getCurrentPosition(new GeolocationCallback() {
 
             @Override
-            public void onFailure(Throwable caught) {
+            public void onSuccess(Position position) {
+                double latitude = position.getCoordinates().getLatitude();
+                double longitude = position.getCoordinates().getLongitude();
+
+                getDistanceFromStation(latitude, longitude);
                 view.hideProgressIndicator();
             }
 
             @Override
-            public void onSuccess(AmtrakCascadesScheduleFeed result) {
-                if (result.getSchedule() != null) {
-                    serviceItems.clear();
-                    AmtrakCascadesScheduleItem scheduleItem;
-                    int numItems = result.getSchedule().length();
+            public void onFailure(PositionError error) {
+                switch (error.getCode()) {
+                    case PositionError.PERMISSION_DENIED:
+                        phoneGap.getNotification()
+                            .alert("You can turn Location Services on at Settings > Privacy > Location Services.",
+                                    new AlertCallback() {
 
-                    int i = 0;
-                    int startingTripNumber = 0;
-                    int currentTripNumber = 0;
-                    while (i < numItems) { // Loop through all trains
-                        Date scheduledDepartureTime = null;
-                        locationItems = new ArrayList<Map<String, AmtrakCascadesScheduleItem>>();
-                        stationItems = new HashMap<String, AmtrakCascadesScheduleItem>();
-
-                        startingTripNumber = result.getSchedule().get(i).getTripNumber();
-                        currentTripNumber = startingTripNumber;
-                        List<String> trainNameList = new ArrayList<String>();
-                        int tripCounter = 0;
-                        while (currentTripNumber == startingTripNumber && i < numItems) { // Trains are grouped by two or more 
-                            scheduleItem = new AmtrakCascadesScheduleItem();
-
-                            if (result.getSchedule().get(i).getArrivalComment() != null) {
-                                scheduleItem.setArrivalComment(result
-                                        .getSchedule().get(i)
-                                        .getArrivalComment());
-                            }
-
-                            if (result.getSchedule().get(i).getArrivalScheduleType() != null) {
-                                scheduleItem.setArrivalScheduleType(result
-                                        .getSchedule()
-                                        .get(i)
-                                        .getArrivalScheduleType());
-                            }
-
-                            if (result.getSchedule().get(i).getArrivalTime() != null) {
-                                scheduleItem.setArrivalTime(result
-                                        .getSchedule().get(i)
-                                        .getArrivalTime().toString()
-                                        .substring(6, 19));
-                            }
-
-                            if (result.getSchedule().get(i).getDepartureComment() != null) {
-                                scheduleItem.setDepartureComment(result
-                                        .getSchedule().get(i)
-                                        .getDepartureComment());
-                            }
-
-                            if (result.getSchedule().get(i).getDepartureScheduleType() != null) {
-                                scheduleItem.setDepartureScheduleType(result
-                                        .getSchedule()
-                                        .get(i)
-                                        .getDepartureScheduleType());
-                            }
-
-                            if (result.getSchedule().get(i).getDepartureTime() != null) {
-                                scheduleItem.setDepartureTime(result
-                                        .getSchedule().get(i)
-                                        .getDepartureTime().toString()
-                                        .substring(6, 19));
-                            }
-
-                            if (result.getSchedule().get(i).getScheduledArrivalTime() != null) {
-                                scheduleItem.setScheduledArrivalTime(result
-                                        .getSchedule()
-                                        .get(i)
-                                        .getScheduledArrivalTime()
-                                        .toString()
-                                        .substring(6, 19));
-                            }
-
-                            scheduleItem.setStationName(result.getSchedule().get(i).getStationName());
-                            
-                            if (result.getSchedule().get(i).getTrainMessage() != "") {
-                                scheduleItem.setTrainMessage(result
-                                        .getSchedule().get(i)
-                                        .getTrainMessage());
-                            }
-
-                            if (result.getSchedule().get(i).getScheduledDepartureTime() != null) {
-                                scheduleItem.setScheduledDepartureTime(result
-                                        .getSchedule()
-                                        .get(i)
-                                        .getScheduledDepartureTime()
-                                        .toString()
-                                        .substring(6, 19));
-                                
-                                // We sort by scheduled departure time of the From station.
-                                if (fromLocation.equalsIgnoreCase(scheduleItem.getStationName())) {
-                                    scheduledDepartureTime = new Date(
-                                            Long.parseLong((scheduleItem
-                                                    .getScheduledDepartureTime())));
-                                }
-                            }
-
-                            int trainNumber = result.getSchedule().get(i).getTrainNumber();
-                            scheduleItem.setTrainNumber(trainNumber);
-                            String serviceName = trainNumberMap.get(trainNumber);
-
-                            if (serviceName == null) {
-                                serviceName = "Bus Service";
-                            }
-
-                            scheduleItem.setSortOrder(result.getSchedule().get(i).getSortOrder());
-                            String trainName = trainNumber + " " + serviceName;
-                            
-                            // Add the train name for ever other record. When there is one orgin and destination point
-                            // the train name will be the same. If the tripNumber is the same over more than two records
-                            // then we have multiple origin and destination points and likely different train names.
-                            // e.g. 515 Amtrak Cascades Train, 8911 Bus Service
-                            if (tripCounter % 2 == 0) {
-                                trainNameList.add(trainName);
-                            }
-                            scheduleItem.setTrainName(trainName);
-                            scheduleItem.setTripNumber(result.getSchedule().get(i).getTripNumber());
-                            scheduleItem.setUpdateTime(result
-                                    .getSchedule().get(i)
-                                    .getUpdateTime().toString()
-                                    .substring(6, 19));
-
-                            stationItems.put(scheduleItem.getStationName(), scheduleItem);
-
-                            i++;
-                            if (i < numItems) {
-                                currentTripNumber = result.getSchedule().get(i).getTripNumber();
-                            }
-
-                            tripCounter++;
-                        }
-
-                        if (trainNameList.size() > 1) {
-                            StringBuilder sb = new StringBuilder();
-                            for (String s: trainNameList) {
-                                if (sb.length() > 0) sb.append(", ");
-                                sb.append(s);
-                            }
-                            stationItems.get(fromLocation).setTrainName(sb.toString());
-                        }
-
-                        locationItems.add(stationItems);
-                        serviceItems.add(new AmtrakCascadesServiceItem(scheduledDepartureTime, locationItems));
-
-                    }
+                                        @Override
+                                        public void onOkButtonClicked() {
+                                            // TODO Auto-generated method stub
+                                        }
+                                    }, "Location Services Off");
+                    
+                        view.renderFromLocation(amtrakStationItems);
+                        view.renderToLocation(amtrakStationItems);
+                        view.hideProgressIndicator();
+                        
+                        break;
+                    default:
+                        view.renderFromLocation(amtrakStationItems);
+                        view.renderToLocation(amtrakStationItems);
+                        view.hideProgressIndicator();
+                        
+                        break;
                 }
 
-                Collections.sort(serviceItems, AmtrakCascadesServiceItem.scheduledDepartureTimeComparator);
-                
-                view.hideProgressIndicator();
-                view.setFromToLocation(fromLocation, toLocation);
-                view.setTitle("Departing: "
-                        + amtrakStations.get(fromLocation)
-                        + " and Arriving: "
-                        + amtrakStations.get(toLocation));
-                view.render(serviceItems);
-                
-                view.refresh();
             }
         });        
     }
-    
+
     /**
-     * Get train schedules for those with just a departing station.
+     * Haversine formula
      * 
-     * @param url URL of the Web services API
-     * @param toLocation arriving station name
-     * @param fromLocation departing station name
+     * Provides great-circle distances between two points on a sphere from their longitudes and latitudes
+     * 
+     * http://en.wikipedia.org/wiki/Haversine_formula
+     * 
+     * @param latitude
+     * @param longitude
      */
-    private void getDepartingTrains(String url, final String fromLocation, final String toLocation) {
-        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-        jsonp.setTimeout(30000); // Set timeout for 30 seconds
-        jsonp.requestObject(url, new AsyncCallback<AmtrakCascadesScheduleFeed>() {
+    protected void getDistanceFromStation(double latitude, double longitude) {
+        for (AmtrakCascadesStationItem station: amtrakStationItems) {
+            double earthRadius = 3958.75; // miles
+            double dLat = Math.toRadians(station.getLatitude() - latitude);
+            double dLng = Math.toRadians(station.getLongitude() - longitude);
+            double sindLat = Math.sin(dLat / 2);
+            double sindLng = Math.sin(dLng / 2);
+            double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+                    * Math.cos(Math.toRadians(latitude))
+                    * Math.cos(Math.toRadians(station.getLatitude()));
+            
+            double c = 2 * Math.asin(Math.sqrt(a));
+            int distance = (int) Math.round(earthRadius * c);
 
-            @Override
-            public void onFailure(Throwable caught) {
-                view.hideProgressIndicator();
-            }
-
-            @Override
-            public void onSuccess(AmtrakCascadesScheduleFeed result) {
-                if (result.getSchedule() != null) {
-                    serviceItems.clear();
-                    AmtrakCascadesScheduleItem scheduleItem;
-                    int numItems = result.getSchedule().length();
-                    
-                    for (int i = 0; i < numItems; i++) { // Loop through all trains
-                        Date scheduledTime = null;
-                        locationItems = new ArrayList<Map<String, AmtrakCascadesScheduleItem>>();
-                        stationItems = new HashMap<String, AmtrakCascadesScheduleItem>();
-                        scheduleItem = new AmtrakCascadesScheduleItem();
-
-                        if (result.getSchedule().get(i).getArrivalComment() != null) {
-                            scheduleItem.setArrivalComment(result
-                                    .getSchedule().get(i)
-                                    .getArrivalComment());
-                        }
-
-                        if (result.getSchedule().get(i).getArrivalScheduleType() != null) {
-                            scheduleItem.setArrivalScheduleType(result
-                                    .getSchedule().get(i)
-                                    .getArrivalScheduleType());
-                        }
-
-                        if (result.getSchedule().get(i).getArrivalTime() != null) {
-                            scheduleItem.setArrivalTime(result
-                                    .getSchedule().get(i)
-                                    .getArrivalTime().toString()
-                                    .substring(6, 19));
-                        }
-
-                        if (result.getSchedule().get(i).getDepartureComment() != null) {
-                            scheduleItem.setDepartureComment(result
-                                    .getSchedule().get(i)
-                                    .getDepartureComment());
-                        }
-
-                        if (result.getSchedule().get(i).getDepartureScheduleType() != null) {
-                            scheduleItem.setDepartureScheduleType(result
-                                    .getSchedule().get(i)
-                                    .getDepartureScheduleType());
-                        }
-
-                        if (result.getSchedule().get(i).getDepartureTime() != null) {
-                            scheduleItem.setDepartureTime(result
-                                    .getSchedule().get(i)
-                                    .getDepartureTime().toString()
-                                    .substring(6, 19));
-                        }
-
-                        scheduleItem.setStationName(result.getSchedule().get(i).getStationName());
-
-                        if (result.getSchedule().get(i).getTrainMessage() != "") {
-                            scheduleItem.setTrainMessage(result
-                                    .getSchedule().get(i)
-                                    .getTrainMessage());
-                        }
-
-                        if (result.getSchedule().get(i).getScheduledArrivalTime() != null) {
-                            scheduleItem.setScheduledArrivalTime(result
-                                    .getSchedule().get(i)
-                                    .getScheduledArrivalTime()
-                                    .toString().substring(6, 19));
-                            
-                            if (fromLocation.equalsIgnoreCase(scheduleItem.getStationName())) {
-                                scheduledTime = new Date(
-                                        Long.parseLong((scheduleItem
-                                                .getScheduledArrivalTime())));
-                            }
-                        }
-
-                        if (result.getSchedule().get(i).getScheduledDepartureTime() != null) {
-                            scheduleItem.setScheduledDepartureTime(result
-                                    .getSchedule()
-                                    .get(i)
-                                    .getScheduledDepartureTime()
-                                    .toString()
-                                    .substring(6, 19));
-                            
-                            // We sort by scheduled departure time of the From station.
-                            if (fromLocation.equalsIgnoreCase(scheduleItem.getStationName())) {
-                                scheduledTime = new Date(
-                                        Long.parseLong((scheduleItem
-                                                .getScheduledDepartureTime())));
-                            }
-                        }
-
-                        int trainNumber = result.getSchedule().get(i).getTrainNumber();
-                        scheduleItem.setTrainNumber(trainNumber);
-                        String serviceName = trainNumberMap.get(trainNumber);
-                        if (serviceName == null) {
-                            serviceName = "Bus Service";
-                        }
-                        scheduleItem.setTrainName(trainNumber + " " + serviceName);
-                        scheduleItem.setTripNumber(result.getSchedule().get(i).getTripNumber());
-                        scheduleItem.setUpdateTime(result.getSchedule()
-                                .get(i).getUpdateTime().toString()
-                                .substring(6, 19));
-                        
-                        stationItems.put(scheduleItem.getStationName(), scheduleItem);
-                        
-                        locationItems.add(stationItems);
-                        serviceItems.add(new AmtrakCascadesServiceItem(scheduledTime, locationItems));
-                    }
-                }
-                
-                Collections.sort(serviceItems, AmtrakCascadesServiceItem.scheduledDepartureTimeComparator);
-                
-                view.hideProgressIndicator();
-                String location = fromLocation;
-                view.setFromToLocation(fromLocation, location);
-                view.setTitle(amtrakStations.get(fromLocation));
-                view.render(serviceItems);
-                
-                view.refresh();
-            }
-        });
-    }
-    
-    @Override
-    public void onStop() {
-        view.setPresenter(null);
-    }
-
-    @Override
-    public void onBackButtonPressed() {
-        ActionEvent.fire(eventBus, ActionNames.BACK);        
-    }
-
-    @Override
-    public void onItemSelected(int index) {
-        /*
-        AmtrakCascadesServiceItem item = serviceItems.get(index);
-        
-        // Only register the click if the cell is selectable.
-        if (item.getLocation().get(0).size() > 2) {
-            clientFactory.getPlaceController().goTo(
-                    new AmtrakCascadesSchedulesDetailsPlace("X", item.getLocation()));
+            station.setDistance(distance);
         }
-        */
+        
+        view.setLocationEnabled(true);
+        view.renderFromLocation(amtrakStationItems);
+        view.renderToLocation(amtrakStationItems);
+    }
+
+    @Override
+	public void onStop() {
+		view.setPresenter(null);
+	}
+	
+	@Override
+	public void onBackButtonPressed() {
+		ActionEvent.fire(eventBus, ActionNames.BACK);
+	}
+
+    @Override
+    public void onSubmitButtonPressed() {
+        String statusDate = view.getDayOfWeekSelected();
+        String fromLocation = view.getFromLocationSelected();
+        String toLocation = view.getToLocationSelected();
+        
+        if (fromLocation.equalsIgnoreCase("NA")) {
+            phoneGap.getNotification().alert(
+                    "Please select a point of origin from the selection box.",
+                    new AlertCallback() {
+
+                        @Override
+                        public void onOkButtonClicked() {
+                            // TODO Auto-generated method stub
+                        }
+                    }, "Point of origin needed");
+        } else if (fromLocation.equalsIgnoreCase(toLocation)) {
+            // User picked the same destination as the origin. Just ignore it.
+            toLocation = "NA";
+            clientFactory.getPlaceController().goTo(
+                    new AmtrakCascadesSchedulesDetailsPlace(statusDate, fromLocation,
+                            toLocation));
+        } else {
+            clientFactory.getPlaceController().goTo(
+                    new AmtrakCascadesSchedulesDetailsPlace(statusDate, fromLocation,
+                            toLocation));
+        }
     }
 
 }
