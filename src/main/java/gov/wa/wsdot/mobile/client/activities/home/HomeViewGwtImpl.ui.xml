@@ -70,7 +70,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-	                    <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+	                    <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
 	                        <g:HTMLPanel styleName="{style.dashboardPanel}">
 	                            <g:HTMLPanel styleName="{app.css.dashboard}">
 	                                
