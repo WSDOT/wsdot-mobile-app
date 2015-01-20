@@ -31,7 +31,7 @@ public final class Consts {
 	/**
 	 * Current version number and build of the app.
 	 */
-	public static final String APP_VERSION = "3.1.0";
+	public static final String APP_VERSION = "3.1.1";
 	
 	/**
 	 * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,

@@ -87,7 +87,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 		ArrayList<Topic> list = new ArrayList<Topic>();
 		
         list.add(new Topic("Buy Tickets"));
-		list.add(new Topic("Check Schedules"));
+		list.add(new Topic("Check Schedules and Status"));
 		
 		return list;
 	}
