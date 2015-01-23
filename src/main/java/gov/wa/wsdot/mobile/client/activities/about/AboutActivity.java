@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.event.ActionNames;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
 public class AboutActivity extends MGWTAbstractActivity implements
@@ -32,6 +33,7 @@ public class AboutActivity extends MGWTAbstractActivity implements
 	private final ClientFactory clientFactory;
 	private AboutView view;
 	private EventBus eventBus;
+	private PhoneGap phoneGap;
 
 	public AboutActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -41,9 +43,12 @@ public class AboutActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getAboutView();
 		this.eventBus = eventBus;
+		phoneGap = clientFactory.getPhoneGap();
 		view.setPresenter(this);
-
+		
 		panel.setWidget(view);
+		
+		captureClickEvents();
 
 	}
 
@@ -56,5 +61,26 @@ public class AboutActivity extends MGWTAbstractActivity implements
 	public void onBackButtonPressed() {
 		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
+	
+    /**
+     * JSNI method to capture click events and open urls in PhoneGap
+     * InAppBrowser.
+     * 
+     * Tapping external links on the Google map like the Google logo and 'Terms
+     * of Use' will cause those links to open in the same browser window as the
+     * app with no way for the user to return to the app.
+     * 
+     * http://docs.phonegap.com/en/2.4.0/cordova_inappbrowser_inappbrowser.md.html
+     */
+    public static native void captureClickEvents() /*-{
+        var anchors = $doc.getElementsByTagName('a');
+        for ( var i = 0; i < anchors.length; i++) {
+            anchors[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                $wnd.open(this.href, '_blank',
+                        'location=yes,enableViewportScale=yes');
+            });
+        }
+    }-*/;
 
 }
