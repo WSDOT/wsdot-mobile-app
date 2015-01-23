@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -236,17 +236,25 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public TollRatesView getTollRatesView() {
-		if (tollRatesView == null) {
-			tollRatesView = new TollRatesViewGwtImpl();
-		}
+        /**
+         * Instantiating a new View is a temporary measure until
+         * I can figure out why Views which use tabs throw NPEs
+         * on a device configuration change.
+         */
+	    tollRatesView = new TollRatesViewGwtImpl();
+
 		return tollRatesView;
 	}
 
 	@Override
 	public BorderWaitView getBorderWaitView() {
-		if (borderWaitView == null) {
-			borderWaitView = new BorderWaitViewGwtImpl();
-		}
+        /**
+         * Instantiating a new View is a temporary measure until
+         * I can figure out why Views which use tabs throw NPEs
+         * on a device configuration change.
+         */
+	    borderWaitView = new BorderWaitViewGwtImpl();
+
 		return borderWaitView;
 	}
 
@@ -456,9 +464,8 @@ public class ClientFactoryImpl implements ClientFactory {
 
     @Override
     public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesDeparturesView() {
-        if (amtrakCascadesDeparturesView == null) {
-            amtrakCascadesDeparturesView = new AmtrakCascadesSchedulesDetailsViewGwtImpl();
-        }
+        amtrakCascadesDeparturesView = new AmtrakCascadesSchedulesDetailsViewGwtImpl();
+
         return amtrakCascadesDeparturesView;
     }
 

@@ -16,14 +16,14 @@
     
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
-			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
-			<mgwt:panel.flex.FlexSpacer />
+			<wsdot:button.image.BackImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 			<mgwt:header.HeaderTitle>About</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
         	<g:HTMLPanel styleName="{style.htmlPanel}">
             	<g:HTML>
             	    <p>The mission of the Washington State Department of Transportation is 
@@ -32,9 +32,10 @@
             	    <p>The WSDOT mobile app was created to make it easier for you to know the latest 
             	        about Washington's transportation system.</p><br />
                     <p><strong>Advertising</strong><br />
-                        In an effort to generate a new source of revenue, WSDOT is conducting a <a href="http://www.wsdot.wa.gov/funding/partners/projects/webadvertising.htm" target="_blank">digital 
-                        advertising pilot project</a> to allow commercial advertising through its websites 
-                        and social media tools.</p><br />
+                        In an effort to generate a new source of revenue, WSDOT is conducting a 
+                        <a href="http://www.wsdot.wa.gov/funding/partners/projects/webadvertising.htm" target="_blank" id="webAdvertLink">digital 
+                        advertising pilot project</a> to allow commercial advertising through its websites, 
+                        social media tools and mobile apps.</p><br />
             	    <p>Questions, comments or suggestions about this app can be emailed to the 
             	        <a href="mailto:webfeedback@wsdot.wa.gov?subject=WSDOT Mobile App">
             	            WSDOT Communications Office</a>.</p>

@@ -44,25 +44,27 @@
         }
         .progressIndicatorPanel {
 	        display: -webkit-box;
+            display: -webkit-flex;
             -webkit-box-pack: center;
+            -webkit-justify-content: center;
             max-width: 100%;
         }
         .progressIndicator {
-            width: 0px;
+            margin-right: 0px;
         }
     </ui:style>
     
     <mgwt:panel.flex.RootFlexPanel>
 
         <mgwt:header.HeaderPanel>
-            <mgwt:panel.flex.FlexSpacer />
-            <mgwt:panel.flex.FixedSpacer />
+            <mgwt:panel.flex.FixedSpacer ui:field="leftFixedSpacer" />
+            <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
             <mgwt:header.HeaderTitle>WSDOT</mgwt:header.HeaderTitle>
             <mgwt:panel.flex.FlexSpacer />
             <mgwt:button.image.AboutImageButton ui:field="aboutButton" />
         </mgwt:header.HeaderPanel>
 
-        <mgwt:tabbar.TabPanel height="100%">
+        <mgwt:tabbar.TabPanel ui:field="tabPanel" height="100%">
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
@@ -136,7 +138,7 @@
 	                            
 		                        <g:HTMLPanel ui:field="highImpactAlertsPanel" styleName="{style.highImpactAlertsPanel}">
 		                            <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
-		                                <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+		                                <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="true" addStyleNames="{style.progressIndicator}" />
 		                            </g:HTMLPanel>
 	                                <mgwt:carousel.Carousel ui:field="alertsCarousel" />
 		                        </g:HTMLPanel>
@@ -155,7 +157,8 @@
                         <wsdot:tabbar.FavoritesTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
-				        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" height="100%">
+                        <mgwt:panel.flex.RootFlexPanel>
+				        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
 				            <g:FlowPanel ui:field="flowPanel">
 				                <g:HTML ui:field="camerasHeader" styleName="{style.sectionHeader}" visible="false">Cameras</g:HTML>
 				                <mgwt:list.celllist.CellList ui:field="camerasCellList" visible="false" />
@@ -170,11 +173,12 @@
                                     <g:HTMLPanel>
 	                                    <g:HTML>To add favorites, tap a</g:HTML>
 	                                    <g:Image resource="{app.btnStarOffNormalPNG}" />
-	                                    <g:HTML>icon to turn it blue.</g:HTML>
+	                                    <g:HTML ui:field="colorOfStar">icon to turn it blue.</g:HTML>
                                     </g:HTMLPanel>
                                 </g:HTMLPanel>
 				            </g:FlowPanel>
 				        </mgwt:panel.pull.PullPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
             </mgwt:tabs>

@@ -8,8 +8,8 @@
 
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
-		    <mgwt:panel.flex.FlexSpacer />
-		    <mgwt:panel.flex.FixedSpacer />
+            <mgwt:panel.flex.FixedSpacer ui:field="leftFixedSpacer" />
+            <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 			<mgwt:header.HeaderTitle>GoTo Location</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 	        <mgwt:button.Button ui:field="doneButton" text="Done" />

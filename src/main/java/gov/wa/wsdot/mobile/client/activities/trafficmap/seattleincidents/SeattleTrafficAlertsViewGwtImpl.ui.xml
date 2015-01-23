@@ -19,15 +19,15 @@
             max-width: 100%;
         }
         .progressIndicator {
-            width: 0px;
+            margin-right: 0px;
             padding: 30px 0 20px 0;
         }
     </ui:style>
     
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
-		    <mgwt:panel.flex.FlexSpacer />
-		    <mgwt:panel.flex.FixedSpacer />
+            <mgwt:panel.flex.FixedSpacer ui:field="leftFixedSpacer" />
+            <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 			<mgwt:header.HeaderTitle>Seattle Alerts</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 	        <mgwt:button.Button ui:field="doneButton" text="Done" />

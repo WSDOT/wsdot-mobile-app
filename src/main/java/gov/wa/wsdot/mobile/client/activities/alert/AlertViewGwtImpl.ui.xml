@@ -36,8 +36,8 @@
     
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
-			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
-			<mgwt:panel.flex.FlexSpacer />
+			<wsdot:button.image.BackImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 			<mgwt:header.HeaderTitle ui:field="title" />
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />

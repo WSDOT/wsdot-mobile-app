@@ -32,9 +32,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
@@ -60,6 +63,12 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 
 	@UiField
 	Button doneButton;
+	
+	@UiField
+	FixedSpacer leftFixedSpacer;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
 	
 	@UiField(provided = true)
 	CellList<ExpressLaneItem> cellList;
@@ -107,7 +116,11 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 		});
 	
 		initWidget(uiBinder.createAndBindUi(this));
-
+        
+		if (MGWT.getOsDetection().isAndroid()) {
+            leftFixedSpacer.setWidth("12px");
+            leftFlexSpacer.setVisible(false);
+        }
 	}
 
 	@UiHandler("doneButton")

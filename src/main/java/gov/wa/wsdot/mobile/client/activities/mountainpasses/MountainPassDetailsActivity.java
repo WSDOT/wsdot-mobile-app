@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,19 +35,19 @@ import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
 import com.google.code.gwt.database.client.service.VoidCallback;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
 public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 		MountainPassDetailsView.Presenter {
 
 	private final ClientFactory clientFactory;
-	private MountainPassDetailsView view;
+	private final MountainPassDetailsView view;
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private static List<MountainPassItem> mountainPassItems = new ArrayList<MountainPassItem>();
@@ -57,11 +57,11 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 
 	public MountainPassDetailsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
+	    view = clientFactory.getMountainPassDetailsView();
 	}
 	
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
-		view = clientFactory.getMountainPassDetailsView();
 		dbService = clientFactory.getDbService();
 		this.eventBus = eventBus;
 		view.setPresenter(this);

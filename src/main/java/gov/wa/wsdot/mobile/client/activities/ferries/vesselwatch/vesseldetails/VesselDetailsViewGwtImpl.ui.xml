@@ -31,23 +31,18 @@
         .horizontalCell .section > div:nth-child\(2\) {
             padding: 0px;
         }
-        .vesselButton {
-            margin: auto;
-            margin-top: 14px;
-            width: 225px;
-        }
     </ui:style>
     
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
-			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
-			<mgwt:panel.flex.FlexSpacer />
+			<wsdot:button.image.BackImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 			<mgwt:header.HeaderTitle ui:field="title" />
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
         	<g:HTMLPanel styleName="{style.htmlPanel}">
 				<g:HTMLPanel styleName="{style.horizontalCell}">
 				    <g:HTMLPanel styleName="{style.section}">
@@ -97,9 +92,10 @@
                         <g:HTML ui:field="speed" />
                     </g:HTMLPanel>
                 </g:HTMLPanel>
-                <g:HTMLPanel styleName="{style.section}">
-                    <mgwt:button.Button ui:field="vesselButton" addStyleNames="{style.vesselButton}" />
-                </g:HTMLPanel>
+                
+                <mgwt:panel.flex.FlexPanel alignment="CENTER">
+                    <mgwt:button.Button ui:field="vesselButton" />
+                </mgwt:panel.flex.FlexPanel>
             </g:HTMLPanel>
         </mgwt:panel.scroll.ScrollPanel>
 		

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries;
 
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
 import gov.wa.wsdot.mobile.shared.Topic;
 
@@ -30,9 +31,11 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
 public class FerriesViewGwtImpl extends Composite implements FerriesView {
 
@@ -53,7 +56,13 @@ public class FerriesViewGwtImpl extends Composite implements FerriesView {
 	CellList<Topic> cellList;
 	
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
+	
+	@UiField
+	ScrollPanel scrollPanel;
 	
 	private Presenter presenter;
 	
@@ -73,7 +82,11 @@ public class FerriesViewGwtImpl extends Composite implements FerriesView {
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
+        if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            scrollPanel.setBounce(false);
+        }
 	}
 
 	@UiHandler("cellList")

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.client.widget.button.image.CameraImageButton;
 import gov.wa.wsdot.mobile.client.widget.button.image.LocationImageButton;
 import gov.wa.wsdot.mobile.client.widget.button.image.NavigationImageButton;
@@ -74,9 +75,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.RefreshImageButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
@@ -95,7 +97,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 			.create(TrafficMapViewGwtImplUiBinder.class);
 
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
 	
 	@UiField
 	FlowPanel flowPanel;
@@ -140,6 +145,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	public TrafficMapViewGwtImpl() {
 
 		initWidget(uiBinder.createAndBindUi(this));
+        
+		if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+        }
 		
 		if (localStorage != null) {
 			storageMap = new StorageMap(localStorage);

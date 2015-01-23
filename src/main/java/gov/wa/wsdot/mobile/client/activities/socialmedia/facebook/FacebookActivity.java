@@ -104,10 +104,10 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 		FacebookItem item = facebookItems.get(index);
 		
 		if (item.getType().equalsIgnoreCase("photo")) {
-			inAppBrowser.open(item.getLink(), "",
+			inAppBrowser.open(item.getLink(), "_blank",
 					"enableViewportScale=yes,transitionstyle=fliphorizontal");
 		} else {
-			inAppBrowser.open("https://www.facebook.com/" + item.getId(), "",
+			inAppBrowser.open("https://www.facebook.com/" + item.getId(), "_blank",
 					"enableViewportScale=yes,transitionstyle=fliphorizontal");
 		}
 	}

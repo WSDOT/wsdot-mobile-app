@@ -3,7 +3,7 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar">
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
@@ -45,8 +45,8 @@
     
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
-			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
-			<mgwt:panel.flex.FlexSpacer />
+			<wsdot:button.image.BackImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 			<mgwt:header.HeaderTitle>Mountain Pass</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:button.image.NotimportantImageButton ui:field="starButton" />
@@ -56,7 +56,7 @@
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
-						<wsdot:ReportTabBarButton />
+						<wsdot:tabbar.ReportTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
 					    <mgwt:panel.flex.RootFlexPanel>
@@ -112,7 +112,7 @@
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
-						<wsdot:CameraTabBarButton />
+						<wsdot:tabbar.CameraTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
 					    <mgwt:panel.flex.RootFlexPanel>
@@ -129,7 +129,7 @@
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
-						<wsdot:ForecastTabBarButton />
+						<wsdot:tabbar.ForecastTabBarButton />
 					</mgwt:button>
 					<mgwt:widget>
 					    <mgwt:panel.flex.RootFlexPanel>

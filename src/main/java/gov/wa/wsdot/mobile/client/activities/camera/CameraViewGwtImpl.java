@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.camera;
 
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 
 import java.util.List;
@@ -29,11 +30,12 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
@@ -56,7 +58,10 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
 			.create(CameraViewGwtImplUiBinder.class);
 
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
 	
 	@UiField(provided = true)
 	NotimportantImageButton starButton;
@@ -129,7 +134,10 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
         });
         
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
+        if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+        }
 	}
 	
     /**
@@ -223,6 +231,8 @@ public class CameraViewGwtImpl extends Composite implements CameraView {
     @Override
     public void removeTab(int tabIndex) {
         this.tabPanel.tabBar.remove(tabIndex);
+        this.tabPanel.tabContainer.container.remove(tabIndex);
+        this.tabPanel.tabContainer.refresh();
     }
     
 	@Override

@@ -103,7 +103,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 	public void onItemSelected(int index) {
 		BlogItem item = blogItems.get(index);
 		
-		inAppBrowser.open(item.getLink(), "",
+		inAppBrowser.open(item.getLink(), "_blank",
 				"enableViewportScale=yes,transitionstyle=fliphorizontal");
 	}
 

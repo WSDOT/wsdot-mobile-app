@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.ForecastItem;
 
@@ -33,11 +34,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
@@ -58,7 +60,10 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 			.create(MountainPassDetailsViewGwtImplUiBinder.class);
 	
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
 	
     @UiField(provided = true)
     NotimportantImageButton starButton;
@@ -163,7 +168,13 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
+        
+		if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            reportScrollPanel.setBounce(false);
+            cameraScrollPanel.setBounce(false);
+            forecastScrollPanel.setBounce(false);
+        }
 	}
 	
 	/**
@@ -267,7 +278,9 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void removeTab(int tabIndex) {
-		this.tabPanel.tabBar.remove(tabIndex);
+        this.tabPanel.tabBar.remove(tabIndex);
+        this.tabPanel.tabContainer.container.remove(tabIndex);
+        this.tabPanel.tabContainer.refresh();
 	}
 
 	@Override
@@ -296,17 +309,20 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void refreshReport() {
-		reportScrollPanel.refresh();
+        tabPanel.tabContainer.refresh();
+	    reportScrollPanel.refresh();
 	}
 
 	@Override
 	public void refreshCameras() {
-		cameraScrollPanel.refresh();
+        tabPanel.tabContainer.refresh();
+	    cameraScrollPanel.refresh();
 	}
 
 	@Override
 	public void refreshForecast() {
-		forecastScrollPanel.refresh();
+        tabPanel.tabContainer.refresh();
+	    forecastScrollPanel.refresh();
 	}
 
 }

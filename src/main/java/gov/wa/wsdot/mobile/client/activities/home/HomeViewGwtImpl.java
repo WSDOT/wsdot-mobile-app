@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,18 +46,22 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ImageResourceRenderer;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 
@@ -110,6 +114,12 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	ScrollPanel scrollPanel;
 	
 	@UiField
+	FixedSpacer leftFixedSpacer;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
+	
+	@UiField
 	HTML camerasHeader;
 	
 	@UiField
@@ -123,6 +133,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	HTMLPanel emptyFavorites;
+	
+	@UiField
+	HTML colorOfStar;
 	
 	@UiField(provided = true)
 	CellList<CameraItem> camerasCellList;
@@ -139,12 +152,15 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	@UiField(provided = true)
 	Carousel alertsCarousel;
 	
+	@UiField
+	TabPanel tabPanel;
+	
 	private Presenter presenter;
 	private PullArrowHeader pullArrowHeader;
 
 	public HomeViewGwtImpl() {
 		
-		pullToRefresh = new PullPanel();
+	    pullToRefresh = new PullPanel();
 		pullArrowHeader = new PullArrowHeader();
 		pullToRefresh.setHeader(pullArrowHeader);
 
@@ -277,7 +293,13 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-
+		
+        if (MGWT.getOsDetection().isAndroid()) {
+            leftFixedSpacer.setWidth("12px");
+            leftFlexSpacer.setVisible(false);
+            scrollPanel.setBounce(false);
+            colorOfStar.setHTML("icon to turn it white.");
+        }
 	}
 
 	@UiHandler("aboutButton")
@@ -427,6 +449,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@Override
 	public void refresh() {
+        tabPanel.tabContainer.refresh();
 	    scrollPanel.refresh();
 		pullToRefresh.refresh();
 	}

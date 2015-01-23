@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules;
 
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 
 import java.util.Collections;
@@ -32,9 +33,11 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements AmtrakCascadesSchedulesView {
@@ -54,7 +57,13 @@ public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements Amt
 	
 
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	ScrollPanel scrollPanel;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
 	
     @UiField
     ProgressIndicator progressIndicator;
@@ -85,6 +94,10 @@ public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements Amt
 	
 		initWidget(uiBinder.createAndBindUi(this));
 
+        if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            scrollPanel.setBounce(false);
+        }
 	}
 
 	@UiHandler("backButton")

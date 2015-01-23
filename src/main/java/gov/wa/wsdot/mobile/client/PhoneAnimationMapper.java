@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -170,11 +170,11 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof CameraPlace) {
-			return Animations.FLIP;
+			return Animations.FADE;
 		}
 		
 		if (oldPlace instanceof CameraPlace && newPlace instanceof TrafficMapPlace) {
-			return Animations.FLIP_REVERSE;
+			return Animations.FADE_REVERSE;
 		}
 
 		if (oldPlace instanceof AlertPlace && newPlace instanceof HomePlace) {
@@ -182,11 +182,11 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof AlertPlace) {
-			return Animations.FLIP;
+			return Animations.FADE;
 		}
 		
 		if (oldPlace instanceof AlertPlace && newPlace instanceof TrafficMapPlace) {
-			return Animations.FLIP_REVERSE;
+			return Animations.FADE_REVERSE;
 		}
 
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof SeattleExpressLanesPlace) {
@@ -214,19 +214,19 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		}
 		
 		if (oldPlace instanceof VesselWatchMapPlace && newPlace instanceof CameraPlace) {
-			return Animations.FLIP;
+			return Animations.FADE;
 		}
 		
 		if (oldPlace instanceof CameraPlace && newPlace instanceof VesselWatchMapPlace) {
-			return Animations.FLIP_REVERSE;
+			return Animations.FADE_REVERSE;
 		}
 		
 		if (oldPlace instanceof VesselWatchMapPlace && newPlace instanceof VesselDetailsPlace) {
-			return Animations.FLIP;
+			return Animations.FADE;
 		}
 		
 		if (oldPlace instanceof VesselDetailsPlace && newPlace instanceof VesselWatchMapPlace) {
-			return Animations.FLIP_REVERSE;
+			return Animations.FADE_REVERSE;
 		}
 		
 		if (oldPlace instanceof CameraPlace && newPlace instanceof MountainPassDetailsPlace) {

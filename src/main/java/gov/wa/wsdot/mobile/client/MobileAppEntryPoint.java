@@ -71,9 +71,9 @@ public class MobileAppEntryPoint implements EntryPoint {
 	    		final ClientFactory clientFactory = new ClientFactoryImpl();
 	        	((ClientFactoryImpl) clientFactory).setPhoneGap(phoneGap);
 	        	buildDisplay(clientFactory);
-    	        if (MGWT.getOsDetection().isIOs()) {
+    	        if (MGWT.getOsDetection().isIOs() || MGWT.getOsDetection().isAndroid()) {
     	            try {
-    	                hideSplashScreen(); // For use on iOS with PhoneGap.
+    	                hideSplashScreen(); // For use on iOS and Android with PhoneGap.
     	            } catch (Exception e) {
     	                // Just pass through.
     	            }
@@ -609,8 +609,8 @@ public class MobileAppEntryPoint implements EntryPoint {
     }-*/;
 	
     /**
-     * JSNI method to capture click events and open urls in PhoneGap
-     * InAppBrowser.
+     * JSNI method to capture click events on ad banners and open
+     * urls in PhoneGap InAppBrowser.
      * 
      * Tapping external links on the Google map like the Google logo and 'Terms
      * of Use' will cause those links to open in the same browser window as the
@@ -619,13 +619,14 @@ public class MobileAppEntryPoint implements EntryPoint {
      * http://docs.phonegap.com/en/2.4.0/cordova_inappbrowser_inappbrowser.md.html
      */
     public static native void captureClickEvents() /*-{
-        var anchors = $doc.getElementsByTagName('a');
+        var adBanner = $doc.getElementById('aje_tmp_1180114');
+        var anchors = adBanner.getElementsByTagName('a');
         for ( var i = 0; i < anchors.length; i++) {
             anchors[i].addEventListener('click', function(e) {
                 e.preventDefault();
                 $wnd.open(this.href, '_blank',
-                        'location=yes,enableViewportScale=yes');
-            });
+                        'location=yes,enableViewportScale=yes,transitionstyle=fliphorizontal');
+            }, false);
         }
     }-*/;
 

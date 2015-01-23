@@ -97,7 +97,7 @@ public class VesselDetailsActivity extends MGWTAbstractActivity implements
 	public void onVesselButtonPressed() {
 		inAppBrowser.open(
 				"http://www.wsdot.com/ferries/vesselwatch/VesselDetail.aspx?vessel_id="
-						+ vesselId, "", "enableViewportScale=yes");
+						+ vesselId, "_blank", "enableViewportScale=yes");
 		
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		HomeView.Presenter {
 
 	private final ClientFactory clientFactory;
-	private HomeView view;
+	private final HomeView view;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
 	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
@@ -112,15 +112,14 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	
 	public HomeActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
-		
+		view = clientFactory.getHomeView();
 	}
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getHomeView();
-		dbService = clientFactory.getDbService();
-		phoneGap = clientFactory.getPhoneGap();
-		view.setPresenter(this);
+        view.setPresenter(this);
+        dbService = clientFactory.getDbService();
+        phoneGap = clientFactory.getPhoneGap();
 		view.getPullHeader().setHTML("pull down");
 		
 		PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
@@ -163,7 +162,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		
 		// Schedule alert box to update every 60 seconds (60000 millseconds).
 		timer.scheduleRepeating(60000);
-		
+
 		panel.setWidget(view);
 	}
 
