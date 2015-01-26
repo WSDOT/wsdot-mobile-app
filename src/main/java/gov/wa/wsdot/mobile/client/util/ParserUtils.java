@@ -108,7 +108,7 @@ public class ParserUtils {
     }
     
     public static int windowUI() {
-        int amount = 91;
+        int amount = 136; // 86 for nav bars, 50 for bottom ad.
         if (MGWT.getOsDetection().isIOs()) {
             if (iOSversion() >= 7) {
                 //amount = 111;

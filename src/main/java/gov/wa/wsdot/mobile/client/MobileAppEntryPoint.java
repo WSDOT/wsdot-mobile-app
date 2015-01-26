@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 	    });
 		
 		phoneGap.initializePhoneGap();
+		
+		captureClickEvents();
 
 	}
 
@@ -544,7 +546,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 				clientFactory.getEventBus());
 
 		activityManager.setDisplay(display);
-		RootPanel.get().add(display);
+		RootPanel.get("main").add(display);
 	}
 
 	private void loadMapApi() {
@@ -604,6 +606,27 @@ public class MobileAppEntryPoint implements EntryPoint {
 	
 	private static native void hideSplashScreen() /*-{ 
         $wnd.navigator.splashscreen.hide(); 
+    }-*/;
+	
+    /**
+     * JSNI method to capture click events and open urls in PhoneGap
+     * InAppBrowser.
+     * 
+     * Tapping external links on the Google map like the Google logo and 'Terms
+     * of Use' will cause those links to open in the same browser window as the
+     * app with no way for the user to return to the app.
+     * 
+     * http://docs.phonegap.com/en/2.4.0/cordova_inappbrowser_inappbrowser.md.html
+     */
+    public static native void captureClickEvents() /*-{
+        var anchors = $doc.getElementsByTagName('a');
+        for ( var i = 0; i < anchors.length; i++) {
+            anchors[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                $wnd.open(this.href, '_blank',
+                        'location=yes,enableViewportScale=yes');
+            });
+        }
     }-*/;
 
 }
