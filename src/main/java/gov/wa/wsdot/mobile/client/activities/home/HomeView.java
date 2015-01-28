@@ -51,6 +51,8 @@ public interface HomeView extends IsWidget {
 		
 		public void onBorderWaitButtonPressed();
 		
+		public void onAmtrakButtonPressed();
+		
 		public void onHighImpactAlertSelected(int alertId);
 		
 		public void onCameraSelected(int index);

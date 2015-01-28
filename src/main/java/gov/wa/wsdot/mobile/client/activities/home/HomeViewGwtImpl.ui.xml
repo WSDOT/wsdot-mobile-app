@@ -70,7 +70,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-	                    <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+	                    <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
 	                        <g:HTMLPanel styleName="{style.dashboardPanel}">
 	                            <g:HTMLPanel styleName="{app.css.dashboard}">
 	                                
@@ -122,6 +122,18 @@
 			                            
 		                        </g:HTMLPanel>
 
+                                <g:HTMLPanel styleName="{app.css.dashboard}">
+                                    <g:HTMLPanel styleName="{app.css.homeButton}" />
+                                    <g:HTMLPanel styleName="{app.css.homeButton}">
+                                        <g:HTMLPanel>
+                                            <mgwt:button.Button ui:field="amtrakButton" styleName="{app.css.amtrakButton}" />
+                                        </g:HTMLPanel>
+                                        <g:HTMLPanel>Amtrak Cascades</g:HTMLPanel>
+                                    </g:HTMLPanel>
+                                    <g:HTMLPanel styleName="{app.css.homeButton}" />
+                                        
+                                </g:HTMLPanel>
+	                            
 		                        <g:HTMLPanel ui:field="highImpactAlertsPanel" styleName="{style.highImpactAlertsPanel}">
 		                            <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
 		                                <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />

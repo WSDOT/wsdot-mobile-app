@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gov.wa.wsdot.mobile</groupId>
 	<artifactId>MobileApp</artifactId>
-	<version>3.0.1-SNAPSHOT</version>
+	<version>3.1.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>WSDOT Mobile App</name>
 	<description>A GWT based HTML5 Web application targeting WebKit based browsers</description>
@@ -80,7 +80,6 @@
 				<version>${gwt.version}</version>
 				<configuration>
 					<strict>true</strict>
-
 					<testTimeOut>180</testTimeOut>
 					<mode>htmlunit</mode>
 					<!-- Switch to a suite to run tests faster -->
@@ -116,7 +115,7 @@
 		<dependency>
 			<groupId>com.googlecode.mgwt</groupId>
 			<artifactId>mgwt</artifactId>
-			<version>2.0.0</version>
+			<version>2.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- HTML5 database -->
 		<dependency>
@@ -129,6 +128,13 @@
 			<groupId>com.googlecode.gwtphonegap</groupId>
 			<artifactId>gwtphonegap</artifactId>
 			<version>3.5.0.0</version>
+            <!-- Exclude outdated gwt-dev that breaks compile -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>gwt-dev</artifactId>
+                    <groupId>com.google.gwt</groupId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<!-- GWT Maps API V3 -->
 		<dependency>
@@ -160,11 +166,11 @@
 			<version>${gwt.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-codeserver</artifactId>
-			<version>${gwt.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-codeserver</artifactId>
+            <version>${gwt.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>

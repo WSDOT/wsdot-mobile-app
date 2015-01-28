@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:header.HeaderTitle>Amtrak Cascades</mgwt:header.HeaderTitle>
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:panel.flex.FixedSpacer />
+		</mgwt:header.HeaderPanel>
+		
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+        	<g:FlowPanel>
+            	<mgwt:list.celllist.CellList ui:field="cellList" />
+            </g:FlowPanel>
+        </mgwt:panel.scroll.ScrollPanel>
+		
+	</mgwt:panel.flex.RootFlexPanel>
+    
+</ui:UiBinder>

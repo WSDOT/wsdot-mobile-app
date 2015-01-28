@@ -108,7 +108,7 @@ public class ParserUtils {
     }
     
     public static int windowUI() {
-        int amount = 91;
+        int amount = 136; // 86 for nav bars, 50 for bottom ad.
         if (MGWT.getOsDetection().isIOs()) {
             if (iOSversion() >= 7) {
                 //amount = 111;
@@ -116,6 +116,18 @@ public class ParserUtils {
         }
         
         return amount;
+    }
+    
+    /**
+     * Returns a singlular or pluralized word.
+     * 
+     * @param count count to base if the word should be treated as singular or plural
+     * @param singular single version of the word
+     * @param plural plural version of the word
+     * @return pluralized String
+     */
+    public static String pluralize(int count, String singular, String plural) {
+        return (count == 1 ? singular : plural);
     }
 
 }

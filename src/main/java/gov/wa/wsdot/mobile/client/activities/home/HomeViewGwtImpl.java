@@ -56,6 +56,7 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
@@ -94,6 +95,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	Button borderButton;
 	
 	@UiField
+	Button amtrakButton;
+	
+	@UiField
 	HTMLPanel highImpactAlertsPanel;
 	
 	@UiField
@@ -101,6 +105,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField(provided = true)
 	PullPanel pullToRefresh;
+	
+	@UiField
+	ScrollPanel scrollPanel;
 	
 	@UiField
 	HTML camerasHeader;
@@ -321,6 +328,13 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			presenter.onBorderWaitButtonPressed();
 		}
 	}
+
+    @UiHandler("amtrakButton")
+    protected void onAmtrakButtonPressed(TapEvent event) {
+        if (presenter != null) {
+            presenter.onAmtrakButtonPressed();
+        }
+    }
 	
 	@UiHandler("camerasCellList")
 	protected void onCameraCellSelected(CellSelectedEvent event) {
@@ -413,6 +427,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@Override
 	public void refresh() {
+	    scrollPanel.refresh();
 		pullToRefresh.refresh();
 	}
 	

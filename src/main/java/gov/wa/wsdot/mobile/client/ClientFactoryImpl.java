@@ -22,6 +22,12 @@ import gov.wa.wsdot.mobile.client.activities.about.AboutView;
 import gov.wa.wsdot.mobile.client.activities.about.AboutViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertView;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesView;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesView;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsView;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitView;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraView;
@@ -125,6 +131,9 @@ public class ClientFactoryImpl implements ClientFactory {
 	private YouTubeDetailsViewGwtImpl youTubeDetailsView;
 	private TravelTimeDetailsViewGwtImpl travelTimeDetailsView;
 	private FerriesRouteAlertDetailsViewGwtImpl ferriesRouteAlertDetailsView;
+	private AmtrakCascadesViewGwtImpl amtrakCascadesView;
+	private AmtrakCascadesSchedulesViewGwtImpl amtrakCascadesSchedulesView;
+    private AmtrakCascadesSchedulesDetailsViewGwtImpl amtrakCascadesDeparturesView;
 
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -428,5 +437,29 @@ public class ClientFactoryImpl implements ClientFactory {
 		}
 		return ferriesRouteAlertDetailsView;
 	}
+
+    @Override
+    public AmtrakCascadesView getAmtrakCascadesView() {
+        if (amtrakCascadesView == null) {
+            amtrakCascadesView = new AmtrakCascadesViewGwtImpl();
+        }
+        return amtrakCascadesView;
+    }
+
+    @Override
+    public AmtrakCascadesSchedulesView getAmtrakCascadesSchedulesView() {
+        if (amtrakCascadesSchedulesView == null) {
+            amtrakCascadesSchedulesView = new AmtrakCascadesSchedulesViewGwtImpl();
+        }
+        return amtrakCascadesSchedulesView;
+    }
+
+    @Override
+    public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesDeparturesView() {
+        if (amtrakCascadesDeparturesView == null) {
+            amtrakCascadesDeparturesView = new AmtrakCascadesSchedulesDetailsViewGwtImpl();
+        }
+        return amtrakCascadesDeparturesView;
+    }
 
 }

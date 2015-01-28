@@ -93,7 +93,8 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 		twitterAccounts.addItem("Good To Go!");
 		twitterAccounts.addItem("Snoqualmie Pass");
 		twitterAccounts.addItem("WSDOT");
-		twitterAccounts.addItem("WSDOT North");
+		twitterAccounts.addItem("WSDOT 520");
+		twitterAccounts.addItem("WSDOT East");
 		twitterAccounts.addItem("WSDOT Southwest");
 		twitterAccounts.addItem("WSDOT Tacoma");
 		twitterAccounts.addItem("WSDOT Traffic");

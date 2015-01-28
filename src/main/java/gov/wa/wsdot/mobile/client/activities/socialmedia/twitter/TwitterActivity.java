@@ -80,7 +80,8 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		twitterScreenNames.put("Good To Go!", "GoodToGoWSDOT");
 		twitterScreenNames.put("Snoqualmie Pass", "SnoqualmiePass");
 		twitterScreenNames.put("WSDOT", "wsdot");
-		twitterScreenNames.put("WSDOT North", "wsdot_north");
+		twitterScreenNames.put("WSDOT 520", "wsdot_520");
+		twitterScreenNames.put("WSDOT East", "WSDOT_East");
 		twitterScreenNames.put("WSDOT Southwest", "wsdot_sw");
 		twitterScreenNames.put("WSDOT Tacoma", "wsdot_tacoma");
 		twitterScreenNames.put("WSDOT Traffic", "wsdot_traffic");		
@@ -89,8 +90,9 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		twitterProfileImages.put("GoodToGoWSDOT", AppBundle.INSTANCE.css().wsdotGoodToGoIcon());
 		twitterProfileImages.put("SnoqualmiePass", AppBundle.INSTANCE.css().wsdotSnoqualmiePassIcon());
 		twitterProfileImages.put("wsdot", AppBundle.INSTANCE.css().wsdotIcon());
-		twitterProfileImages.put("BerthaDigsSR99", AppBundle.INSTANCE.css().wsdotIcon());
-		twitterProfileImages.put("wsdot_north", AppBundle.INSTANCE.css().wsdotNorthIcon());
+		twitterProfileImages.put("BerthaDigsSR99", AppBundle.INSTANCE.css().berthaDigsSR99Icon());
+		twitterProfileImages.put("wsdot_520", AppBundle.INSTANCE.css().wsdot520Icon());
+		twitterProfileImages.put("WSDOT_East", AppBundle.INSTANCE.css().wsdotEastIcon());
 		twitterProfileImages.put("wsdot_sw", AppBundle.INSTANCE.css().wsdotSwIcon());
 		twitterProfileImages.put("wsdot_tacoma", AppBundle.INSTANCE.css().wsdotTacomaIcon());
 		twitterProfileImages.put("wsdot_traffic", AppBundle.INSTANCE.css().wsdotTrafficIcon());		
