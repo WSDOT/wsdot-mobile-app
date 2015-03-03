@@ -43,6 +43,8 @@ import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -51,6 +53,8 @@ import com.googlecode.gwtphonegap.client.PhoneGapAvailableEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapAvailableHandler;
 import com.googlecode.gwtphonegap.client.PhoneGapTimeoutEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapTimeoutHandler;
+import com.googlecode.gwtphonegap.client.event.BackButtonPressedEvent;
+import com.googlecode.gwtphonegap.client.event.BackButtonPressedHandler;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.history.MGWTPlaceHistoryHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
@@ -70,7 +74,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 	        public void onPhoneGapAvailable(PhoneGapAvailableEvent event) {
 	    		final ClientFactory clientFactory = new ClientFactoryImpl();
 	        	((ClientFactoryImpl) clientFactory).setPhoneGap(phoneGap);
-	        	buildDisplay(clientFactory);
+	        	buildDisplay(clientFactory, phoneGap);
     	        if (MGWT.getOsDetection().isIOs() || MGWT.getOsDetection().isAndroid()) {
     	            try {
     	                hideSplashScreen(); // For use on iOS and Android with PhoneGap.
@@ -95,7 +99,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 	}
 
-	private void buildDisplay(ClientFactory clientFactory) {
+	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
 
 		ViewPort viewPort = new MGWTSettings.ViewPort();
 		viewPort.setUserScaleAble(false).setMinimumScale(1.0)
@@ -113,6 +117,21 @@ public class MobileAppEntryPoint implements EntryPoint {
 		// Create initial database tables
 		createDatabaseTables(clientFactory);
 
+        phoneGap.getEvent().getBackButton()
+                .addBackButtonPressedHandler(new BackButtonPressedHandler() {
+
+                    @Override
+                    public void onBackButtonPressed(BackButtonPressedEvent event) {
+                        Place place = clientFactory.getPlaceController()
+                                .getWhere();
+                        if (place instanceof HomePlace) {
+                            phoneGap.exitApp();
+                        } else {
+                            History.back();
+                        }
+                    }
+                });
+		
 		// Start PlaceHistoryHandler with our PlaceHistoryMapper
 		AppPlaceHistoryMapper historyMapper = GWT.create(AppPlaceHistoryMapper.class);
 
