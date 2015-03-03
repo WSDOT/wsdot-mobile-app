@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
 
 import java.util.Date;
@@ -38,10 +39,11 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
@@ -69,8 +71,11 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 	CellList<AmtrakCascadesServiceItem> cellList;
 	
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
     
+	@UiField
+	FlexSpacer leftFlexSpacer;
+	
 	@UiField(provided = true)
     PullPanel pullToRefresh;	
 	
@@ -344,7 +349,11 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
+        if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+        }
+
 	}
 
 	@UiHandler("backButton")

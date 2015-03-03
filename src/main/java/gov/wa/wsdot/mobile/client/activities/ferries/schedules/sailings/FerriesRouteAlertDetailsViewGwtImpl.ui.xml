@@ -33,14 +33,14 @@
     
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
-			<mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
-			<mgwt:panel.flex.FlexSpacer />
+			<wsdot:button.image.BackImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 			<mgwt:header.HeaderTitle>Route Alert</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
         	<g:HTMLPanel styleName="{style.htmlPanel}">
         	    <g:HTML ui:field="alertTitle" styleName="{style.alertTitle}" />
                 <g:HTML ui:field="alertText" styleName="{style.alertText}" />

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.tollrates;
 
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -25,7 +27,10 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 
@@ -43,14 +48,35 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 			.create(TollRatesViewGwtImplUiBinder.class);
 
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
+	
+	@UiField
+	ScrollPanel sr520ScrollPanel;
+	
+	@UiField
+	ScrollPanel sr16ScrollPanel;
+	
+	@UiField
+	ScrollPanel sr167ScrollPanel;
+	
+	@UiField
+	TabPanel tabPanel;
 	
 	private Presenter presenter;
 	
 	public TollRatesViewGwtImpl() {
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
+        
+		if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            sr520ScrollPanel.setBounce(false);
+            sr16ScrollPanel.setBounce(false);
+            sr167ScrollPanel.setBounce(false);
+        }
 	}
 	
 	@UiHandler("backButton")
@@ -64,5 +90,13 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
+
+    @Override
+    public void refresh() {
+        sr520ScrollPanel.refresh();
+        sr16ScrollPanel.refresh();
+        sr167ScrollPanel.refresh();
+        tabPanel.tabContainer.refresh();
+    }
 
 }

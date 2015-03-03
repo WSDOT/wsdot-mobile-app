@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,5 +29,7 @@ public interface TollRatesView extends IsWidget {
 		public void onBackButtonPressed();
 		
 	}
+	
+	public void refresh();
 
 }

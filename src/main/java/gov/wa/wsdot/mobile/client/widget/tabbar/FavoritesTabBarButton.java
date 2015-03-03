@@ -21,6 +21,7 @@ package gov.wa.wsdot.mobile.client.widget.tabbar;
 import gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalTabBarImageHolder;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarAppearance;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
@@ -33,7 +34,9 @@ public class FavoritesTabBarButton extends TabBarButton {
 	
 	public FavoritesTabBarButton(TabBarAppearance appearance) {
         super(appearance, LocalTabBarImageHolder.get().star());
-        setText("Favorites");
+        if (!MGWT.getOsDetection().isAndroid()) {
+            setText("Favorites");
+        }
         text.getStyle().setTop(1, Unit.PX);
 	}
 	

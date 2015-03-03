@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,15 @@ public class LocalImageHolderDefaultAppearance implements
 
         @Source("resources/ic_action_warning_mdpi.png")
         ImageResource warning();
+        
+        @Source("resources/ic_action_menu_mdpi.png")
+        ImageResource menu();
+        
+        @Source("resources/ic_action_previous_item_mdpi.png")
+        ImageResource back();
+        
+        @Source("resources/ic_action_back_mdpi.png")
+        ImageResource backAndroid();
     }
 
     @Override

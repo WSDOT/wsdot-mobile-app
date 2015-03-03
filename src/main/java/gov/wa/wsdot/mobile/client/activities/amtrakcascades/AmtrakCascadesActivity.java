@@ -67,7 +67,8 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onItemSelected(int index) {
 		if (index == 0) {
-            inAppBrowser.open("http://m.amtrak.com","", "enableViewportScale=yes");
+            inAppBrowser.open("http://m.amtrak.com", "_blank",
+                    "enableViewportScale=yes,transitionstyle=fliphorizontal");
             
 			return;
 		}

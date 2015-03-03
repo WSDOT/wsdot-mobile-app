@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.news;
 
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -26,8 +28,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
 public class NewsDetailsViewGwtImpl extends Composite implements
 		NewsDetailsView {
@@ -46,7 +50,13 @@ public class NewsDetailsViewGwtImpl extends Composite implements
 			.create(NewsDetailsViewGwtImplUiBinder.class);
 
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
+	
+	@UiField
+	ScrollPanel scrollPanel;
 	
 	@UiField
 	HeaderTitle title;
@@ -59,7 +69,11 @@ public class NewsDetailsViewGwtImpl extends Composite implements
 	public NewsDetailsViewGwtImpl() {
 
 		initWidget(uiBinder.createAndBindUi(this));
-
+        
+		if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            scrollPanel.setBounce(false);
+        }
 	}
 
 	@UiHandler("backButton")

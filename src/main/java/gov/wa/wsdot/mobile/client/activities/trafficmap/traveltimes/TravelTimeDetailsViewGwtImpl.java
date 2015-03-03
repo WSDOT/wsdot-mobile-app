@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 import java.util.List;
@@ -31,10 +32,12 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
 public class TravelTimeDetailsViewGwtImpl extends Composite implements
 		TravelTimeDetailsView {
@@ -53,11 +56,17 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 			.create(TravelTimeDetailsViewGwtImplUiBinder.class);
 
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
 	
     @UiField(provided = true)
     NotimportantImageButton starButton;
 	
+    @UiField
+    FlexSpacer leftFlexSpacer;
+    
+    @UiField
+    ScrollPanel scrollPanel;
+    
 	@UiField(provided = true)
 	CellList<TravelTimesItem> travelTimeCellList;
 	
@@ -123,7 +132,11 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 		});
 
 		initWidget(uiBinder.createAndBindUi(this));
-
+        
+		if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            scrollPanel.setBounce(false);
+        }
 	}
 
 	@UiHandler("backButton")

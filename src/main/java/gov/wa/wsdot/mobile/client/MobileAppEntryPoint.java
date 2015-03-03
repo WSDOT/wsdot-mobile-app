@@ -43,6 +43,8 @@ import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -51,6 +53,8 @@ import com.googlecode.gwtphonegap.client.PhoneGapAvailableEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapAvailableHandler;
 import com.googlecode.gwtphonegap.client.PhoneGapTimeoutEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapTimeoutHandler;
+import com.googlecode.gwtphonegap.client.event.BackButtonPressedEvent;
+import com.googlecode.gwtphonegap.client.event.BackButtonPressedHandler;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.history.MGWTPlaceHistoryHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
@@ -70,10 +74,10 @@ public class MobileAppEntryPoint implements EntryPoint {
 	        public void onPhoneGapAvailable(PhoneGapAvailableEvent event) {
 	    		final ClientFactory clientFactory = new ClientFactoryImpl();
 	        	((ClientFactoryImpl) clientFactory).setPhoneGap(phoneGap);
-	        	buildDisplay(clientFactory);
-    	        if (MGWT.getOsDetection().isIOs()) {
+	        	buildDisplay(clientFactory, phoneGap);
+    	        if (MGWT.getOsDetection().isIOs() || MGWT.getOsDetection().isAndroid()) {
     	            try {
-    	                hideSplashScreen(); // For use on iOS with PhoneGap.
+    	                hideSplashScreen(); // For use on iOS and Android with PhoneGap.
     	            } catch (Exception e) {
     	                // Just pass through.
     	            }
@@ -95,7 +99,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 	}
 
-	private void buildDisplay(ClientFactory clientFactory) {
+	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
 
 		ViewPort viewPort = new MGWTSettings.ViewPort();
 		viewPort.setUserScaleAble(false).setMinimumScale(1.0)
@@ -113,6 +117,21 @@ public class MobileAppEntryPoint implements EntryPoint {
 		// Create initial database tables
 		createDatabaseTables(clientFactory);
 
+        phoneGap.getEvent().getBackButton()
+                .addBackButtonPressedHandler(new BackButtonPressedHandler() {
+
+                    @Override
+                    public void onBackButtonPressed(BackButtonPressedEvent event) {
+                        Place place = clientFactory.getPlaceController()
+                                .getWhere();
+                        if (place instanceof HomePlace) {
+                            phoneGap.exitApp();
+                        } else {
+                            History.back();
+                        }
+                    }
+                });
+		
 		// Start PlaceHistoryHandler with our PlaceHistoryMapper
 		AppPlaceHistoryMapper historyMapper = GWT.create(AppPlaceHistoryMapper.class);
 
@@ -609,8 +628,8 @@ public class MobileAppEntryPoint implements EntryPoint {
     }-*/;
 	
     /**
-     * JSNI method to capture click events and open urls in PhoneGap
-     * InAppBrowser.
+     * JSNI method to capture click events on ad banners and open
+     * urls in PhoneGap InAppBrowser.
      * 
      * Tapping external links on the Google map like the Google logo and 'Terms
      * of Use' will cause those links to open in the same browser window as the
@@ -619,13 +638,14 @@ public class MobileAppEntryPoint implements EntryPoint {
      * http://docs.phonegap.com/en/2.4.0/cordova_inappbrowser_inappbrowser.md.html
      */
     public static native void captureClickEvents() /*-{
-        var anchors = $doc.getElementsByTagName('a');
+        var adBanner = $doc.getElementById('aje_tmp_1180114');
+        var anchors = adBanner.getElementsByTagName('a');
         for ( var i = 0; i < anchors.length; i++) {
             anchors[i].addEventListener('click', function(e) {
                 e.preventDefault();
                 $wnd.open(this.href, '_blank',
-                        'location=yes,enableViewportScale=yes');
-            });
+                        'location=yes,enableViewportScale=yes,transitionstyle=fliphorizontal');
+            }, false);
         }
     }-*/;
 

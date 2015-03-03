@@ -103,7 +103,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 	public void onItemSelected(int index) {
 		YouTubeItem item = youTubeItems.get(index);
 
-		inAppBrowser.open("http://m.youtube.com/watch?v=" + item.getId(), "",
+		inAppBrowser.open("http://m.youtube.com/watch?v=" + item.getId(), "_blank",
 				"enableViewportScale=yes,transitionstyle=fliphorizontal");
 
 	}

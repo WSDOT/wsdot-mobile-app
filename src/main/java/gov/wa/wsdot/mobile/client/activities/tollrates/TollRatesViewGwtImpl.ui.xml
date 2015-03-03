@@ -3,7 +3,7 @@
     xmlns:ui="urn:ui:com.google.gwt.uibinder"
     xmlns:g="urn:import:com.google.gwt.user.client.ui"
     xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget.tabbar">
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
@@ -26,22 +26,22 @@
     
     <mgwt:panel.flex.RootFlexPanel>
         <mgwt:header.HeaderPanel>
-	        <mgwt:button.image.PreviousitemImageButton ui:field="backButton" />
-	        <mgwt:panel.flex.FlexSpacer />
+	        <wsdot:button.image.BackImageButton ui:field="backButton" />
+	        <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
 	        <mgwt:header.HeaderTitle>Toll Rates</mgwt:header.HeaderTitle>
 	        <mgwt:panel.flex.FlexSpacer />
 	        <mgwt:panel.flex.FixedSpacer />
         </mgwt:header.HeaderPanel>
         
-        <mgwt:tabbar.TabPanel height="100%">
+        <mgwt:tabbar.TabPanel ui:field="tabPanel" height="100%">
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:SR520TabBarButton />
+                        <wsdot:tabbar.SR520TabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr520ScrollPanel">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
 	                            <g:Grid styleName="{style.grid}">
@@ -162,11 +162,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:SR16TabBarButton />
+                        <wsdot:tabbar.SR16TabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr16ScrollPanel">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
                                 <g:Grid styleName="{style.grid}">
@@ -218,11 +218,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:SR167TabBarButton />
+                        <wsdot:tabbar.SR167TabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr167ScrollPanel">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
                                 <g:HTML styleName="{style.simplePadding}">
                                     <p>Tolls are collected in both directions.</p>

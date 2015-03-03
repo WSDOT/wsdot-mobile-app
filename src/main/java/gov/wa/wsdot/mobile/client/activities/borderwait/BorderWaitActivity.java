@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.
 public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWaitView.Presenter {
 
 	private final ClientFactory clientFactory;
-	private BorderWaitView view;
+	private final BorderWaitView view;
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
@@ -70,14 +70,14 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 	
 	public BorderWaitActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
+        view = clientFactory.getBorderWaitView();
 	}
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getBorderWaitView();
-		dbService = clientFactory.getDbService();
+        this.eventBus = eventBus;
+        dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
-		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.getNorthboundPullHeader().setHTML("pull down");
 		view.getSouthboundPullHeader().setHTML("pull down");
@@ -140,7 +140,6 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 		buildRouteIcons();
 		createBorderWaitList(view);
 		panel.setWidget(view);
-		
 	}	
 
 	private void createBorderWaitList(final BorderWaitView view) {

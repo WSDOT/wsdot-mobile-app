@@ -109,7 +109,7 @@ public class NewsActivity extends MGWTAbstractActivity implements
 	public void onItemSelected(int index) {
 		NewsItem item = newsItems.get(index);
 
-		inAppBrowser.open(item.getLink(), "",
+		inAppBrowser.open(item.getLink(), "_blank",
 				"enableViewportScale=yes,transitionstyle=fliphorizontal");
 	}
 

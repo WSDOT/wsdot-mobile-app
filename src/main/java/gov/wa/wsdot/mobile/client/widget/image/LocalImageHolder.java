@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,10 @@ public class LocalImageHolder {
             ImageResource navigation();
             ImageResource rocket();
             ImageResource time();
-            ImageResource warning();         
+            ImageResource warning();
+            ImageResource menu();
+            ImageResource back();
+            ImageResource backAndroid();
         }
         
         Images get();

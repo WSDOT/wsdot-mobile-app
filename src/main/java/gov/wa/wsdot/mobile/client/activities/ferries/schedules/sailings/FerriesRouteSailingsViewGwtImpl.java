@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.TitleLastUpdatedCell;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
 import gov.wa.wsdot.mobile.shared.FerriesTerminalItem;
 
@@ -32,14 +33,16 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.BasicCell;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class FerriesRouteSailingsViewGwtImpl extends Composite
 		implements FerriesRouteSailingsView {
@@ -71,13 +74,19 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	CellList<FerriesRouteAlertItem> alertsCellList;
 	
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
 	
 	@UiField(provided = true)
 	NotimportantImageButton starButton;
 	
 	@UiField
 	ProgressIndicator progressIndicator;
+	
+	@UiField
+	TabPanel tabPanel;
 	
 	private Presenter presenter;
 	
@@ -121,7 +130,12 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
+        if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            sailingsPanel.setBounce(false);
+            alertsPanel.setBounce(false);
+        }
 	}
 
 	@UiHandler("sailingsCellList")
@@ -188,7 +202,8 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 
 	@Override
 	public void refresh() {
-		sailingsPanel.refresh();
+        tabPanel.tabContainer.refresh();
+	    sailingsPanel.refresh();
 		alertsPanel.refresh();
 	}
 

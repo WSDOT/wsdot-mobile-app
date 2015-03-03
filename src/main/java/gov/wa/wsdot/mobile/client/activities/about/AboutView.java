@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.client.activities.about;
 
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
 public interface AboutView extends IsWidget {
 	
@@ -29,4 +30,6 @@ public interface AboutView extends IsWidget {
 		public void onBackButtonPressed();
 		
 	}
+	
+	public ScrollPanel getScrollPanel();
 }

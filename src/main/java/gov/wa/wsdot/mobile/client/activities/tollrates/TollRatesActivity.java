@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,19 +30,19 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 		TollRatesView.Presenter {
 
 	private final ClientFactory clientFactory;
-	private TollRatesView view;
+	private final TollRatesView view;
 	private EventBus eventBus;
 	
 	public TollRatesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
+	    view = clientFactory.getTollRatesView();
 	}
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getTollRatesView();
-		this.eventBus = eventBus;
-		view.setPresenter(this);
-		
+	    this.eventBus = eventBus;
+        view.setPresenter(this);
+        
 		panel.setWidget(view);
 	}	
 

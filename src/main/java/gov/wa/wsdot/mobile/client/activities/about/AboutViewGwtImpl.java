@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.about;
 
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -25,7 +27,9 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
 public class AboutViewGwtImpl extends Composite implements AboutView {
 
@@ -44,13 +48,24 @@ public class AboutViewGwtImpl extends Composite implements AboutView {
 	
 
 	@UiField
-	PreviousitemImageButton backButton;
+	BackImageButton backButton;
+	
+	@UiField
+	FlexSpacer leftFlexSpacer;
+	
+	@UiField
+	ScrollPanel scrollPanel;
 	
 	private Presenter presenter;
 	
 	public AboutViewGwtImpl() {
 	
 		initWidget(uiBinder.createAndBindUi(this));
+        
+		if (MGWT.getOsDetection().isAndroid()) {
+            leftFlexSpacer.setVisible(false);
+            scrollPanel.setBounce(false);
+        }
 
 	}
 
@@ -65,5 +80,10 @@ public class AboutViewGwtImpl extends Composite implements AboutView {
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
+
+    @Override
+    public ScrollPanel getScrollPanel() {
+        return scrollPanel;
+    }
 
 }

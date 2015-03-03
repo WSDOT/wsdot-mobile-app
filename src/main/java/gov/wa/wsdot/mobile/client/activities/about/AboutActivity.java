@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,29 +22,34 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import com.googlecode.mgwt.ui.client.MGWT;
 
 public class AboutActivity extends MGWTAbstractActivity implements
 		AboutView.Presenter {
 
 	private final ClientFactory clientFactory;
-	private AboutView view;
-	private EventBus eventBus;
-	private PhoneGap phoneGap;
+	private final AboutView view;
+	private final EventBus eventBus;
+	private final PhoneGap phoneGap;
 
 	public AboutActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
+		this.view = clientFactory.getAboutView();
+		this.eventBus = clientFactory.getEventBus();
+		this.phoneGap = clientFactory.getPhoneGap();
 	}
 
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
-		view = clientFactory.getAboutView();
-		this.eventBus = eventBus;
-		phoneGap = clientFactory.getPhoneGap();
 		view.setPresenter(this);
+		
+        if (MGWT.getOsDetection().isAndroid()) {
+            view.getScrollPanel().setBounce(false);
+        }
 		
 		panel.setWidget(view);
 		
@@ -73,14 +78,12 @@ public class AboutActivity extends MGWTAbstractActivity implements
      * http://docs.phonegap.com/en/2.4.0/cordova_inappbrowser_inappbrowser.md.html
      */
     public static native void captureClickEvents() /*-{
-        var anchors = $doc.getElementsByTagName('a');
-        for ( var i = 0; i < anchors.length; i++) {
-            anchors[i].addEventListener('click', function(e) {
+        var anchor = $doc.getElementById('webAdvertLink');
+        anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 $wnd.open(this.href, '_blank',
-                        'location=yes,enableViewportScale=yes');
-            });
-        }
+                        'enableViewportScale=yes,transitionstyle=fliphorizontal,location=yes');
+        });
     }-*/;
 
 }

@@ -139,7 +139,7 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		TwitterItem item = twitterItems.get(index);
 
 		inAppBrowser.open("https://twitter.com/" + item.getScreenName()
-				+ "/status/" + item.getId(), "",
+				+ "/status/" + item.getId(), "_blank",
 				"enableViewportScale=yes,transitionstyle=fliphorizontal");
 	}
 
