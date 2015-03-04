@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ public abstract class VideoCell<T> implements Cell<T> {
 	private static Template TEMPLATE = GWT.create(Template.class);
 
 	public interface Template extends SafeHtmlTemplates {
-        @SafeHtmlTemplates.Template("<div class=\"{0}\"><div><video poster=\"{1}\"><source src=\"{2}\" type=\"video/mp4\"/></video><div></div>")
+        @SafeHtmlTemplates.Template("<div class=\"{0}\"><div><video width=\"320\" height=\"240\" poster=\"{1}\" controls><source src=\"{2}\" type=\"video/mp4\"></video><div></div>")
         SafeHtml content(String class1, String posterUrl, String videoUrl);
 	}
 
