@@ -18,12 +18,14 @@
 
 package gov.wa.wsdot.mobile.client.activities.about;
 
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -56,17 +58,28 @@ public class AboutViewGwtImpl extends Composite implements AboutView {
 	@UiField
 	ScrollPanel scrollPanel;
 	
+	@UiField
+	Anchor email;
+	
 	private Presenter presenter;
 	
 	public AboutViewGwtImpl() {
 	
+	    String appVersion = Consts.APP_VERSION;
+	    String mailToAddressSubject = "mailto:webfeedback@wsdot.wa.gov?subject=WSDOT ";
+	    email = new Anchor();
+	    
 		initWidget(uiBinder.createAndBindUi(this));
         
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
+            email.setHref(mailToAddressSubject + "Android App v" + appVersion);
+        } else if (MGWT.getOsDetection().isIOs()) {
+            email.setHref(mailToAddressSubject + "iPhone App v" + appVersion);
+        } else {
+            email.setHref(mailToAddressSubject + "Mobile App v" + appVersion);
         }
-
 	}
 
 	@UiHandler("backButton")

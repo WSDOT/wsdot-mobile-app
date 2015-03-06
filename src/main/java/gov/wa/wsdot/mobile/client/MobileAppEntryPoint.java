@@ -21,10 +21,10 @@ package gov.wa.wsdot.mobile.client;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 	        	buildDisplay(clientFactory, phoneGap);
     	        if (MGWT.getOsDetection().isIOs() || MGWT.getOsDetection().isAndroid()) {
     	            try {
-    	                hideSplashScreen(); // For use on iOS and Android with PhoneGap.
+    	                phoneGap.getSplashScreen().hide();
     	            } catch (Exception e) {
     	                // Just pass through.
     	            }
@@ -94,9 +94,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 	    });
 		
 		phoneGap.initializePhoneGap();
-		
-		captureClickEvents();
 
+		captureClickEvents();
 	}
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
@@ -122,8 +121,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 
                     @Override
                     public void onBackButtonPressed(BackButtonPressedEvent event) {
-                        Place place = clientFactory.getPlaceController()
-                                .getWhere();
+                        Place place = clientFactory.getPlaceController().getWhere();
                         if (place instanceof HomePlace) {
                             phoneGap.exitApp();
                         } else {
@@ -591,8 +589,6 @@ public class MobileAppEntryPoint implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-
-	    //MGWTStyle.setTheme(new CustomTheme());
 	    
 		if (!Database.isSupported()) {
 			Window.alert("HTML 5 Database is NOT supported in this browser!");
@@ -622,10 +618,6 @@ public class MobileAppEntryPoint implements EntryPoint {
 		}.schedule(1);
 
 	}
-	
-	private static native void hideSplashScreen() /*-{ 
-        $wnd.navigator.splashscreen.hide(); 
-    }-*/;
 	
     /**
      * JSNI method to capture click events on ad banners and open

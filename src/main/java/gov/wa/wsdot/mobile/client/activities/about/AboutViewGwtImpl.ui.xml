@@ -14,6 +14,8 @@
         }
     </ui:style>
     
+    <ui:import field="gov.wa.wsdot.mobile.client.util.Consts.APP_VERSION" />
+    
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
@@ -25,7 +27,7 @@
 		
         <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
         	<g:HTMLPanel styleName="{style.htmlPanel}">
-            	<g:HTML>
+            	<g:HTMLPanel>
             	    <p>The mission of the Washington State Department of Transportation is 
             	        to keep people and business moving by operating and improving the state's 
             	        transportation systems vital to our taxpayers and communities.</p><br />
@@ -36,12 +38,11 @@
                         <a href="http://www.wsdot.wa.gov/funding/partners/projects/webadvertising.htm" target="_blank" id="webAdvertLink">digital 
                         advertising pilot project</a> to allow commercial advertising through its websites, 
                         social media tools and mobile apps.</p><br />
-            	    <p>Questions, comments or suggestions about this app can be emailed to the 
-            	        <a href="mailto:webfeedback@wsdot.wa.gov?subject=WSDOT Mobile App">
-            	            WSDOT Communications Office</a>.</p>
+            	    <p>Questions, comments or suggestions about this app can be emailed to the
+            	       <g:Anchor ui:field="email">WSDOT Communications Office</g:Anchor>.</p>
             	    <br />
-            	    <p style="color:#959595;">App Version: 3.1.4</p>
-            	</g:HTML>
+            	    <p style="color:#959595;">App Version: <ui:text from="{APP_VERSION}" /></p>
+            	</g:HTMLPanel>
             </g:HTMLPanel>
         </mgwt:panel.scroll.ScrollPanel>
 		

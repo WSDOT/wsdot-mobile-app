@@ -176,6 +176,12 @@ public class HomeActivity extends MGWTAbstractActivity implements
 			
 			@Override
 			public void onFailure(DataServiceException error) {
+                // On first install the 'caches' table doesn't exist yet. Why?
+			    highwayAlertItems.clear();
+                highwayAlertItems.add(new HighwayAlertItem(-1, "No highest impact travel alerts"));
+                view.hideProgressIndicator();
+                view.render(highwayAlertItems);
+                view.refresh();
 			}
 
 			@Override

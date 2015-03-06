@@ -138,7 +138,7 @@
 	                            
 		                        <g:HTMLPanel ui:field="highImpactAlertsPanel" styleName="{style.highImpactAlertsPanel}">
 		                            <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
-		                                <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="true" addStyleNames="{style.progressIndicator}" />
+		                                <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
 		                            </g:HTMLPanel>
 	                                <mgwt:carousel.Carousel ui:field="alertsCarousel" />
 		                        </g:HTMLPanel>
