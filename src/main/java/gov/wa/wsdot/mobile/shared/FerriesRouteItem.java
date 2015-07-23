@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@ import java.io.Serializable;
 
 public class FerriesRouteItem implements Serializable {
 
-	private static final long serialVersionUID = -84316089995566867L;
-	private int routeID;
+    private static final long serialVersionUID = -8830406769389004396L;
+    private int routeID;
 	private String description;
 	private boolean selected;
 	//private ArrayList<FerriesRouteAlertItem> routeAlert = new ArrayList<FerriesRouteAlertItem>();
@@ -31,6 +31,7 @@ public class FerriesRouteItem implements Serializable {
 	private String routeAlert;
 	private String scheduleDate;
 	private String cacheDate;
+	private String crossingTime;
 	private int isStarred;
 
 	/**
@@ -119,5 +120,13 @@ public class FerriesRouteItem implements Serializable {
 	public void setIsStarred(int isStarred) {
 		this.isStarred = isStarred;
 	}
+
+    public String getCrossingTime() {
+        return crossingTime;
+    }
+
+    public void setCrossingTime(String crossingTime) {
+        this.crossingTime = crossingTime;
+    }
 
 }

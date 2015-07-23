@@ -141,7 +141,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 				if (!result.isEmpty()) {
 					double now = System.currentTimeMillis();
 					double lastUpdated = result.get(0).getDouble(CachesColumns.CACHE_LAST_UPDATED);
-					shouldUpdate = (Math.abs(now - lastUpdated) > (30 * 60000)); // Refresh every 30 minutes.
+					shouldUpdate = (Math.abs(now - lastUpdated) > (15 * 60000)); // Refresh every 15 minutes.
 				}
 
 				view.showProgressIndicator();
@@ -200,6 +200,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 											item.setRouteID(result.getRoutes().get(i).getRouteID());
 											item.setDescription(result.getRoutes().get(i).getDescription());
+											item.setCrossingTime(result.getRoutes().get(i).getCrossingTime());
 											item.setScheduleDate(new JSONArray(result.getRoutes().get(i).getDate()).toString());
 											item.setRouteAlert(new JSONArray(result.getRoutes().get(i).getRouteAlert()).toString());
 											item.setCacheDate(dateFormat.format(new Date(
@@ -303,6 +304,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 			item.setRouteID(result.get(i).getInt(FerriesSchedulesColumns.FERRIES_SCHEDULE_ID));
 			item.setDescription(result.get(i).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_TITLE));
+			item.setCrossingTime(result.get(i).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_CROSSING_TIME));
 			item.setScheduleDate(result.get(i).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_DATE));
 			item.setRouteAlert(result.get(i).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_ALERT));
 			item.setCacheDate(result.get(i).getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_UPDATED));

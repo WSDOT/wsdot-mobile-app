@@ -17,16 +17,16 @@
 	<inherits name="gov.wa.wsdot.mobile.client.widget.image.LocalImageHolder"/>
 	<inherits name="gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalImageHolder" />
 	
-    <inherits name="com.googlecode.mgwt.theme.CustomUiBinderTheme" />
+    <!-- <inherits name="com.googlecode.mgwt.theme.CustomUiBinderTheme" /> -->
     
 	<!-- set the user agent to safari -> only webkit -->
 	<set-property name="user.agent" value="safari" />
 	
 	<!-- Uncomment to use platform themes -->
-	<!-- <inherits name="com.googlecode.mgwt.ui.client.theme.platform.Platform" /> -->
+	<inherits name="com.googlecode.mgwt.ui.client.theme.platform.Platform" />
 	<!-- mgwt.os is only available when using the platform theme -->
 	<!-- <set-property name="mgwt.os" value="android, ios" /> -->
-	<!-- <set-property name="mgwt.os" value="ios" /> -->
+	<set-property name="mgwt.os" value="ios" />
 	  
 	<set-property name="mgwt.formfactor" value="phone" />
 	<set-property name="mgwt.density" value="mid,high,xhigh" />	

@@ -18,6 +18,11 @@
             padding-bottom: 7px;
         }
         .cellFerriesRouteSchedules > div:nth-child\(1\) > div:nth-child\(2\) {
+            font-size: medium;
+            font-weight: normal;
+            padding-bottom: 10px;
+        }
+        .cellFerriesRouteSchedules > div:nth-child\(1\) > div:nth-child\(3\) {
             font-size: small;
             font-weight: normal;
             color: #7d7d7d;
@@ -33,12 +38,14 @@
     </ui:style>
     
     <ui:with field="description" type="java.lang.String" />
+    <ui:with field="crossingTime" type="java.lang.String" />
     <ui:with field="lastUpdated" type="java.lang.String" />
     <ui:with field='alertImage' type='com.google.gwt.safehtml.shared.SafeHtml'/>
     
     <div class="{style.cellFerriesRouteSchedules}">
         <div>
             <div><ui:text from="{description}" /></div>
+            <div><ui:text from="{crossingTime}" /></div>
             <div><ui:text from="{lastUpdated}" /></div>
         </div>
         <div>

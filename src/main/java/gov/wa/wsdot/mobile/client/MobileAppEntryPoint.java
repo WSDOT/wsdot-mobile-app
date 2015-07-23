@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
@@ -152,7 +153,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 	    final String VER_1 = "1.0";
 	    final String VER_2 = "1.1";
 	    final String VER_3 = "3";
-	    final String DATABASE_VERSION = VER_3;
+	    final String VER_4 = "4";
+	    final String DATABASE_VERSION = VER_4;
 
 	    if (clientFactory.getDbService().getDatabase().getVersion().equals("")) {
 	        clientFactory.getDbService().getDatabase()
@@ -305,7 +307,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 
                 @Override
                 public void onTransactionSuccess() {
-                    GWT.log("Successfully upgraded database from version 1.0 to 1.1");
+                    GWT.log("Successfully upgraded database from version " + VER_1 + " to " + VER_2);
                     
                     clientFactory.getDbService().getDatabase()
                             .changeVersion(VER_2, VER_3, new TransactionCallback() {
@@ -331,7 +333,27 @@ public class MobileAppEntryPoint implements EntryPoint {
         
                         @Override
                         public void onTransactionSuccess() {
-                            GWT.log("Successfully upgraded database from version 1.1 to 3");
+                            GWT.log("Successfully upgraded database from version " + VER_2 + " to " + VER_3);
+                            
+                            clientFactory.getDbService().getDatabase()
+                                    .changeVersion(VER_3, VER_4, new TransactionCallback() {
+
+                                @Override
+                                public void onTransactionStart(SQLTransaction transaction) {
+                                    transaction.executeSql("ALTER TABLE " + Tables.FERRIES_SCHEDULES
+                                            + " ADD COLUMN " + FerriesSchedulesColumns.FERRIES_SCHEDULE_CROSSING_TIME + " TEXT", null);
+                                }
+                
+                                @Override
+                                public void onTransactionSuccess() {
+                                    GWT.log("Successfully upgraded database from version " + VER_3 + " to " + VER_4);
+                                }
+                
+                                @Override
+                                public void onTransactionFailure(SQLError error) {
+                                }
+                            });
+                            
                         }
         
                         @Override
@@ -373,7 +395,27 @@ public class MobileAppEntryPoint implements EntryPoint {
 
                 @Override
                 public void onTransactionSuccess() {
-                    GWT.log("Successfully upgraded database from version 1.1 to 3");
+                    GWT.log("Successfully upgraded database from version " + VER_2 + " to " + VER_3);
+                    
+                    clientFactory.getDbService().getDatabase()
+                            .changeVersion(VER_3, VER_4, new TransactionCallback() {
+
+                        @Override
+                        public void onTransactionStart(SQLTransaction transaction) {
+                            transaction.executeSql("ALTER TABLE " + Tables.FERRIES_SCHEDULES
+                                    + " ADD COLUMN " + FerriesSchedulesColumns.FERRIES_SCHEDULE_CROSSING_TIME + " TEXT", null);
+                        }
+        
+                        @Override
+                        public void onTransactionSuccess() {
+                            GWT.log("Successfully upgraded database from version " + VER_3 + " to " + VER_4);
+                        }
+        
+                        @Override
+                        public void onTransactionFailure(SQLError error) {
+                        }
+                    });
+                    
                 }
 
                 @Override
@@ -381,54 +423,28 @@ public class MobileAppEntryPoint implements EntryPoint {
                 }
 	        });
 	    }
-        
-	    /*
-        if (!clientFactory.getDbService().getDatabase().getVersion().equals(DATABASE_VERSION)) {
-            clientFactory.getDbService().getDatabase().transaction(new TransactionCallback() {
+	    
+	    if (clientFactory.getDbService().getDatabase().getVersion().equals(VER_3)) {
+	        clientFactory.getDbService().getDatabase()
+                    .changeVersion(VER_3, VER_4, new TransactionCallback() {
 
                 @Override
                 public void onTransactionStart(SQLTransaction transaction) {
-                    GWT.log("Destroying old data during upgrade");
-                    
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.CACHES, null);
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.CAMERAS, null);
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.HIGHWAY_ALERTS, null);
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.MOUNTAIN_PASSES, null);
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.TRAVEL_TIMES, null);
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.FERRIES_SCHEDULES, null);
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.FERRIES_TERMINAL_SAILING_SPACE, null);
-                    transaction.executeSql("DROP TABLE IF EXISTS " + Tables.BORDER_WAIT, null);                    
+                    transaction.executeSql("ALTER TABLE " + Tables.FERRIES_SCHEDULES
+                            + " ADD COLUMN " + FerriesSchedulesColumns.FERRIES_SCHEDULE_CROSSING_TIME + " TEXT", null);
                 }
-
+        
                 @Override
                 public void onTransactionSuccess() {
-                    String version = clientFactory.getDbService().getDatabase().getVersion();
-                    
-                    clientFactory.getDbService().getDatabase()
-                            .changeVersion(version, "", new TransactionCallback() {
-
-                                @Override
-                                public void onTransactionStart(SQLTransaction transaction) {
-                                    createDatabaseTables(clientFactory);
-                                }
-
-                                @Override
-                                public void onTransactionSuccess() {
-                                    GWT.log("Successfully recreated database. Now at version " + DATABASE_VERSION);
-                                }
-
-                                @Override
-                                public void onTransactionFailure(SQLError error) {
-                                }
-                            });
+                    GWT.log("Successfully upgraded database from version " + VER_3 + " to " + VER_4);
                 }
-
+        
                 @Override
                 public void onTransactionFailure(SQLError error) {
                 }
             });
-        }
-        */
+	    }
+
 	}
 	
 	private void initCachesTable(ClientFactory clientFactory) {

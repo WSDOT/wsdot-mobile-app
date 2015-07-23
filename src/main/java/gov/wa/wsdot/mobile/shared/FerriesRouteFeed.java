@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ public class FerriesRouteFeed extends JavaScriptObject {
 		
 		public final native JsArray<Date> getDate() /*-{ return this.Date }-*/;
 		public final native JsArray<RouteAlert> getRouteAlert() /*-{ return this.RouteAlert }-*/;
+		public final native String getCrossingTime() /*-{ return this.CrossingTime }-*/;
 		//public final native String getDate() /*-{ return this.Date }-*/;
 		//public final native String getRouteAlert() /*-{ return this.RouteAlert }-*/;
 		public final native int getRouteID() /*-{ return this.RouteID }-*/;

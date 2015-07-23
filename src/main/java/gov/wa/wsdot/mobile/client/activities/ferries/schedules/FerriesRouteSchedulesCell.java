@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,18 +30,20 @@ public abstract class FerriesRouteSchedulesCell<T> implements Cell<T> {
 	@UiTemplate("FerriesRouteSchedulesCell.ui.xml")
 	public interface Renderer extends UiRenderer {
 		public void render(SafeHtmlBuilder safeHtmlBuilder, String description,
-				String lastUpdated, SafeHtml alertImage);
+				String crossingTime, String lastUpdated, SafeHtml alertImage);
 	}
 
 	private Renderer renderer = GWT.create(Renderer.class);
 	
 	public void render(SafeHtmlBuilder sb, T model) {
-		renderer.render(sb, getDescription(model), getLastUpdated(model),
-				getAlertImage(model));
+		renderer.render(sb, getDescription(model), getCrossingTime(model),
+		        getLastUpdated(model), getAlertImage(model));
 
 	}
 	
 	public abstract String getDescription(T model);
+	
+	public abstract String getCrossingTime(T model);
 	
 	public abstract String getLastUpdated(T model);
 	
