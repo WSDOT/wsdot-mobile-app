@@ -530,6 +530,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 												item.setRouteID(result.getRoutes().get(i).getRouteID());
 												item.setDescription(result.getRoutes().get(i).getDescription());
+												item.setCrossingTime(result.getRoutes().get(i).getCrossingTime());
 												item.setScheduleDate(new JSONArray(result.getRoutes().get(i).getDate()).toString());
 												item.setRouteAlert(new JSONArray(result.getRoutes().get(i).getRouteAlert()).toString());
 												item.setCacheDate(dateFormat.format(new Date(
@@ -946,6 +947,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 			
 			f.setRouteID(route.getInt(FerriesSchedulesColumns.FERRIES_SCHEDULE_ID));
 			f.setDescription(route.getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_TITLE));
+			f.setCrossingTime(route.getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_CROSSING_TIME));
 			f.setRouteAlert(route.getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_ALERT));
 			f.setCacheDate(route.getString(FerriesSchedulesColumns.FERRIES_SCHEDULE_UPDATED));
 			

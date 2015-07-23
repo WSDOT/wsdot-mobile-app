@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -131,6 +131,7 @@ public interface WSDOTDataService extends DataService {
 		+ FerriesSchedulesColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_ID + " INTEGER,"
 	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_TITLE + " TEXT,"
+	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_CROSSING_TIME + " TEXT,"
 	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_DATE + " TEXT,"
 	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_ALERT + " TEXT,"
 	    + FerriesSchedulesColumns.FERRIES_SCHEDULE_UPDATED + " TEXT,"
@@ -355,12 +356,13 @@ public interface WSDOTDataService extends DataService {
 	@Update(sql="INSERT INTO " + Tables.FERRIES_SCHEDULES + " ("
 			+ FerriesSchedulesColumns.FERRIES_SCHEDULE_ID + ", "
 			+ FerriesSchedulesColumns.FERRIES_SCHEDULE_TITLE + ", "
+			+ FerriesSchedulesColumns.FERRIES_SCHEDULE_CROSSING_TIME + ", "
 			+ FerriesSchedulesColumns.FERRIES_SCHEDULE_DATE + ", "
 			+ FerriesSchedulesColumns.FERRIES_SCHEDULE_ALERT + ", "
 			+ FerriesSchedulesColumns.FERRIES_SCHEDULE_UPDATED + ", "
 			+ FerriesSchedulesColumns.FERRIES_SCHEDULE_IS_STARRED + ") "
 			+ "VALUES "
-			+ "({_.getRouteID()}, {_.getDescription()}, {_.getScheduleDate()}, "
+			+ "({_.getRouteID()}, {_.getDescription()}, {_.getCrossingTime()}, {_.getScheduleDate()}, "
 			+ "{_.getRouteAlert()}, {_.getCacheDate()}, {_.getIsStarred()})", foreach="ferriesRouteItems")
 	void insertFerriesSchedules(List<FerriesRouteItem> ferriesRouteItems, RowIdListCallback callback);
 	

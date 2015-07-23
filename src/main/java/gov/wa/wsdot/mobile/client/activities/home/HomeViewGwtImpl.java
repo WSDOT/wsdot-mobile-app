@@ -206,6 +206,18 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 				return hasAlerts ? image : SafeHtmlUtils.fromString("");
 			}
 
+            @Override
+            public String getCrossingTime(FerriesRouteItem model) {
+                try {
+                    if (model.getCrossingTime().equalsIgnoreCase("null")) {
+                        return "";
+                    } else {
+                        return "Crossing Time: ~ " + model.getCrossingTime() + " min";
+                    }
+                } catch (Exception e) {
+                    return "";
+                }
+            }
 
 		});
 

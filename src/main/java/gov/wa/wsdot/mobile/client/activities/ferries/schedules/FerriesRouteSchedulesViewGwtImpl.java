@@ -117,6 +117,19 @@ public class FerriesRouteSchedulesViewGwtImpl extends Composite implements
 				return hasAlerts ? image : SafeHtmlUtils.fromString("");
 			}
 
+            @Override
+            public String getCrossingTime(FerriesRouteItem model) {
+                try {
+                    if (model.getCrossingTime().equalsIgnoreCase("null")) {
+                        return "";
+                    } else {
+                        return "Crossing Time: ~ " + model.getCrossingTime() + " min";
+                    }
+                } catch (Exception e) {
+                    return "";
+                }
+            }
+
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
