@@ -178,33 +178,33 @@
                                     </g:row>
                                     <g:row>
                                         <g:cell>Two (includes motorcycle)</g:cell>
-                                        <g:cell>$4.50</g:cell>
-                                        <g:cell>$5.50</g:cell>
-                                        <g:cell>$6.50</g:cell>
+                                        <g:cell>$5.00</g:cell>
+                                        <g:cell>$6.00</g:cell>
+                                        <g:cell>$7.00</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>Three</g:cell>
-                                        <g:cell>$6.75</g:cell>
-                                        <g:cell>$8.25</g:cell>
-                                        <g:cell>$9.75</g:cell>
+                                        <g:cell>$7.50</g:cell>
+                                        <g:cell>$9.00</g:cell>
+                                        <g:cell>$10.50</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>Four</g:cell>
-                                        <g:cell>$9.00</g:cell>
-                                        <g:cell>$11.00</g:cell>
-                                        <g:cell>$13.00</g:cell>
+                                        <g:cell>$10.00</g:cell>
+                                        <g:cell>$12.00</g:cell>
+                                        <g:cell>$14.00</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>Five</g:cell>
-                                        <g:cell>$11.25</g:cell>
-                                        <g:cell>$13.75</g:cell>
-                                        <g:cell>$16.25</g:cell>
+                                        <g:cell>$12.50</g:cell>
+                                        <g:cell>$15.00</g:cell>
+                                        <g:cell>$17.50</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>Six or more</g:cell>
-                                        <g:cell>$13.50</g:cell>
-                                        <g:cell>$16.50</g:cell>
-                                        <g:cell>$19.50</g:cell>
+                                        <g:cell>$15.00</g:cell>
+                                        <g:cell>$18.00</g:cell>
+                                        <g:cell>$21.00</g:cell>
                                     </g:row>
                                 </g:Grid>
                                 
