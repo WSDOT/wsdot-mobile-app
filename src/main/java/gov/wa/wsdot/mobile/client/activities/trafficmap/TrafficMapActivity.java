@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
@@ -33,6 +34,7 @@ import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.CacheItem;
+import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.CamerasFeed;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
@@ -75,6 +77,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
+	private static List<CalloutItem> calloutItems = new ArrayList<CalloutItem>();
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
 	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
 	private Timer timer;
@@ -441,8 +444,59 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 				}
 			}
 		});
-		
 	}
+
+	/**
+	 * 
+	 */
+    private void getCallouts() {
+        calloutItems.clear();
+
+        CalloutItem item = new CalloutItem();
+        item.setTitle("JBLM");
+        item.setImageUrl("http://images.wsdot.wa.gov/traffic/flowmaps/jblm.png");
+        item.setLatitude(47.103033);
+        item.setLongitude(-122.584394);
+
+        calloutItems.add(item);
+
+        drawCalloutsLayer();
+    }
+	
+	/**
+	 * 
+	 */
+    private void drawCalloutsLayer() {
+        LatLngBounds bounds = view.getViewportBounds();
+        LatLng swPoint = bounds.getSouthWest();
+        LatLng nePoint = bounds.getNorthEast();
+
+        ArrayList<LatLonItem> viewableMapArea = new ArrayList<LatLonItem>();
+        viewableMapArea.add(new LatLonItem(nePoint.getLatitude(), swPoint.getLongitude()));
+        viewableMapArea.add(new LatLonItem(nePoint.getLatitude(), nePoint.getLongitude()));
+        viewableMapArea.add(new LatLonItem(swPoint.getLatitude(), nePoint.getLongitude()));
+        viewableMapArea.add(new LatLonItem(swPoint.getLatitude(), swPoint.getLongitude()));
+
+        List<CalloutItem> callouts = new ArrayList<CalloutItem>();
+
+        for (CalloutItem item: calloutItems) {
+            if (inPolygon(
+                    viewableMapArea,
+                    item.getLatitude(),
+                    item.getLongitude())) {
+
+                callouts.add(new CalloutItem(
+                        item.getTitle(),
+                        item.getImageUrl(),
+                        item.getLatitude(),
+                        item.getLongitude()));
+            }
+        }
+
+        if (!callouts.isEmpty()) {
+            view.drawCallouts(callouts);
+        }
+    }
 	
 	/**
 	 * Iterate through collection of LatLon objects in ArrayList and see if
@@ -501,7 +555,6 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		} else {
 			view.showCameras();
 		}
-		
 	}
 
 	@Override
@@ -515,7 +568,12 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		clientFactory.getPlaceController().goTo(
 				new AlertPlace(Integer.toString(alertId)));
 	}	
-	
+
+    @Override
+    public void onCalloutSelected(String url) {
+        clientFactory.getPlaceController().goTo(new CalloutPlace(url));
+    }
+
 	@Override
 	public void onLocateButtonPressed() {
 		
@@ -569,6 +627,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		captureClickEvents();
 		getCameras();
         getHighwayAlerts();
+        getCallouts();
 	}
 
     @Override

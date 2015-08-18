@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesPlace;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitPlace;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace;
@@ -260,6 +261,14 @@ public class PhoneAnimationMapper implements AnimationMapper {
         
         if (oldPlace instanceof AmtrakCascadesSchedulesDetailsPlace && newPlace instanceof AmtrakCascadesSchedulesPlace) {
             return Animations.SLIDE_REVERSE;
+        }
+        
+        if (oldPlace instanceof TrafficMapPlace && newPlace instanceof CalloutPlace) {
+            return Animations.FADE;
+        }
+        
+        if (oldPlace instanceof CalloutPlace && newPlace instanceof TrafficMapPlace) {
+            return Animations.FADE_REVERSE;
         }
         
 		if (oldPlace == null && newPlace instanceof HomePlace) {

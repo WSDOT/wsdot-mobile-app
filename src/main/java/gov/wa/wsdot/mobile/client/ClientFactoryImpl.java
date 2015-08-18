@@ -30,6 +30,8 @@ import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.Am
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitView;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutView;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraView;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesView;
@@ -134,6 +136,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private AmtrakCascadesViewGwtImpl amtrakCascadesView;
 	private AmtrakCascadesSchedulesViewGwtImpl amtrakCascadesSchedulesView;
     private AmtrakCascadesSchedulesDetailsViewGwtImpl amtrakCascadesDeparturesView;
+    private CalloutViewGwtImpl calloutView;
 
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -467,6 +470,14 @@ public class ClientFactoryImpl implements ClientFactory {
         amtrakCascadesDeparturesView = new AmtrakCascadesSchedulesDetailsViewGwtImpl();
 
         return amtrakCascadesDeparturesView;
+    }
+
+    @Override
+    public CalloutView getCalloutView() {
+        if (calloutView == null) {
+            calloutView = new CalloutViewGwtImpl();
+        }
+        return calloutView;
     }
 
 }

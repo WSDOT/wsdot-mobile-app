@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace.
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesPlace.AmtrakCascadesSchedulesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace.AmtrakCascadesSchedulesDetailsPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitPlace.BorderWaitPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace.CalloutPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace.CameraPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace.FerriesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace.FerriesRouteSchedulesPlaceTokenizer;
@@ -78,6 +79,7 @@ import com.google.gwt.place.shared.WithTokenizers;
         FerriesRouteAlertDetailsPlaceTokenizer.class,
         AmtrakCascadesPlaceTokenizer.class,
         AmtrakCascadesSchedulesPlaceTokenizer.class,
-        AmtrakCascadesSchedulesDetailsPlaceTokenizer.class })
+        AmtrakCascadesSchedulesDetailsPlaceTokenizer.class,
+        CalloutPlaceTokenizer.class})
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }

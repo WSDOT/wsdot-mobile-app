@@ -27,6 +27,7 @@ import gov.wa.wsdot.mobile.client.widget.button.image.NavigationImageButton;
 import gov.wa.wsdot.mobile.client.widget.button.image.RocketImageButton;
 import gov.wa.wsdot.mobile.client.widget.button.image.TimeImageButton;
 import gov.wa.wsdot.mobile.client.widget.button.image.WarningImageButton;
+import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
 
@@ -136,8 +137,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	private MyMapWidget mapWidget;
 	private Marker cameraMarker;
 	private Marker alertMarker;
-	private static ArrayList<Marker> cameraMarkers = new ArrayList<Marker>();
-	private static ArrayList<Marker> alertMarkers = new ArrayList<Marker>();
+	private Marker calloutMarker;
+	private static List<Marker> cameraMarkers = new ArrayList<Marker>();
+	private static List<Marker> alertMarkers = new ArrayList<Marker>();
+	private static List<Marker> calloutMarkers = new ArrayList<Marker>();
 	
 	private static Storage localStorage = Storage.getLocalStorageIfSupported();
 	private static StorageMap storageMap;
@@ -233,7 +236,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 				}
 			}
 		});
-	    
 	}
 
 	@UiHandler("backButton")
@@ -350,7 +352,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		if (Boolean.valueOf(localStorage.getItem("KEY_SHOW_CAMERAS"))) {
 			showCameras();
 		}
-		
 	}
 
 
@@ -391,12 +392,40 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		    alertMarkers.add(alertMarker);
 		    
 		}
-		
-	    showAlerts();
-	    
+
+		showAlerts();
 	}
-	
-	@Override
+
+    @Override
+    public void drawCallouts(List<CalloutItem> callouts) {
+        deleteCallouts();
+        
+        for (final CalloutItem callout: callouts) {
+            LatLng loc = LatLng.newInstance(callout.getLatitude(), callout.getLongitude());
+            MarkerOptions options = MarkerOptions.newInstance();
+            options.setPosition(loc);
+            
+            MarkerImage icon = MarkerImage.newInstance(AppBundle.INSTANCE
+                    .jblmPNG().getSafeUri().asString());
+
+            options.setIcon(icon);
+
+            calloutMarker = Marker.newInstance(options);
+            calloutMarker.addClickHandler(new ClickMapHandler() {
+
+                @Override
+                public void onEvent(ClickMapEvent event) {
+                    presenter.onCalloutSelected(callout.getImageUrl());
+                }
+            });
+            
+            calloutMarkers.add(calloutMarker);
+        }
+
+        showCallouts();
+    }
+
+    @Override
 	public void hideCameras() {
 		for (Marker marker: cameraMarkers) {
 			marker.setMap((MapWidget)null);
@@ -434,7 +463,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		
 		mapWidget.panTo(latLng);
 		mapWidget.setZoom(zoom);
-		
 	}
 
 	@Override
@@ -468,9 +496,25 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		for (Marker marker: alertMarkers) {
 			marker.setMap((MapWidget)null);
 		}
-		
+
 		alertMarkers.clear();
 	}
+
+    @Override
+    public void deleteCallouts() {
+        for (Marker marker: calloutMarkers) {
+            marker.setMap((MapWidget)null);
+        }
+
+        calloutMarkers.clear();
+    }
+
+    @Override
+    public void showCallouts() {
+        for (Marker marker: calloutMarkers) {
+            marker.setMap(mapWidget);
+        }
+    }
 
 	/**
 	 * Refresh the map to update the traffic layer.
@@ -488,7 +532,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
                 mapWidget.setZoom(mapWidget.getZoom() - 1);                
             }
          }.schedule(1);
-
     }
 	
     /**
@@ -603,7 +646,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 			MapHandlerRegistration.trigger(this, MapEventType.RESIZE);        
 			this.setCenter(center);
 		}
-
 	}
 	
 }

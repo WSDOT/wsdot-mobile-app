@@ -247,6 +247,12 @@ public interface AppBundle extends ClientBundle {
 	ImageResource imagePlaceholderPNG();
 	
 	/**
+	 * Callout icons
+	 */
+	@Source("jblm.png")
+	ImageResource jblmPNG();
+	
+	/**
 	 * Highway alert icons 
 	 */
 	@Source("alert_highest.png")
