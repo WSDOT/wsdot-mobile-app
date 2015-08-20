@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@ import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.Am
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitActivity;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitPlace;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutActivity;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraActivity;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesActivity;
@@ -235,6 +237,10 @@ public class PhoneActivityMapper implements ActivityMapper {
 
         if (place instanceof AmtrakCascadesSchedulesDetailsPlace) {
             return new AmtrakCascadesSchedulesDetailsActivity(clientFactory);
+        }
+        
+        if (place instanceof CalloutPlace) {
+            return new CalloutActivity(clientFactory);
         }
 		
 		return new HomeActivity(clientFactory);

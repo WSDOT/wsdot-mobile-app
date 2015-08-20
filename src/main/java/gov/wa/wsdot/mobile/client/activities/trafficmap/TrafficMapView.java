@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
+import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
 
@@ -44,6 +45,8 @@ public interface TrafficMapView extends IsWidget {
 		public void onCameraSelected(int cameraId);
 		
 		public void onAlertSelected(int alertId);
+		
+		public void onCalloutSelected(String url);
 		
 		public void onLocateButtonPressed();
 		
@@ -77,9 +80,15 @@ public interface TrafficMapView extends IsWidget {
 	
 	public void deleteAlerts();
 	
-	public void drawCameras(List<CameraItem> cameras);
+	public void deleteCallouts();
 	
+	public void showCallouts();
+
+	public void drawCameras(List<CameraItem> cameras);
+
 	public void drawAlerts(List<HighwayAlertItem> alerts);
+	
+	public void drawCallouts(List<CalloutItem> callouts);
 	
 	public void setTitle(String title);
 

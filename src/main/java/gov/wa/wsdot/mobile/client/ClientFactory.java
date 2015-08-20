@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesView;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesView;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsView;
 import gov.wa.wsdot.mobile.client.activities.borderwait.BorderWaitView;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutView;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraView;
 import gov.wa.wsdot.mobile.client.activities.ferries.FerriesView;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesView;
@@ -103,4 +104,5 @@ public interface ClientFactory {
 	public AmtrakCascadesView getAmtrakCascadesView();
 	public AmtrakCascadesSchedulesView getAmtrakCascadesSchedulesView();
     public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesDeparturesView();
+    public CalloutView getCalloutView();
 }

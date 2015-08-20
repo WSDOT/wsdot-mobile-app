@@ -113,7 +113,7 @@ public class CameraActivity extends MGWTAbstractActivity implements
                     @Override
                     public void run() {
                         getCamera(view, cameraId);
-                        view.videoRefresh();;
+                        view.videoRefresh();
                         callback.onSuccess(null);
                         
                     }

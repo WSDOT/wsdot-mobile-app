@@ -1,0 +1,54 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .htmlPanel {
+            background-color: white;
+            padding: 12px;
+        }
+        
+        .headlineDescription {
+            font-size: small;
+            font-weight: normal;
+            padding-bottom: 6px;
+        }
+
+        .lastUpdatedTime {
+            font-size: small;
+            font-weight: normal;
+            color: #7d7d7d;
+        }
+
+        .htmlPanel {
+            padding: 10px;
+        }
+
+        .image {
+            max-width: 100%;
+        }
+    </ui:style>
+    
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+			<wsdot:button.image.BackImageButton ui:field="backButton" />
+			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
+			<mgwt:header.HeaderTitle ui:field="title" />
+			<mgwt:panel.flex.FlexSpacer />
+			<mgwt:panel.flex.FixedSpacer />
+		</mgwt:header.HeaderPanel>
+		
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+            <g:HTMLPanel ui:field="htmlPanel" styleName="{style.htmlPanel}">
+                <g:Image ui:field="image" styleName="{style.image}" />
+            </g:HTMLPanel>
+        </mgwt:panel.pull.PullPanel>
+        
+	</mgwt:panel.flex.RootFlexPanel>
+	
+</ui:UiBinder>
