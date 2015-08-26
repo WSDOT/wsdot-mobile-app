@@ -110,11 +110,11 @@ public class ParserUtils {
     public static int windowUI() {
         int amount = 0;
         if (MGWT.getOsDetection().isIOs()) {
-            amount = 136; // 86 for nav bars, 50 for bottom ad.
+            amount = 86; // for nav bars
         } else if (MGWT.getOsDetection().isAndroid()) {
-            amount = 149; //99 for nav bars, 50 for bottom ad.
+            amount = 99; // for nav bars
         } else {
-            amount = 149;
+            amount = 99;
         }
         
         return amount;
