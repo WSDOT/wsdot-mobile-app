@@ -230,11 +230,13 @@ public class FerriesRouteDeparturesActivity extends
 							JSONObject time = times.get(l).isObject();
 							
                             // Don't display past sailing times. Doesn't make sense.
-                            if (now.after(new Date(Long.parseLong(time
+                            /*
+							if (now.after(new Date(Long.parseLong(time
                                     .get("DepartingTime").isString().stringValue()
                                     .substring(6, 19))))) {
                                 continue;
-                            }							
+                            }
+                            */
 							
 							timesItem = new FerriesScheduleTimesItem();
 							timesItem.setDepartingTime(time.get("DepartingTime").isString().stringValue().substring(6, 19));
