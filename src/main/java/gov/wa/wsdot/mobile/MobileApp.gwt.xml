@@ -16,6 +16,7 @@
 	
 	<inherits name="gov.wa.wsdot.mobile.client.widget.image.LocalImageHolder"/>
 	<inherits name="gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalImageHolder" />
+    <inherits name="gov.wa.wsdot.mobile.client.plugins.Plugins" />
 	
     <!-- <inherits name="com.googlecode.mgwt.theme.CustomUiBinderTheme" /> -->
     
