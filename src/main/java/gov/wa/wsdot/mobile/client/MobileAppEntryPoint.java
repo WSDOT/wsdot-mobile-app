@@ -18,15 +18,6 @@
 
 package gov.wa.wsdot.mobile.client;
 
-import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +32,7 @@ import com.google.code.gwt.database.client.service.VoidCallback;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
@@ -62,6 +54,18 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.MGWTSettings;
 import com.googlecode.mgwt.ui.client.MGWTSettings.ViewPort;
 import com.googlecode.mgwt.ui.client.widget.animation.AnimationWidget;
+
+import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.plugins.admob.AdMob;
+import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions;
+import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions.AdPosition;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.shared.CacheItem;
+import gov.wa.wsdot.mobile.shared.CameraItem;
 
 public class MobileAppEntryPoint implements EntryPoint {
 	
@@ -93,8 +97,20 @@ public class MobileAppEntryPoint implements EntryPoint {
 	          Window.alert("Cannot load PhoneGap");
 	        }
 	    });
-		
+
 		phoneGap.initializePhoneGap();
+
+		// Initialize and configure AdMob plugin
+		final AdMob adMob = GWT.create(AdMob.class);
+		adMob.initialize();
+
+		AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
+		options.setAdId("/6499/example/banner");
+		options.setOffsetTopBar(true);
+		options.setAutoShow(true);
+		options.setPosition(AdPosition.TOP_CENTER.getPosition());
+
+		adMob.createBanner(options);
 	}
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {

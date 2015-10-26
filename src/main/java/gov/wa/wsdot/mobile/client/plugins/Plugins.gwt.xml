@@ -1,0 +1,31 @@
+<!--
+Copyright (c) 2015 Washington State Department of Transportation
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+-->
+
+<module>
+    <inherits name='com.googlecode.gwtphonegap.PhoneGap' />
+
+    <!-- AdMob -->
+    <replace-with class="gov.wa.wsdot.mobile.client.plugins.admob.AdMobBrowserImpl">
+        <when-type-is class="gov.wa.wsdot.mobile.client.plugins.admob.AdMob" />
+    </replace-with>
+    <replace-with class="gov.wa.wsdot.mobile.client.plugins.admob.AdMobCordovaImpl">
+        <when-type-is class="gov.wa.wsdot.mobile.client.plugins.admob.AdMob" />
+        <all>
+            <when-property-is name="phonegap.env" value="yes" />
+        </all>
+    </replace-with>
+</module>
