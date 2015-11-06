@@ -34,6 +34,12 @@
             padding-bottom: 7px;
         }
 
+        .disclaimer {
+            font-size: small;
+            font-weight: normal;
+            margin-top: 7px;
+        }
+
         .lastUpdated {
             font-size: small;
             font-weight: normal;
@@ -110,6 +116,7 @@
 			    </div>
 			    <div>Drive-up spaces</div>
 		    </div>
+            <div class="{cellStyle.disclaimer}">Vehicles in line for tollbooth are not included in this estimate</div>
 		    <div class="{cellStyle.lastUpdated}"><ui:text from="{lastUpdated}" /></div>
 	    </div>
 
