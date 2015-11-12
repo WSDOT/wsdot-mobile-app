@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,16 +25,19 @@ public class FerriesRouteDeparturesPlace extends Place {
 
 	private final String id;
 	private static int index;
+	private static int terminalId;
 	
 	/**
 	 * Route schedules day departures Place
 	 * 
-	 * @param id Route id
-	 * @param index Index of which sailing on the route
+	 * @param id  Route id
+	 * @param index  Index of which sailing on the route
+	 * @param terminalId  Unique identifier for a terminal
 	 */
-	public FerriesRouteDeparturesPlace(String id, int index) {
+	public FerriesRouteDeparturesPlace(String id, int index, Integer terminalId) {
 		this.id = id;
 		FerriesRouteDeparturesPlace.index = index;
+		FerriesRouteDeparturesPlace.terminalId = terminalId;
 		
 	}
 	
@@ -46,12 +49,16 @@ public class FerriesRouteDeparturesPlace extends Place {
 		return index;
 	}
 	
+	public int getTerminalId() {
+	    return terminalId;
+	}
+	
 	public static class FerriesRouteDeparturesPlaceTokenizer implements
 			PlaceTokenizer<FerriesRouteDeparturesPlace> {
 
 		@Override
 		public FerriesRouteDeparturesPlace getPlace(String token) {
-			return new FerriesRouteDeparturesPlace(token, index);
+			return new FerriesRouteDeparturesPlace(token, index, terminalId);
 		}
 
 		@Override

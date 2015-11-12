@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
+import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 import java.util.List;
@@ -39,7 +40,9 @@ public interface FerriesRouteDeparturesView extends IsWidget {
 		
 	}
 	
-	public void render(List<FerriesScheduleTimesItem> createTopicsList);
+	public void render(List<FerriesScheduleTimesItem> departureTimesList);
+	
+	public void renderCameras(List<CameraItem> cameraList);
 	
 	public void renderDaysOfWeek(List<String> days);
 	

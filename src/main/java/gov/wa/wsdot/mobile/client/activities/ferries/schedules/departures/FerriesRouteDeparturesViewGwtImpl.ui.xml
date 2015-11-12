@@ -54,27 +54,53 @@
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
-        	<g:FlowPanel>
-               <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
-                   <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
-               </g:HTMLPanel>
-        	    
-                <mgwt:list.widgetlist.WidgetList ui:field="widgetList" round="true">
-                   <mgwt:input.listbox.MListBox ui:field="daysOfWeek" />
-                </mgwt:list.widgetlist.WidgetList>
-				<g:HTMLPanel styleName="{style.title}">
-				   <g:HTML ui:field="title" />
-				</g:HTMLPanel>        	    
-                <g:HTMLPanel styleName="{style.timesHeader}">
-                    <div class="{style.departingHeader}">Departing</div>
-                    <div class="{style.arrivingHeader}">Arriving</div>
-                </g:HTMLPanel>
-                
-            	<mgwt:list.celllist.CellList ui:field="cellList" />
-            </g:FlowPanel>
-        </mgwt:panel.pull.PullPanel>
-		
-	</mgwt:panel.flex.RootFlexPanel>
+        <mgwt:tabbar.TabPanel ui:field="tabPanel" height="100%">
+            <mgwt:tabs>
+                <mgwt:tabbar.Tab>
+                    <mgwt:button>
+                        <wsdot:tabbar.ReportTabBarButton />
+                    </mgwt:button>
+                    <mgwt:widget>
+                        <mgwt:panel.flex.RootFlexPanel>
+                            <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+                            	<g:FlowPanel>
+                                   <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+                                       <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+                                   </g:HTMLPanel>
+                                    <mgwt:list.widgetlist.WidgetList ui:field="widgetList" round="true">
+                                       <mgwt:input.listbox.MListBox ui:field="daysOfWeek" />
+                                    </mgwt:list.widgetlist.WidgetList>
+                    				<g:HTMLPanel styleName="{style.title}">
+                    				   <g:HTML ui:field="title" />
+                    				</g:HTMLPanel>        	    
+                                    <g:HTMLPanel styleName="{style.timesHeader}">
+                                        <div class="{style.departingHeader}">Departing</div>
+                                        <div class="{style.arrivingHeader}">Arriving</div>
+                                    </g:HTMLPanel>
+                                	<mgwt:list.celllist.CellList ui:field="cellList" />
+                                </g:FlowPanel>
+                            </mgwt:panel.pull.PullPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
+                    </mgwt:widget>
+                </mgwt:tabbar.Tab>
+            </mgwt:tabs>
+            <mgwt:tabs>
+                <mgwt:tabbar.Tab>
+                    <mgwt:button>
+                        <wsdot:tabbar.CameraTabBarButton />
+                    </mgwt:button>
+                    <mgwt:widget>
+                        <mgwt:panel.flex.RootFlexPanel>
+                            <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
+                                <g:FlowPanel ui:field="cameraPanel">
+                                   <mgwt:list.celllist.CellList ui:field="cameraCellList" />
+                                </g:FlowPanel>
+                            </mgwt:panel.scroll.ScrollPanel>
+                        </mgwt:panel.flex.RootFlexPanel>
+                    </mgwt:widget>
+                </mgwt:tabbar.Tab>
+            </mgwt:tabs>
+        </mgwt:tabbar.TabPanel>
+    </mgwt:panel.flex.RootFlexPanel>
     
 </ui:UiBinder>
