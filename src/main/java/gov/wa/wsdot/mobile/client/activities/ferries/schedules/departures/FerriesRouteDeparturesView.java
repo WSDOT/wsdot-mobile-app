@@ -62,10 +62,16 @@ public interface FerriesRouteDeparturesView extends IsWidget {
 
 	public void refresh();
 
+	public void refreshCameras();
+
     public void setHeaderPullHandler(Pullhandler pullHandler);
 
     public PullArrowWidget getPullHeader();
 
     public HasRefresh getPullPanel();
+
+    public void removeTab(int tabIndex);
+
+    public int getTabCount();
 
 }

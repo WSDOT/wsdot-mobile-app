@@ -87,9 +87,9 @@ public class FerriesRouteDeparturesActivity extends
     private static Map<Integer, FerriesTerminalItem> ferriesTerminalMap = new HashMap<Integer, FerriesTerminalItem>();
     private static List<Integer> starred = new ArrayList<Integer>();
     private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
-	private String routeId;
-	private int sailingsIndex;
-	private int terminalId;
+	private static String routeId;
+	private static int sailingsIndex;
+	private static int terminalId;
 	private static final String TERMINAL_SAILING_SPACE_URL = Consts.HOST_URL + "/traveler/api/ferries/terminalsailingspace";
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
 	
@@ -123,7 +123,7 @@ public class FerriesRouteDeparturesActivity extends
         
                     @Override
                     public void run() {
-                        createDepartureTimesList(routeId, 0, sailingsIndex);                         
+                        createDepartureTimesList(routeId, 0, sailingsIndex);
                         view.refresh();
                         callback.onSuccess(null);
                     }
@@ -639,15 +639,19 @@ public class FerriesRouteDeparturesActivity extends
                             camera.setLongitude(result.get(i).getDouble(CamerasColumns.CAMERA_LONGITUDE));
                             camera.setHasVideo(result.get(i).getInt(CamerasColumns.CAMERA_HAS_VIDEO));
                             camera.setDistance(distance);
+
                             cameraItems.add(camera);
                         }
                     }
                 }
                 
-                if (!result.isEmpty()) {
+                // If we've already removed the tab don't try and do it again
+                if (cameraItems.size() == 0 && view.getTabCount() != 1) {
+                    view.removeTab(1);
+                } else {
                     Collections.sort(cameraItems, CameraItem.cameraDistanceComparator);
                     view.renderCameras(cameraItems);
-                    view.refresh();
+                    view.refreshCameras();
                 }
                 
                 createFerryTerminalSailingSpaces();

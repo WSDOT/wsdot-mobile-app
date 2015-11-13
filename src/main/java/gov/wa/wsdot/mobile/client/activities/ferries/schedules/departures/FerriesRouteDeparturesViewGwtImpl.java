@@ -279,6 +279,11 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		pullToRefresh.refresh();
 	}
 
+    @Override
+    public void refreshCameras() {
+        cameraScrollPanel.refresh();
+    }
+
 	@Override
 	public int getDayOfWeekSelected() {
 		return daysOfWeek.getSelectedIndex();
@@ -317,6 +322,18 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     @Override
     public void setCameraSelected(int lastIndex, boolean b) {
         cameraCellList.setSelectedIndex(lastIndex, b);
+    }
+
+    @Override
+    public void removeTab(int tabIndex) {
+        this.tabPanel.tabBar.remove(tabIndex);
+        this.tabPanel.tabContainer.container.remove(tabIndex);
+        this.tabPanel.tabContainer.refresh();
+    }
+
+    @Override
+    public int getTabCount() {
+        return this.tabPanel.tabContainer.container.getWidgetCount();
     }
 
 }
