@@ -52,6 +52,7 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
@@ -619,7 +620,7 @@ public class FerriesRouteDeparturesActivity extends
 
             @Override
             public void onSuccess(List<GenericRow> result) {
-                List<CameraItem> cameras = new ArrayList<CameraItem>();
+                cameraItems.clear();
                 int numRows = result.size();
                 
                 for (int i = 0; i < numRows; i++) {
@@ -638,14 +639,14 @@ public class FerriesRouteDeparturesActivity extends
                             camera.setLongitude(result.get(i).getDouble(CamerasColumns.CAMERA_LONGITUDE));
                             camera.setHasVideo(result.get(i).getInt(CamerasColumns.CAMERA_HAS_VIDEO));
                             camera.setDistance(distance);
-                            cameras.add(camera);
+                            cameraItems.add(camera);
                         }
                     }
                 }
                 
                 if (!result.isEmpty()) {
-                    Collections.sort(cameras, CameraItem.cameraDistanceComparator);
-                    view.renderCameras(cameras);
+                    Collections.sort(cameraItems, CameraItem.cameraDistanceComparator);
+                    view.renderCameras(cameraItems);
                     view.refresh();
                 }
                 
@@ -653,7 +654,14 @@ public class FerriesRouteDeparturesActivity extends
             }
         });
     }
-    
+
+    @Override
+    public void onCameraSelected(int index) {
+        CameraItem item = cameraItems.get(index);
+        clientFactory.getPlaceController().goTo(
+                new CameraPlace(Integer.toString(item.getCameraId())));
+    }
+
     /**
      * Haversine formula
      * 

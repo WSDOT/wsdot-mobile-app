@@ -38,30 +38,34 @@ public interface FerriesRouteDeparturesView extends IsWidget {
 		
 		public void onDayOfWeekSelected(int position);
 		
+		public void onCameraSelected(int index);
+
 	}
 	
 	public void render(List<FerriesScheduleTimesItem> departureTimesList);
-	
+
 	public void renderCameras(List<CameraItem> cameraList);
-	
+
+	public void setCameraSelected(int lastIndex, boolean b);
+
 	public void renderDaysOfWeek(List<String> days);
-	
+
 	public void setTitle(String title);
-	
+
 	public int getDayOfWeekSelected();
-	
+
 	public void setDayOfWeekSelected(int index);
-	
+
 	public void showProgressIndicator();
-	
+
 	public void hideProgressIndicator();
-	
+
 	public void refresh();
-	
+
     public void setHeaderPullHandler(Pullhandler pullHandler);
-    
+
     public PullArrowWidget getPullHeader();
-    
+
     public HasRefresh getPullPanel();
-	
+
 }

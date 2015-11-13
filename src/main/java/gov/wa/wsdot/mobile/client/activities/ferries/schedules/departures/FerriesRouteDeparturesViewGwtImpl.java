@@ -46,6 +46,7 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
@@ -235,6 +236,14 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		}
 	}
 
+    @UiHandler("cameraCellList")
+    protected void onCameraCellSelected(CellSelectedEvent event) {
+        if (presenter != null) {
+            int index = event.getIndex();
+            presenter.onCameraSelected(index);
+        }
+    }
+
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
@@ -303,6 +312,11 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     @Override
     public HasRefresh getPullPanel() {
         return pullToRefresh;
+    }
+
+    @Override
+    public void setCameraSelected(int lastIndex, boolean b) {
+        cameraCellList.setSelectedIndex(lastIndex, b);
     }
 
 }
