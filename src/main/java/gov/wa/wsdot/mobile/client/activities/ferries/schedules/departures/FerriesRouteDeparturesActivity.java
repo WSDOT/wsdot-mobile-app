@@ -301,6 +301,8 @@ public class FerriesRouteDeparturesActivity extends
             public void onSuccess(List<GenericRow> result) {
                 boolean shouldUpdate = true;
                 
+                view.showProgressIndicator();
+
                 if (!result.isEmpty()) {
                     double now = System.currentTimeMillis();
                     double lastUpdated = result.get(0).getDouble(CachesColumns.CACHE_LAST_UPDATED);
@@ -317,6 +319,7 @@ public class FerriesRouteDeparturesActivity extends
 
                                 @Override
                                 public void onFailure(Throwable caught) {
+                                    view.hideProgressIndicator();
                                 }
 
                                 @Override
@@ -589,7 +592,6 @@ public class FerriesRouteDeparturesActivity extends
 
                                                             @Override
                                                             public void onSuccess() {
-                                                                view.hideProgressIndicator();
                                                                 getFerryTerminalCameras();
                                                             }
                                                         });
@@ -604,7 +606,6 @@ public class FerriesRouteDeparturesActivity extends
                     });
 
                 } else {
-                    view.hideProgressIndicator();
                     getFerryTerminalCameras();
                 }
             }
@@ -622,7 +623,9 @@ public class FerriesRouteDeparturesActivity extends
             public void onSuccess(List<GenericRow> result) {
                 cameraItems.clear();
                 int numRows = result.size();
-                
+
+                view.showProgressIndicator();
+
                 for (int i = 0; i < numRows; i++) {
                     if (result.get(i).getString(CamerasColumns.CAMERA_ROAD_NAME).toLowerCase() == "ferries") {
                         int distance = getDistanceFromTerminal(terminalId,
