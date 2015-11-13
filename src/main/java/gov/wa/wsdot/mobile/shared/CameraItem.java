@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.shared;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import com.google.gwt.safehtml.shared.SafeHtml;
 
@@ -172,4 +173,16 @@ public class CameraItem implements Serializable {
     public void setDistance(int distance) {
         this.distance = distance;
     }
+    
+    public static Comparator<CameraItem> cameraDistanceComparator = new Comparator<CameraItem>() {
+
+        @Override
+        public int compare(CameraItem o1, CameraItem o2) {
+            int cameraDistance1 = o1.getDistance();
+            int cameraDistance2 = o2.getDistance();
+            
+            return cameraDistance1 - cameraDistance2;
+        }
+        
+    };
 }

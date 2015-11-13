@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -435,7 +436,11 @@ public class FerriesRouteDeparturesActivity extends
                 
                 for (int j=0; j < spaceForArrivalTerminals.size(); j++) {
                     JSONObject terminals = spaceForArrivalTerminals.get(j).isObject();
-                    if (Integer.parseInt(terminals.get("TerminalID").toString()) != scheduleDateItems.get(view.getDayOfWeekSelected()).getFerriesTerminalItem().get(sailingsIndex).getArrivingTerminalID()) {
+                    if (Integer.parseInt(terminals.get("TerminalID")
+                            .toString()) != scheduleDateItems
+                                    .get(view.getDayOfWeekSelected())
+                                    .getFerriesTerminalItem().get(sailingsIndex)
+                                    .getArrivingTerminalID()) {
                         continue;
                     } else {
                         int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
@@ -623,7 +628,8 @@ public class FerriesRouteDeparturesActivity extends
                                 result.get(i).getDouble(CamerasColumns.CAMERA_LATITUDE),
                                 result.get(i).getDouble(CamerasColumns.CAMERA_LONGITUDE));
 
-                        if (distance < 1) {
+                        // If less than a mile from terminal, show the camera
+                        if (distance < 5280) { // in feet
                             CameraItem camera = new CameraItem();
                             camera.setCameraId(result.get(i).getInt(CamerasColumns.CAMERA_ID));
                             camera.setTitle(result.get(i).getString(CamerasColumns.CAMERA_TITLE));
@@ -638,6 +644,7 @@ public class FerriesRouteDeparturesActivity extends
                 }
                 
                 if (!result.isEmpty()) {
+                    Collections.sort(cameras, CameraItem.cameraDistanceComparator);
                     view.renderCameras(cameras);
                     view.refresh();
                 }
@@ -660,7 +667,7 @@ public class FerriesRouteDeparturesActivity extends
      */
     protected int getDistanceFromTerminal(int terminalId, double latitude, double longitude) {
         FerriesTerminalItem terminal = ferriesTerminalMap.get(terminalId);
-        double earthRadius = 3958.75; // miles
+        double earthRadius = 20902200; // feet
         double dLat = Math.toRadians(terminal.getLatitude() - latitude);
         double dLng = Math.toRadians(terminal.getLongitude() - longitude);
         double sindLat = Math.sin(dLat / 2);
