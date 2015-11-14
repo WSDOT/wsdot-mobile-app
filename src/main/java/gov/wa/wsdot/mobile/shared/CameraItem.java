@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.shared;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import com.google.gwt.safehtml.shared.SafeHtml;
 
@@ -34,15 +35,17 @@ public class CameraItem implements Serializable {
 	private int cameraId;
 	private int isStarred;
 	private int hasVideo;
+	private int distance;
 	
 	/**
 	 * 
-	 * @param cameraId Camera id
-	 * @param title Camera display title
-	 * @param imageUrl Camera url
-	 * @param latitude Camera latitude
-	 * @param longitude Camera longitude
-	 * @param hasVideo Whether or not the camera has a video feed available
+	 * @param cameraId  Camera id
+	 * @param title  Camera display title
+	 * @param imageUrl  Camera url
+	 * @param latitude  Camera latitude
+	 * @param longitude  Camera longitude
+	 * @param hasVideo  Whether or not the camera has a video feed available
+	 * @param distance  Distance of the camera from a fixed lat/lon
 	 */
 	public CameraItem(int cameraId, String title, String imageUrl,
 			Double latitude, Double longitude, int hasVideo) {
@@ -52,18 +55,20 @@ public class CameraItem implements Serializable {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.hasVideo = hasVideo;
+		this.distance = -1;
 	}
 	
 	/**
 	 * 
-	 * @param cameraId Camera id
-	 * @param title Camera display title
-	 * @param imageUrl Camera url
-	 * @param latitude Camera latitude
-	 * @param longitude Camera longitude
-	 * @param hasVideo Whether or not the camera has a video feed available
-	 * @param roadName Highway or location the camera is located on
-	 * @param isStarred Whether or not the camera is starred as a favorite
+	 * @param cameraId  Camera id
+	 * @param title  Camera display title
+	 * @param imageUrl  Camera url
+	 * @param latitude  Camera latitude
+	 * @param longitude  Camera longitude
+	 * @param hasVideo  Whether or not the camera has a video feed available
+	 * @param roadName  Highway or location the camera is located on
+	 * @param isStarred  Whether or not the camera is starred as a favorite
+	 * @param distance  Distance of the camera from a fixed lat/lon
 	 */
 	public CameraItem(int cameraId, String title, String imageUrl,
 			Double latitude, Double longitude, int hasVideo, String roadName,
@@ -76,6 +81,7 @@ public class CameraItem implements Serializable {
 		this.hasVideo = hasVideo;
 		this.roadName = roadName;
 		this.isStarred = isStarred;
+		this.distance = -1;
 	}
 	
 	public CameraItem() {
@@ -159,4 +165,24 @@ public class CameraItem implements Serializable {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+    
+    public static Comparator<CameraItem> cameraDistanceComparator = new Comparator<CameraItem>() {
+
+        @Override
+        public int compare(CameraItem o1, CameraItem o2) {
+            int cameraDistance1 = o1.getDistance();
+            int cameraDistance2 = o2.getDistance();
+            
+            return cameraDistance1 - cameraDistance2;
+        }
+        
+    };
 }

@@ -102,6 +102,10 @@ public class PhoneAnimationMapper implements AnimationMapper {
 			return Animations.SLIDE_REVERSE;
 		}
 
+        if (oldPlace instanceof CameraPlace && newPlace instanceof FerriesRouteDeparturesPlace) {
+            return Animations.SLIDE_REVERSE;
+        }
+
 		if (oldPlace instanceof MountainPassesPlace && newPlace instanceof HomePlace) {
 			return Animations.SLIDE_REVERSE;
 		}

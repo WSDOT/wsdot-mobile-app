@@ -18,8 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
+import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 import java.util.Date;
@@ -44,12 +46,15 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		implements FerriesRouteDeparturesView {
@@ -71,6 +76,16 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	@UiField(provided = true)
 	CellList<FerriesScheduleTimesItem> cellList;
 	
+    @UiField(provided = true)
+    CellList<CameraItem> cameraCellList;
+
+    @UiField
+    TabPanel tabPanel;
+    
+    @UiField
+    static
+    ScrollPanel cameraScrollPanel;
+    
 	@UiField
 	BackImageButton backButton;
     
@@ -105,6 +120,8 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
         pullToRefresh.setHeader(pullArrowHeader);
 	    
 		daysOfWeek = new MListBox();
+		
+		handleOnLoad();
 		
 		cellList = new CellList<FerriesScheduleTimesItem>(
 				new FerriesRouteDeparturesCell<FerriesScheduleTimesItem>() {
@@ -165,13 +182,45 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 			
 		});
 		
+        cameraCellList = new CellList<CameraItem>(new CameraCell<CameraItem>() {
+
+            @Override
+            public String getUrl(CameraItem model) {
+                return model.getImageUrl();
+            }
+            
+            @Override
+            public boolean canBeSelected(CameraItem model) {
+                return true;
+            }
+        });
+		
 		initWidget(uiBinder.createAndBindUi(this));
 
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
+            cameraScrollPanel.setBounce(false);
         }
 	}
 
+    /**
+     * ScrollPanel doesn't allow scrolling to the bottom if it contains a CellList with images.
+     * 
+     * See: https://code.google.com/p/mgwt/issues/detail?id=276
+     * 
+     * ScrollPanel.refresh() must be explicitly called after the images are loaded.
+     * Since the onload event of images is not bubbling up, the LoadHandler can't be attached
+     * to the CellList. Instead, the onload event needs to be captured at the <img>, and directly
+     * trigger the ScrollPanel.refresh() from there.
+     */
+    private native void handleOnLoad() /*-{
+        $wnd.refreshPanel = @gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.FerriesRouteDeparturesViewGwtImpl::refreshPanel();
+    }-*/;
+	
+    public static void refreshPanel() {
+        cameraScrollPanel.refresh();
+    }
+    
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {
@@ -187,6 +236,14 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		}
 	}
 
+    @UiHandler("cameraCellList")
+    protected void onCameraCellSelected(CellSelectedEvent event) {
+        if (presenter != null) {
+            int index = event.getIndex();
+            presenter.onCameraSelected(index);
+        }
+    }
+
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
@@ -198,9 +255,14 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     }
 	
 	@Override
-	public void render(List<FerriesScheduleTimesItem> createTopicsList) {
-		cellList.render(createTopicsList);
+	public void render(List<FerriesScheduleTimesItem> departureTimesList) {
+		cellList.render(departureTimesList);
 	}
+	
+    @Override
+    public void renderCameras(List<CameraItem> cameraList) {
+        cameraCellList.render(cameraList);
+    }
 	
 	@Override
 	public void showProgressIndicator() {
@@ -216,6 +278,11 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	public void refresh() {
 		pullToRefresh.refresh();
 	}
+
+    @Override
+    public void refreshCameras() {
+        cameraScrollPanel.refresh();
+    }
 
 	@Override
 	public int getDayOfWeekSelected() {
@@ -250,6 +317,23 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     @Override
     public HasRefresh getPullPanel() {
         return pullToRefresh;
+    }
+
+    @Override
+    public void setCameraSelected(int lastIndex, boolean b) {
+        cameraCellList.setSelectedIndex(lastIndex, b);
+    }
+
+    @Override
+    public void removeTab(int tabIndex) {
+        this.tabPanel.tabBar.remove(tabIndex);
+        this.tabPanel.tabContainer.container.remove(tabIndex);
+        this.tabPanel.tabContainer.refresh();
+    }
+
+    @Override
+    public int getTabCount() {
+        return this.tabPanel.tabContainer.container.getWidgetCount();
     }
 
 }

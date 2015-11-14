@@ -348,9 +348,8 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public FerriesRouteDeparturesView getFerriesRouteDeparturesView() {
-		if (ferriesRouteDeparturesView == null) {
-			ferriesRouteDeparturesView = new FerriesRouteDeparturesViewGwtImpl();
-		}
+		ferriesRouteDeparturesView = new FerriesRouteDeparturesViewGwtImpl();
+
 		return ferriesRouteDeparturesView;
 	}
 

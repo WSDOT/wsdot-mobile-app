@@ -66,6 +66,9 @@ public class LocalImageHolderDefaultAppearance implements
         
         @Source("i405_mdpi.png")
         ImageResource i405();
+
+        @Source("time_mdpi.png")
+        ImageResource time();
     }
 
     @Override

@@ -179,9 +179,12 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 	@Override
 	public void onSailingItemSelected(int index) {
 
-		clientFactory.getPlaceController().goTo(
-				new FerriesRouteDeparturesPlace(Integer
-						.toString(ferriesRouteItems.get(0).getRouteID()), index));
+        clientFactory.getPlaceController()
+                .goTo(new FerriesRouteDeparturesPlace(
+                        Integer.toString(ferriesRouteItems.get(0).getRouteID()),
+                        index,
+                        scheduleDateItems.get(0).getFerriesTerminalItem()
+                                .get(index).getDepartingTerminalID()));
 	}
 
 	@Override

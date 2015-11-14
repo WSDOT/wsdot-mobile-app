@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
+import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 import java.util.List;
@@ -37,28 +38,40 @@ public interface FerriesRouteDeparturesView extends IsWidget {
 		
 		public void onDayOfWeekSelected(int position);
 		
+		public void onCameraSelected(int index);
+
 	}
 	
-	public void render(List<FerriesScheduleTimesItem> createTopicsList);
-	
+	public void render(List<FerriesScheduleTimesItem> departureTimesList);
+
+	public void renderCameras(List<CameraItem> cameraList);
+
+	public void setCameraSelected(int lastIndex, boolean b);
+
 	public void renderDaysOfWeek(List<String> days);
-	
+
 	public void setTitle(String title);
-	
+
 	public int getDayOfWeekSelected();
-	
+
 	public void setDayOfWeekSelected(int index);
-	
+
 	public void showProgressIndicator();
-	
+
 	public void hideProgressIndicator();
-	
+
 	public void refresh();
-	
+
+	public void refreshCameras();
+
     public void setHeaderPullHandler(Pullhandler pullHandler);
-    
+
     public PullArrowWidget getPullHeader();
-    
+
     public HasRefresh getPullPanel();
-	
+
+    public void removeTab(int tabIndex);
+
+    public int getTabCount();
+
 }
