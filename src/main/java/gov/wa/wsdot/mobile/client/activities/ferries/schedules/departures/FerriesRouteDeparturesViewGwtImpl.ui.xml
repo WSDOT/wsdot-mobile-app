@@ -58,7 +58,7 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.ReportTabBarButton />
+                        <wsdot:tabbar.TimeTabBarButton />
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>

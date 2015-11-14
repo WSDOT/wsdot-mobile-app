@@ -53,6 +53,8 @@ public class LocalTabBarImageHolder {
             ImageResource sr520();
             
             ImageResource i405();
+            
+            ImageResource time();
         }
 
         Images get();

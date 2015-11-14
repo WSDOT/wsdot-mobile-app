@@ -66,6 +66,9 @@ public class LocalImageHolderDefaultXHighAppearance implements
         
         @Source("i405_xhdpi.png")
         ImageResource i405();
+
+        @Source("time_xhdpi.png")
+        ImageResource time();
     }
 
     @Override
