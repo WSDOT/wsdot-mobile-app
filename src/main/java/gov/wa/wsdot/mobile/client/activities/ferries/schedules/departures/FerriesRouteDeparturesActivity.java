@@ -36,6 +36,7 @@ import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.i18n.client.TimeZoneInfo;
 import com.google.gwt.i18n.client.constants.TimeZoneConstants;
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -228,16 +229,14 @@ public class FerriesRouteDeparturesActivity extends
 						int numTimes = times.size();
 						for (int l = 0; l < numTimes; l++) {
 							JSONObject time = times.get(l).isObject();
-							
+
                             // Don't display past sailing times. Doesn't make sense.
-                            /*
 							if (now.after(new Date(Long.parseLong(time
                                     .get("DepartingTime").isString().stringValue()
                                     .substring(6, 19))))) {
                                 continue;
                             }
-                            */
-							
+
 							timesItem = new FerriesScheduleTimesItem();
 							timesItem.setDepartingTime(time.get("DepartingTime").isString().stringValue().substring(6, 19));
 
@@ -449,14 +448,18 @@ public class FerriesRouteDeparturesActivity extends
                                     .getArrivingTerminalID()) {
                         continue;
                     } else {
-                        int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
-                        int maxSpaceCount = Integer.parseInt(terminals.get("MaxSpaceCount").toString());
-                        
-                        for (FerriesScheduleTimesItem time: times) {
-                            if (dateFormat.format(new Date(Long.parseLong(time.getDepartingTime()))).equals(departure)) {
-                                time.setDriveUpSpaceCount(driveUpSpaceCount);
-                                time.setMaxSpaceCount(maxSpaceCount);
-                                time.setLastUpdated(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED));
+                        JSONBoolean displayDriveUpSpace = terminals.get("DisplayDriveUpSpace").isBoolean();
+                        boolean showIndicator = displayDriveUpSpace.booleanValue();
+                        if (showIndicator) {
+                            int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
+                            int maxSpaceCount = Integer.parseInt(terminals.get("MaxSpaceCount").toString());
+
+                            for (FerriesScheduleTimesItem time: times) {
+                                if (dateFormat.format(new Date(Long.parseLong(time.getDepartingTime()))).equals(departure)) {
+                                    time.setDriveUpSpaceCount(driveUpSpaceCount);
+                                    time.setMaxSpaceCount(maxSpaceCount);
+                                    time.setLastUpdated(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED));
+                                }
                             }
                         }
                     }
