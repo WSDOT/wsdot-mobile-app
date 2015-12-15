@@ -47,7 +47,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<YouTubeItem> youTubeItems = new ArrayList<YouTubeItem>();
-	private static final String YOUTUBE_KEY_URL = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=UUmWr7UYgRp4v_HvRfEgquXg&key=INSERT_API_KEY_HERE";
+	private static final String YOUTUBE_KEY_URL = "http://mobileapp-wsdot.rhcloud.com/traveler/api/socialmedia/youtube";
 	public YouTubeActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
