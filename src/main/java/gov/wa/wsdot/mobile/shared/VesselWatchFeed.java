@@ -19,35 +19,31 @@
 package gov.wa.wsdot.mobile.shared;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
 
 public class VesselWatchFeed extends JavaScriptObject {
 	protected VesselWatchFeed() {}
 
-	public final native JsArray<VesselList> getVesselList() /*-{ return this.vessellist }-*/;
-
-	static public class VesselList extends JavaScriptObject {
-		protected VesselList() {}
+	public final native Vessel get(int i) /*-{ return this[i] }-*/;
+	
+	public final native int length() /*-{ return this.length }-*/;
 		
-		public final native int getId() /*-{ return this.id }-*/;
-		public final native String getInService() /*-{ return this.inservice }-*/;
-		public final native int getVesselID() /*-{ return this.vesselID }-*/;
-		public final native int getHead() /*-{ return this.head }-*/;
-		public final native String getRoute() /*-{ return this.route }-*/;
-		public final native String getLastDock() /*-{ return this.lastdock }-*/;
-		public final native String getATerm() /*-{ return this.aterm }-*/;
-		public final native String getLeftDock() /*-{ return this.leftdock }-*/;
-		public final native String getLeftDockAMPM() /*-{ return this.leftdockAMPM }-*/;
-		public final native double getLat() /*-{ return this.lat }-*/;
-		public final native double getLon() /*-{ return this.lon }-*/;
-		public final native String getName() /*-{ return this.name }-*/;
-		public final native String getNextDep() /*-{ return this.nextdep }-*/;
-		public final native String getNextDepAMPM() /*-{ return this.nextdepAMPM }-*/;
-		public final native String getEta() /*-{ return this.eta }-*/;
-		public final native String getEtaAMPM() /*-{ return this.etaAMPM }-*/;
-		public final native String getHeadTxt() /*-{ return this.headtxt }-*/;
-		public final native double getSpeed() /*-{ return this.speed }-*/;
-
+	public static class Vessel extends JavaScriptObject {
+		protected Vessel() {}
+	
+		public final native boolean getInService() /*-{ return this.InService }-*/;
+		public final native int getVesselID() /*-{ return this.VesselID }-*/;
+		public final native int getHead() /*-{ return this.Heading }-*/;
+		public final native String getRoute() /*-{ return this.OpRouteAbbrev[0] }-*/;
+		public final native String getLastDock() /*-{ return this.DepartingTerminalName }-*/;
+		public final native String getATerm() /*-{ return this.ArrivingTerminalName }-*/;
+		public final native String getLeftDock() /*-{ return this.LeftDock}-*/;
+		public final native double getLat() /*-{ return this.Latitude }-*/;
+		public final native double getLon() /*-{ return this.Longitude }-*/;
+		public final native String getName() /*-{ return this.VesselName }-*/;
+		public final native String getNextDep() /*-{ return this.ScheduledDeparture }-*/;
+		public final native String getEta() /*-{ return this.Eta }-*/;
+		public final native double getSpeed() /*-{ return this.Speed }-*/;
 	}
+
 	
 }

@@ -27,7 +27,6 @@ public class VesselWatchItem {
 	private String lastdock;
 	private String arrivingTerminal;
 	private String nextDep;
-	private String nextDepAMPM;
 	private Double lat;
 	private Double lon;
 	private Double speed;
@@ -37,9 +36,7 @@ public class VesselWatchItem {
 	private String icon;
 	private String iconShadow;
 	private String leftDock;
-	private String leftDockAMPM;
 	private String eta;
-	private String etaAMPM;
 	
 	public VesselWatchItem() {
 	}
@@ -127,14 +124,6 @@ public class VesselWatchItem {
 		this.head = head;
 	}
 	
-	public String getHeadTxt() {
-		return headTxt;
-	}
-	
-	public void setHeadTxt(String headTxt) {
-		this.headTxt = headTxt;
-	}
-	
 	public String getDateTime() {
 		return datetime;
 	}
@@ -159,14 +148,6 @@ public class VesselWatchItem {
 		this.iconShadow = iconShadow;
 	}
 
-	public String getNextDepAMPM() {
-		return nextDepAMPM;
-	}
-
-	public void setNextDepAMPM(String nextDepAMPM) {
-		this.nextDepAMPM = nextDepAMPM;
-	}
-
 	public String getLeftDock() {
 		return leftDock;
 	}
@@ -175,28 +156,12 @@ public class VesselWatchItem {
 		this.leftDock = leftDock;
 	}
 
-	public String getLeftDockAMPM() {
-		return leftDockAMPM;
-	}
-
-	public void setLeftDockAMPM(String leftDockAMPM) {
-		this.leftDockAMPM = leftDockAMPM;
-	}
-
 	public String getEta() {
 		return eta;
 	}
 
 	public void setEta(String eta) {
 		this.eta = eta;
-	}
-
-	public String getEtaAMPM() {
-		return etaAMPM;
-	}
-
-	public void setEtaAMPM(String etaAMPM) {
-		this.etaAMPM = etaAMPM;
 	}
 	
 }
