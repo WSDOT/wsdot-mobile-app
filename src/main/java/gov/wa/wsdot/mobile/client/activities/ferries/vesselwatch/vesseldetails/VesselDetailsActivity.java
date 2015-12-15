@@ -62,14 +62,11 @@ public class VesselDetailsActivity extends MGWTAbstractActivity implements
 			view.setDeparting(vesselDetailsPlace.getVessel().getLastDock());
 			view.setArriving(vesselDetailsPlace.getVessel().getArrivingTerminal());
 			
-			view.setScheduledDeparture(vesselDetailsPlace.getVessel().getNextDep(),
-					vesselDetailsPlace.getVessel().getNextDepAMPM());
+			view.setScheduledDeparture(vesselDetailsPlace.getVessel().getNextDep());
 			
-			view.setActualDeparture(vesselDetailsPlace.getVessel().getLeftDock(),
-					vesselDetailsPlace.getVessel().getLeftDockAMPM());
+			view.setActualDeparture(vesselDetailsPlace.getVessel().getLeftDock());
 			
-			view.setEstimatedArrival(vesselDetailsPlace.getVessel().getEta(),
-					vesselDetailsPlace.getVessel().getEtaAMPM());
+			view.setEstimatedArrival(vesselDetailsPlace.getVessel().getEta());
 			
 			view.setHeading(vesselDetailsPlace.getVessel().getHead(),
 					vesselDetailsPlace.getVessel().getHeadTxt());

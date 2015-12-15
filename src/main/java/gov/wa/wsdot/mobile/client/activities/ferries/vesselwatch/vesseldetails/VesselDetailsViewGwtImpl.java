@@ -20,6 +20,8 @@ package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails;
 
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -33,6 +35,9 @@ import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
+
 
 public class VesselDetailsViewGwtImpl extends Composite implements
 		VesselDetailsView {
@@ -91,6 +96,7 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 	Button vesselButton;
 	
 	private Presenter presenter;
+
 	
 	public VesselDetailsViewGwtImpl() {
 	
@@ -154,18 +160,20 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 	}
 
 	@Override
-	public void setScheduledDeparture(String scheduledDeparture, String ampm) {
-		this.scheduledDeparture.setText(scheduledDeparture + " " + ampm);
+	public void setScheduledDeparture(String scheduledDeparture) {		
+		DateTimeFormat fmt = DateTimeFormat.getFormat("h:mm a");
+		this.scheduledDeparture.setText(fmt.format(new Date(Long.parseLong(scheduledDeparture.substring(6, 19)))));
 	}
 
 	@Override
-	public void setActualDeparture(String leftDock, String ampm) {
+	public void setActualDeparture(String leftDock) {
+		DateTimeFormat fmt = DateTimeFormat.getFormat("h:mm a");
 		String actualDeparture;
-		
+
 		if (leftDock.length() == 0) {
 			actualDeparture = "--:--";
 		} else {
-			actualDeparture = leftDock + " " + ampm;
+			actualDeparture = fmt.format(new Date(Long.parseLong(leftDock.substring(6, 19))));
 		}
 		
 		this.actualDeparture.setText(actualDeparture);
@@ -173,8 +181,9 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 	}
 
 	@Override
-	public void setEstimatedArrival(String estimatedArrival, String ampm) {
-		this.estimatedArrival.setText(estimatedArrival + " " + ampm);
+	public void setEstimatedArrival(String estimatedArrival) {
+		DateTimeFormat fmt = DateTimeFormat.getFormat("h:mm a");
+		this.scheduledDeparture.setText(fmt.format(new Date(Long.parseLong(estimatedArrival.substring(6, 19)))));
 	}
 
 	@Override
@@ -190,6 +199,7 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 	@Override
 	public void setVesselButtonText(String vesselName) {
 		this.vesselButton.setText(vesselName + " Web page");
-	}
+	}	
+	
 
 }

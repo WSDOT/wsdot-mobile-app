@@ -68,7 +68,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
-	private static final String VESSEL_WATCH_URL = Consts.HOST_URL + "/traveler/api/vesselwatch";
+	private static final String VESSEL_WATCH_URL = Consts.HOST_URL + "/traveler/api/ferries/vessellocations";
 	private static ArrayList<VesselWatchItem> vesselWatchItems = new ArrayList<VesselWatchItem>();
 	private static HashMap<Integer, String> ferryIcons;
 	private Timer timer;
@@ -340,7 +340,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 					for (int i = 0; i < numEntries; i++) {
 						item = new VesselWatchItem();
 						
-						if (result.getVesselList().get(i).getInService().equalsIgnoreCase("false")) {
+						if (!result.getVesselList().get(i).getInService()) {
 							continue;
 						}
 						
@@ -350,11 +350,8 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 						item.setLastDock(result.getVesselList().get(i).getLastDock());
 						item.setArrivingTerminal(result.getVesselList().get(i).getATerm());
 						item.setLeftDock(result.getVesselList().get(i).getLeftDock());
-						item.setLeftDockAMPM(result.getVesselList().get(i).getLeftDockAMPM());
 						item.setNextDep(result.getVesselList().get(i).getNextDep());
-						item.setNextDepAMPM(result.getVesselList().get(i).getNextDepAMPM());
 						item.setEta(result.getVesselList().get(i).getEta());
-						item.setEtaAMPM(result.getVesselList().get(i).getEtaAMPM());
 						item.setHead(result.getVesselList().get(i).getHead());
 						item.setHeadTxt(result.getVesselList().get(i).getHeadTxt());
 						item.setSpeed(result.getVesselList().get(i).getSpeed());
