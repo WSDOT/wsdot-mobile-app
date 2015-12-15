@@ -30,19 +30,27 @@ public class YouTubeFeed extends JavaScriptObject {
 		protected Items() {}
 			
 		public final native Snippet getSnippet() /*-{ return this.snippet }-*/;
-		public final native String getId() /*-{ return this.id }-*/;
 
 	}
 	
 	static public class Snippet extends JavaScriptObject {
 		protected Snippet() {}
 		
+		public final native Resource getResource() /*-{ return this.resourceId }-*/;
 		public final native String getPublished() /*-{ return this.publishedAt }-*/;
 		public final native String getTitle() /*-{ return this.title }-*/;
 		public final native String getDescription() /*-{ return this.description }-*/;
 		public final native Thumbnail getThumbnail() /*-{ return this.thumbnails }-*/;
 	
 	}
+	
+	static public class Resource extends JavaScriptObject {
+		protected Resource() {}
+		
+        public final native String getVidID() /*-{ return this.videoId }-*/;
+		
+	}
+	
 	static public class Thumbnail extends JavaScriptObject {
 		protected Thumbnail() {}
 		

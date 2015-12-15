@@ -47,8 +47,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<YouTubeItem> youTubeItems = new ArrayList<YouTubeItem>();
-	//private static final String YOUTUBE_FEED_URL = "http://gdata.youtube.com/feeds/api/users/wsdot/uploads?v=2&alt=jsonc&max-results=10";
-	private static final String YOUTUBE_KEY_URL = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=UUmWr7UYgRp4v_HvRfEgquXg&key=KEY_GOES_HERE";
+	private static final String YOUTUBE_KEY_URL = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=UUmWr7UYgRp4v_HvRfEgquXg&key=INSERT_API_KEY_HERE";
 	public YouTubeActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -120,7 +119,6 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 		// Set timeout for 30 seconds (30000 milliseconds)
 		jsonp.setTimeout(30000);
 		jsonp.requestObject(YOUTUBE_KEY_URL, new AsyncCallback<YouTubeFeed>() {
-		//jsonp.requestObject(YOUTUBE_FEED_URL, new AsyncCallback<YouTubeFeed>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				view.hideProgressIndicator();
@@ -143,7 +141,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 					for (int i = 0; i < numEntries; i++) {
 						item = new YouTubeItem();
 						
-						item.setId(result.getItems().get(i).getId());
+						item.setId(result.getItems().get(i).getSnippet().getResource().getVidID());
 						item.setTitle(result.getItems().get(i).getSnippet().getTitle());
 						item.setDescription(result.getItems().get(i).getSnippet().getDescription());
 						item.setThumbnailUrl(result.getItems().get(i).getSnippet().getThumbnail().getDefault().getUrl());
