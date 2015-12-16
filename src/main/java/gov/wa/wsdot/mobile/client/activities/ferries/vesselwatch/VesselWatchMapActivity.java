@@ -332,37 +332,37 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 			@Override
 			public void onSuccess(VesselWatchFeed result) {
+				
 				vesselWatchItems.clear();
 				VesselWatchItem item = null;
 				
-				if (result.getVesselList() != null) {
-					int numEntries = result.getVesselList().length();
+				if (result != null) {
+					int numEntries = result.length();
 					for (int i = 0; i < numEntries; i++) {
 						item = new VesselWatchItem();
 						
-						if (!result.getVesselList().get(i).getInService()) {
+						if (!result.get(i).getInService()) {
 							continue;
 						}
 						
-						item.setVesselID(result.getVesselList().get(i).getVesselID());
-						item.setName(result.getVesselList().get(i).getName());
-						item.setRoute(result.getVesselList().get(i).getRoute());
-						item.setLastDock(result.getVesselList().get(i).getLastDock());
-						item.setArrivingTerminal(result.getVesselList().get(i).getATerm());
-						item.setLeftDock(result.getVesselList().get(i).getLeftDock());
-						item.setNextDep(result.getVesselList().get(i).getNextDep());
-						item.setEta(result.getVesselList().get(i).getEta());
-						item.setHead(result.getVesselList().get(i).getHead());
-						item.setHeadTxt(result.getVesselList().get(i).getHeadTxt());
-						item.setSpeed(result.getVesselList().get(i).getSpeed());
+						item.setVesselID(result.get(i).getVesselID());
+						item.setName(result.get(i).getName());
+						item.setRoute(result.get(i).getRoute());
+						item.setLastDock(result.get(i).getLastDock());
+						item.setArrivingTerminal(result.get(i).getATerm());
+						item.setLeftDock(result.get(i).getLeftDock());
+						item.setNextDep(result.get(i).getNextDep());
+						item.setEta(result.get(i).getEta());
+						item.setHead(result.get(i).getHead());
+						item.setSpeed(result.get(i).getSpeed());
 						
 						// round heading to nearest 30 degrees
-						int nearest = (result.getVesselList().get(i)
+						int nearest = (result.get(i)
 								.getHead() + 30 / 2) / 30 * 30;
 						
 						item.setIcon(ferryIcons.get(nearest));
-						item.setLat(result.getVesselList().get(i).getLat());
-						item.setLon(result.getVesselList().get(i).getLon());						
+						item.setLat(result.get(i).getLat());
+						item.setLon(result.get(i).getLon());						
 						
 						vesselWatchItems.add(item);
 						

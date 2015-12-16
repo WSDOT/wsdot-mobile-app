@@ -68,8 +68,7 @@ public class VesselDetailsActivity extends MGWTAbstractActivity implements
 			
 			view.setEstimatedArrival(vesselDetailsPlace.getVessel().getEta());
 			
-			view.setHeading(vesselDetailsPlace.getVessel().getHead(),
-					vesselDetailsPlace.getVessel().getHeadTxt());
+			view.setHeading(vesselDetailsPlace.getVessel().getHead());
 			
 			view.setSpeed(vesselDetailsPlace.getVessel().getSpeed());
 			view.setVesselButtonText(vesselDetailsPlace.getVessel().getName());

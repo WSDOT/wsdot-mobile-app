@@ -19,21 +19,21 @@
 package gov.wa.wsdot.mobile.shared;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
 
 public class VesselWatchFeed extends JavaScriptObject {
 	protected VesselWatchFeed() {}
 
-	public final native JsArray<Vessel> getVesselList() /*-{ return this }-*/;
-
-	static public class Vessel extends JavaScriptObject {
-		protected Vessel() {}
+	public final native Vessel get(int i) /*-{ return this[i] }-*/;
+	
+	public final native int length() /*-{ return this.length }-*/;
 		
-		public final native int getId() /*-{ return this.VesselID }-*/;
+	public static class Vessel extends JavaScriptObject {
+		protected Vessel() {}
+	
 		public final native boolean getInService() /*-{ return this.InService }-*/;
 		public final native int getVesselID() /*-{ return this.VesselID }-*/;
 		public final native int getHead() /*-{ return this.Heading }-*/;
-		public final native String getRoute() /*-{ return this.route[0] }-*/;
+		public final native String getRoute() /*-{ return this.OpRouteAbbrev[0] }-*/;
 		public final native String getLastDock() /*-{ return this.DepartingTerminalName }-*/;
 		public final native String getATerm() /*-{ return this.ArrivingTerminalName }-*/;
 		public final native String getLeftDock() /*-{ return this.LeftDock}-*/;
@@ -42,9 +42,8 @@ public class VesselWatchFeed extends JavaScriptObject {
 		public final native String getName() /*-{ return this.VesselName }-*/;
 		public final native String getNextDep() /*-{ return this.ScheduledDeparture }-*/;
 		public final native String getEta() /*-{ return this.Eta }-*/;
-		public final native String getHeadTxt() /*-{ return this.headtxt }-*/;
 		public final native double getSpeed() /*-{ return this.Speed }-*/;
-
 	}
+
 	
 }

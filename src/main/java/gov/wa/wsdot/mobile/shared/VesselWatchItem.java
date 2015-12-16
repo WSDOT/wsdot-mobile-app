@@ -124,14 +124,6 @@ public class VesselWatchItem {
 		this.head = head;
 	}
 	
-	public String getHeadTxt() {
-		return headTxt;
-	}
-	
-	public void setHeadTxt(String headTxt) {
-		this.headTxt = headTxt;
-	}
-	
 	public String getDateTime() {
 		return datetime;
 	}

@@ -134,8 +134,11 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void setRoute(String route) {
-		if (route.length() == 0) {
+		
+		if (route == null) {
 			route = "Not available";
+		}else{
+			route = route.toUpperCase();
 		}
 		
 		this.route.setText(route);
@@ -143,7 +146,7 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void setDeparting(String departing) {
-		if (departing.length() == 0) {
+		if (departing == null) {
 			departing = "Not available";		
 		}
 		
@@ -152,7 +155,7 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 
 	@Override
 	public void setArriving(String arriving) {
-		if (arriving.length() == 0) {
+		if (arriving == null) {
 			arriving = "Not available";
 		}
 		
@@ -162,32 +165,43 @@ public class VesselDetailsViewGwtImpl extends Composite implements
 	@Override
 	public void setScheduledDeparture(String scheduledDeparture) {		
 		DateTimeFormat fmt = DateTimeFormat.getFormat("h:mm a");
-		this.scheduledDeparture.setText(fmt.format(new Date(Long.parseLong(scheduledDeparture.substring(6, 19)))));
+		
+		if (scheduledDeparture == null){
+			this.scheduledDeparture.setText("--:--");
+		} else{
+			this.scheduledDeparture.setText(fmt.format(new Date(Long.parseLong(scheduledDeparture.substring(6, 19)))));
+		}
 	}
 
 	@Override
 	public void setActualDeparture(String leftDock) {
 		DateTimeFormat fmt = DateTimeFormat.getFormat("h:mm a");
-		String actualDeparture;
 
-		if (leftDock.length() == 0) {
-			actualDeparture = "--:--";
+		if (leftDock == null) {
+			this.actualDeparture.setText("--:--");
 		} else {
-			actualDeparture = fmt.format(new Date(Long.parseLong(leftDock.substring(6, 19))));
+			this.actualDeparture.setText(fmt.format(new Date(Long.parseLong(leftDock.substring(6, 19)))));
 		}
-		
-		this.actualDeparture.setText(actualDeparture);
 		
 	}
 
 	@Override
 	public void setEstimatedArrival(String estimatedArrival) {
 		DateTimeFormat fmt = DateTimeFormat.getFormat("h:mm a");
-		this.scheduledDeparture.setText(fmt.format(new Date(Long.parseLong(estimatedArrival.substring(6, 19)))));
+		
+		if (estimatedArrival == null) {
+			this.estimatedArrival.setText("--:--");
+		}else{
+			this.estimatedArrival.setText(fmt.format(new Date(Long.parseLong(estimatedArrival.substring(6, 19)))));
+		}
 	}
 
 	@Override
-	public void setHeading(Integer heading, String headingText) {
+	public void setHeading(Integer heading) {
+
+		String directions[] = {"N", "NxE", "E", "SxE", "S", "SxW", "W", "NxW", "N"};
+		String headingText =  directions[ (int)Math.round((  ((double)heading % 360) / 45)) ];
+		
 		this.heading.setHTML(heading + "\u00b0 " + headingText);
 	}
 

@@ -46,7 +46,7 @@ public interface VesselDetailsView extends IsWidget {
 	
 	public void setEstimatedArrival(String estimatedArrival);
 	
-	public void setHeading(Integer heading, String headingText);
+	public void setHeading(Integer heading);
 	
 	public void setSpeed(Double speed);
 	
