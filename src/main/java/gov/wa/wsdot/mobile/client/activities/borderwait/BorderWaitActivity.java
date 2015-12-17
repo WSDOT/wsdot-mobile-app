@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.BorderWaitColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -140,6 +141,10 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 		buildRouteIcons();
 		createBorderWaitList(view);
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Border Wait");
+		}
 	}	
 
 	private void createBorderWaitList(final BorderWaitView view) {

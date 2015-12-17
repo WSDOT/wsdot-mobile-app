@@ -27,6 +27,8 @@ import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubePlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.TopicWithImage;
 
 import java.util.ArrayList;
@@ -60,6 +62,10 @@ public class SocialMediaActivity extends MGWTAbstractActivity implements
 		view.render(createTopicsList());
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media");
+		}
 	}
 	
 	@Override

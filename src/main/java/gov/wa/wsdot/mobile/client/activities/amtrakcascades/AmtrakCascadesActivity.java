@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.amtrakcascades;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
@@ -57,6 +59,10 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 		view.render(createTopicsList());
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Amtrak Cascades");
+		}
 	}
 
 	@Override
@@ -67,6 +73,11 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onItemSelected(int index) {
 		if (index == 0) {
+			
+			if (Consts.ANALYTICS_ENABLED) {
+				Analytics.trackScreen("/Amtrak Cascades/Buy Tickets");
+			}
+			
             inAppBrowser.open("http://m.amtrak.com", "_blank",
                     "enableViewportScale=yes,transitionstyle=fliphorizontal");
             

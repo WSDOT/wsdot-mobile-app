@@ -18,7 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
-import gov.wa.wsdot.mobile.client.Analytics;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
@@ -34,6 +33,7 @@ import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
@@ -70,6 +70,8 @@ import com.google.code.gwt.database.client.service.RowIdListCallback;
 import com.google.code.gwt.database.client.service.VoidCallback;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayInteger;
+import com.google.gwt.event.dom.client.TouchMoveEvent;
+import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
@@ -124,7 +126,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		
 		PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
 				view.getPullHeader(), view.getPullPanel());
-		
+
 		headerHandler.setErrorText("Error");
 		headerHandler.setLoadingText("Loading");
 		headerHandler.setNormalText("pull down");
@@ -133,7 +135,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 			@Override
 			public void onPullAction(final AsyncCallback<Void> callback) {
-
+				
 				new Timer() {
 
 					@Override
@@ -164,6 +166,12 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		timer.scheduleRepeating(60000);
 
 		panel.setWidget(view);
+		
+
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Home");
+		}
 	}
 
 	private void createAlertsList() {
@@ -351,73 +359,47 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onAboutButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/About");
-		}
+
 		clientFactory.getPlaceController().goTo(new AboutPlace());
 	}
 
 	@Override
 	public void onTrafficMapButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Traffic Map");
-		}
 		clientFactory.getPlaceController().goTo(new TrafficMapPlace());
 	}
 
 	@Override
 	public void onFerriesButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Ferries");
-		}
 		clientFactory.getPlaceController().goTo(new FerriesPlace());		
 	}
 	
 	@Override
 	public void onMountainPassesButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Mountain Passes");
-		}
 		clientFactory.getPlaceController().goTo(new MountainPassesPlace());
 	}
 
 	@Override
 	public void onSocialMediaButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Social Media");
-		}
 		clientFactory.getPlaceController().goTo(new SocialMediaPlace());
 	}
 
 	@Override
 	public void onTollRatesButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Toll Rates");
-		}
 		clientFactory.getPlaceController().goTo(new TollRatesPlace());
 	}
 
 	@Override
 	public void onBorderWaitButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Border Wait");
-		}
 		clientFactory.getPlaceController().goTo(new BorderWaitPlace());
 	}
 
     @Override
     public void onAmtrakButtonPressed() {
-        if (Consts.ANALYTICS_ENABLED) {
-            Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/Amtrak Cascades");
-        }
         clientFactory.getPlaceController().goTo(new AmtrakCascadesPlace());
     }
 
 	@Override
 	public void onHighImpactAlertSelected(int alertId) {
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackEvent(Consts.EVENT_TRACKING_CATEGORY, "Navigation", "/High Impact Alerts");
-		}
 		clientFactory.getPlaceController().goTo(
 				new AlertPlace(Integer.toString(alertId)));
 	}
@@ -428,10 +410,13 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 			@Override
 			public void onFailure(DataServiceException error) {
+				
+				
 			}
-
+			
 			@Override
 			public void onSuccess(List<GenericRow> result) {
+				
 				if (!result.isEmpty()) {
 					cameraItems.clear();
 					CameraItem c;
@@ -1015,6 +1000,9 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onCameraSelected(int index) {
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Favorites/Cameras");
+		}
 		CameraItem item = cameraItems.get(index);
 		
 		clientFactory.getPlaceController().goTo(
@@ -1023,6 +1011,9 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onFerriesSelected(int index) {
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Favorites/Ferries");
+		}
 		FerriesRouteItem item = ferriesRouteItems.get(index);
 		
 		clientFactory.getPlaceController().goTo(
@@ -1032,6 +1023,9 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onMountainPassSelected(int index) {
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Favorites/Mountain Passes");
+		}
 		MountainPassItem item = mountainPassItems.get(index);
 
 		clientFactory.getPlaceController().goTo(
@@ -1042,6 +1036,9 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onTravelTimeSelected(int index) {
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Favorites/Travel Times");
+		}
 		TravelTimesItem item = travelTimesItems.get(index);
 		
 		clientFactory.getPlaceController()

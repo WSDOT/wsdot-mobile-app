@@ -22,6 +22,8 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.TwitterFeed;
 import gov.wa.wsdot.mobile.shared.TwitterFeed.Media;
 import gov.wa.wsdot.mobile.shared.TwitterFeed.Urls;
@@ -127,6 +129,11 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		createPostList(view, twitterScreenNames.get(view.getAccountSelected()));
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Twitter");
+		}
+		
 	}
 	
 	@Override
@@ -136,6 +143,11 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Twitter/Details Link");
+		}
+		
 		TwitterItem item = twitterItems.get(index);
 
 		inAppBrowser.open("https://twitter.com/" + item.getScreenName()

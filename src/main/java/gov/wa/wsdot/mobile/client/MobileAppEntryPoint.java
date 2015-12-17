@@ -60,6 +60,7 @@ import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMob;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions.AdPosition;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
@@ -111,6 +112,10 @@ public class MobileAppEntryPoint implements EntryPoint {
 		options.setPosition(AdPosition.TOP_CENTER.getPosition());
 
 		adMob.createBanner(options);
+		
+		// Start GA Tracker
+		Analytics.startTracker();
+		
 	}
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {

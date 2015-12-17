@@ -16,18 +16,27 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client;
 
+package gov.wa.wsdot.mobile.client.plugins.analytics;
+
+/**
+ * This class is a wrapper for the google-analytics-plugin for Cordova. 
+ * 
+ *  @see <a href="https://github.com/danwilson/google-analytics-plugin">https://github.com/danwilson/google-analytics-plugin</a>
+ */
 public class Analytics {
-
-	public Analytics() {
-	}
+	
+	public static native void startTracker() /*-{
+		$wnd.analytics.startTrackerWithId('INSERT_GA_TRACKING_ID_HERE')
+	}-*/;
+	
+	public static native void trackScreen(String name) /*-{
+		$wnd.analytics.trackView(name);
+	}-*/;
 	
 	public static native void trackEvent(String category, String action, String label) /*-{
-		$wnd._gaq.push(['_trackEvent', category, action, label]);
+		$wnd.analytics.trackEvent(category, action, label);
 	}-*/;
 
-	public static native void trackEvent(String category, String action, String label, int intArg) /*-{
-    	$wnd._gaq.push(['_trackEvent', category, action, label, intArg]);
-	}-*/;
+
 }

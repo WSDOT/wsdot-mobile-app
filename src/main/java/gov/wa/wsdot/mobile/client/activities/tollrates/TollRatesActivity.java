@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.tollrates;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
@@ -45,6 +47,10 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
         
 		panel.setWidget(view);
 	    captureClickEvents();
+	    
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Toll Rates/SR 520");
+		}
 	}	
 
 	@Override

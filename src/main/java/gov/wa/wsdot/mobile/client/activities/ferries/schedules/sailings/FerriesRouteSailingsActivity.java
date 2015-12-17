@@ -22,7 +22,9 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.FerriesRouteDeparturesPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
 import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
@@ -77,6 +79,10 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 			String routeId = ferriesRouteSchedulesDaySailingsPlace.getId();
 			createTopicsList(routeId);
 			panel.setWidget(view);
+		}
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Ferries/Schedules/Sailings");
 		}
 		
 	}
