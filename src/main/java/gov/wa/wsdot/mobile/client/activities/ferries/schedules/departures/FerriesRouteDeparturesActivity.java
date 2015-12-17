@@ -56,6 +56,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
@@ -145,6 +146,9 @@ public class FerriesRouteDeparturesActivity extends
             view.setHeaderPullHandler(headerHandler);
 			createDepartureTimesList(routeId, 0, sailingsIndex);
 			panel.setWidget(view);
+			if (Consts.ANALYTICS_ENABLED) {
+				Analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
+			}
 		}
 	}
 	

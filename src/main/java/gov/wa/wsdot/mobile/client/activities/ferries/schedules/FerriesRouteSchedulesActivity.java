@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -111,11 +112,19 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		createTopicsList();
 		panel.setWidget(view);
 		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Ferries/Schedules");
+		}
+		
 	}
 
 	@Override
 	public void onItemSelected(int index) {
 		FerriesRouteItem item = ferriesRouteItems.get(index);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+    		Analytics.trackEvent("Ferries", "Schedules", item.getDescription());
+		}
 		
 		clientFactory.getPlaceController().goTo(
 				new FerriesRouteSailingsPlace(Integer.toString(item

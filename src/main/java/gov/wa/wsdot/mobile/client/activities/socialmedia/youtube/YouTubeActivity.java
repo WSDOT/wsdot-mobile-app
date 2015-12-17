@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.socialmedia.youtube;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.YouTubeFeed;
 import gov.wa.wsdot.mobile.shared.YouTubeItem;
 
@@ -91,6 +93,11 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 		createPostList(view);
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Youtube");
+		}
+		
 	}
 	
 	@Override
@@ -100,6 +107,11 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Youtube/Details Link");
+		}
+		
 		YouTubeItem item = youTubeItems.get(index);
 
 		inAppBrowser.open("http://m.youtube.com/watch?v=" + item.getId(), "_blank",

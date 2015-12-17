@@ -24,7 +24,9 @@ import java.util.List;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 
@@ -125,6 +127,7 @@ public class CameraActivity extends MGWTAbstractActivity implements
 		view.setVideoHeaderPullHandler(headerHandler2);
 		getCamera(view, cameraId);
 		panel.setWidget(view);
+		
 	}	
 
 	private void getCamera(final CameraView view, String cameraId) {

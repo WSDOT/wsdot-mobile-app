@@ -21,7 +21,9 @@ package gov.wa.wsdot.mobile.client.activities.alert;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 
 import java.util.List;
@@ -84,6 +86,10 @@ public class AlertActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Alerts");
+		}
 
 	}
 
