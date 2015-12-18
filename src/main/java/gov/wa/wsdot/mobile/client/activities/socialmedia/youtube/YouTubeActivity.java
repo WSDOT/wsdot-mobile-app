@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<YouTubeItem> youTubeItems = new ArrayList<YouTubeItem>();
-	private static final String YOUTUBE_KEY_URL = "http://mobileapp-wsdot.rhcloud.com/traveler/api/socialmedia/youtube";
+	private static final String YOUTUBE_FEED_URL = "http://mobileapp-wsdot.rhcloud.com/traveler/api/socialmedia/youtube";
 	public YouTubeActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -118,7 +118,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		// Set timeout for 30 seconds (30000 milliseconds)
 		jsonp.setTimeout(30000);
-		jsonp.requestObject(YOUTUBE_KEY_URL, new AsyncCallback<YouTubeFeed>() {
+		jsonp.requestObject(YOUTUBE_FEED_URL, new AsyncCallback<YouTubeFeed>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				view.hideProgressIndicator();
@@ -139,15 +139,20 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 				if (result.getItems() != null) {
 					int numEntries = result.getItems().length();
 					for (int i = 0; i < numEntries; i++) {
-						item = new YouTubeItem();
-						
-						item.setId(result.getItems().get(i).getSnippet().getResource().getVidID());
-						item.setTitle(result.getItems().get(i).getSnippet().getTitle());
-						item.setDescription(result.getItems().get(i).getSnippet().getDescription());
-						item.setThumbnailUrl(result.getItems().get(i).getSnippet().getThumbnail().getDefault().getUrl());
-						item.setUploaded(result.getItems().get(i).getSnippet().getPublished());
-						
-						youTubeItems.add(item);
+					    // If we don't have a standard sized 640x480 video available, move on
+					    if (result.getItems().get(i).getSnippet().getThumbnails().getStandard().getUrl() == null) {
+					        continue;
+					    } else {
+    					    item = new YouTubeItem();
+
+    					    item.setId(result.getItems().get(i).getSnippet().getResourceId().getVideoId());
+    						item.setTitle(result.getItems().get(i).getSnippet().getTitle());
+    						item.setDescription(result.getItems().get(i).getSnippet().getDescription());
+    						item.setThumbnailUrl(result.getItems().get(i).getSnippet().getThumbnails().getStandard().getUrl());
+    						item.setUploaded(result.getItems().get(i).getSnippet().getPublished());
+
+    						youTubeItems.add(item);
+                        }
 					}
 					
 					view.hideProgressIndicator();

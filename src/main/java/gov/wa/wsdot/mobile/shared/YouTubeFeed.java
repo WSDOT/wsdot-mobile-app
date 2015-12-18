@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,31 +36,30 @@ public class YouTubeFeed extends JavaScriptObject {
 	static public class Snippet extends JavaScriptObject {
 		protected Snippet() {}
 		
-		public final native Resource getResource() /*-{ return this.resourceId }-*/;
+		public final native ResourceId getResourceId() /*-{ return this.resourceId }-*/;
 		public final native String getPublished() /*-{ return this.publishedAt }-*/;
 		public final native String getTitle() /*-{ return this.title }-*/;
 		public final native String getDescription() /*-{ return this.description }-*/;
-		public final native Thumbnail getThumbnail() /*-{ return this.thumbnails }-*/;
-	
+		public final native Thumbnails getThumbnails() /*-{ return this.thumbnails }-*/;
+
 	}
-	
-	static public class Resource extends JavaScriptObject {
-		protected Resource() {}
-		
-        public final native String getVidID() /*-{ return this.videoId }-*/;
-		
+
+	static public class ResourceId extends JavaScriptObject {
+		protected ResourceId() {}
+
+        public final native String getVideoId() /*-{ return this.videoId }-*/;
+
 	}
-	
-	static public class Thumbnail extends JavaScriptObject {
-		protected Thumbnail() {}
-		
-        public final native DefaultThumbnail getDefault() /*-{ return this["default"] }-*/;
-		
+
+	static public class Thumbnails extends JavaScriptObject {
+		protected Thumbnails() {}
+
+        public final native Standard getStandard() /*-{ return this.standard }-*/;
 	}
-	
-	static public class DefaultThumbnail extends JavaScriptObject {
-		protected DefaultThumbnail() {}
-		
+
+	static public class Standard extends JavaScriptObject {
+		protected Standard() {}
+
 		public final native String getUrl() /*-{ return this.url }-*/;
 	}
 }
