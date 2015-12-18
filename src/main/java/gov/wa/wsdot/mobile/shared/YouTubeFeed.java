@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2015 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,38 +23,43 @@ import com.google.gwt.core.client.JsArray;
 
 public class YouTubeFeed extends JavaScriptObject {
 	protected YouTubeFeed() {}
-
-	public final native Data getData() /*-{ return this.data }-*/;
-
-	static public class Data extends JavaScriptObject {
-		protected Data() {}
-		
-		public final native JsArray<Items> getItems() /*-{ return this.items }-*/;
-
-	}
 	
+	public final native JsArray<Items> getItems() /*-{ return this.items }-*/;
+
 	static public class Items extends JavaScriptObject {
 		protected Items() {}
+			
+		public final native Snippet getSnippet() /*-{ return this.snippet }-*/;
+
+	}
+	
+	static public class Snippet extends JavaScriptObject {
+		protected Snippet() {}
 		
-		public final native String getId() /*-{ return this.id }-*/;
-		public final native String getUploaded() /*-{ return this.uploaded }-*/;
+		public final native ResourceId getResourceId() /*-{ return this.resourceId }-*/;
+		public final native String getPublished() /*-{ return this.publishedAt }-*/;
 		public final native String getTitle() /*-{ return this.title }-*/;
 		public final native String getDescription() /*-{ return this.description }-*/;
-		public final native Thumbnail getThumbnail() /*-{ return this.thumbnail }-*/;
-		public final native Player getPlayer() /*-{ return this.player }-*/;
-		public final native int getViewCount() /*-{ return this.viewCount }-*/;
-	}
-	
-	static public class Thumbnail extends JavaScriptObject {
-		protected Thumbnail() {}
-		
-		public final native String getHqDefault() /*-{ return this.hqDefault }-*/;
-	}
-	
-	static public class Player extends JavaScriptObject {
-		protected Player() {};
-		
-		public final native String getMobile() /*-{ return this.mobile }-*/;
+		public final native Thumbnails getThumbnails() /*-{ return this.thumbnails }-*/;
+
 	}
 
+	static public class ResourceId extends JavaScriptObject {
+		protected ResourceId() {}
+
+        public final native String getVideoId() /*-{ return this.videoId }-*/;
+
+	}
+
+	static public class Thumbnails extends JavaScriptObject {
+		protected Thumbnails() {}
+
+        public final native Standard getStandard() /*-{ return this.standard }-*/;
+	}
+
+	static public class Standard extends JavaScriptObject {
+		protected Standard() {}
+
+		public final native String getUrl() /*-{ return this.url }-*/;
+	}
 }
