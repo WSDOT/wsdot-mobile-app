@@ -140,7 +140,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 					int numEntries = result.getItems().length();
 					for (int i = 0; i < numEntries; i++) {
 					    // If we don't have a standard sized 640x480 video available, move on
-					    if (result.getItems().get(i).getSnippet().getThumbnails().getStandard().getUrl() == null) {
+					    if (result.getItems().get(i).getSnippet().getThumbnails().getStandard() == null) {
 					        continue;
 					    } else {
     					    item = new YouTubeItem();
