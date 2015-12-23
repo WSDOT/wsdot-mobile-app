@@ -40,13 +40,13 @@ public interface VesselDetailsView extends IsWidget {
 	
 	public void setArriving(String arriving);
 	
-	public void setScheduledDeparture(String scheduledDeparture, String ampm);
+	public void setScheduledDeparture(String scheduledDeparture);
 	
-	public void setActualDeparture(String leftDock, String ampm);
+	public void setActualDeparture(String leftDock);
 	
-	public void setEstimatedArrival(String estimatedArrival, String ampm);
+	public void setEstimatedArrival(String estimatedArrival);
 	
-	public void setHeading(Integer heading, String headingText);
+	public void setHeading(Integer heading);
 	
 	public void setSpeed(Double speed);
 	
