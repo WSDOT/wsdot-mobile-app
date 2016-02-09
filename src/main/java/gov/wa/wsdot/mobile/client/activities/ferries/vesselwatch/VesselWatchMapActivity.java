@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -100,6 +101,10 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 		timer.scheduleRepeating(30000);		
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Ferries/Vessel Watch");
+		}
 
 	}
 
@@ -422,6 +427,9 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onGoToLocationButtonPressed() {
 		clientFactory.getPlaceController().goTo(new GoToFerriesLocationPlace());
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Ferries/Vessel Watch/Go To Location");
+		}
 	}
 
 	@Override
@@ -438,6 +446,9 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	public void onCameraSelected(int cameraId) {
 		clientFactory.getPlaceController().goTo(
 				new CameraPlace(Integer.toString(cameraId)));
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Ferries/Vessel Watch/Cameras");
+		}
 	}
 
 	@Override
@@ -479,6 +490,11 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onFerrySelected(VesselWatchItem vessel) {
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Ferries/Vessel Watch/Vessel Details/" + vessel.getName());
+		}
+		
 		clientFactory.getPlaceController().goTo(new VesselDetailsPlace(vessel));
 		
 	}

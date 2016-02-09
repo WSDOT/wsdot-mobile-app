@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.socialmedia.news;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.NewsFeed;
 import gov.wa.wsdot.mobile.shared.NewsItem;
 
@@ -98,6 +100,10 @@ public class NewsActivity extends MGWTAbstractActivity implements
 		
 		panel.setWidget(view);
 		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/News");
+		}
+		
 	}
 	
 	@Override
@@ -107,6 +113,11 @@ public class NewsActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/News/Details Link");
+		}
+		
 		NewsItem item = newsItems.get(index);
 
 		inAppBrowser.open(item.getLink(), "_blank",

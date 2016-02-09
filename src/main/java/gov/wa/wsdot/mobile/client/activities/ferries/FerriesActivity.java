@@ -22,6 +22,8 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
@@ -58,6 +60,10 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 		view.render(createTopicsList());
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Ferries");
+		}
 	}
 
 	@Override
@@ -72,6 +78,9 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 			return;
 		}
 		if (index == 1) {
+			if (Consts.ANALYTICS_ENABLED) {
+				Analytics.trackScreen("/Ferries/Vehicle Reservations");
+			}
             inAppBrowser.open("http://www.wsdot.wa.gov/ferries/reservations",
                     "", "enableViewportScale=yes");
             return;

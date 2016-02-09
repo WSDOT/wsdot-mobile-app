@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.callout;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
@@ -86,6 +88,11 @@ public class CalloutActivity extends MGWTAbstractActivity implements
         view.setImageUrl(url);
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Traffic/Callout/JBLM");
+		}
+		
 	}
 
 	@Override

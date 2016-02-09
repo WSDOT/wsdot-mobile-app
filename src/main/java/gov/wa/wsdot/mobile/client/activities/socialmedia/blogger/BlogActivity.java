@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.socialmedia.blogger;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.BlogFeed;
 import gov.wa.wsdot.mobile.shared.BlogItem;
 
@@ -92,6 +94,11 @@ public class BlogActivity extends MGWTAbstractActivity implements
 		createBlogList(view);
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Blog");
+		}
+		
 	}
 	
 	@Override
@@ -101,6 +108,11 @@ public class BlogActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Blog/Details Link");
+		}
+		
 		BlogItem item = blogItems.get(index);
 		
 		inAppBrowser.open(item.getLink(), "_blank",

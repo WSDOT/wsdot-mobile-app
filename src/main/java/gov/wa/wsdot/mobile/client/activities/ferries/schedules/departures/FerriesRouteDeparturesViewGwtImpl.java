@@ -19,6 +19,8 @@
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
@@ -29,6 +31,8 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.i18n.client.TimeZoneInfo;
@@ -113,6 +117,8 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     private final TimeZone usPacific = TimeZone.createTimeZone(TimeZoneInfo
             .buildTimeZoneData(timeZoneConstants.americaLosAngeles()));	
 	
+	private static int lastTab = 0;
+    
 	public FerriesRouteDeparturesViewGwtImpl() {
 		
         pullToRefresh = new PullPanel();
@@ -197,6 +203,37 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
+		
+		// Add selection handler to tabContainer for google analytics tracking
+    	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
+        	@Override
+    		public void onSelection(SelectionEvent<Integer> event){
+    			
+    			int currentTab = tabPanel.tabContainer.getSelectedPage();
+    			
+    			switch(currentTab){
+    			case 0:
+    				if (currentTab != lastTab){
+        				if (Consts.ANALYTICS_ENABLED) {
+        					Analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
+            			}
+    				}
+    				break;
+    			case 1:
+    				if (currentTab != lastTab){
+        				if (Consts.ANALYTICS_ENABLED) {
+        					Analytics.trackScreen("/Ferries/Schedules/Sailings/Cameras");
+            			}
+    				}
+    				break;
+    			default:    			
+    			}
+
+    			lastTab = currentTab;
+    		}
+    	});
+
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             cameraScrollPanel.setBounce(false);

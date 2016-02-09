@@ -21,7 +21,7 @@ package gov.wa.wsdot.mobile.client.util;
 public final class Consts {
 	
 	public static final String HOST_URL = "http://mobileapp-wsdot.rhcloud.com";
-	public static final boolean ANALYTICS_ENABLED = false; 
+	public static final boolean ANALYTICS_ENABLED = true; 
 	
 	/**
 	 * The Event Category title in Google Analytics.

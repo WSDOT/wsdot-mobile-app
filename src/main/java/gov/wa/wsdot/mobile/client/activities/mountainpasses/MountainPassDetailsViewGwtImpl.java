@@ -19,6 +19,8 @@
 package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
@@ -27,6 +29,9 @@ import gov.wa.wsdot.mobile.shared.ForecastItem;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -119,6 +124,8 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 	private Presenter presenter;
 	
+	private static int lastTab = 0;
+	
 	public MountainPassDetailsViewGwtImpl() {
 	    
 	    starButton = new NotimportantImageButton();
@@ -168,7 +175,44 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-        
+		
+		// Add selection handler to tabContainer for google analytics tracking
+    	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
+        	@Override
+    		public void onSelection(SelectionEvent<Integer> event){
+    			
+    			int currentTab = tabPanel.tabContainer.getSelectedPage();
+    			
+    			switch(currentTab){
+    			case 0:
+    				if (currentTab != lastTab){
+        				if (Consts.ANALYTICS_ENABLED) {
+        					Analytics.trackScreen("/Mountain Passes/Pass/Report");
+            			}
+    				}
+    				break;
+    			case 1:
+    				if (currentTab != lastTab){
+        				if (Consts.ANALYTICS_ENABLED) {
+        					Analytics.trackScreen("/Mountain Passes/Pass/Cameras");
+            			}
+    				}
+    				break;
+    			case 2:
+    				if (currentTab != lastTab){
+        				if (Consts.ANALYTICS_ENABLED) {
+        					Analytics.trackScreen("/Mountain Passes/Pass/Forcast");
+            			}
+    				}
+    				break;
+    			default:    			
+    			}
+
+    			lastTab = currentTab;
+    		}
+    	});
+		
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             reportScrollPanel.setBounce(false);

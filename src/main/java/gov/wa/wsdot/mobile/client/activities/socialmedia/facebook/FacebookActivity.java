@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.socialmedia.facebook;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.FacebookFeed;
 import gov.wa.wsdot.mobile.shared.FacebookItem;
 
@@ -92,6 +94,10 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 		createPostList(view);
 		
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Facebook");
+		}
 	}
 	
 	@Override
@@ -101,6 +107,11 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Social Media/Facebook/Details Link");
+		}
+		
 		FacebookItem item = facebookItems.get(index);
 		
 		if (item.getType().equalsIgnoreCase("photo")) {

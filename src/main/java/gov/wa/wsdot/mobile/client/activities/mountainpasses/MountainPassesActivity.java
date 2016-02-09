@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -123,6 +124,10 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		buildWeatherPhrases();
 		createTopicsList();
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Mountain Passes");
+		}
 	}
 	
 	@Override
@@ -134,6 +139,10 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	public void onItemSelected(int index) {
 		MountainPassItem item = mountainPassItems.get(index);
 
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Mountain Passes/Pass/Report");
+		}
+		
 		clientFactory.getPlaceController().goTo(
 				new MountainPassDetailsPlace(Integer.toString(item
 						.getMountainPassId())));		

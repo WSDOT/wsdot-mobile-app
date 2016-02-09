@@ -22,6 +22,8 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 
 import java.util.ArrayList;
@@ -66,6 +68,10 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 		getCurrentLocation();
 
 		panel.setWidget(view);
+		
+		if (Consts.ANALYTICS_ENABLED) {
+			Analytics.trackScreen("/Amtrak Cascades/Schedules");
+		}
 
 	}
 
@@ -206,13 +212,23 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
                             // TODO Auto-generated method stub
                         }
                     }, "Point of origin needed");
-        } else if (fromLocation.equalsIgnoreCase(toLocation)) {
-            // User picked the same destination as the origin. Just ignore it.
+        } else if (toLocation.equalsIgnoreCase("NA") || fromLocation.equalsIgnoreCase(toLocation)) {
+            // User selected no destination or user picked the same destination as the origin. Just ignore it.
             toLocation = "NA";
+            
+    		if (Consts.ANALYTICS_ENABLED) {
+    			Analytics.trackEvent("Amtrak", "Schedules", fromLocation);
+    		}
+    		
             clientFactory.getPlaceController().goTo(
                     new AmtrakCascadesSchedulesDetailsPlace(statusDate, fromLocation,
                             toLocation));
         } else {
+        	
+    		if (Consts.ANALYTICS_ENABLED) {
+        		Analytics.trackEvent("Amtrak", "Schedules", fromLocation + " - " + toLocation);
+    		}
+        	
             clientFactory.getPlaceController().goTo(
                     new AmtrakCascadesSchedulesDetailsPlace(statusDate, fromLocation,
                             toLocation));

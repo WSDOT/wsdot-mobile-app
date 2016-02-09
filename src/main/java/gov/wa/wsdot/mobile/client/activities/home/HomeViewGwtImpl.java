@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.home;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesCell;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesCell;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
@@ -35,17 +37,29 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchEndHandler;
+import com.google.gwt.event.dom.client.TouchMoveEvent;
+import com.google.gwt.event.dom.client.TouchMoveHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ImageResourceRenderer;
+import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.mgwt.dom.client.event.animation.AnimationEndEvent;
+import com.googlecode.mgwt.dom.client.event.animation.AnimationEndHandler;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.recognizer.swipe.SwipeEndEvent;
+import com.googlecode.mgwt.dom.client.recognizer.swipe.SwipeEndHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
@@ -62,6 +76,7 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+import com.googlecode.mgwt.ui.client.widget.touch.TouchDelegate;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 
@@ -154,12 +169,16 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	TabPanel tabPanel;
-	
+
 	private Presenter presenter;
 	private PullArrowHeader pullArrowHeader;
 
+	//tracks tabs for google analytics
+	private static int lastTab = 0;
+	
 	public HomeViewGwtImpl() {
 		
+
 	    pullToRefresh = new PullPanel();
 		pullArrowHeader = new PullArrowHeader();
 		pullToRefresh.setHeader(pullArrowHeader);
@@ -312,6 +331,23 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             scrollPanel.setBounce(false);
             colorOfStar.setHTML("icon to turn it white.");
         }
+        
+        // Add selection handler to tabContainer for google analytics tracking
+    	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
+        	@Override
+    		public void onSelection(SelectionEvent<Integer> event){
+    			
+    			int currentTab = tabPanel.tabContainer.getSelectedPage();
+    			
+    			if ((currentTab != lastTab) && (currentTab == 1)){
+    				if (Consts.ANALYTICS_ENABLED) {
+        				Analytics.trackScreen("/Favorites");
+        			}
+    			}
+    			lastTab = currentTab;
+    		}
+    	});
+    	
 	}
 
 	@UiHandler("aboutButton")
@@ -401,7 +437,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			presenter.onTravelTimeSelected(index);
 		}
 	}
-	
+
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;

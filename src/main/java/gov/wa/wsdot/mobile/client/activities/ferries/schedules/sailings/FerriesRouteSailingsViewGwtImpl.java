@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.TitleLastUpdatedCell;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
@@ -27,6 +29,8 @@ import gov.wa.wsdot.mobile.shared.FerriesTerminalItem;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -89,6 +93,7 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	TabPanel tabPanel;
 	
 	private Presenter presenter;
+	private static int lastTab = 0;
 	
 	public FerriesRouteSailingsViewGwtImpl() {
 	    
@@ -131,6 +136,35 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
+		// Add selection handler to tabContainer for google analytics tracking
+    	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
+        	@Override
+    		public void onSelection(SelectionEvent<Integer> event){
+    			
+    			int currentTab = tabPanel.tabContainer.getSelectedPage();
+    			
+    			switch(currentTab){
+    			case 0:
+    				if (currentTab != lastTab){
+        				if (Consts.ANALYTICS_ENABLED) {
+        					Analytics.trackScreen("/Ferries/Schedules/Sailings");
+            			}
+    				}
+    				break;
+    			case 1:
+    				if (currentTab != lastTab){
+        				if (Consts.ANALYTICS_ENABLED) {
+        					Analytics.trackScreen("/Ferries/Schedules/Alerts");
+            			}
+    				}
+    				break;
+    			default:    			
+    			}
+
+    			lastTab = currentTab;
+    		}
+    	});
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             sailingsPanel.setBounce(false);
