@@ -25,6 +25,7 @@ import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
 import gov.wa.wsdot.mobile.shared.ExpressLanesFeed;
+import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
+import com.googlecode.gwtphonegap.client.inappbrowser.InAppBrowser;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
@@ -51,6 +53,9 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 	private SeattleExpressLanesView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private InAppBrowser inAppBrowser;
+	
+	private static ArrayList<Topic> schedules = new ArrayList<Topic>();
 	private static ArrayList<ExpressLaneItem> expressLaneItems = new ArrayList<ExpressLaneItem>();
 	private static HashMap<Integer, String> routeIcon = new HashMap<Integer, String>();
 	private static final String EXPRESS_LANES_URL = Consts.HOST_URL + "/traveler/api/expresslanes";
@@ -63,8 +68,13 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		view = clientFactory.getSeattleExpressLanesView();
 		this.eventBus = eventBus;
+		this.phoneGap = this.clientFactory.getPhoneGap();
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
+		inAppBrowser = this.phoneGap.getInAppBrowser();
+		
+		schedules.add(new Topic("Check Express Lane Schedules"));
+		view.scheduleRender(schedules);
 		
 		PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
 				view.getPullHeader(), view.getPullPanel());
@@ -166,6 +176,12 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 		String html = image.getHTML();
 		
 		return SafeHtmlUtils.fromTrustedString(html);
+	}
+
+	@Override
+	public void onItemSelected(int index) {
+        inAppBrowser.open("http://www.wsdot.wa.gov/Northwest/King/ExpressLanes", "_blank",
+                "enableViewportScale=yes,transitionstyle=fliphorizontal");
 	}
 
 }

@@ -20,7 +20,9 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes;
 
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
+import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
 import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
+import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
@@ -72,6 +75,9 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 	
 	@UiField(provided = true)
 	CellList<ExpressLaneItem> cellList;
+	
+	@UiField(provided = true)
+	CellList<Topic> schedules;
 	
 	@UiField(provided = true)
 	PullPanel pullToRefresh;
@@ -115,6 +121,21 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 			}
 		});
 	
+		
+		schedules = new CellList<Topic>(new BasicCell<Topic>() {
+
+			@Override
+			public String getDisplayString(Topic model) {
+				return model.getName();
+			}
+
+			@Override
+			public boolean canBeSelected(Topic model) {
+				return true;
+			}
+		});
+		
+		
 		initWidget(uiBinder.createAndBindUi(this));
         
 		if (MGWT.getOsDetection().isAndroid()) {
@@ -130,6 +151,15 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 		}
 	}
 	
+
+	@UiHandler("schedules")
+	protected void onCellSelected(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(index);
+		}
+	}
+	
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
@@ -138,6 +168,11 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 	@Override
 	public void render(List<ExpressLaneItem> createPostList) {
 		cellList.render(createPostList);
+	}
+	
+	@Override
+	public void scheduleRender(List<Topic> createPostList) {
+		schedules.render(createPostList);
 	}
 	
 	@Override
@@ -168,6 +203,11 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 	@Override
 	public HasRefresh getPullPanel() {
 		return pullToRefresh;
+	}
+	
+	@Override
+	public void setSelected(int lastIndex, boolean b) {
+		schedules.setSelectedIndex(lastIndex, b);
 	}
 
 }
