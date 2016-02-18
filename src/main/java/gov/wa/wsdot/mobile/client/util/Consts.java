@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ package gov.wa.wsdot.mobile.client.util;
 
 public final class Consts {
 	
-	public static final String HOST_URL = "http://mobileapp-wsdot.rhcloud.com";
+	public static final String HOST_URL = "http://www.wsdot.wa.gov";
 	public static final boolean ANALYTICS_ENABLED = false; 
 	
 	/**
