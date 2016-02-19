@@ -22,6 +22,12 @@
             margin-right: 0px;
             padding: 30px 0 20px 0;
         }
+        .scheduleLink {
+            color: black;
+            font-size: medium;
+            font-weight: normal;
+            margin: 6px 0px 6px 0px;
+        }
     </ui:style>
     
 	<mgwt:panel.flex.RootFlexPanel>
@@ -39,6 +45,9 @@
                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
                 </g:HTMLPanel>
                 <mgwt:list.celllist.CellList ui:field="cellList" />
+                
+                <mgwt:list.celllist.CellList ui:field="schedules" styleName="{style.scheduleLink}" />
+                
                 <g:HTMLPanel styleName="{style.about}">
                     <g:HTML>
                         <p>WSDOT uses the I-5 and I-90 express lanes to assist the flow of 

@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes;
 
 import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
+import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.List;
 
@@ -35,9 +36,13 @@ public interface SeattleExpressLanesView extends IsWidget {
 		
 		public void onDoneButtonPressed();
 		
+		public void onItemSelected(int index);
+		
 	}
 	
 	public void render(List<ExpressLaneItem> createPostList);
+	
+	public void scheduleRender(List<Topic> createPostList);
 	
 	public void showProgressIndicator();
 	
@@ -50,5 +55,7 @@ public interface SeattleExpressLanesView extends IsWidget {
 	public PullArrowWidget getPullHeader();
 	
 	public HasRefresh getPullPanel();	
+	
+	public void setSelected(int lastIndex, boolean b);
 	
 }
