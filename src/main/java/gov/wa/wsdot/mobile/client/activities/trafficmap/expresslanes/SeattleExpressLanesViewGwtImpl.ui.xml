@@ -25,7 +25,7 @@
         .scheduleLink {
             color: black;
             font-size: medium;
-            font-weight: bold;
+            font-weight: normal;
             margin: 6px 0px 6px 0px;
         }
     </ui:style>
