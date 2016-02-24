@@ -50,7 +50,7 @@ import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
 
@@ -202,11 +202,11 @@ public class PhoneAnimationMapper implements AnimationMapper {
 			return Animations.SLIDE_UP_REVERSE;
 		}
 
-		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof SeattleTrafficAlertsPlace) {
+		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof TrafficAlertsPlace) {
 			return Animations.SLIDE_UP;
 		}
 		
-		if (oldPlace instanceof SeattleTrafficAlertsPlace && newPlace instanceof TrafficMapPlace) {
+		if (oldPlace instanceof TrafficAlertsPlace && newPlace instanceof TrafficMapPlace) {
 			return Animations.SLIDE_UP_REVERSE;
 		}
 		

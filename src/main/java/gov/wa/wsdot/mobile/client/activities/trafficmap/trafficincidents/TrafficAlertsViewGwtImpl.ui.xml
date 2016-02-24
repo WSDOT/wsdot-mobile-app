@@ -28,7 +28,7 @@
 		<mgwt:header.HeaderPanel>
             <mgwt:panel.flex.FixedSpacer ui:field="leftFixedSpacer" />
             <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle ui:field="heading">Seattle Alerts</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Traffic Alerts</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 	        <mgwt:button.Button ui:field="doneButton" text="Done" />
 		</mgwt:header.HeaderPanel>
@@ -44,8 +44,8 @@
                 <mgwt:list.celllist.CellList ui:field="blockingCellList" />
                 <g:HTML styleName="{style.incidentHeader}">Construction Closures</g:HTML>
                 <mgwt:list.celllist.CellList ui:field="constructionCellList" />
-                <g:HTML styleName="{style.incidentHeader}">Special Events</g:HTML>
-                <mgwt:list.celllist.CellList ui:field="specialCellList" />
+                <g:HTML styleName="{style.incidentHeader}">Road Closures</g:HTML>
+                <mgwt:list.celllist.CellList ui:field="closureCellList" />
             </g:FlowPanel>
         </mgwt:panel.pull.PullPanel>
 		

@@ -16,9 +16,9 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents;
 
-import gov.wa.wsdot.mobile.shared.SeattleIncidentItem;
+import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 
-public interface SeattleTrafficAlertsView extends IsWidget {
+public interface TrafficAlertsView extends IsWidget {
 	
 	public void setPresenter(Presenter presenter);
 	
@@ -37,13 +37,13 @@ public interface SeattleTrafficAlertsView extends IsWidget {
 		
 	}
 	
-	public void renderAmberAlerts(List<SeattleIncidentItem> amberAlertsList);
+	public void renderAmberAlerts(List<HighwayAlertItem> amberAlertsList);
 	
-	public void renderBlocking(List<SeattleIncidentItem> blockingList);
+	public void renderBlocking(List<HighwayAlertItem> blockingList);
 	
-	public void renderConstruction(List<SeattleIncidentItem> constructionList);
+	public void renderConstruction(List<HighwayAlertItem> constructionList);
 	
-	public void renderSpecial(List<SeattleIncidentItem> specialList);
+	public void renderSpecial(List<HighwayAlertItem> specialList);
 	
 	public void showProgressIndicator();
 	

@@ -50,7 +50,7 @@ import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
@@ -97,7 +97,7 @@ public interface ClientFactory {
 	public PhoneGap getPhoneGap();
 	public Analytics getAnalytics();
 	public SeattleExpressLanesView getSeattleExpressLanesView();
-	public SeattleTrafficAlertsView getSeattleTrafficAlertsView();
+	public TrafficAlertsView getTrafficAlertsView();
 	public GoToFerriesLocationView getFerriesGoToLocationView();
 	public VesselWatchMapView getVesselWatchMapView();
 	public VesselDetailsView getVesselDetailsView();

@@ -82,8 +82,8 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpr
 import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationViewGwtImpl;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
@@ -127,7 +127,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private AlertViewGwtImpl alertView;
 	private PhoneGap phoneGap;
 	private SeattleExpressLanesViewGwtImpl seattleExpressLanesView;
-	private SeattleTrafficAlertsViewGwtImpl seattleTrafficAlertsView;
+	private TrafficAlertsViewGwtImpl seattleTrafficAlertsView;
 	private GoToFerriesLocationViewGwtImpl ferriesGoToLocationView;
 	private VesselWatchMapViewGwtImpl vesselWatchMapView;
 	private VesselDetailsViewGwtImpl vesselDetailsView;
@@ -395,9 +395,9 @@ public class ClientFactoryImpl implements ClientFactory {
 	}
 
 	@Override
-	public SeattleTrafficAlertsView getSeattleTrafficAlertsView() {
+	public TrafficAlertsView getTrafficAlertsView() {
 		if (seattleTrafficAlertsView == null) {
-			seattleTrafficAlertsView = new SeattleTrafficAlertsViewGwtImpl();
+			seattleTrafficAlertsView = new TrafficAlertsViewGwtImpl();
 		}
 		return seattleTrafficAlertsView;
 	}
