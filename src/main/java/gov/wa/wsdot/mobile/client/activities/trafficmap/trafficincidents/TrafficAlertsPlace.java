@@ -16,23 +16,34 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents;
 
+import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-public class SeattleTrafficAlertsPlace extends Place {
+public class TrafficAlertsPlace extends Place {
 	
-	public static class SeattleTrafficAlertsPlaceTokenizer implements
-			PlaceTokenizer<SeattleTrafficAlertsPlace> {
+	private static LatLngBounds bounds;
+	
+	public TrafficAlertsPlace(LatLngBounds b) {
+		bounds = b;
+	}
+
+	public LatLngBounds getBounds() {
+		return bounds;
+	}
+
+	public static class TrafficAlertsPlaceTokenizer implements
+			PlaceTokenizer<TrafficAlertsPlace> {
 
 		@Override
-		public SeattleTrafficAlertsPlace getPlace(String token) {
-			return new SeattleTrafficAlertsPlace();
+		public TrafficAlertsPlace getPlace(String token) {
+			return new TrafficAlertsPlace(bounds);
 		}
 
 		@Override
-		public String getToken(SeattleTrafficAlertsPlace place) {
+		public String getToken(TrafficAlertsPlace place) {
 			return "";
 		}
 

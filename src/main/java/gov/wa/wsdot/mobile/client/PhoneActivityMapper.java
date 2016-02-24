@@ -82,8 +82,8 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpr
 import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationActivity;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsActivity;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsActivity;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsActivity;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesActivity;
@@ -195,8 +195,8 @@ public class PhoneActivityMapper implements ActivityMapper {
 			return new SeattleExpressLanesActivity(clientFactory);
 		}
 		
-		if (place instanceof SeattleTrafficAlertsPlace) {
-			return new SeattleTrafficAlertsActivity(clientFactory);
+		if (place instanceof TrafficAlertsPlace) {
+			return new TrafficAlertsActivity(clientFactory);
 		}
 		
 		if (place instanceof GoToFerriesLocationPlace) {
