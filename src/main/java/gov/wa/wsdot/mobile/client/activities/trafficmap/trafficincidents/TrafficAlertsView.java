@@ -34,6 +34,8 @@ public interface TrafficAlertsView extends IsWidget {
 	public interface Presenter {
 		
 		public void onDoneButtonPressed();
+
+		void onItemSelected(int index, int alertType);
 		
 	}
 	
@@ -43,7 +45,7 @@ public interface TrafficAlertsView extends IsWidget {
 	
 	public void renderConstruction(List<HighwayAlertItem> constructionList);
 	
-	public void renderSpecial(List<HighwayAlertItem> specialList);
+	public void renderClosure(List<HighwayAlertItem> closureList);
 	
 	public void showProgressIndicator();
 	

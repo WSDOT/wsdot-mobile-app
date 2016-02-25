@@ -23,6 +23,7 @@ import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.SimpleListItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+import gov.wa.wsdot.mobile.client.util.Consts;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
@@ -193,6 +195,30 @@ public class TrafficAlertsViewGwtImpl extends Composite implements
         }
 	}
 
+	
+	@UiHandler("blockingCellList")
+	protected void onBlockingPressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.BLOCKING, index);
+		}
+	}
+	@UiHandler("constructionCellList")
+	protected void onconstructionPressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.CONSTRUCTION, index);
+		}
+	}
+	@UiHandler("closureCellList")
+	protected void onClosurePressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.CLOSURES, index);
+		}
+	}
+	
+	
 	@UiHandler("doneButton")
 	protected void onDoneButtonPressed(TapEvent event) {
 		if (presenter != null) {
@@ -221,8 +247,8 @@ public class TrafficAlertsViewGwtImpl extends Composite implements
 	}
 
 	@Override
-	public void renderSpecial(List<HighwayAlertItem> specialList) {
-		closureCellList.render(specialList);
+	public void renderClosure(List<HighwayAlertItem> closureList) {
+		closureCellList.render(closureList);
 	}
 	
 	@Override
