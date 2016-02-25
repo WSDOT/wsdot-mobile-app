@@ -19,6 +19,7 @@
 package gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -36,7 +37,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
-import java.util.StringTokenizer;
 import java.util.Map.Entry;
 import java.util.Iterator;
 import java.util.HashMap;
@@ -58,7 +58,6 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
@@ -70,19 +69,19 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 	private TrafficAlertsView view;
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
-	private PhoneGap phoneGap;
 	
 	private static ArrayList<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
 	private static ArrayList<HighwayAlertItem> alertsToAdd = new ArrayList<HighwayAlertItem>();
 	
-	private static List<Integer> blockingCategory = new ArrayList<Integer>();
-    private static List<Integer> constructionCategory = new ArrayList<Integer>();
-    private static List<Integer> closureCategory = new ArrayList<Integer>();
     private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
     private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
     
     private static LatLngBounds bounds;
-    //private String bounds;
+    
+	private ArrayList<HighwayAlertItem> amberAlerts = new ArrayList<HighwayAlertItem>();
+	private ArrayList<HighwayAlertItem> blockingIncidents = new ArrayList<HighwayAlertItem>();
+	private ArrayList<HighwayAlertItem> constructionClosures = new ArrayList<HighwayAlertItem>();
+	private ArrayList<HighwayAlertItem> trafficClosures = new ArrayList<HighwayAlertItem>();
 	
 	public TrafficAlertsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -132,19 +131,11 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 		
 		view.setHeaderPullHandler(headerHandler);
 		
-		buildCategories();
 		view.showProgressIndicator();
 		getHighwayAlerts();
 		view.hideProgressIndicator();
 		panel.setWidget(view);
 
-	}
-
-	private void buildCategories() {
-		blockingCategory.add(0);
-		constructionCategory.add(1);
-		closureCategory.add(2);
-		
 	}
 	
 	
@@ -285,7 +276,8 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
                     if (inPolygon(
                             viewableMapArea,
                             alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LATITUDE),
-                            alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LONGITUDE))) {
+                            alert.getDouble(HighwayAlertsColumns.HIGHWAY_ALERT_LONGITUDE)) || 
+                    		alert.getString(HighwayAlertsColumns.HIGHWAY_ALERT_CATEGORY) == "amber alert") {
                         
                     	HighwayAlertItem item = new HighwayAlertItem();
                     	item.setAlertId(alert.getInt(HighwayAlertsColumns.HIGHWAY_ALERT_ID));
@@ -298,7 +290,7 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
                     	highwayAlertItems.add(item);				        
 				    }
 				}
-				
+
 				if (!result.isEmpty()) {
 					categorizeAlerts();
 					view.refresh();
@@ -314,28 +306,30 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
     	Stack<HighwayAlertItem> construction = new Stack<HighwayAlertItem>();
     	Stack<HighwayAlertItem> closures = new Stack<HighwayAlertItem>();
     	
-    	ArrayList<HighwayAlertItem> amberAlerts = new ArrayList<HighwayAlertItem>();
-    	ArrayList<HighwayAlertItem> blockingIncidents = new ArrayList<HighwayAlertItem>();
-    	ArrayList<HighwayAlertItem> constructionClosures = new ArrayList<HighwayAlertItem>();
-    	ArrayList<HighwayAlertItem> specialEvents = new ArrayList<HighwayAlertItem>();
+		amberAlerts.clear();
+		blockingIncidents.clear();
+		constructionClosures.clear();
+		trafficClosures.clear();
     	
     	for (HighwayAlertItem item : highwayAlertItems) {
-			// Check if there is an active amber alert
+			
     		int category = getCategoryID(item.getEventCategory());
     		
+    		// Check if there is an active amber alert
 			if (category == 24) {
 				amberalert.push(item);
 			}
-			else if (blockingCategory.contains(category)) {
+			else if (category == Consts.BLOCKING) {
 				blocking.push(item);
 			}
-            else if (constructionCategory.contains(category)) {
+            else if (category == Consts.CONSTRUCTION) {
                 construction.push(item);
             }
-            else if (closureCategory.contains(category)) {
+            else if (category == Consts.CLOSURES) {
                 closures.push(item);
             }
     	}
+    	
     	
     	if (amberalert != null && amberalert.size() != 0) {
     		while (!amberalert.empty()) {
@@ -368,14 +362,14 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 		view.renderConstruction(constructionClosures);
 
 		if (closures.empty()) {
-			specialEvents.add(new HighwayAlertItem(0, "None reported"));
+			trafficClosures.add(new HighwayAlertItem(0, "None reported"));
 		} else {
 			while (!closures.empty()) {
-				specialEvents.add(closures.pop());
+				trafficClosures.add(closures.pop());
 			}					
 		}
 		
-		view.renderSpecial(specialEvents);
+		view.renderClosure(trafficClosures);
     	
 	}
 	
@@ -389,6 +383,35 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
 
+	@Override
+	public void onItemSelected(int alertType, int index) {
+		
+		int alertId;
+		
+		switch (alertType){
+			case Consts.BLOCKING:
+				alertId = blockingIncidents.get(index).getAlertId();
+				if (alertId != 0)
+					clientFactory.getPlaceController().goTo(
+						new AlertPlace(Integer.toString(alertId)));
+				break;
+			case Consts.CONSTRUCTION:
+				alertId = constructionClosures.get(index).getAlertId();
+				if (alertId != 0)
+					clientFactory.getPlaceController().goTo(
+						new AlertPlace(Integer.toString(alertId)));
+				break;
+			case Consts.CLOSURES:
+				alertId = trafficClosures.get(index).getAlertId();
+				if (alertId != 0)	
+					clientFactory.getPlaceController().goTo(
+						new AlertPlace(Integer.toString(alertId)));
+				break;
+			default:
+				//TODO Shouldn't get here, if we do treat as if nothing was clicked
+		}
+	}
+	
 	/**
 	 * Iterate through collection of LatLon objects in ArrayList and see if
 	 * passed latitude and longitude point is within the collection.
@@ -433,7 +456,7 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 		Set<Entry<String, String[]>> set = eventCategories.entrySet();
 		Iterator<Entry<String, String[]>> i = set.iterator();
 
-        if (category.equals("")) return 0; //incident
+        if (category.equals("")) return Consts.BLOCKING;
 
         while(i.hasNext()) {
         	Entry<String, String[]> me = i.next();
@@ -445,16 +468,16 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
                 if (matchFound) {
                     String keyWord = me.getKey();
                     if (keyWord.equalsIgnoreCase("closure")) {
-                        return 2;
+                        return Consts.CLOSURES;
                     } else if (keyWord.equalsIgnoreCase("construction")) {
-                        return 1;
+                        return Consts.CONSTRUCTION;
                     } else if (keyWord.equalsIgnoreCase("amber")){
                         return 24;
                     }
                 }
             }
         }
-        return 0;
+        return Consts.BLOCKING;
     }
 	
 }
