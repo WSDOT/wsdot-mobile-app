@@ -93,6 +93,9 @@ public class TrafficAlertsViewGwtImpl extends Composite implements
 	CellList<HighwayAlertItem> closureCellList;
 	
 	@UiField(provided = true)
+	CellList<HighwayAlertItem> specialCellList;
+	
+	@UiField(provided = true)
 	PullPanel pullToRefresh;
 	
 	@UiField
@@ -185,6 +188,25 @@ public class TrafficAlertsViewGwtImpl extends Composite implements
 
 		});
 		
+		specialCellList = new CellList<HighwayAlertItem>(new SimpleListItem<HighwayAlertItem>() {
+
+			@Override
+			public String getDisplayDescription(HighwayAlertItem model) {
+				return model.getHeadlineDescription();
+			}
+
+			@Override
+			public String getDisplayLastUpdated(HighwayAlertItem model) {
+				if (model.getLastUpdatedTime() == null) {
+				    return "";
+				} else {
+    			    return ParserUtils.relativeTime(model.getLastUpdatedTime(),
+                            "MMMM d, yyyy h:mm a", false);
+				}
+			}
+
+		});
+		
 		initWidget(uiBinder.createAndBindUi(this));
 
 		accessibilityPrepare();
@@ -215,6 +237,13 @@ public class TrafficAlertsViewGwtImpl extends Composite implements
 		if (presenter != null) {
 			int index = event.getIndex();
 			presenter.onItemSelected(Consts.CLOSURES, index);
+		}
+	}
+	@UiHandler("specialCellList")
+	protected void onSpecialPressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.SPECIAL, index);
 		}
 	}
 	
@@ -249,6 +278,11 @@ public class TrafficAlertsViewGwtImpl extends Composite implements
 	@Override
 	public void renderClosure(List<HighwayAlertItem> closureList) {
 		closureCellList.render(closureList);
+	}
+	
+	@Override
+	public void renderSpecial(List<HighwayAlertItem> specialList) {
+		specialCellList.render(specialList);
 	}
 	
 	@Override

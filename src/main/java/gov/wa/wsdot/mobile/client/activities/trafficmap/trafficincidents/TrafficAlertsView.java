@@ -63,4 +63,6 @@ public interface TrafficAlertsView extends IsWidget {
 	
 	public void hideAmberAlerts();
 
+	void renderSpecial(List<HighwayAlertItem> specialList);
+
 }

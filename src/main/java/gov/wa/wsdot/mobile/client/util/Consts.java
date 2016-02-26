@@ -50,6 +50,9 @@ public final class Consts {
 	public static final int BLOCKING = 0;
 	public static final int CONSTRUCTION = 1;
 	public static final int CLOSURES = 2;
+
+	public static final int SPECIAL = 3;
+	public static final int AMBER = 24;
 	
 	/**
 	 * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,
