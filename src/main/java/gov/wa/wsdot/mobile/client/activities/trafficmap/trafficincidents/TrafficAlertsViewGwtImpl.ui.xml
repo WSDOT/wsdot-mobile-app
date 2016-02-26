@@ -40,12 +40,18 @@
                 </g:HTMLPanel>
                 <g:HTML ui:field="amberAlertsHeader" styleName="{style.incidentHeader}" visible="false">Amber Alerts</g:HTML>
                 <mgwt:list.celllist.CellList ui:field="amberAlertsCellList" visible="false" />
-                <g:HTML styleName="{style.incidentHeader}">Blocking Incidents</g:HTML>
+                
+                <g:HTML styleName="{style.incidentHeader}">Incidents</g:HTML>
                 <mgwt:list.celllist.CellList ui:field="blockingCellList" />
+                
                 <g:HTML styleName="{style.incidentHeader}">Construction Closures</g:HTML>
                 <mgwt:list.celllist.CellList ui:field="constructionCellList" />
+                
                 <g:HTML styleName="{style.incidentHeader}">Road Closures</g:HTML>
                 <mgwt:list.celllist.CellList ui:field="closureCellList" />
+                
+                <g:HTML styleName="{style.incidentHeader}">Special Events</g:HTML>
+                <mgwt:list.celllist.CellList ui:field="specialCellList" />
             </g:FlowPanel>
         </mgwt:panel.pull.PullPanel>
 		

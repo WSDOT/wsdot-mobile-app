@@ -82,6 +82,7 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 	private ArrayList<HighwayAlertItem> blockingIncidents = new ArrayList<HighwayAlertItem>();
 	private ArrayList<HighwayAlertItem> constructionClosures = new ArrayList<HighwayAlertItem>();
 	private ArrayList<HighwayAlertItem> trafficClosures = new ArrayList<HighwayAlertItem>();
+	private ArrayList<HighwayAlertItem> specialEvents = new ArrayList<HighwayAlertItem>();
 	
 	public TrafficAlertsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -290,7 +291,7 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
                     	highwayAlertItems.add(item);				        
 				    }
 				}
-
+				
 				if (!result.isEmpty()) {
 					categorizeAlerts();
 					view.refresh();
@@ -305,18 +306,20 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 		Stack<HighwayAlertItem> blocking = new Stack<HighwayAlertItem>();
     	Stack<HighwayAlertItem> construction = new Stack<HighwayAlertItem>();
     	Stack<HighwayAlertItem> closures = new Stack<HighwayAlertItem>();
+    	Stack<HighwayAlertItem> special = new Stack<HighwayAlertItem>();
     	
 		amberAlerts.clear();
 		blockingIncidents.clear();
 		constructionClosures.clear();
 		trafficClosures.clear();
+		specialEvents.clear();
     	
     	for (HighwayAlertItem item : highwayAlertItems) {
 			
     		int category = getCategoryID(item.getEventCategory());
     		
     		// Check if there is an active amber alert
-			if (category == 24) {
+			if (category == Consts.AMBER) {
 				amberalert.push(item);
 			}
 			else if (category == Consts.BLOCKING) {
@@ -327,6 +330,9 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
             }
             else if (category == Consts.CLOSURES) {
                 closures.push(item);
+            }
+            else if (category == Consts.SPECIAL) {
+                special.push(item);
             }
     	}
     	
@@ -348,7 +354,6 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 				blockingIncidents.add(blocking.pop());
 			}					
 		}
-
 		view.renderBlocking(blockingIncidents);
 		
 		if (construction.empty()) {
@@ -358,7 +363,7 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 				constructionClosures.add(construction.pop());
 			}					
 		}
-		
+	
 		view.renderConstruction(constructionClosures);
 
 		if (closures.empty()) {
@@ -368,8 +373,16 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 				trafficClosures.add(closures.pop());
 			}					
 		}
-		
 		view.renderClosure(trafficClosures);
+
+		if (special.empty()) {
+			specialEvents.add(new HighwayAlertItem(0, "None reported"));
+		} else {
+			while (!special.empty()) {
+				specialEvents.add(special.pop());
+			}					
+		}
+		view.renderSpecial(specialEvents);
     	
 	}
 	
@@ -386,30 +399,27 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onItemSelected(int alertType, int index) {
 		
-		int alertId;
+		int alertId = 0;
 		
 		switch (alertType){
 			case Consts.BLOCKING:
 				alertId = blockingIncidents.get(index).getAlertId();
-				if (alertId != 0)
-					clientFactory.getPlaceController().goTo(
-						new AlertPlace(Integer.toString(alertId)));
 				break;
 			case Consts.CONSTRUCTION:
 				alertId = constructionClosures.get(index).getAlertId();
-				if (alertId != 0)
-					clientFactory.getPlaceController().goTo(
-						new AlertPlace(Integer.toString(alertId)));
 				break;
 			case Consts.CLOSURES:
 				alertId = trafficClosures.get(index).getAlertId();
-				if (alertId != 0)	
-					clientFactory.getPlaceController().goTo(
-						new AlertPlace(Integer.toString(alertId)));
+				break;
+			case Consts.SPECIAL:
+				alertId = specialEvents.get(index).getAlertId();
 				break;
 			default:
 				//TODO Shouldn't get here, if we do treat as if nothing was clicked
 		}
+		if (alertId != 0)	
+			clientFactory.getPlaceController().goTo(
+				new AlertPlace(Integer.toString(alertId)));
 	}
 	
 	/**
@@ -442,16 +452,26 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
 		return inPoly;
 	}
 	
+	/**
+	 * 
+	 * Maps a category name to one of four possible types. These four IDs
+	 * represent the four lists displayed by this activity.
+	 * 
+	 * @param category The name of the category of alert
+	 * @return category ID
+	 */
 	private int getCategoryID(String category) {
         // Types of categories
         String[] event_closure = {"closed", "closure"};
         String[] event_construction = {"construction", "maintenance", "lane closure"};
         String[] event_amber = {"amber"};
+        String[] event_special = {"special event"};
 
         HashMap<String, String[]> eventCategories = new HashMap<>();
         eventCategories.put("closure", event_closure);
         eventCategories.put("construction", event_construction);
         eventCategories.put("amber", event_amber);
+        eventCategories.put("special", event_special);
 
 		Set<Entry<String, String[]>> set = eventCategories.entrySet();
 		Iterator<Entry<String, String[]>> i = set.iterator();
@@ -471,8 +491,10 @@ public class TrafficAlertsActivity extends MGWTAbstractActivity implements
                         return Consts.CLOSURES;
                     } else if (keyWord.equalsIgnoreCase("construction")) {
                         return Consts.CONSTRUCTION;
+                    } else if (keyWord.equalsIgnoreCase("special")) {
+                        return Consts.SPECIAL;    
                     } else if (keyWord.equalsIgnoreCase("amber")){
-                        return 24;
+                        return Consts.AMBER;
                     }
                 }
             }

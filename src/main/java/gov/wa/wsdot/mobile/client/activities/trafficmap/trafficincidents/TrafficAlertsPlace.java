@@ -44,7 +44,7 @@ public class TrafficAlertsPlace extends Place {
 
 		@Override
 		public String getToken(TrafficAlertsPlace place) {
-			return "";
+			return "Traffic Alerts";
 		}
 
 	}
