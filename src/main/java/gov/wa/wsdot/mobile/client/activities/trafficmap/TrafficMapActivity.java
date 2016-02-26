@@ -656,11 +656,15 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onSeattleTrafficAlertsButtonPressed(LatLngBounds bounds) {
-		if (Consts.ANALYTICS_ENABLED) {
-			analytics.trackScreen("/Traffic Map/Seattle Alerts");
+
+        // Check if map has loaded
+		if (bounds != null) {
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Traffic Map/Alerts In This Area");
+			}
+			clientFactory.getPlaceController()
+					.goTo(new TrafficAlertsPlace(bounds));
 		}
-        clientFactory.getPlaceController()
-		.goTo(new TrafficAlertsPlace(bounds));
 	}
 	
 	@Override

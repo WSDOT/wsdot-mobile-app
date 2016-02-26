@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Seattle Alerts feature has been removed. Replacing it is "Alerts in This Area".
 
 ## [4.2.1] - 2016-04-18
 ### Fixed
@@ -16,6 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Accessibility: Now supports reading and accessing content with VoiceOver.
 At this time three-finger swipe gestures are not supported.
+
 
 ## [4.0.0] - 2016-03-15
 ### Added
