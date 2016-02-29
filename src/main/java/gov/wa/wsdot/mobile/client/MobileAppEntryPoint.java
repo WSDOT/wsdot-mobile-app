@@ -98,7 +98,7 @@ public class MobileAppEntryPoint implements EntryPoint {
     	        }
 	        }
 	    });	
-	    
+
 	    phoneGap.addHandler(new PhoneGapTimeoutHandler() {
 
 	        @Override

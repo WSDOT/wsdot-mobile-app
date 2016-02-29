@@ -32,7 +32,7 @@ public abstract class SimpleListItem<T> implements Cell<T> {
 	private static Template TEMPLATE = GWT.create(Template.class);
 
 	public interface Template extends SafeHtmlTemplates {
-		@SafeHtmlTemplates.Template("<div class=\"{0}\"><div></div><div>{1}</div><div>{2}</div></div>")
+		@SafeHtmlTemplates.Template("<div role=\"button\" tabindex=0 class=\"{0}\"><div></div><div>{1}</div><div>{2}</div></div>")
 		SafeHtml content(String class1, SafeHtml description, String lastUpdated);
 	}
 

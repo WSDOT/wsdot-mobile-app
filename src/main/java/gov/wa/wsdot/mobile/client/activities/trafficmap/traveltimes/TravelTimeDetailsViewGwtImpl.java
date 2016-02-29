@@ -25,6 +25,8 @@ import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.CheckedValue;
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -34,6 +36,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
@@ -55,6 +58,9 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 	private static TravelTimeDetailsViewGwtImplUiBinder uiBinder = GWT
 			.create(TravelTimeDetailsViewGwtImplUiBinder.class);
 
+	@UiField
+	HeaderTitle heading;
+	
 	@UiField
 	BackImageButton backButton;
 	
@@ -133,6 +139,8 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
@@ -167,9 +175,21 @@ public class TravelTimeDetailsViewGwtImpl extends Composite implements
 	public void toggleStarButton(boolean isStarred) {
         if (isStarred) {
             starButton.setIcon(ImageHolder.get().important());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.TRUE);
         } else {
             starButton.setIcon(ImageHolder.get().notImportant());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.FALSE);
         }		
 	}
-
+private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		
+		Roles.getCheckboxRole().set(starButton.getElement());
+		Roles.getCheckboxRole().setAriaLabelProperty(starButton.getElement(), "favorite");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+	}
 }

@@ -37,12 +37,12 @@
         }
     </ui:style>
     
-    <ui:with field="description" type="java.lang.String" />
+    <ui:with field="description" type="java.lang.String"  />
     <ui:with field="crossingTime" type="java.lang.String" />
     <ui:with field="lastUpdated" type="java.lang.String" />
     <ui:with field='alertImage' type='com.google.gwt.safehtml.shared.SafeHtml'/>
     
-    <div class="{style.cellFerriesRouteSchedules}">
+    <div class="{style.cellFerriesRouteSchedules}"  role="button" tabindex="0">
         <div>
             <div><ui:text from="{description}" /></div>
             <div><ui:text from="{crossingTime}" /></div>

@@ -20,21 +20,27 @@ package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.CheckedValue;
+import com.google.gwt.aria.client.LiveValue;
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
-import com.googlecode.mgwt.ui.client.widget.list.celllist.BasicCell;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
@@ -42,8 +48,11 @@ import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.TitleLastUpdatedCell;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.SailingsTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.WarningTabBarButton;
 import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
 import gov.wa.wsdot.mobile.shared.FerriesTerminalItem;
+import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 
 public class FerriesRouteSailingsViewGwtImpl extends Composite
 		implements FerriesRouteSailingsView {
@@ -61,6 +70,14 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	private static FerriesRouteSailingsViewGwtImplUiBinder uiBinder = GWT
 			.create(FerriesRouteSailingsViewGwtImplUiBinder.class);	
 
+	@UiField
+	HeaderTitle heading;
+	
+	@UiField
+	RootFlexPanel sailings;
+	
+	@UiField
+	RootFlexPanel alerts;
 	
 	@UiField
 	ScrollPanel sailingsPanel;
@@ -89,6 +106,15 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	@UiField
 	TabPanel tabPanel;
 	
+	@UiField
+	SailingsTabBarButton sailingsTab;
+	
+	@UiField
+	WarningTabBarButton alertsTab;
+	
+	@UiField
+	HTMLPanel emptyAlerts;
+	
 	private Presenter presenter;
 	
 	public FerriesRouteSailingsViewGwtImpl() {
@@ -96,8 +122,8 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	    starButton = new NotimportantImageButton();
 		
 		sailingsCellList = new CellList<FerriesTerminalItem>(
-				new BasicCell<FerriesTerminalItem>() {
-			
+				new MyBasicCell<FerriesTerminalItem>() {
+					
 			@Override
 			public String getDisplayString(FerriesTerminalItem model) {
 				return model.getDepartingTerminalName() + " to " + model.getArrivingTerminalName();
@@ -132,6 +158,8 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             sailingsPanel.setBounce(false);
@@ -146,7 +174,21 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
             presenter.onTabSelected(index);
         }
     }
-
+	
+    @UiHandler("sailingsTab")
+    protected void onTimesTabPressed(TapEvent event) {
+    	if (presenter != null) {
+    		accessibilityShowSailings();
+    	}
+    }
+    
+    @UiHandler("alertsTab")
+    protected void onCamerasTabPressed(TapEvent event) {
+    	if (presenter != null) {
+    		accessibilityShowAlerts();
+    	}
+    }
+	
 	@UiHandler("sailingsCellList")
 	protected void onSailingCellSelected(CellSelectedEvent event) {
 		if (presenter != null) {
@@ -220,9 +262,60 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	public void toggleStarButton(boolean isStarred) {
         if (isStarred) {
             starButton.setIcon(ImageHolder.get().important());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.TRUE);
         } else {
             starButton.setIcon(ImageHolder.get().notImportant());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.FALSE);
         }
 	}
+	
+	@Override
+	public void showEmptyAlertsMessage() {
+		emptyAlerts.setVisible(true);
+	}
 
+	@Override
+	public void hideEmptyAlertsMessage() {
+		emptyAlerts.setVisible(false);
+	}
+	
+	private void accessibilityShowSailings(){
+		Roles.getMainRole().setAriaHiddenState(sailings.getElement(), false);
+		Roles.getMainRole().setAriaHiddenState(alerts.getElement(), true);
+		Roles.getTabRole().setAriaSelectedState(sailingsTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaSelectedState(alertsTab.getElement(), SelectedValue.FALSE);
+	}
+	
+	private void accessibilityShowAlerts(){
+		Roles.getMainRole().setAriaHiddenState(sailings.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(alerts.getElement(), false);
+		Roles.getTabRole().setAriaSelectedState(sailingsTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(alertsTab.getElement(), SelectedValue.TRUE);
+	}
+	
+    private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");	
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getCheckboxRole().set(starButton.getElement());
+		Roles.getCheckboxRole().setAriaLabelProperty(starButton.getElement(), "favorite");
+		
+		Roles.getTabRole().set(sailingsTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(sailingsTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaLabelProperty(sailingsTab.getElement(), "sailings");
+		
+		Roles.getTabRole().set(alertsTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(alertsTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaLabelProperty(alertsTab.getElement(), "route alerts");
+
+		Roles.getProgressbarRole().set(progressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+		
+		
+		accessibilityShowSailings();
+		
+    }
 }

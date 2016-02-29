@@ -32,7 +32,7 @@ public abstract class CellWithIcon<T> implements Cell<T> {
 	private static Template TEMPLATE = GWT.create(Template.class);
 
 	public interface Template extends SafeHtmlTemplates {
-		@SafeHtmlTemplates.Template("<div class=\"{0}\"><div class=\"{1}\"></div><div style=\"margin-left:10px;\">{2}</div></div>")
+		@SafeHtmlTemplates.Template("<div role=\"button\" tabindex=0 class=\"{0}\"><div class=\"{1}\"></div><div style=\"margin-left:10px;\">{2}</div></div>")
 		
 		SafeHtml content(String classes, String cellImage, String cellContents);
 	}

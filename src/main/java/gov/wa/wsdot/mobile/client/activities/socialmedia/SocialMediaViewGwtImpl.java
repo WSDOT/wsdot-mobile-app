@@ -24,6 +24,8 @@ import gov.wa.wsdot.mobile.shared.TopicWithImage;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.LiveValue;
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -32,6 +34,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
@@ -53,6 +56,9 @@ public class SocialMediaViewGwtImpl extends Composite implements
 	private static SocialMediaViewGwtImplUiBinder uiBinder = GWT
 			.create(SocialMediaViewGwtImplUiBinder.class);
 
+	@UiField
+	HeaderTitle heading;
+	
 	@UiField(provided = true)
 	CellList<TopicWithImage> cellList;
 	
@@ -90,6 +96,8 @@ public class SocialMediaViewGwtImpl extends Composite implements
 
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
@@ -125,5 +133,11 @@ public class SocialMediaViewGwtImpl extends Composite implements
 	public void setSelected(int lastIndex, boolean b) {
 		cellList.setSelectedIndex(lastIndex, b);
 	}
-	
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+	}
 }

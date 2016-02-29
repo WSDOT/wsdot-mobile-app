@@ -21,6 +21,7 @@ package gov.wa.wsdot.mobile.client.activities.about;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -30,6 +31,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
@@ -48,7 +50,9 @@ public class AboutViewGwtImpl extends Composite implements AboutView {
 	private static AboutViewGwtImplUiBinder uiBinder = GWT
 			.create(AboutViewGwtImplUiBinder.class);
 	
-
+	@UiField
+	HeaderTitle heading;
+	
 	@UiField
 	BackImageButton backButton;
 	
@@ -71,6 +75,8 @@ public class AboutViewGwtImpl extends Composite implements AboutView {
 	    
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
@@ -98,5 +104,9 @@ public class AboutViewGwtImpl extends Composite implements AboutView {
     public ScrollPanel getScrollPanel() {
         return scrollPanel;
     }
-
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getHeadingRole().set(heading.getElement());
+	}
 }

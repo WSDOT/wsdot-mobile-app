@@ -56,5 +56,9 @@ public interface FerriesRouteSailingsView extends IsWidget {
 	public void hideProgressIndicator();
 	
 	public void refresh();
+
+	void showEmptyAlertsMessage();
+
+	void hideEmptyAlertsMessage();
 	
 }

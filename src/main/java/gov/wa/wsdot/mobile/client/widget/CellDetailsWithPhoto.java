@@ -32,7 +32,7 @@ public abstract class CellDetailsWithPhoto<T> implements Cell<T> {
 	private static Template TEMPLATE = GWT.create(Template.class);
 
 	public interface Template extends SafeHtmlTemplates {
-		@SafeHtmlTemplates.Template("<div class=\"{0}\"><div>{1}</div><div class=\"{2}\"><div>{3}</div><div>{4}</div><div>{5}</div></div></div>")
+		@SafeHtmlTemplates.Template("<div role=\"button\" tabindex=0 class=\"{0}\"><div>{1}</div><div class=\"{2}\"><div>{3}</div><div>{4}</div><div>{5}</div></div></div>")
 		SafeHtml content(String class1, String cellImage, String class2, String cellContents, String description, String lastUpdated);
 	}
 

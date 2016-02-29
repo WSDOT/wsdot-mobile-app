@@ -20,10 +20,14 @@ package gov.wa.wsdot.mobile.client.activities.borderwait;
 
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.NorthboundTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.SouthboundTabBarButton;
 import gov.wa.wsdot.mobile.shared.BorderWaitItem;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -34,8 +38,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
@@ -58,6 +64,9 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 	private static BorderWaitViewGwtImplUiBinder uiBinder = GWT
 			.create(BorderWaitViewGwtImplUiBinder.class);
 
+	@UiField
+	HeaderTitle heading;
+	
 	@UiField
 	BackImageButton backButton;
 	
@@ -83,7 +92,19 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 	ProgressIndicator southboundProgressIndicator;
 	
 	@UiField
+	RootFlexPanel northPanel;
+	
+	@UiField
+	RootFlexPanel southPanel;
+	
+	@UiField
 	TabPanel tabPanel;
+	
+	@UiField
+	NorthboundTabBarButton northTab;
+	
+	@UiField
+	SouthboundTabBarButton southTab;
 	
 	private Presenter presenter;
 	private PullArrowHeader northboundPullArrowHeader;
@@ -175,6 +196,8 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
         }
@@ -194,6 +217,21 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 			presenter.onBackButtonPressed();
 		}
 	}	
+	
+    @UiHandler("northTab")
+    protected void on167TabPressed(TapEvent event) {
+    	if (presenter != null) {
+    		accessibilityShowNorth();
+    	}
+    }
+    
+    @UiHandler("southTab")
+    protected void on405TabPressed(TapEvent event) {
+    	if (presenter != null) {
+    		accessibilityShowSouth();
+
+    	}
+    }
 	
 	@Override
 	public void setPresenter(Presenter presenter) {
@@ -258,5 +296,47 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 	public HasRefresh getSouthboundPullPanel() {
 		return southboundPullToRefresh;
 	}
-
+	private void accessibilityShowNorth(){
+		Roles.getMainRole().setAriaHiddenState(northPanel.getElement(), false);
+		Roles.getMainRole().setAriaHiddenState(southPanel.getElement(), true);
+		
+		Roles.getTabRole().setAriaSelectedState(northTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaSelectedState(southTab.getElement(), SelectedValue.FALSE);
+	}
+	
+	private void accessibilityShowSouth(){
+		Roles.getMainRole().setAriaHiddenState(northPanel.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(southPanel.getElement(), false);
+		
+		Roles.getTabRole().setAriaSelectedState(northTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(southTab.getElement(), SelectedValue.TRUE);
+	}
+    
+    private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getMainRole().set(northPanel.getElement());
+		Roles.getMainRole().set(southPanel.getElement());
+		
+		Roles.getTabRole().set(northTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(northTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaLabelProperty(northTab.getElement(), "north bound");
+		
+		Roles.getTabRole().set(southTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(southTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaLabelProperty(southTab.getElement(), "south bound");
+		
+		Roles.getProgressbarRole().set(northboundProgressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(northboundProgressIndicator.getElement(), "loading indicator");
+		
+		Roles.getProgressbarRole().set(southboundProgressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(southboundProgressIndicator.getElement(), "loading indicator");
+		
+		accessibilityShowNorth();	
+	}
 }

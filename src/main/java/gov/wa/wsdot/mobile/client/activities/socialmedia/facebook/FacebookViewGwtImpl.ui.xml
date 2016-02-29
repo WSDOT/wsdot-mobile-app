@@ -23,7 +23,7 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Facebook</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Facebook</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
