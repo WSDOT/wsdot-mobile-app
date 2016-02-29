@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -37,6 +38,7 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
@@ -63,6 +65,9 @@ public class TravelTimesViewGwtImpl extends Composite implements
 	 */
 	private static TravelTimesViewGwtImplUiBinder uiBinder = GWT
 			.create(TravelTimesViewGwtImplUiBinder.class);
+	
+	@UiField
+	HeaderTitle heading;
 	
 	@UiField(provided = true)
 	CellList<TravelTimesItem> cellList;
@@ -163,6 +168,8 @@ public class TravelTimesViewGwtImpl extends Composite implements
 		
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFixedSpacer.setWidth("12px");
             leftFlexSpacer.setVisible(false);
@@ -223,5 +230,8 @@ public class TravelTimesViewGwtImpl extends Composite implements
 	public HasRefresh getPullPanel() {
 		return pullToRefresh;
 	}
-
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getHeadingRole().set(heading.getElement());
+	}
 }

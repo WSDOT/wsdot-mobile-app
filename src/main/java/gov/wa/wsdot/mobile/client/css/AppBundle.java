@@ -335,6 +335,8 @@ public interface AppBundle extends ClientBundle {
 		String highImpactAlert();
 		String noHighImpactAlerts();
 		
+		String ariaOnly();
+		
 		String borderButton();
 		String ferriesButton();
 		String passesButton();

@@ -168,6 +168,12 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 					routeAlertItems.add(routeAlert);
 				}
 
+				if(routeAlertItems.isEmpty()){
+					view.showEmptyAlertsMessage();
+				}else{
+					view.hideEmptyAlertsMessage();
+				}
+				
 				view.hideProgressIndicator();
 				view.toggleStarButton(isStarred);
 				view.render(scheduleDateItems.get(0).getFerriesTerminalItem());

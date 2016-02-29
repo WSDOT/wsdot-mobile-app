@@ -20,7 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes;
 
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
-import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
+import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
 import gov.wa.wsdot.mobile.shared.Topic;
 
@@ -122,7 +122,7 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 		});
 	
 		
-		schedules = new CellList<Topic>(new BasicCell<Topic>() {
+		schedules = new CellList<Topic>(new MyBasicCell<Topic>() {
 
 			@Override
 			public String getDisplayString(Topic model) {

@@ -24,10 +24,15 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Traffic Map</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Traffic Map</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 	        <mgwt:button.image.RefreshImageButton ui:field="refreshButton" />
 		</mgwt:header.HeaderPanel>
+		
+		<g:HTMLPanel>
+			<div class="{app.css.ariaOnly}">you can dial  <a href="tel:511">5 1 1</a> and get real time traffic and weather information. 
+			    Out of state travelers call <a href="tel:1-800-695-7623">1 800 6 9 5 7 6 2 3</a></div>
+		</g:HTMLPanel>
 		
        	<g:FlowPanel ui:field="flowPanel">
 	        <g:HTMLPanel styleName="{style.progressIndicatorPanel}">

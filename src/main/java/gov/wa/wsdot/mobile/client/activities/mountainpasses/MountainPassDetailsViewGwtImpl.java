@@ -20,27 +20,39 @@ package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.CheckedValue;
+import com.google.gwt.aria.client.LiveValue;
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.CameraTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.ForecastTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.ReportTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.SailingsTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.WarningTabBarButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.ForecastItem;
 
@@ -59,6 +71,18 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	 */	
 	private static MountainPassDetailsViewGwtImplUiBinder uiBinder = GWT
 			.create(MountainPassDetailsViewGwtImplUiBinder.class);
+	
+	@UiField
+	HeaderTitle heading;
+	
+	@UiField
+	RootFlexPanel report;
+	
+	@UiField
+	RootFlexPanel cameras;
+	
+	@UiField
+	RootFlexPanel forecast;
 	
 	@UiField
 	BackImageButton backButton;
@@ -107,6 +131,15 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	
 	@UiField
 	TabPanel tabPanel;
+	
+	@UiField
+	ReportTabBarButton reportTab;
+	
+	@UiField
+	CameraTabBarButton camerasTab;
+	
+	@UiField
+	ForecastTabBarButton forecastTab;
 	
 	@UiField
 	ScrollPanel reportScrollPanel;
@@ -169,7 +202,13 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 		});
 
 		initWidget(uiBinder.createAndBindUi(this));
+<<<<<<< 9b88671fd0e5adfbd4d28bc0e5aa7bd776f24900
 
+=======
+        
+		accessibilityPrepare();
+		
+>>>>>>> WIP: scrolling with footer
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             reportScrollPanel.setBounce(false);
@@ -196,6 +235,7 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	    cameraScrollPanel.refresh();
 	}
 
+<<<<<<< 9b88671fd0e5adfbd4d28bc0e5aa7bd776f24900
     @UiHandler("tabPanel")
     protected void onTabSelected(SelectionEvent<Integer> event) {
         if (presenter != null) {
@@ -204,6 +244,29 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
         }
     }
 
+=======
+    @UiHandler("reportTab")
+    protected void onReportTabPressed(TapEvent event) {
+    	if (presenter != null) {
+    		accessibilityShowReport();
+    	}
+    }
+    
+    @UiHandler("camerasTab")
+    protected void onCamerasTabPressed(TapEvent event) {
+    	if (presenter != null) {
+       		accessibilityShowCameras();
+    	}
+    }
+    @UiHandler("forecastTab")
+    protected void onForecastTabPressed(TapEvent event) {
+    	if (presenter != null) {
+       		accessibilityShowForcast();
+    	}
+    }
+	
+	
+>>>>>>> WIP: scrolling with footer
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {
@@ -311,8 +374,10 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	public void toggleStarButton(boolean isStarred) {
         if (isStarred) {
             starButton.setIcon(ImageHolder.get().important());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.TRUE);
         } else {
             starButton.setIcon(ImageHolder.get().notImportant());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.FALSE);
         }	
 	}
 
@@ -333,5 +398,56 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
         tabPanel.tabContainer.refresh();
 	    forecastScrollPanel.refresh();
 	}
-
+	
+	private void accessibilityShowReport(){
+		Roles.getMainRole().setAriaHiddenState(report.getElement(), false);
+		Roles.getMainRole().setAriaHiddenState(cameras.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(forecast.getElement(), true);
+		Roles.getTabRole().setAriaSelectedState(reportTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaSelectedState(camerasTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(forecastTab.getElement(), SelectedValue.FALSE);
+	}
+	
+	private void accessibilityShowCameras(){
+		Roles.getMainRole().setAriaHiddenState(report.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(cameras.getElement(), false);
+		Roles.getMainRole().setAriaHiddenState(forecast.getElement(), true);
+		Roles.getTabRole().setAriaSelectedState(reportTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(camerasTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaSelectedState(forecastTab.getElement(), SelectedValue.FALSE);
+	}
+	
+	private void accessibilityShowForcast(){
+		Roles.getMainRole().setAriaHiddenState(report.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(cameras.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(forecast.getElement(), false);
+		Roles.getTabRole().setAriaSelectedState(reportTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(camerasTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(forecastTab.getElement(), SelectedValue.TRUE);
+	}
+	
+	
+	private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getCheckboxRole().set(starButton.getElement());
+		Roles.getCheckboxRole().setAriaLabelProperty(starButton.getElement(), "favorite");
+		
+		Roles.getTabRole().set(reportTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(reportTab.getElement(), SelectedValue.TRUE);
+		
+		Roles.getTabRole().set(camerasTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(camerasTab.getElement(), SelectedValue.FALSE);
+		
+		Roles.getTabRole().set(forecastTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(forecastTab.getElement(), SelectedValue.FALSE);
+		
+		
+		accessibilityShowReport();
+	}
 }

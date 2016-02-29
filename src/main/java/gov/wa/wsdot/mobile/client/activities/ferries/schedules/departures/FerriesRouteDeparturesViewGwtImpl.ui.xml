@@ -49,7 +49,7 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Departures</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Departures</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
@@ -58,10 +58,10 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.TimeTabBarButton />
+                        <wsdot:tabbar.TimeTabBarButton ui:field="timesTab"/>
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:panel.flex.RootFlexPanel>
+                        <mgwt:panel.flex.RootFlexPanel ui:field="times">
                             <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
                             	<g:FlowPanel>
                                    <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
@@ -87,10 +87,10 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.CameraTabBarButton />
+                        <wsdot:tabbar.CameraTabBarButton ui:field="camerasTab" />
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:panel.flex.RootFlexPanel>
+                        <mgwt:panel.flex.RootFlexPanel ui:field="cameras">
                             <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
                                 <g:FlowPanel ui:field="cameraPanel">
                                    <mgwt:list.celllist.CellList ui:field="cameraCellList" />

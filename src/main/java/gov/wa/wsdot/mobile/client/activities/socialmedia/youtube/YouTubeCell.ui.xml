@@ -35,7 +35,7 @@
     <ui:with field="description" type="java.lang.String" />
     <ui:with field="uploaded" type="java.lang.String" />
     
-    <div>
+    <div role="button" tabindex="0">
         <div class="{style.videoImage}">
             <div>
                 <img class="{style.img}" src="{thumbnail}" onload="refreshPanel();" />

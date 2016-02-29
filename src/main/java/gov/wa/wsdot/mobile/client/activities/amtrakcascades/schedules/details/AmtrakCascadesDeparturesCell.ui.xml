@@ -68,9 +68,11 @@
     <ui:with field="trainName" type="com.google.gwt.safehtml.shared.SafeHtml" />
     <ui:with field="lastUpdated" type="com.google.gwt.safehtml.shared.SafeHtml" />
     
-    <div class="{cellStyle.cellAmtrakCascadesSchedulesStatus}">
+    <div class="{cellStyle.cellAmtrakCascadesSchedulesStatus}" tabindex="0">
         <div>
+            <div class="{app.css.ariaOnly}" >departing</div>
             <div class="{cellStyle.scheduledDeparture}"><ui:safehtml from="{scheduledDeparture}" /></div>
+            <div class="{app.css.ariaOnly}" >arriving</div>
             <div class="{cellStyle.scheduledArrival}"><ui:safehtml from="{scheduledArrival}" /></div>
         </div>
         <div>

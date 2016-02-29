@@ -226,6 +226,7 @@ video {
     margin: 10px 20px 0px 20px;
 }
 
+/*
 @sprite .highImpactAlert > div:nth-child\(2\) {
     gwt-image: "disclosurePNG";
     background-repeat: no-repeat;
@@ -233,7 +234,6 @@ video {
     margin-left: 5px;
 }
 
-/*
 @sprite .highImpactAlerts > div:nth-child\(2\) {
     gwt-image: "disclosurePNG";
     background-repeat: no-repeat;
@@ -249,6 +249,22 @@ video {
     color: #000000;
     font-weight: bold;
 }
+
+/*
+Style for accessibility
+Used to hide labels for content
+so only screen readers can see it.
+*/
+.ariaOnly {
+	position: absolute;
+	clip: rect(1px, 1px, 1px, 1px);
+	padding: 0;
+	border: 0;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
 
 @sprite .borderButton {
 	gwt-image: "borderDefaultPNG";

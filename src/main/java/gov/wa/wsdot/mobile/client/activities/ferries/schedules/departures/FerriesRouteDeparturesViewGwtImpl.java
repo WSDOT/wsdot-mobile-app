@@ -21,7 +21,11 @@ package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.aria.client.LiveValue;
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -35,14 +39,17 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
@@ -54,6 +61,8 @@ import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.CameraTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.TimeTabBarButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
@@ -73,6 +82,14 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	private static FerriesRouteDeparturesViewGwtImplUiBinder uiBinder = GWT
 			.create(FerriesRouteDeparturesViewGwtImplUiBinder.class);	
 
+	@UiField
+	HeaderTitle heading;
+	
+	@UiField
+	RootFlexPanel times;
+	
+	@UiField
+	RootFlexPanel cameras;
 	
 	@UiField(provided = true)
 	CellList<FerriesScheduleTimesItem> cellList;
@@ -82,6 +99,12 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 
     @UiField
     TabPanel tabPanel;
+    
+    @UiField
+    TimeTabBarButton timesTab;
+    
+    @UiField
+    CameraTabBarButton camerasTab;
     
     @UiField
     static
@@ -198,6 +221,8 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             cameraScrollPanel.setBounce(false);
@@ -221,6 +246,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     public static void refreshPanel() {
         cameraScrollPanel.refresh();
     }
+<<<<<<< ebdb337e45bf0020b65015562e7de00521cb3900
 
     @UiHandler("tabPanel")
     protected void onTabSelected(SelectionEvent<Integer> event) {
@@ -230,6 +256,28 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
         }
     }
 
+=======
+    
+
+    
+    
+    @UiHandler("timesTab")
+    protected void onTimesTabPressed(TapEvent event) {
+    	if (presenter != null) {
+    		accessibilityShowTimes();
+    	}
+    }
+    
+    @UiHandler("camerasTab")
+    protected void onCamerasTabPressed(TapEvent event) {
+    	if (presenter != null) {
+    		accessibilityShowCameras();
+
+    	}
+    }
+
+    
+>>>>>>> Added accessibility features to home activity and ferries.
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {
@@ -345,4 +393,47 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
         return this.tabPanel.tabContainer.container.getWidgetCount();
     }
 
+
+	private void accessibilityShowTimes(){
+		Roles.getMainRole().setAriaHiddenState(times.getElement(), false);
+		Roles.getMainRole().setAriaHiddenState(cameras.getElement(), true);
+		Roles.getTabRole().setAriaSelectedState(timesTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaSelectedState(camerasTab.getElement(), SelectedValue.FALSE);
+	}
+	
+	private void accessibilityShowCameras(){
+		Roles.getMainRole().setAriaHiddenState(times.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(cameras.getElement(), false);
+		Roles.getTabRole().setAriaSelectedState(timesTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(camerasTab.getElement(), SelectedValue.TRUE);
+	}
+
+	private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getMenuRole().set(daysOfWeek.getElement());
+		Roles.getMenuRole().setAriaLabelProperty(daysOfWeek.getElement(), "select a departing day");
+		Roles.getMenuRole().setTabindexExtraAttribute(daysOfWeek.getElement(), 0);		
+		
+		Roles.getMainRole().set(times.getElement());
+		Roles.getMainRole().set(cameras.getElement());
+		
+		Roles.getTabRole().set(timesTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(timesTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaLabelProperty(timesTab.getElement(), "times");
+		
+		Roles.getTabRole().set(camerasTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(camerasTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaLabelProperty(camerasTab.getElement(), "cameras");
+		
+		Roles.getProgressbarRole().set(progressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+		
+		accessibilityShowTimes();	
+	}
 }
