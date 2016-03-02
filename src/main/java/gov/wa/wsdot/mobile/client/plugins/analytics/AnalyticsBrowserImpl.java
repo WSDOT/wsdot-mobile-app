@@ -18,37 +18,25 @@
 
 package gov.wa.wsdot.mobile.client.plugins.analytics;
 
-import com.googlecode.gwtphonegap.client.plugins.PhoneGapPlugin;
-
 /**
- * This class is a wrapper for the google-analytics-plugin for Cordova. 
- * <p>
- * The implementation is based on
- *  <a href="https://github.com/danwilson/google-analytics-plugin/blob/master/www/analytics.js">analytics.js</a>
+ * Empty implementation for browser
  */
-public interface Analytics extends PhoneGapPlugin {
-	
-    /**
-     * Set up Analytics tracker
-     *
-     * @param id
-     */
-    public void startTrackerWithId(String id);
+public class AnalyticsBrowserImpl implements Analytics {
 
-    /**
-     * Track a Screen (PageView)
-     *
-     * @param screen
-     */
-    public void trackScreen(String screen);
+    @Override
+    public void initialize() {
+    }
 
-    /**
-     * Track an Event
-     *
-     * @param category
-     * @param action
-     * @param label
-     */
-    public void trackEvent(String category, String action, String label);
+    @Override
+    public void startTrackerWithId(String id) {
+    }
+
+    @Override
+    public void trackScreen(String screen) {
+    }
+
+    @Override
+    public void trackEvent(String category, String action, String label) {
+    }
 
 }

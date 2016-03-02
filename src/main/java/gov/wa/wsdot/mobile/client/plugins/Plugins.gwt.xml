@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2015 Washington State Department of Transportation
+Copyright (c) 2016 Washington State Department of Transportation
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
     </replace-with>
     <replace-with class="gov.wa.wsdot.mobile.client.plugins.admob.AdMobCordovaImpl">
         <when-type-is class="gov.wa.wsdot.mobile.client.plugins.admob.AdMob" />
+        <all>
+            <when-property-is name="phonegap.env" value="yes" />
+        </all>
+    </replace-with>
+
+    <!-- Analytics -->
+    <replace-with class="gov.wa.wsdot.mobile.client.plugins.analytics.AnalyticsBrowserImpl">
+        <when-type-is class="gov.wa.wsdot.mobile.client.plugins.analytics.Analytics" />
+    </replace-with>
+    <replace-with class="gov.wa.wsdot.mobile.client.plugins.analytics.AnalyticsCordovaImpl">
+        <when-type-is class="gov.wa.wsdot.mobile.client.plugins.analytics.Analytics" />
         <all>
             <when-property-is name="phonegap.env" value="yes" />
         </all>
