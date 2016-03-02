@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 	private AmtrakCascadesView view;
 	private PhoneGap phoneGap;
 	private InAppBrowser inAppBrowser;
+	private Analytics analytics;
 	
 	@SuppressWarnings("unused")
 	private EventBus eventBus;
@@ -55,14 +56,15 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 		this.eventBus = eventBus;
 	    this.phoneGap = clientFactory.getPhoneGap();
 	    inAppBrowser = this.phoneGap.getInAppBrowser();
+	    analytics = clientFactory.getAnalytics();
 		view.setPresenter(this);
 		view.render(createTopicsList());
-		
-		panel.setWidget(view);
-		
+
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Amtrak Cascades");
+			analytics.trackScreen("/Amtrak Cascades");
 		}
+
+		panel.setWidget(view);
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 		if (index == 0) {
 			
 			if (Consts.ANALYTICS_ENABLED) {
-				Analytics.trackScreen("/Amtrak Cascades/Buy Tickets");
+				analytics.trackScreen("/Amtrak Cascades/Buy Tickets");
 			}
 			
             inAppBrowser.open("http://m.amtrak.com", "_blank",

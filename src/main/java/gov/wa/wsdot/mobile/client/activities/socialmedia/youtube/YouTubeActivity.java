@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 	private YouTubeView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<YouTubeItem> youTubeItems = new ArrayList<YouTubeItem>();
 	private static final String YOUTUBE_FEED_URL = "http://mobileapp-wsdot.rhcloud.com/traveler/api/socialmedia/youtube";
@@ -59,6 +60,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getYouTubeView();
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		inAppBrowser = phoneGap.getInAppBrowser();
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -88,16 +90,15 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 			}
 			
 		});
-		
+
 		view.setHeaderPullHandler(headerHandler);
 		createPostList(view);
-		
-		panel.setWidget(view);
-		
+
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Social Media/Youtube");
+			analytics.trackScreen("/Social Media/Youtube");
 		}
-		
+
+		panel.setWidget(view);
 	}
 	
 	@Override
@@ -107,16 +108,14 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
-		
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Social Media/Youtube/Details Link");
+			analytics.trackScreen("/Social Media/Youtube/Details Link");
 		}
-		
+
 		YouTubeItem item = youTubeItems.get(index);
 
 		inAppBrowser.open("http://m.youtube.com/watch?v=" + item.getId(), "_blank",
 				"enableViewportScale=yes,transitionstyle=fliphorizontal");
-
 	}
 
 	@Override

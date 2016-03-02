@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@ public class NewsActivity extends MGWTAbstractActivity implements
 	private NewsView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<NewsItem> newsItems = new ArrayList<NewsItem>();
 	private static final String NEWS_FEED_URL = "http://www.wsdot.wa.gov/news/socialroom/posts/News";
@@ -64,6 +65,7 @@ public class NewsActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getNewsView();
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		inAppBrowser = phoneGap.getInAppBrowser();
 		
 		view.setPresenter(this);
@@ -94,16 +96,15 @@ public class NewsActivity extends MGWTAbstractActivity implements
 			}
 			
 		});
-		
+
 		view.setHeaderPullHandler(headerHandler);
 		createPostList(view);
-		
-		panel.setWidget(view);
-		
+
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Social Media/News");
+			analytics.trackScreen("/Social Media/News");
 		}
-		
+
+		panel.setWidget(view);
 	}
 	
 	@Override
@@ -113,11 +114,10 @@ public class NewsActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
-		
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Social Media/News/Details Link");
+			analytics.trackScreen("/Social Media/News/Details Link");
 		}
-		
+
 		NewsItem item = newsItems.get(index);
 
 		inAppBrowser.open(item.getLink(), "_blank",

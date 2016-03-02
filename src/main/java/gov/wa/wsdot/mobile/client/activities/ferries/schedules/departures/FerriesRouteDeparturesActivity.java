@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,7 @@ public class FerriesRouteDeparturesActivity extends
 	private FerriesRouteDeparturesView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private WSDOTDataService dbService;
 	private static ArrayList<String> daysOfWeek = new ArrayList<String>();
     private static ArrayList<FerriesScheduleDateItem> scheduleDateItems = new ArrayList<FerriesScheduleDateItem>();
@@ -104,6 +105,7 @@ public class FerriesRouteDeparturesActivity extends
 		view = clientFactory.getFerriesRouteDeparturesView();
 		dbService = clientFactory.getDbService();
         phoneGap = clientFactory.getPhoneGap();
+        analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 
@@ -145,10 +147,12 @@ public class FerriesRouteDeparturesActivity extends
 			terminalId = ferriesRouteSchedulesDayDeparturesPlace.getTerminalId();
             view.setHeaderPullHandler(headerHandler);
 			createDepartureTimesList(routeId, 0, sailingsIndex);
-			panel.setWidget(view);
+
 			if (Consts.ANALYTICS_ENABLED) {
-				Analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
+				analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
 			}
+
+			panel.setWidget(view);
 		}
 	}
 	

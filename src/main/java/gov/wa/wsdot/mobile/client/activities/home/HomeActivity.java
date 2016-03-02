@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,6 +96,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private final HomeView view;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
 	private static final String FERRIES_SCHEDULES_URL = Consts.HOST_URL + "/traveler/api/wsfschedule";
 	private static final String MOUNTAIN_PASS_URL = Consts.HOST_URL + "/traveler/api/mountainpassconditions";
@@ -122,6 +123,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
         view.setPresenter(this);
         dbService = clientFactory.getDbService();
         phoneGap = clientFactory.getPhoneGap();
+        analytics = clientFactory.getAnalytics();
 		view.getPullHeader().setHTML("pull down");
 		
 		PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
@@ -148,9 +150,9 @@ public class HomeActivity extends MGWTAbstractActivity implements
 				}.schedule(1);
 			}
 		});
-		
+
 		view.setHeaderPullHandler(headerHandler);
-		
+
 		buildWeatherPhrases();
 		createAlertsList();
 		createFavoritesList();
@@ -165,13 +167,11 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		// Schedule alert box to update every 60 seconds (60000 millseconds).
 		timer.scheduleRepeating(60000);
 
-		panel.setWidget(view);
-		
-
-		
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Home");
+			analytics.trackScreen("/Home");
 		}
+
+		panel.setWidget(view);
 	}
 
 	private void createAlertsList() {
@@ -1001,7 +1001,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onCameraSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Favorites/Cameras");
+			analytics.trackScreen("/Favorites/Cameras");
 		}
 		CameraItem item = cameraItems.get(index);
 		
@@ -1012,7 +1012,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onFerriesSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Favorites/Ferries");
+			analytics.trackScreen("/Favorites/Ferries");
 		}
 		FerriesRouteItem item = ferriesRouteItems.get(index);
 		
@@ -1024,7 +1024,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onMountainPassSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Favorites/Mountain Passes");
+			analytics.trackScreen("/Favorites/Mountain Passes");
 		}
 		MountainPassItem item = mountainPassItems.get(index);
 
@@ -1037,7 +1037,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	@Override
 	public void onTravelTimeSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Favorites/Travel Times");
+			analytics.trackScreen("/Favorites/Travel Times");
 		}
 		TravelTimesItem item = travelTimesItems.get(index);
 		

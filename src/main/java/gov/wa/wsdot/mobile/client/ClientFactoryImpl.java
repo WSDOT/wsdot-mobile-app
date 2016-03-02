@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDe
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesViewGwtImpl;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 
 import com.google.gwt.core.client.GWT;
@@ -137,6 +138,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private AmtrakCascadesSchedulesViewGwtImpl amtrakCascadesSchedulesView;
     private AmtrakCascadesSchedulesDetailsViewGwtImpl amtrakCascadesDeparturesView;
     private CalloutViewGwtImpl calloutView;
+    private Analytics analytics;
 
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -172,7 +174,6 @@ public class ClientFactoryImpl implements ClientFactory {
 		return dbService;
 	}
 
-
     public void setPhoneGap(PhoneGap phoneGap) {
         this.phoneGap = phoneGap;
     }
@@ -181,7 +182,16 @@ public class ClientFactoryImpl implements ClientFactory {
 	public PhoneGap getPhoneGap() {
 		return phoneGap;
 	}
-	
+
+	public void setAnalytics(Analytics analytics) {
+	    this.analytics = analytics;
+	}
+
+	@Override
+	public Analytics getAnalytics() {
+	    return analytics;
+	}
+
 	@Override
 	public AboutView getAboutView() {
 		if (aboutView == null) {

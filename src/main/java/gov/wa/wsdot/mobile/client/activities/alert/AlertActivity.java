@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ public class AlertActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private String alertId;
+	private Analytics analytics;
 
 	public AlertActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -53,6 +54,7 @@ public class AlertActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getAlertView();
 		dbService = clientFactory.getDbService();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -85,12 +87,11 @@ public class AlertActivity extends MGWTAbstractActivity implements
 			
 		}
 
-		panel.setWidget(view);
-		
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Alerts");
+			analytics.trackScreen("/Alerts");
 		}
 
+        panel.setWidget(view);
 	}
 
 	@Override

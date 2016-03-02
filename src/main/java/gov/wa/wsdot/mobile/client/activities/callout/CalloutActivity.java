@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ public class CalloutActivity extends MGWTAbstractActivity implements
 	private CalloutView view;
 	private EventBus eventBus;
 	private String url;
+	private Analytics analytics;
 
 	public CalloutActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -48,6 +49,7 @@ public class CalloutActivity extends MGWTAbstractActivity implements
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getCalloutView();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -86,13 +88,12 @@ public class CalloutActivity extends MGWTAbstractActivity implements
         view.setHeaderPullHandler(headerHandler);
         view.setTitle("JBLM");
         view.setImageUrl(url);
-		
+
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Traffic/Callout/JBLM");
+        }
+
 		panel.setWidget(view);
-		
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Traffic/Callout/JBLM");
-		}
-		
 	}
 
 	@Override

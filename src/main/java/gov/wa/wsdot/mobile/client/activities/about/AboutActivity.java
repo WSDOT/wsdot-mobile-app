@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,12 +37,14 @@ public class AboutActivity extends MGWTAbstractActivity implements
 	private final AboutView view;
 	private final EventBus eventBus;
 	private final PhoneGap phoneGap;
+	private final Analytics analytics;
 
 	public AboutActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
-		this.view = clientFactory.getAboutView();
-		this.eventBus = clientFactory.getEventBus();
-		this.phoneGap = clientFactory.getPhoneGap();
+		view = clientFactory.getAboutView();
+		eventBus = clientFactory.getEventBus();
+		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 	}
 
 	@Override
@@ -53,13 +55,12 @@ public class AboutActivity extends MGWTAbstractActivity implements
             view.getScrollPanel().setBounce(false);
         }
 
-		panel.setWidget(view);
-		
-		
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/About");
+			analytics.trackScreen("/About");
 		}
-		
+
+        panel.setWidget(view);
+
 	}
 
 	@Override

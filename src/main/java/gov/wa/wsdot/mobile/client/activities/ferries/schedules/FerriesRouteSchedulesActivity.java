@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<Integer> starred = new ArrayList<Integer>();
@@ -77,6 +78,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		view = clientFactory.getFerriesRouteSchedulesView();
 		dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 
@@ -110,12 +112,12 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		
 		view.setHeaderPullHandler(headerHandler);
 		createTopicsList();
-		panel.setWidget(view);
-		
+
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Ferries/Schedules");
-		}
-		
+            analytics.trackScreen("/Ferries/Schedules");
+        }
+
+		panel.setWidget(view);
 	}
 
 	@Override
@@ -123,7 +125,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		FerriesRouteItem item = ferriesRouteItems.get(index);
 		
 		if (Consts.ANALYTICS_ENABLED) {
-    		Analytics.trackEvent("Ferries", "Schedules", item.getDescription());
+    		analytics.trackEvent("Ferries", "Schedules", item.getDescription());
 		}
 		
 		clientFactory.getPlaceController().goTo(

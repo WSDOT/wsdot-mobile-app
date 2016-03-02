@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private static HashMap<Integer, String> USRouteIcon = new HashMap<Integer, String>();
 	private static HashMap<Integer, String> CanadaRouteIcon = new HashMap<Integer, String>();
 	private static List<BorderWaitItem> borderWaitItems = new ArrayList<BorderWaitItem>();
@@ -79,6 +80,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
         this.eventBus = eventBus;
         dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		view.setPresenter(this);
 		view.getNorthboundPullHeader().setHTML("pull down");
 		view.getSouthboundPullHeader().setHTML("pull down");
@@ -140,11 +142,12 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 		
 		buildRouteIcons();
 		createBorderWaitList(view);
-		panel.setWidget(view);
-		
+
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Border Wait");
-		}
+            analytics.trackScreen("/Border Wait");
+        }
+
+		panel.setWidget(view);
 	}	
 
 	private void createBorderWaitList(final BorderWaitView view) {

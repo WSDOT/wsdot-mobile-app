@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,23 +34,25 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 	private final ClientFactory clientFactory;
 	private final TollRatesView view;
 	private EventBus eventBus;
+	private Analytics analytics;
 	
 	public TollRatesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	    view = clientFactory.getTollRatesView();
+	    analytics = clientFactory.getAnalytics();
 	}
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 	    this.eventBus = eventBus;
         view.setPresenter(this);
-        
-		panel.setWidget(view);
-	    captureClickEvents();
-	    
+
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Toll Rates/SR 520");
+			analytics.trackScreen("/Toll Rates/SR 520");
 		}
+
+        panel.setWidget(view);
+        captureClickEvents();
 	}	
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 	private BlogView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<BlogItem> blogItems = new ArrayList<BlogItem>();
 	private static final String BLOG_FEED_URL = "http://wsdotblog.blogspot.com/feeds/posts/default?alt=json&max-results=10";
@@ -59,6 +60,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getBlogView();
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		inAppBrowser = this.phoneGap.getInAppBrowser();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
@@ -89,16 +91,15 @@ public class BlogActivity extends MGWTAbstractActivity implements
 			}
 			
 		});
-		
+
 		view.setHeaderPullHandler(headerHandler);
 		createBlogList(view);
-		
-		panel.setWidget(view);
-		
+
 		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Social Media/Blog");
+			analytics.trackScreen("/Social Media/Blog");
 		}
-		
+
+		panel.setWidget(view);
 	}
 	
 	@Override
@@ -108,10 +109,9 @@ public class BlogActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
-		
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Social Media/Blog/Details Link");
-		}
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Social Media/Blog/Details Link");
+        }
 		
 		BlogItem item = blogItems.get(index);
 		

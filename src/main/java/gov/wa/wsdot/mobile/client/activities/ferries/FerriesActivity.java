@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 	private final ClientFactory clientFactory;
 	private FerriesView view;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
 	
 	@SuppressWarnings("unused")
@@ -54,16 +55,17 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getFerriesView();
 		this.eventBus = eventBus;
-	    this.phoneGap = clientFactory.getPhoneGap();
+	    phoneGap = clientFactory.getPhoneGap();
+	    analytics = clientFactory.getAnalytics();
 	    inAppBrowser = this.phoneGap.getInAppBrowser();
 		view.setPresenter(this);
 		view.render(createTopicsList());
-		
+
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Ferries");
+        }
+
 		panel.setWidget(view);
-		
-		if (Consts.ANALYTICS_ENABLED) {
-			Analytics.trackScreen("/Ferries");
-		}
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 		}
 		if (index == 1) {
 			if (Consts.ANALYTICS_ENABLED) {
-				Analytics.trackScreen("/Ferries/Vehicle Reservations");
+				analytics.trackScreen("/Ferries/Vehicle Reservations");
 			}
             inAppBrowser.open("http://www.wsdot.wa.gov/ferries/reservations",
                     "", "enableViewportScale=yes");

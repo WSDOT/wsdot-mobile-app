@@ -19,20 +19,25 @@
 package gov.wa.wsdot.mobile.client.util;
 
 public final class Consts {
-	
+
 	public static final String HOST_URL = "http://www.wsdot.wa.gov";
 	public static final boolean ANALYTICS_ENABLED = false; 
-	
+
 	/**
 	 * The Event Category title in Google Analytics.
 	 */
 	public static final String EVENT_TRACKING_CATEGORY = "MobileApp";
-	
+
 	/**
 	 * Current version number and build of the app.
 	 */
 	public static final String APP_VERSION = "3.4.0";
-	
+
+	/**
+	 * Unique Tracking Id from Property Settings in Google Analytics
+	 */
+	public static final String ANALYTICS_TRACKING_ID = "UA-XXXXXX-XX";
+
 	/**
 	 * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,
 	 * and so on. Thus, the caller should be prevented from constructing objects of
