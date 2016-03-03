@@ -62,6 +62,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 	private static List<FerriesRouteAlertItem> routeAlertItems = new ArrayList<FerriesRouteAlertItem>();
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	private boolean isStarred = false;
+	private static int lastTab = 0;
 	
 	public FerriesRouteSailingsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -231,5 +232,30 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 		});
 		
 	}
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab){
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Sailings");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Alerts");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
+    }
 
 }

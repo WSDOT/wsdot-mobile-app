@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,6 @@
  */
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
-
-import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 import java.util.Date;
 import java.util.List;
@@ -59,6 +51,12 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+
+import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.CameraItem;
+import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		implements FerriesRouteDeparturesView {
@@ -116,9 +114,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	private final TimeZoneConstants timeZoneConstants = GWT.create(TimeZoneConstants.class);
     private final TimeZone usPacific = TimeZone.createTimeZone(TimeZoneInfo
             .buildTimeZoneData(timeZoneConstants.americaLosAngeles()));	
-	
-	private static int lastTab = 0;
-    
+
 	public FerriesRouteDeparturesViewGwtImpl() {
 		
         pullToRefresh = new PullPanel();
@@ -208,28 +204,9 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
         	@Override
     		public void onSelection(SelectionEvent<Integer> event){
-    			
-    			int currentTab = tabPanel.tabContainer.getSelectedPage();
-    			
-    			switch(currentTab){
-    			case 0:
-    				if (currentTab != lastTab){
-        				if (Consts.ANALYTICS_ENABLED) {
-        					Analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
-            			}
-    				}
-    				break;
-    			case 1:
-    				if (currentTab != lastTab){
-        				if (Consts.ANALYTICS_ENABLED) {
-        					Analytics.trackScreen("/Ferries/Schedules/Sailings/Cameras");
-            			}
-    				}
-    				break;
-    			default:    			
-    			}
-
-    			lastTab = currentTab;
+        	    if (presenter != null) {
+        	        presenter.onTabSelected(tabPanel.tabContainer.getSelectedPage());
+        	    }
     		}
     	});
 

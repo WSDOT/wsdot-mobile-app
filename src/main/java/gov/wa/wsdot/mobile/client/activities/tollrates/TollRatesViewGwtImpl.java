@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,12 @@
 
 package gov.wa.wsdot.mobile.client.activities.tollrates;
 
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -36,6 +31,8 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
 public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 
@@ -71,58 +68,21 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 	TabPanel tabPanel;
 	
 	private Presenter presenter;
-	
-	private static int lastTab = 0;
-	
+
 	public TollRatesViewGwtImpl() {
 		
 		initWidget(uiBinder.createAndBindUi(this));
-        
-		
+
         // Add selection handler to tabContainer for google analytics tracking
     	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
-        	@Override
-    		public void onSelection(SelectionEvent<Integer> event){
-    			
-    			int currentTab = tabPanel.tabContainer.getSelectedPage();
-    			
-    			switch(currentTab){
-    			case 0:
-    				if (currentTab != lastTab){
-        				if (Consts.ANALYTICS_ENABLED) {
-        					Analytics.trackScreen("/Toll Rates/SR 520");
-            			}
-    				}
-    				break;
-    			case 1:
-    				if (currentTab != lastTab){
-        				if (Consts.ANALYTICS_ENABLED) {
-        					Analytics.trackScreen("/Toll Rates/SR 16");
-            			}
-    				}
-    				break;
-    			case 2:
-    				if (currentTab != lastTab){
-        				if (Consts.ANALYTICS_ENABLED) {
-        					Analytics.trackScreen("/Toll Rates/SR 167");
-            			}
-    				}
-    				break;
-    			case 3:
-    				if (currentTab != lastTab){
-        				if (Consts.ANALYTICS_ENABLED) {
-        					Analytics.trackScreen("/Toll Rates/I-405");
-            			}
-    				}
-    				break;
-    			default:    			
-    			}
-
-    			lastTab = currentTab;
-    		}
+            @Override
+            public void onSelection(SelectionEvent<Integer> event){
+                if (presenter != null) {
+                    presenter.onTabSelected(tabPanel.tabContainer.getSelectedPage());
+                }
+            }
     	});
-		
-		
+
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             sr520ScrollPanel.setBounce(false);
@@ -130,7 +90,7 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
             sr167ScrollPanel.setBounce(false);
         }
 	}
-	
+
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {

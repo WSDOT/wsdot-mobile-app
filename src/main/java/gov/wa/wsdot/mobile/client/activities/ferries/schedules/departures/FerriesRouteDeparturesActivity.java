@@ -95,6 +95,7 @@ public class FerriesRouteDeparturesActivity extends
 	private static int terminalId;
 	private static final String TERMINAL_SAILING_SPACE_URL = Consts.HOST_URL + "/traveler/api/ferries/terminalsailingspace";
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
+	private static int lastTab = 0;
 	
 	public FerriesRouteDeparturesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -138,7 +139,11 @@ public class FerriesRouteDeparturesActivity extends
         });
         
         createTerminalLocations();
-		
+
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
+        }
+
 		Place place = clientFactory.getPlaceController().getWhere();
 		if (place instanceof FerriesRouteDeparturesPlace) {
             FerriesRouteDeparturesPlace ferriesRouteSchedulesDayDeparturesPlace = (FerriesRouteDeparturesPlace) place;
@@ -147,10 +152,6 @@ public class FerriesRouteDeparturesActivity extends
 			terminalId = ferriesRouteSchedulesDayDeparturesPlace.getTerminalId();
             view.setHeaderPullHandler(headerHandler);
 			createDepartureTimesList(routeId, 0, sailingsIndex);
-
-			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
-			}
 
 			panel.setWidget(view);
 		}
@@ -680,6 +681,31 @@ public class FerriesRouteDeparturesActivity extends
         CameraItem item = cameraItems.get(index);
         clientFactory.getPlaceController().goTo(
                 new CameraPlace(Integer.toString(item.getCameraId())));
+    }
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab) {
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab) {
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Sailings/Cameras");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
     }
 
     /**

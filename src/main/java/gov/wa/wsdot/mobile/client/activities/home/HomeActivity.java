@@ -18,6 +18,38 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import com.google.code.gwt.database.client.GenericRow;
+import com.google.code.gwt.database.client.service.DataServiceException;
+import com.google.code.gwt.database.client.service.ListCallback;
+import com.google.code.gwt.database.client.service.RowIdListCallback;
+import com.google.code.gwt.database.client.service.VoidCallback;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsArrayInteger;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.jsonp.client.JsonpRequestBuilder;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.gwtphonegap.client.PhoneGap;
+import com.googlecode.gwtphonegap.client.notification.AlertCallback;
+import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
@@ -55,40 +87,6 @@ import gov.wa.wsdot.mobile.shared.MountainPassItem;
 import gov.wa.wsdot.mobile.shared.TravelTimes;
 import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import com.google.code.gwt.database.client.GenericRow;
-import com.google.code.gwt.database.client.service.DataServiceException;
-import com.google.code.gwt.database.client.service.ListCallback;
-import com.google.code.gwt.database.client.service.RowIdListCallback;
-import com.google.code.gwt.database.client.service.VoidCallback;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsArrayInteger;
-import com.google.gwt.event.dom.client.TouchMoveEvent;
-import com.google.gwt.event.dom.client.TouchMoveHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.jsonp.client.JsonpRequestBuilder;
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.web.bindery.event.shared.EventBus;
-import com.googlecode.gwtphonegap.client.PhoneGap;
-import com.googlecode.gwtphonegap.client.notification.AlertCallback;
-import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
-
 public class HomeActivity extends MGWTAbstractActivity implements
 		HomeView.Presenter {
 
@@ -111,6 +109,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
 	private static HashMap<String, String[]> weatherPhrasesNight = new HashMap<String, String[]>();
+	private static int lastTab = 0;
 
 	
 	public HomeActivity(ClientFactory clientFactory) {
@@ -1046,7 +1045,20 @@ public class HomeActivity extends MGWTAbstractActivity implements
 						.getRouteId())));
 
 	}
-	
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        if ((currentTab != lastTab) && (currentTab == 1)){
+            if (Consts.ANALYTICS_ENABLED) {
+                analytics.trackScreen("/Favorites");
+            }
+        }
+
+        lastTab = currentTab;
+    }
+
 	@SuppressWarnings("unused")
     private static String makeImage(ImageResource resource) {
 		AbstractImagePrototype image = AbstractImagePrototype.create(resource);

@@ -35,6 +35,7 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 	private final TollRatesView view;
 	private EventBus eventBus;
 	private Analytics analytics;
+	private static int lastTab = 0;
 	
 	public TollRatesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -64,7 +65,46 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 	public void onBackButtonPressed() {
 		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
-	
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab){
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/SR 520");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/SR 16");
+                }
+            }
+            break;
+        case 2:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/SR 167");
+                }
+            }
+            break;
+        case 3:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/I-405");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
+    }
+
     /**
      * JSNI method to capture click events and open urls in PhoneGap
      * InAppBrowser.
@@ -83,4 +123,5 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
                         'enableViewportScale=yes,transitionstyle=fliphorizontal,location=yes');
         });
     }-*/;
+
 }
