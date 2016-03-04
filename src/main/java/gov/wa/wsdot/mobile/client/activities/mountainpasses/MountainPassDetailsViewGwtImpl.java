@@ -22,7 +22,6 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -171,16 +170,6 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 
 		initWidget(uiBinder.createAndBindUi(this));
 
-		// Add selection handler to tabContainer for google analytics tracking
-    	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
-            @Override
-            public void onSelection(SelectionEvent<Integer> event){
-                if (presenter != null) {
-                    presenter.onTabSelected(tabPanel.tabContainer.getSelectedPage());
-                }
-            }
-    	});
-
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             reportScrollPanel.setBounce(false);
@@ -206,6 +195,14 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	public static void refreshPanel() {
 	    cameraScrollPanel.refresh();
 	}
+
+    @UiHandler("tabPanel")
+    protected void onTabSelected(SelectionEvent<Integer> event) {
+        if (presenter != null) {
+            int index = event.getSelectedItem();
+            presenter.onTabSelected(index);
+        }
+    }
 
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {

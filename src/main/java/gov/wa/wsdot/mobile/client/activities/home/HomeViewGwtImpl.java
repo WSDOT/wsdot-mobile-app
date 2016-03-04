@@ -24,7 +24,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -314,16 +313,14 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             colorOfStar.setHTML("icon to turn it white.");
         }
 
-        // Add selection handler to tabContainer for google analytics tracking
-    	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
-            @Override
-            public void onSelection(SelectionEvent<Integer> event){
-                if (presenter != null) {
-                    presenter.onTabSelected(tabPanel.tabContainer.getSelectedPage());
-                }
-            }
-    	});
+	}
 
+	@UiHandler("tabPanel")
+	protected void onTabSelected(SelectionEvent<Integer> event) {
+	    if (presenter != null) {
+	        int index = event.getSelectedItem();
+	        presenter.onTabSelected(index);
+	    }
 	}
 
 	@UiHandler("aboutButton")

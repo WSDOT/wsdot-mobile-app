@@ -20,7 +20,6 @@ package gov.wa.wsdot.mobile.client.activities.tollrates;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -73,16 +72,6 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
-        // Add selection handler to tabContainer for google analytics tracking
-    	tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>(){
-            @Override
-            public void onSelection(SelectionEvent<Integer> event){
-                if (presenter != null) {
-                    presenter.onTabSelected(tabPanel.tabContainer.getSelectedPage());
-                }
-            }
-    	});
-
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             sr520ScrollPanel.setBounce(false);
@@ -90,6 +79,14 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
             sr167ScrollPanel.setBounce(false);
         }
 	}
+
+    @UiHandler("tabPanel")
+    protected void onTabSelected(SelectionEvent<Integer> event) {
+        if (presenter != null) {
+            int index = event.getSelectedItem();
+            presenter.onTabSelected(index);
+        }
+    }
 
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
