@@ -69,6 +69,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 	private static List<BorderWaitItem> borderWaitItems = new ArrayList<BorderWaitItem>();
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static final String BORDER_WAIT_URL = Consts.HOST_URL + "/traveler/api/bordercrossings";
+	private static int lastTab = 0;
 	
 	public BorderWaitActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -144,7 +145,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 		createBorderWaitList(view);
 
 		if (Consts.ANALYTICS_ENABLED) {
-            analytics.trackScreen("/Border Wait");
+            analytics.trackScreen("/Border Wait/Northbound");
         }
 
 		panel.setWidget(view);
@@ -373,6 +374,31 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 	public void onBackButtonPressed() {
 		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
+
+	@Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab){
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Border Wait/Northbound");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Border Wait/Southbound");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
+    }
 
 	private static SafeHtml makeImage(ImageResource resource) {
 		AbstractImagePrototype image = AbstractImagePrototype.create(resource);

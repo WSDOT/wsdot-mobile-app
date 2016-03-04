@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,9 @@ public interface BorderWaitView extends IsWidget {
 	public interface Presenter {
 
 		public void onBackButtonPressed();
-	
+
+		public void onTabSelected(int index);
+
 	}
 
 	public void renderNorthbound(List<BorderWaitItem> createNorthboundList);
