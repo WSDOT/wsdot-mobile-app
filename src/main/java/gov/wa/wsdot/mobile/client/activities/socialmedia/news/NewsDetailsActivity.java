@@ -27,6 +27,11 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
+/**
+ * TODO: This class is no longer in use as WSDOT template is now mobile friendly.
+ * @author simsl
+ *
+ */
 public class NewsDetailsActivity extends MGWTAbstractActivity implements
 		NewsDetailsView.Presenter {
 

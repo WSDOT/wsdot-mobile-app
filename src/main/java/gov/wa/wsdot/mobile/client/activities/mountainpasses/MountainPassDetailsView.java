@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,9 @@ public interface MountainPassDetailsView extends IsWidget {
 		public void onBackButtonPressed();
 		
 		public void onStarButtonPressed();
-		
+
+		public void onTabSelected(int index);
+
 	}
 	
 	public void renderCamera(List<CameraItem> createCameraList);

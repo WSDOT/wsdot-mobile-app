@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
@@ -33,6 +35,7 @@ public class FerriesRouteAlertDetailsActivity extends MGWTAbstractActivity imple
 	private final ClientFactory clientFactory;
 	private FerriesRouteAlertDetailsView view;
 	private EventBus eventBus;
+	private Analytics analytics;
 
 	public FerriesRouteAlertDetailsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -41,6 +44,7 @@ public class FerriesRouteAlertDetailsActivity extends MGWTAbstractActivity imple
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getFerriesRouteAlertDetailsView();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -54,9 +58,12 @@ public class FerriesRouteAlertDetailsActivity extends MGWTAbstractActivity imple
 			view.setAlertText(ferriesRouteAlertDetailsPlace.getFerriesRouteAlertItem().getAlertFullText());
 		}
 
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Ferries/Schedules/Sailings/Alerts");
+		}
+
 		panel.setWidget(view);
 		captureClickEvents();
-
 	}
 
 	@Override

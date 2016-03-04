@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,12 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
-import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
-
 import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.i18n.client.TimeZoneInfo;
@@ -55,6 +50,12 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+
+import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.CameraItem;
+import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
 
 public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		implements FerriesRouteDeparturesView {
@@ -112,7 +113,7 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
 	private final TimeZoneConstants timeZoneConstants = GWT.create(TimeZoneConstants.class);
     private final TimeZone usPacific = TimeZone.createTimeZone(TimeZoneInfo
             .buildTimeZoneData(timeZoneConstants.americaLosAngeles()));	
-	
+
 	public FerriesRouteDeparturesViewGwtImpl() {
 		
         pullToRefresh = new PullPanel();
@@ -220,7 +221,15 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     public static void refreshPanel() {
         cameraScrollPanel.refresh();
     }
-    
+
+    @UiHandler("tabPanel")
+    protected void onTabSelected(SelectionEvent<Integer> event) {
+        if (presenter != null) {
+            int index = event.getSelectedItem();
+            presenter.onTabSelected(index);
+        }
+    }
+
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {

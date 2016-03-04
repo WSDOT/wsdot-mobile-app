@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.socialmedia.facebook;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.FacebookFeed;
 import gov.wa.wsdot.mobile.shared.FacebookItem;
 
@@ -45,6 +47,7 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 	private FacebookView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<FacebookItem> facebookItems = new ArrayList<FacebookItem>();
 	private static final String FACEBOOK_FEED_URL = "http://www.wsdot.wa.gov/news/socialroom/posts/facebook";
@@ -57,6 +60,7 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getFacebookView();
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		inAppBrowser = phoneGap.getInAppBrowser();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
@@ -87,11 +91,15 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 			}
 			
 		});
-		
+
 		view.setHeaderPullHandler(headerHandler);
 		createPostList(view);
-		
-		panel.setWidget(view);
+
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Social Media/Facebook");
+		}
+
+        panel.setWidget(view);
 	}
 	
 	@Override
@@ -101,6 +109,10 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Social Media/Facebook/Details Link");
+		}
+		
 		FacebookItem item = facebookItems.get(index);
 		
 		if (item.getType().equalsIgnoreCase("photo")) {

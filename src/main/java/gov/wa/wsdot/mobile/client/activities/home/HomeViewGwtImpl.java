@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,12 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
-import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesCell;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesCell;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
-import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
-
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -62,6 +51,18 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+
+import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesCell;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesCell;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
+import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
+import gov.wa.wsdot.mobile.shared.CameraItem;
+import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
+import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+import gov.wa.wsdot.mobile.shared.MountainPassItem;
+import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 
@@ -154,12 +155,11 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	TabPanel tabPanel;
-	
+
 	private Presenter presenter;
 	private PullArrowHeader pullArrowHeader;
 
 	public HomeViewGwtImpl() {
-		
 	    pullToRefresh = new PullPanel();
 		pullArrowHeader = new PullArrowHeader();
 		pullToRefresh.setHeader(pullArrowHeader);
@@ -312,6 +312,15 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             scrollPanel.setBounce(false);
             colorOfStar.setHTML("icon to turn it white.");
         }
+
+	}
+
+	@UiHandler("tabPanel")
+	protected void onTabSelected(SelectionEvent<Integer> event) {
+	    if (presenter != null) {
+	        int index = event.getSelectedItem();
+	        presenter.onTabSelected(index);
+	    }
 	}
 
 	@UiHandler("aboutButton")
@@ -401,7 +410,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 			presenter.onTravelTimeSelected(index);
 		}
 	}
-	
+
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;

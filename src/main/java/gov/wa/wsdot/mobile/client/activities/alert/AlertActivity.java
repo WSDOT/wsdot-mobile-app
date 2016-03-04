@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@ package gov.wa.wsdot.mobile.client.activities.alert;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 
 import java.util.List;
@@ -42,6 +44,7 @@ public class AlertActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private String alertId;
+	private Analytics analytics;
 
 	public AlertActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -51,6 +54,7 @@ public class AlertActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getAlertView();
 		dbService = clientFactory.getDbService();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -83,8 +87,11 @@ public class AlertActivity extends MGWTAbstractActivity implements
 			
 		}
 
-		panel.setWidget(view);
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Alerts");
+		}
 
+        panel.setWidget(view);
 	}
 
 	@Override

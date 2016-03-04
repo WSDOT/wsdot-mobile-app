@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpr
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
@@ -74,6 +75,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
@@ -92,9 +94,14 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getTrafficMapView();
 		dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.setMapLocation(); // Set initial map location.
+
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map");
+		}
 
 		panel.setWidget(view);
 	}
@@ -540,43 +547,66 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onTravelTimesButtonPressed() {
-		clientFactory.getPlaceController().goTo(new TravelTimesPlace());
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Traffic Map/Travel Times");
+        }
+	    clientFactory.getPlaceController().goTo(new TravelTimesPlace());
 	}
 
 	@Override
 	public void onGoToLocationButtonPressed() {
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Go To Location");
+		}
 		clientFactory.getPlaceController().goTo(new GoToLocationPlace());
 	}
 
 	@Override
 	public void onCameraButtonPressed(boolean showCameras) {
-		if (showCameras) {
+		if (showCameras) {	
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackEvent("Traffic", "Cameras", "Hide Cameras");
+			}	
 			view.hideCameras();
-		} else {
+		} else {	
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackEvent("Traffic", "Cameras", "Show Cameras");
+			}		
 			view.showCameras();
 		}
 	}
 
 	@Override
 	public void onCameraSelected(int cameraId) {
-		clientFactory.getPlaceController().goTo(
-				new CameraPlace(Integer.toString(cameraId)));
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Cameras");
+		}
+        clientFactory.getPlaceController().goTo(
+                new CameraPlace(Integer.toString(cameraId)));
 	}
 
 	@Override
 	public void onAlertSelected(int alertId) {
-		clientFactory.getPlaceController().goTo(
-				new AlertPlace(Integer.toString(alertId)));
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Map Alert");
+		}
+        clientFactory.getPlaceController().goTo(
+                new AlertPlace(Integer.toString(alertId)));
 	}	
 
     @Override
     public void onCalloutSelected(String url) {
-        clientFactory.getPlaceController().goTo(new CalloutPlace(url));
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Callout");
+		}
+		clientFactory.getPlaceController().goTo(new CalloutPlace(url));
     }
 
 	@Override
 	public void onLocateButtonPressed() {
-		
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/My Location");
+		}
 		phoneGap.getGeolocation().getCurrentPosition(new GeolocationCallback() {
 
 			@Override
@@ -612,14 +642,19 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onSeattleExpressLanesButtonPressed() {
-		clientFactory.getPlaceController()
-				.goTo(new SeattleExpressLanesPlace());
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Seattle Express Lanes");
+		}
+        clientFactory.getPlaceController().goTo(new SeattleExpressLanesPlace());
 	}
 
 	@Override
 	public void onSeattleTrafficAlertsButtonPressed() {
-		clientFactory.getPlaceController()
-				.goTo(new SeattleTrafficAlertsPlace());
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Seattle Alerts");
+		}
+        clientFactory.getPlaceController()
+                .goTo(new SeattleTrafficAlertsPlace());
 	}
 	
 	@Override

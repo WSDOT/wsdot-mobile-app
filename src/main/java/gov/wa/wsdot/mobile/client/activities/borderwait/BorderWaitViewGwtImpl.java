@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import gov.wa.wsdot.mobile.shared.BorderWaitItem;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -178,7 +179,15 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
             leftFlexSpacer.setVisible(false);
         }
 	}
-	
+
+    @UiHandler("tabPanel")
+    protected void onTabSelected(SelectionEvent<Integer> event) {
+        if (presenter != null) {
+            int index = event.getSelectedItem();
+            presenter.onTabSelected(index);
+        }
+    }
+
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {

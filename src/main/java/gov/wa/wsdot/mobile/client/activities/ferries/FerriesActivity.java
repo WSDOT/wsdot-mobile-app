@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 	private final ClientFactory clientFactory;
 	private FerriesView view;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
 	
 	@SuppressWarnings("unused")
@@ -52,11 +55,16 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getFerriesView();
 		this.eventBus = eventBus;
-	    this.phoneGap = clientFactory.getPhoneGap();
+	    phoneGap = clientFactory.getPhoneGap();
+	    analytics = clientFactory.getAnalytics();
 	    inAppBrowser = this.phoneGap.getInAppBrowser();
 		view.setPresenter(this);
 		view.render(createTopicsList());
-		
+
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Ferries");
+        }
+
 		panel.setWidget(view);
 	}
 
@@ -72,6 +80,9 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 			return;
 		}
 		if (index == 1) {
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vehicle Reservations");
+			}
             inAppBrowser.open("http://www.wsdot.wa.gov/ferries/reservations",
                     "", "enableViewportScale=yes");
             return;

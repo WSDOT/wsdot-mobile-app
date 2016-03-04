@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 	private AmtrakCascadesSchedulesView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
     private List<AmtrakCascadesStationItem> amtrakStationItems = new ArrayList<AmtrakCascadesStationItem>();
     private DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	
@@ -58,6 +61,7 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 		view = clientFactory.getAmtrakCascadesSchedulesView();
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		view.setPresenter(this);
 		
         view.showProgressIndicator();
@@ -65,15 +69,18 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 		getAmtrakStations();
 		getCurrentLocation();
 
-		panel.setWidget(view);
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Amtrak Cascades/Schedules");
+		}
 
+        panel.setWidget(view);
 	}
 
 	private void getDaysOfWeek() {
 	    List<String> daysOfWeek = new ArrayList<String>();
-	    
+
 	    Date startDate = new Date();
-	    
+
 	    for (int i = 0; i < 7; i++) {
 	        Date nextDay = new Date(startDate.getTime() + i * 24 * 3600 * 1000);
 	        daysOfWeek.add(dateFormat.format(nextDay));
@@ -206,13 +213,23 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
                             // TODO Auto-generated method stub
                         }
                     }, "Point of origin needed");
-        } else if (fromLocation.equalsIgnoreCase(toLocation)) {
-            // User picked the same destination as the origin. Just ignore it.
+        } else if (toLocation.equalsIgnoreCase("NA") || fromLocation.equalsIgnoreCase(toLocation)) {
+            // User selected no destination or user picked the same destination as the origin. Just ignore it.
             toLocation = "NA";
+
+    		if (Consts.ANALYTICS_ENABLED) {
+    		    analytics.trackEvent("Amtrak", "Schedules", fromLocation);
+    		}
+
             clientFactory.getPlaceController().goTo(
                     new AmtrakCascadesSchedulesDetailsPlace(statusDate, fromLocation,
                             toLocation));
         } else {
+        	
+    		if (Consts.ANALYTICS_ENABLED) {
+    		    analytics.trackEvent("Amtrak", "Schedules", fromLocation + " - " + toLocation);
+    		}
+        	
             clientFactory.getPlaceController().goTo(
                     new AmtrakCascadesSchedulesDetailsPlace(statusDate, fromLocation,
                             toLocation));

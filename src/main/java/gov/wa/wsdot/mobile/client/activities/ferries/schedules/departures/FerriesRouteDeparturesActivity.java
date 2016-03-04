@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
@@ -81,6 +82,7 @@ public class FerriesRouteDeparturesActivity extends
 	private FerriesRouteDeparturesView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private WSDOTDataService dbService;
 	private static ArrayList<String> daysOfWeek = new ArrayList<String>();
     private static ArrayList<FerriesScheduleDateItem> scheduleDateItems = new ArrayList<FerriesScheduleDateItem>();
@@ -93,6 +95,7 @@ public class FerriesRouteDeparturesActivity extends
 	private static int terminalId;
 	private static final String TERMINAL_SAILING_SPACE_URL = Consts.HOST_URL + "/traveler/api/ferries/terminalsailingspace";
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
+	private static int lastTab = 0;
 	
 	public FerriesRouteDeparturesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -103,6 +106,7 @@ public class FerriesRouteDeparturesActivity extends
 		view = clientFactory.getFerriesRouteDeparturesView();
 		dbService = clientFactory.getDbService();
         phoneGap = clientFactory.getPhoneGap();
+        analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 
@@ -135,7 +139,11 @@ public class FerriesRouteDeparturesActivity extends
         });
         
         createTerminalLocations();
-		
+
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
+        }
+
 		Place place = clientFactory.getPlaceController().getWhere();
 		if (place instanceof FerriesRouteDeparturesPlace) {
             FerriesRouteDeparturesPlace ferriesRouteSchedulesDayDeparturesPlace = (FerriesRouteDeparturesPlace) place;
@@ -144,6 +152,7 @@ public class FerriesRouteDeparturesActivity extends
 			terminalId = ferriesRouteSchedulesDayDeparturesPlace.getTerminalId();
             view.setHeaderPullHandler(headerHandler);
 			createDepartureTimesList(routeId, 0, sailingsIndex);
+
 			panel.setWidget(view);
 		}
 	}
@@ -672,6 +681,31 @@ public class FerriesRouteDeparturesActivity extends
         CameraItem item = cameraItems.get(index);
         clientFactory.getPlaceController().goTo(
                 new CameraPlace(Integer.toString(item.getCameraId())));
+    }
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab) {
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Sailings/Departures");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab) {
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Sailings/Cameras");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
     }
 
     /**

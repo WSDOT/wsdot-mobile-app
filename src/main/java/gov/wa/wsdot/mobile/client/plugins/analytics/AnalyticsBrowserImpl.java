@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,27 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client;
+package gov.wa.wsdot.mobile.client.plugins.analytics;
 
-public class Analytics {
+/**
+ * Empty implementation for browser
+ */
+public class AnalyticsBrowserImpl implements Analytics {
 
-	public Analytics() {
-	}
-	
-	public static native void trackEvent(String category, String action, String label) /*-{
-		$wnd._gaq.push(['_trackEvent', category, action, label]);
-	}-*/;
+    @Override
+    public void initialize() {
+    }
 
-	public static native void trackEvent(String category, String action, String label, int intArg) /*-{
-    	$wnd._gaq.push(['_trackEvent', category, action, label, intArg]);
-	}-*/;
+    @Override
+    public void startTrackerWithId(String id) {
+    }
+
+    @Override
+    public void trackScreen(String screen) {
+    }
+
+    @Override
+    public void trackEvent(String category, String action, String label) {
+    }
+
 }

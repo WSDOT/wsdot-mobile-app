@@ -27,6 +27,11 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
+/**
+ * TODO: This class is no longer in use as blogger is now mobile friendly.
+ * @author simsl
+ *
+ */
 public class BlogDetailsActivity extends MGWTAbstractActivity implements
 		BlogDetailsView.Presenter {
 
@@ -55,7 +60,6 @@ public class BlogDetailsActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
-
 	}
 
 	@Override

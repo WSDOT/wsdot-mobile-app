@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.TwitterFeed;
 import gov.wa.wsdot.mobile.shared.TwitterFeed.Media;
 import gov.wa.wsdot.mobile.shared.TwitterFeed.Urls;
@@ -54,6 +56,7 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 	private TwitterView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<TwitterItem> twitterItems = new ArrayList<TwitterItem>();
 	private static HashMap<String, String> twitterProfileImages = new HashMap<String, String>();
@@ -69,6 +72,7 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getTwitterView();
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		inAppBrowser = this.phoneGap.getInAppBrowser();
 		
 		view.setPresenter(this);
@@ -122,10 +126,14 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 			}
 			
 		});
-		
+
 		view.setHeaderPullHandler(headerHandler);
 		createPostList(view, twitterScreenNames.get(view.getAccountSelected()));
-		
+
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Social Media/Twitter");
+		}
+
 		panel.setWidget(view);
 	}
 	
@@ -136,6 +144,10 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onItemSelected(int index) {
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Social Media/Twitter/Details Link");
+		}
+
 		TwitterItem item = twitterItems.get(index);
 
 		inAppBrowser.open("https://twitter.com/" + item.getScreenName()

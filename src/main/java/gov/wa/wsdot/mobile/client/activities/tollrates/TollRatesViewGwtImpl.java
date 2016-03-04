@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.tollrates;
 
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -31,6 +30,8 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
 public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 
@@ -66,11 +67,11 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 	TabPanel tabPanel;
 	
 	private Presenter presenter;
-	
+
 	public TollRatesViewGwtImpl() {
 		
 		initWidget(uiBinder.createAndBindUi(this));
-        
+
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             sr520ScrollPanel.setBounce(false);
@@ -78,7 +79,15 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
             sr167ScrollPanel.setBounce(false);
         }
 	}
-	
+
+    @UiHandler("tabPanel")
+    protected void onTabSelected(SelectionEvent<Integer> event) {
+        if (presenter != null) {
+            int index = event.getSelectedItem();
+            presenter.onTabSelected(index);
+        }
+    }
+
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {

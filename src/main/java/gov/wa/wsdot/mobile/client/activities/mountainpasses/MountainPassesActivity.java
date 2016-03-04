@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -72,6 +73,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
+	private Analytics analytics;
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
 	private static HashMap<String, String[]> weatherPhrasesNight = new HashMap<String, String[]>();
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
@@ -89,6 +91,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getMountainPassesView();
 		dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -118,11 +121,16 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 			}
 			
 		});
-		
+
 		view.setHeaderPullHandler(headerHandler);
 		buildWeatherPhrases();
 		createTopicsList();
-		panel.setWidget(view);
+
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Mountain Passes");
+		}
+
+        panel.setWidget(view);
 	}
 	
 	@Override
@@ -134,6 +142,10 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	public void onItemSelected(int index) {
 		MountainPassItem item = mountainPassItems.get(index);
 
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Mountain Passes/Pass/Report");
+		}
+		
 		clientFactory.getPlaceController().goTo(
 				new MountainPassDetailsPlace(Integer.toString(item
 						.getMountainPassId())));		

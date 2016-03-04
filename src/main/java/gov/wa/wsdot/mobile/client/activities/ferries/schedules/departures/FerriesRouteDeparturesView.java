@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,8 @@ public interface FerriesRouteDeparturesView extends IsWidget {
 		public void onDayOfWeekSelected(int position);
 		
 		public void onCameraSelected(int index);
+
+		public void onTabSelected(int index);
 
 	}
 	

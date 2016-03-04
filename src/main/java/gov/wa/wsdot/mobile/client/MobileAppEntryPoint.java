@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,10 +60,12 @@ import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMob;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions.AdPosition;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 
@@ -71,13 +73,13 @@ public class MobileAppEntryPoint implements EntryPoint {
 	
 	private void start() {
 
-		final PhoneGap phoneGap = GWT.create(PhoneGap.class);
+	    final ClientFactory clientFactory = new ClientFactoryImpl();
+	    final PhoneGap phoneGap = GWT.create(PhoneGap.class);
 
 		phoneGap.addHandler(new PhoneGapAvailableHandler() {
 
 	        @Override
 	        public void onPhoneGapAvailable(PhoneGapAvailableEvent event) {
-	    		final ClientFactory clientFactory = new ClientFactoryImpl();
 	        	((ClientFactoryImpl) clientFactory).setPhoneGap(phoneGap);
 	        	buildDisplay(clientFactory, phoneGap);
     	        if (MGWT.getOsDetection().isIOs() || MGWT.getOsDetection().isAndroid()) {
@@ -111,6 +113,12 @@ public class MobileAppEntryPoint implements EntryPoint {
 		options.setPosition(AdPosition.TOP_CENTER.getPosition());
 
 		adMob.createBanner(options);
+		
+		// Initialize and configure Google Analytics plugin
+		final Analytics analytics = GWT.create(Analytics.class);
+		((ClientFactoryImpl) clientFactory).setAnalytics(analytics);
+		analytics.initialize();
+		analytics.startTrackerWithId(Consts.ANALYTICS_TRACKING_ID);
 	}
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {

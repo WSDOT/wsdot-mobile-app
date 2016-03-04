@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationVie
 import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 
 import com.google.gwt.place.shared.PlaceController;
@@ -93,6 +94,7 @@ public interface ClientFactory {
 	public CameraView getCameraView();
 	public AlertView getAlertView();
 	public PhoneGap getPhoneGap();
+	public Analytics getAnalytics();
 	public SeattleExpressLanesView getSeattleExpressLanesView();
 	public SeattleTrafficAlertsView getSeattleTrafficAlertsView();
 	public GoToFerriesLocationView getFerriesGoToLocationView();

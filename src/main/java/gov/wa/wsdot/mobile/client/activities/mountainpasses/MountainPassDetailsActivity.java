@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,9 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.ForecastItem;
@@ -50,10 +52,12 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 	private final MountainPassDetailsView view;
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
+	private Analytics analytics;
 	private static List<MountainPassItem> mountainPassItems = new ArrayList<MountainPassItem>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<ForecastItem> forecastItems = new ArrayList<ForecastItem>();
 	private boolean isStarred = false;
+	private static int lastTab = 0;
 
 	public MountainPassDetailsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -63,6 +67,7 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		dbService = clientFactory.getDbService();
+        analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -219,5 +224,37 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 		});
 		
 	}
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab){
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Mountain Passes/Pass/Report");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Mountain Passes/Pass/Cameras");
+                }
+            }
+            break;
+        case 2:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Mountain Passes/Pass/Forcast");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
+    }
 
 }

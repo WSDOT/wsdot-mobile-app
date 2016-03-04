@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,9 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.FerriesRouteDeparturesPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
 import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
@@ -53,12 +55,14 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 	private final ClientFactory clientFactory;
 	private FerriesRouteSailingsView view;
 	private EventBus eventBus;
+	private Analytics analytics;
 	private WSDOTDataService dbService;
 	private static List<FerriesScheduleDateItem> scheduleDateItems = new ArrayList<FerriesScheduleDateItem>();
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<FerriesRouteAlertItem> routeAlertItems = new ArrayList<FerriesRouteAlertItem>();
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	private boolean isStarred = false;
+	private static int lastTab = 0;
 	
 	public FerriesRouteSailingsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -68,9 +72,14 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getFerriesRouteSailingsView();
 		dbService = clientFactory.getDbService();
+		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
-		
+
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Ferries/Schedules/Sailings");
+        }
+
 		Place place = clientFactory.getPlaceController().getWhere();
 		if (place instanceof FerriesRouteSailingsPlace) {
 			FerriesRouteSailingsPlace ferriesRouteSchedulesDaySailingsPlace = (FerriesRouteSailingsPlace) place;
@@ -78,7 +87,6 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 			createTopicsList(routeId);
 			panel.setWidget(view);
 		}
-		
 	}
 	
 	private void createTopicsList(final String routeId) {
@@ -224,5 +232,30 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 		});
 		
 	}
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab){
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Sailings");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Ferries/Schedules/Alerts");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
+    }
 
 }

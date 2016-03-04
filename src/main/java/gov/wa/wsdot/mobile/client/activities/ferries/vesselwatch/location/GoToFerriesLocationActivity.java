@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class GoToFerriesLocationActivity extends MGWTAbstractActivity implements
 	private final ClientFactory clientFactory;
 	private GoToFerriesLocationView view;
 	private EventBus eventBus;
+	private Analytics analytics;
 	private static Storage localStorage = Storage.getLocalStorageIfSupported();
 	
 	public GoToFerriesLocationActivity(ClientFactory clientFactory) {
@@ -47,6 +50,7 @@ public class GoToFerriesLocationActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getFerriesGoToLocationView();
 		this.eventBus = eventBus;
+		analytics = clientFactory.getAnalytics();
 		view.setPresenter(this);
 		view.render(createTopicsList());
 		
@@ -62,30 +66,57 @@ public class GoToFerriesLocationActivity extends MGWTAbstractActivity implements
 	public void onItemSelected(int index) {
 		if (index == 0) {
 			storeMapLocation(48.535868, -123.013808, 10); // Anacortes
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Anacortes");
+			}
 		}
 		if (index == 1) {
 			storeMapLocation(47.803096, -122.438718, 12); // Edmonds
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Edmonds");
+			}
 		}
 		if (index == 2) {
 			storeMapLocation(47.513625, -122.450820, 13); // Fauntleroy
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Fauntleroy");
+			}
 		}
 		if (index == 3) {
 			storeMapLocation(47.963857, -122.327721, 13); // Mukilteo
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Mukilteo");
+			}
 		}
 		if (index == 4) {
 			storeMapLocation(47.319040, -122.510890, 13); // Pt Defiance
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Pt Defiance");
+			}
 		}
 		if (index == 5) {
 			storeMapLocation(48.135562, -122.714449, 12); // Port Townsend
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Port Townsend");
+			}
 		}
 		if (index == 6) {
 			storeMapLocation(48.557233, -122.897078, 12); // San Juan Islands
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/an Juan Islands");
+			}
 		}
 		if (index == 7) {
 			storeMapLocation(47.565125, -122.480508, 11); // Seattle
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Seattle");
+			}
 		}
 		if (index == 8) {
 			storeMapLocation(47.600325, -122.437249, 12); // Seattle-Bainbridge
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Ferries/Vessel Watch/Go To Location/Seattle-Bainbridge");
+			}
 		}
 		
 		onDoneButtonPressed();

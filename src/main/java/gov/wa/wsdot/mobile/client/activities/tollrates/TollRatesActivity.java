@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.tollrates;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
 
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
@@ -32,19 +34,26 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 	private final ClientFactory clientFactory;
 	private final TollRatesView view;
 	private EventBus eventBus;
+	private Analytics analytics;
+	private static int lastTab = 0;
 	
 	public TollRatesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	    view = clientFactory.getTollRatesView();
+	    analytics = clientFactory.getAnalytics();
 	}
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 	    this.eventBus = eventBus;
         view.setPresenter(this);
-        
-		panel.setWidget(view);
-	    captureClickEvents();
+
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Toll Rates/SR 520");
+		}
+
+        panel.setWidget(view);
+        captureClickEvents();
 	}	
 
 	@Override
@@ -56,7 +65,46 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 	public void onBackButtonPressed() {
 		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
-	
+
+    @Override
+    public void onTabSelected(int index) {
+        int currentTab = index;
+
+        switch(currentTab){
+        case 0:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/SR 520");
+                }
+            }
+            break;
+        case 1:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/SR 16");
+                }
+            }
+            break;
+        case 2:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/SR 167");
+                }
+            }
+            break;
+        case 3:
+            if (currentTab != lastTab){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Toll Rates/I-405");
+                }
+            }
+            break;
+        default:
+        }
+
+        lastTab = currentTab;
+    }
+
     /**
      * JSNI method to capture click events and open urls in PhoneGap
      * InAppBrowser.
@@ -75,4 +123,5 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
                         'enableViewportScale=yes,transitionstyle=fliphorizontal,location=yes');
         });
     }-*/;
+
 }
