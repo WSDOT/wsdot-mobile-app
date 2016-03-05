@@ -70,13 +70,20 @@ import gov.wa.wsdot.mobile.shared.CacheItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 
 public class MobileAppEntryPoint implements EntryPoint {
-	
+
 	private void start() {
 
 	    final ClientFactory clientFactory = new ClientFactoryImpl();
-	    final PhoneGap phoneGap = GWT.create(PhoneGap.class);
 
-		phoneGap.addHandler(new PhoneGapAvailableHandler() {
+        // Initialize and configure Google Analytics plugin
+        final Analytics analytics = GWT.create(Analytics.class);
+        analytics.initialize();
+
+        ((ClientFactoryImpl) clientFactory).setAnalytics(analytics);
+        analytics.startTrackerWithId(Consts.ANALYTICS_TRACKING_ID);
+
+        final PhoneGap phoneGap = GWT.create(PhoneGap.class);
+        phoneGap.addHandler(new PhoneGapAvailableHandler() {
 
 	        @Override
 	        public void onPhoneGapAvailable(PhoneGapAvailableEvent event) {
@@ -103,22 +110,16 @@ public class MobileAppEntryPoint implements EntryPoint {
 		phoneGap.initializePhoneGap();
 
 		// Initialize and configure AdMob plugin
-		final AdMob adMob = GWT.create(AdMob.class);
-		adMob.initialize();
+        final AdMob adMob = GWT.create(AdMob.class);
+        adMob.initialize();
 
-		AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
-		options.setAdId("/6499/example/banner");
-		options.setOffsetTopBar(true);
-		options.setAutoShow(true);
-		options.setPosition(AdPosition.TOP_CENTER.getPosition());
+        AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
+        options.setAdId("/6499/example/banner");
+        options.setOffsetTopBar(true);
+        options.setAutoShow(true);
+        options.setPosition(AdPosition.TOP_CENTER.getPosition());
 
-		adMob.createBanner(options);
-		
-		// Initialize and configure Google Analytics plugin
-		final Analytics analytics = GWT.create(Analytics.class);
-		((ClientFactoryImpl) clientFactory).setAnalytics(analytics);
-		analytics.initialize();
-		analytics.startTrackerWithId(Consts.ANALYTICS_TRACKING_ID);
+        adMob.createBanner(options);
 	}
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
