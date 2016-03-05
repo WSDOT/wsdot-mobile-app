@@ -31,7 +31,7 @@ public class AnalyticsCordovaImpl implements Analytics {
     }
     
     private native boolean testForPlugin() /*-{
-		if (!$wnd.window.analytics) {
+		if (!$wnd.analytics) {
 			return false;
 		}
 		return true;
@@ -45,7 +45,7 @@ public class AnalyticsCordovaImpl implements Analytics {
         startTrackerWithIdNative(id);
     }
 
-    private static native void startTrackerWithIdNative(String id) /*-{
+    private native void startTrackerWithIdNative(String id) /*-{
         $wnd.analytics.startTrackerWithId(id)
     }-*/;
     
@@ -57,7 +57,7 @@ public class AnalyticsCordovaImpl implements Analytics {
         trackScreenNative(screen);
     }
 
-    private static native void trackScreenNative(String screen) /*-{
+    private native void trackScreenNative(String screen) /*-{
         $wnd.analytics.trackView(screen);
     }-*/;
     
@@ -69,7 +69,7 @@ public class AnalyticsCordovaImpl implements Analytics {
         trackEventNative(category, action, label);
     }
 
-    private static native void trackEventNative(String category, String action, String label) /*-{
+    private native void trackEventNative(String category, String action, String label) /*-{
         $wnd.analytics.trackEvent(category, action, label);
     }-*/;
 
