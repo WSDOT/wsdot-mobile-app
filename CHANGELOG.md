@@ -3,7 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
 - Added Google Analytics
+
+### Fixed
+- Added Train numbers 502 and 504
 
 ## [3.4.0] - 2016-02-24
 ### Added

@@ -126,7 +126,9 @@ public class AmtrakCascadesSchedulesDetailsActivity extends MGWTAbstractActivity
         trainNumberMap.put(28, "Empire Builder Train");
         trainNumberMap.put(500, "Amtrak Cascades Train");
         trainNumberMap.put(501, "Amtrak Cascades Train");
+        trainNumberMap.put(502, "Amtrak Cascades Train");
         trainNumberMap.put(503, "Amtrak Cascades Train");
+        trainNumberMap.put(504, "Amtrak Cascades Train");
         trainNumberMap.put(505, "Amtrak Cascades Train");
         trainNumberMap.put(506, "Amtrak Cascades Train");
         trainNumberMap.put(507, "Amtrak Cascades Train");
