@@ -121,7 +121,8 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
+		
 	}
 
 	@Override

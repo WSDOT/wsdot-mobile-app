@@ -88,7 +88,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 			FerriesRouteSailingsPlace ferriesRouteSchedulesDaySailingsPlace = (FerriesRouteSailingsPlace) place;
 			String routeId = ferriesRouteSchedulesDaySailingsPlace.getId();
 			createTopicsList(routeId);
-			accessibility.postNotification();
+			accessibility.postScreenChangeNotification();
 			panel.setWidget(view);
 		}
 	}

@@ -56,7 +56,7 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	    captureClickEvents();
 	}	
 

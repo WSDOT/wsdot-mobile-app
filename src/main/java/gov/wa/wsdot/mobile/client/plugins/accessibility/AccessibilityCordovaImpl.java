@@ -1,5 +1,7 @@
 package gov.wa.wsdot.mobile.client.plugins.accessibility;
 
+import gov.wa.wsdot.mobile.client.MobileAppEntryPoint;
+
 /**
  * Created by simsl on 3/11/16.
  */
@@ -16,7 +18,7 @@ public class AccessibilityCordovaImpl implements Accessibility {
     }
 
     private native boolean testForPlugin() /*-{
-        if (!$wnd.window.MobileAccessibility) {
+        if (!$wnd.MobileAccessibility) {
             return false;
         }
         return true;
@@ -24,7 +26,13 @@ public class AccessibilityCordovaImpl implements Accessibility {
 
 
     @Override
-    public void postNotification() {
+    public native void isVoiceOverRunning() /*-{
+        $wnd.MobileAccessibility.isVoiceOverRunning($wnd.initAds);
+    }-*/;
+
+
+    @Override
+    public void postScreenChangeNotification() {
         if (!initialized) {
             throw new IllegalStateException("you have to initialize MobileAccessibility plugin before using it");
         }
@@ -32,9 +40,9 @@ public class AccessibilityCordovaImpl implements Accessibility {
     }
 
     private native void postNotificationNative() /*-{
-        $wnd.window.MobileAccessibility.postNotification(
-        $wnd.window.MobileAccessibility.MobileAccessibilityNotifications.SCREEN_CHANGED,
-        'Testing notifications',
+        $wnd.MobileAccessibility.postScreenChangeNotification(
+        $wnd.MobileAccessibility.MobileAccessibilityNotifications.SCREEN_CHANGED,
+        '',
         function(info) {
             if (info) {
                 console.log("Screen Reader notification. success : " + info.wasSuccessful);

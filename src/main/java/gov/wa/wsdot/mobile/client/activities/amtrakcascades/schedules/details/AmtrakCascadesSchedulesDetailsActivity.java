@@ -117,7 +117,7 @@ public class AmtrakCascadesSchedulesDetailsActivity extends MGWTAbstractActivity
             createTopicsList(statusDate, fromLocation, toLocation);
             
             panel.setWidget(view);
-            accessibility.postNotification();
+            accessibility.postScreenChangeNotification();
         }
     }
 

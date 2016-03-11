@@ -106,7 +106,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		createTopicsList(view);
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	}
 
 	private void createTopicsList(final TravelTimesView view) {

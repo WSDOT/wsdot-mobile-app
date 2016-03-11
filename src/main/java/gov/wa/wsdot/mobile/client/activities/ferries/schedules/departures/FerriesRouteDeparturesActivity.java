@@ -157,7 +157,7 @@ public class FerriesRouteDeparturesActivity extends
             view.setHeaderPullHandler(headerHandler);
 			createDepartureTimesList(routeId, 0, sailingsIndex);
 			panel.setWidget(view);
-            accessibility.postNotification();
+			accessibility.postScreenChangeNotification();
 		}
 	}
 	

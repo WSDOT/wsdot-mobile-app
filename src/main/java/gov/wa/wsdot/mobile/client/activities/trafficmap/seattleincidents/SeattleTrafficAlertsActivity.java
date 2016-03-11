@@ -66,7 +66,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getSeattleTrafficAlertsView();
 		accessibility = clientFactory.getAccessibility();
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -103,7 +103,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 		createTopicsList();
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	}
 
 	private void buildCategories() {

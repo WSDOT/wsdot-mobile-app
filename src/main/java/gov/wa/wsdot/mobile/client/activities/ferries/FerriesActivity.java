@@ -68,7 +68,8 @@ public class FerriesActivity extends MGWTAbstractActivity implements
             analytics.trackScreen("/Ferries");
         }
 		panel.setWidget(view);
-        accessibility.postNotification();
+
+        accessibility.postScreenChangeNotification();
 
 	}
 
