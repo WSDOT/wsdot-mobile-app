@@ -67,7 +67,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	}
 
 	@Override

@@ -78,7 +78,7 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 
         panel.setWidget(view);
 
-        accessibility.postNotification();
+        accessibility.postScreenChangeNotification();
 	}
 
 	private void getDaysOfWeek() {

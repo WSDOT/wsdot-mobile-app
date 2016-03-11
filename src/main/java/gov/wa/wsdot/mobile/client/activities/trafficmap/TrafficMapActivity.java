@@ -111,7 +111,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 
 	}
 

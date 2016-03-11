@@ -130,7 +130,7 @@ public class CameraActivity extends MGWTAbstractActivity implements
 		getCamera(view, cameraId);
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	}	
 
 	private void getCamera(final CameraView view, String cameraId) {

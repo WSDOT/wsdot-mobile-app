@@ -116,6 +116,20 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		phoneGap.initializePhoneGap();
 
+        exportInitAds();
+        accessibility.isVoiceOverRunning();
+
+	}
+
+    /**
+     * Callback function for MobileAccessibility.isVoiceOverRunning(callback)
+     *
+     * Changes banner position based on VoiceOverOn
+     *
+     * @param VoiceOverOn
+     */
+	public static void initAds(boolean VoiceOverOn){
+
 		// Initialize and configure AdMob plugin
 		final AdMob adMob = GWT.create(AdMob.class);
 		adMob.initialize();
@@ -125,9 +139,23 @@ public class MobileAppEntryPoint implements EntryPoint {
         options.setOffsetTopBar(true);
         options.setAutoShow(true);
         options.setPosition(AdPosition.TOP_CENTER.getPosition());
+
+        if (VoiceOverOn){
+            options.setPosition(AdPosition.BOTTOM_CENTER.getPosition());
+        }else {
+            options.setPosition(AdPosition.TOP_CENTER.getPosition());
+        }
+
 		adMob.createBanner(options);
 
 	}
+
+    /**
+     *  exports java method initAds to javascript
+     */
+    public static native void exportInitAds() /*-{
+        $wnd.initAds = $entry(@gov.wa.wsdot.mobile.client.MobileAppEntryPoint::initAds(Z));
+    }-*/;
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
 

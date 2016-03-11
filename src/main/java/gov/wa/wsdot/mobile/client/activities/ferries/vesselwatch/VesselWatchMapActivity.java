@@ -115,7 +115,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	}
 
 	private void buildFerryIcons() {

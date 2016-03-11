@@ -153,7 +153,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	}	
 
 	private void createBorderWaitList(final BorderWaitView view) {

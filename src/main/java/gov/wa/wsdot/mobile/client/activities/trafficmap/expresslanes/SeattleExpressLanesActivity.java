@@ -106,7 +106,7 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 
 		panel.setWidget(view);
 
-		accessibility.postNotification();
+		accessibility.postScreenChangeNotification();
 	}
 
     private void createPostList() {

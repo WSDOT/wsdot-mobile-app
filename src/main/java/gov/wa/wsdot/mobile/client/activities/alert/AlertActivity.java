@@ -93,9 +93,8 @@ public class AlertActivity extends MGWTAbstractActivity implements
 			analytics.trackScreen("/Alerts");
 		}
 
-        panel.setWidget(view);
-
-		accessibility.postNotification();
+		panel.setWidget(view);
+		accessibility.postScreenChangeNotification();
 	}
 
 	@Override
