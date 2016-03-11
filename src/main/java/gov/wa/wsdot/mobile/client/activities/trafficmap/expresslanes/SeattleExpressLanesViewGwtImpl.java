@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes;
 
+import com.google.gwt.aria.client.Roles;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
@@ -62,7 +64,9 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 	 */
 	private static SeattleExpressLanesViewGwtImplUiBinder uiBinder = GWT
 			.create(SeattleExpressLanesViewGwtImplUiBinder.class);
-	
+
+	@UiField
+	HeaderTitle heading;
 
 	@UiField
 	Button doneButton;
@@ -137,7 +141,9 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 		
 		
 		initWidget(uiBinder.createAndBindUi(this));
-        
+
+		accessibilityPrepare();
+
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFixedSpacer.setWidth("12px");
             leftFlexSpacer.setVisible(false);
@@ -208,6 +214,14 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 	@Override
 	public void setSelected(int lastIndex, boolean b) {
 		schedules.setSelectedIndex(lastIndex, b);
+	}
+
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getHeadingRole().set(heading.getElement());
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
 	}
 
 }

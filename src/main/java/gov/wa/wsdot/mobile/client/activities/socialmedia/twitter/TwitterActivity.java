@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.TwitterFeed;
 import gov.wa.wsdot.mobile.shared.TwitterFeed.Media;
 import gov.wa.wsdot.mobile.shared.TwitterFeed.Urls;
@@ -58,6 +59,7 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
+	private Accessibility accessibility;
 	private static ArrayList<TwitterItem> twitterItems = new ArrayList<TwitterItem>();
 	private static HashMap<String, String> twitterProfileImages = new HashMap<String, String>();
 	private static HashMap<String, String> twitterScreenNames = new HashMap<String, String>();
@@ -70,6 +72,7 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getTwitterView();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
@@ -135,6 +138,8 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+
+		accessibility.postNotification();
 	}
 	
 	@Override

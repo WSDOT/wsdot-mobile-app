@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -53,6 +54,7 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private static List<MountainPassItem> mountainPassItems = new ArrayList<MountainPassItem>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<ForecastItem> forecastItems = new ArrayList<ForecastItem>();
@@ -68,6 +70,7 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		dbService = clientFactory.getDbService();
         analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -181,6 +184,8 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 		}
 		
 		panel.setWidget(view);
+
+		accessibility.postNotification();
 	}
 
 	@Override

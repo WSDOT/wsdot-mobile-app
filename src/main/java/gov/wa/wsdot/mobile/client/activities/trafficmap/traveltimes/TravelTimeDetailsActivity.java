@@ -24,6 +24,7 @@ import java.util.List;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
 import gov.wa.wsdot.mobile.shared.TravelTimesItem;
@@ -43,6 +44,7 @@ public class TravelTimeDetailsActivity extends MGWTAbstractActivity implements
 	private final ClientFactory clientFactory;
 	private TravelTimeDetailsView view;
 	private EventBus eventBus;
+	private Accessibility accessibility;
 	private WSDOTDataService dbService;
 	private static List<TravelTimesItem> travelTimesItems = new ArrayList<TravelTimesItem>();
 	private boolean isStarred = false;
@@ -55,6 +57,7 @@ public class TravelTimeDetailsActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getTravelTimeDetailsView();
 		dbService = clientFactory.getDbService();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -101,6 +104,7 @@ public class TravelTimeDetailsActivity extends MGWTAbstractActivity implements
 
 		panel.setWidget(view);
 
+		accessibility.postNotification();
 	}
 
 	@Override

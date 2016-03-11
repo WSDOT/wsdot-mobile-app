@@ -194,5 +194,8 @@ public class BlogViewGwtImpl extends Composite implements BlogView {
 		Roles.getProgressbarRole().set(progressIndicator.getElement());
 		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
 		Roles.getProgressbarRole().setAriaLiveProperty(progressIndicator.getElement(), LiveValue.ASSERTIVE);
+
+        // TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+        Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
 	}
 }

@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.BorderWaitColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -64,6 +65,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private static HashMap<Integer, String> USRouteIcon = new HashMap<Integer, String>();
 	private static HashMap<Integer, String> CanadaRouteIcon = new HashMap<Integer, String>();
 	private static List<BorderWaitItem> borderWaitItems = new ArrayList<BorderWaitItem>();
@@ -82,6 +84,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
         dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		view.setPresenter(this);
 		view.getNorthboundPullHeader().setHTML("pull down");
 		view.getSouthboundPullHeader().setHTML("pull down");
@@ -149,6 +152,8 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
         }
 
 		panel.setWidget(view);
+
+		accessibility.postNotification();
 	}	
 
 	private void createBorderWaitList(final BorderWaitView view) {

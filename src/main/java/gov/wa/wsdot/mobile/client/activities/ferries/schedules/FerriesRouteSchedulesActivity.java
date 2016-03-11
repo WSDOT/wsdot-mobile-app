@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesR
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -63,7 +64,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
-	
+	private Accessibility accessibility;
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
@@ -79,6 +80,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 
@@ -118,6 +120,8 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
         }
 
 		panel.setWidget(view);
+
+		accessibility.postNotification();
 	}
 
 	@Override

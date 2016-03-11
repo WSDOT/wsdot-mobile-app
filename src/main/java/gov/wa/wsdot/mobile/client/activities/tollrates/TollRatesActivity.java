@@ -27,6 +27,7 @@ import gov.wa.wsdot.mobile.client.util.Consts;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 
 public class TollRatesActivity extends MGWTAbstractActivity implements
 		TollRatesView.Presenter {
@@ -35,6 +36,7 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 	private final TollRatesView view;
 	private EventBus eventBus;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private static int lastTab = 0;
 	
 	public TollRatesActivity(ClientFactory clientFactory) {
@@ -46,14 +48,16 @@ public class TollRatesActivity extends MGWTAbstractActivity implements
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 	    this.eventBus = eventBus;
+		accessibility = clientFactory.getAccessibility();
         view.setPresenter(this);
 
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Toll Rates/SR 520");
 		}
 
-        panel.setWidget(view);
-        captureClickEvents();
+		panel.setWidget(view);
+		accessibility.postNotification();
+	    captureClickEvents();
 	}	
 
 	@Override

@@ -21,6 +21,7 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.SeattleIncidentItem;
 import gov.wa.wsdot.mobile.shared.SeattleIncidentsFeed;
@@ -49,6 +50,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 	private SeattleTrafficAlertsView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Accessibility accessibility;
 	private static ArrayList<SeattleIncidentItem> seattleIncidentItems = new ArrayList<SeattleIncidentItem>();
 	private static List<Integer> blockingCategory = new ArrayList<Integer>();
     private static List<Integer> constructionCategory = new ArrayList<Integer>();
@@ -63,6 +65,8 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getSeattleTrafficAlertsView();
+		accessibility = clientFactory.getAccessibility();
+		accessibility.postNotification();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -99,6 +103,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 		createTopicsList();
 		panel.setWidget(view);
 
+		accessibility.postNotification();
 	}
 
 	private void buildCategories() {

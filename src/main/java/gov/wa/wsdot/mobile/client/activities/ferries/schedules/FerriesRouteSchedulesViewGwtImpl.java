@@ -113,7 +113,7 @@ public class FerriesRouteSchedulesViewGwtImpl extends Composite implements
 
 			@Override
 			public String getLastUpdated(FerriesRouteItem model) {
-				return "Updated " + ParserUtils.relativeTime(model.getCacheDate(),
+				return ParserUtils.relativeTime(model.getCacheDate(),
 						"MMMM d, yyyy h:mm a", false);
 			}
 
@@ -220,6 +220,9 @@ public class FerriesRouteSchedulesViewGwtImpl extends Composite implements
 
 		Roles.getProgressbarRole().set(progressIndicator.getElement());
 		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
 	}
 
 }

@@ -444,6 +444,7 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 		
 		Roles.getProgressbarRole().set(progressIndicator.getElement());
 		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
-		
+
+        Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
     }
 }

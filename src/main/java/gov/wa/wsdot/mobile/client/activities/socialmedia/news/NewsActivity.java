@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.NewsFeed;
 import gov.wa.wsdot.mobile.shared.NewsItem;
 
@@ -50,6 +51,7 @@ public class NewsActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<NewsItem> newsItems = new ArrayList<NewsItem>();
 	private static final String NEWS_FEED_URL = "http://www.wsdot.wa.gov/news/socialroom/posts/News";
@@ -63,11 +65,11 @@ public class NewsActivity extends MGWTAbstractActivity implements
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getNewsView();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
 		inAppBrowser = phoneGap.getInAppBrowser();
-		
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
 		
@@ -105,6 +107,8 @@ public class NewsActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+
+		accessibility.postNotification();
 	}
 	
 	@Override

@@ -230,8 +230,12 @@ public class TravelTimesViewGwtImpl extends Composite implements
 	public HasRefresh getPullPanel() {
 		return pullToRefresh;
 	}
+
 	private void accessibilityPrepare(){
 		// Add ARIA roles for accessibility
 		Roles.getHeadingRole().set(heading.getElement());
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
 	}
 }

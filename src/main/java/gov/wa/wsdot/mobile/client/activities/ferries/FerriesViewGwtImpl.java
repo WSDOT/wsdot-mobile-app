@@ -136,8 +136,7 @@ public class FerriesViewGwtImpl extends Composite implements FerriesView {
 		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
 		//Roles.getHeadingRole().set(heading.getElement());
-        Roles.getMainRole().set(heading.getElement());
-        Roles.getMainRole().setAriaLiveProperty(heading.getElement(), LiveValue.ASSERTIVE);
+        Roles.getHeadingRole().set(heading.getElement());
 	}
 
 }

@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents;
 
+import com.google.gwt.aria.client.Roles;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.SimpleListItem;
 import gov.wa.wsdot.mobile.shared.SeattleIncidentItem;
@@ -60,7 +62,9 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 	 */
 	private static SeattleTrafficAlertsViewGwtImplUiBinder uiBinder = GWT
 			.create(SeattleTrafficAlertsViewGwtImplUiBinder.class);
-	
+
+	@UiField
+	HeaderTitle heading;
 
 	@UiField
 	Button doneButton;
@@ -180,7 +184,9 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-        
+
+		accessibilityPrepare();
+
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFixedSpacer.setWidth("12px");
             leftFlexSpacer.setVisible(false);
@@ -260,5 +266,13 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
         amberAlertsHeader.setVisible(false);
         amberAlertsCellList.setVisible(false);
     }
+
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getHeadingRole().set(heading.getElement());
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+	}
 
 }

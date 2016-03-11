@@ -116,19 +116,19 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		phoneGap.initializePhoneGap();
 
-        // Initialize Plugins
-
 		// Initialize and configure AdMob plugin
-        final AdMob adMob = GWT.create(AdMob.class);
-        adMob.initialize();
+		final AdMob adMob = GWT.create(AdMob.class);
+		adMob.initialize();
 
-        AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
-        options.setAdId("/6499/example/banner");
-        options.setOffsetTopBar(true);
-        options.setAutoShow(true);
-        options.setPosition(AdPosition.TOP_CENTER.getPosition());
+		AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
+		options.setAdId("/6499/example/banner");
+		options.setOffsetTopBar(true);
+		options.setAutoShow(true);
 
-        adMob.createBanner(options);
+		options.setPosition(AdPosition.TOP_CENTER.getPosition());
+
+		adMob.createBanner(options);
+
 	}
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
@@ -178,6 +178,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 				clientFactory.getEventBus(), new HomePlace());
 		
 		historyHandler.handleCurrentHistory();
+	
 	}
 	
 	private void createDatabaseTables(final ClientFactory clientFactory) {
