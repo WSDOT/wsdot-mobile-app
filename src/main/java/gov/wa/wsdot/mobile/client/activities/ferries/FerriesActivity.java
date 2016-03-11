@@ -44,6 +44,7 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
+	private Accessibility accessibility;
 	
 	@SuppressWarnings("unused")
 	private EventBus eventBus;
@@ -58,6 +59,7 @@ public class FerriesActivity extends MGWTAbstractActivity implements
 		this.eventBus = eventBus;
 	    phoneGap = clientFactory.getPhoneGap();
 	    analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 	    inAppBrowser = this.phoneGap.getInAppBrowser();
 		view.setPresenter(this);
 		view.render(createTopicsList());
@@ -66,6 +68,8 @@ public class FerriesActivity extends MGWTAbstractActivity implements
             analytics.trackScreen("/Ferries");
         }
 		panel.setWidget(view);
+        accessibility.postNotification();
+
 	}
 
 	@Override

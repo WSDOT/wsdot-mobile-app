@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.YouTubeFeed;
 import gov.wa.wsdot.mobile.shared.YouTubeItem;
 
@@ -48,6 +49,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<YouTubeItem> youTubeItems = new ArrayList<YouTubeItem>();
 	private static final String YOUTUBE_FEED_URL = "http://mobileapp-wsdot.rhcloud.com/traveler/api/socialmedia/youtube";
@@ -61,6 +63,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		inAppBrowser = phoneGap.getInAppBrowser();
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -99,6 +102,8 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+
+		accessibility.postNotification();
 	}
 	
 	@Override

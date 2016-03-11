@@ -21,6 +21,7 @@ package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesScheduleFeed;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesScheduleItem;
@@ -50,6 +51,7 @@ public class AmtrakCascadesSchedulesDetailsActivity extends MGWTAbstractActivity
     private AmtrakCascadesSchedulesDetailsView view;
     private EventBus eventBus;
     private String statusDate;
+    private Accessibility accessibility;
     private static Map<String, AmtrakCascadesScheduleItem> stationItems;
     private static List<Map<String, AmtrakCascadesScheduleItem>> locationItems;
     private static List<AmtrakCascadesServiceItem> serviceItems = new ArrayList<AmtrakCascadesServiceItem>();
@@ -65,6 +67,7 @@ public class AmtrakCascadesSchedulesDetailsActivity extends MGWTAbstractActivity
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         view = clientFactory.getAmtrakCascadesDeparturesView();
         this.eventBus = eventBus;
+        accessibility = clientFactory.getAccessibility();
         view.setPresenter(this);
         final Place place = clientFactory.getPlaceController().getWhere();
         
@@ -114,6 +117,7 @@ public class AmtrakCascadesSchedulesDetailsActivity extends MGWTAbstractActivity
             createTopicsList(statusDate, fromLocation, toLocation);
             
             panel.setWidget(view);
+            accessibility.postNotification();
         }
     }
 

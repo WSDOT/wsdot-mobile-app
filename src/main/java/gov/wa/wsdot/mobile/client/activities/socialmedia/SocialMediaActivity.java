@@ -29,6 +29,7 @@ import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.TopicWithImage;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class SocialMediaActivity extends MGWTAbstractActivity implements
 	private SocialMediaView view;
 	private EventBus eventBus;
 	private Analytics analytics;
-	
+	private Accessibility accessibility;
 	public SocialMediaActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -58,16 +59,18 @@ public class SocialMediaActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getSocialMediaView();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
-
 		view.render(createTopicsList());
 
 		if (Consts.ANALYTICS_ENABLED) {
 		    analytics.trackScreen("/Social Media");
 		}
+		
+		panel.setWidget(view);
 
-        panel.setWidget(view);
+		accessibility.postNotification();
 	}
 	
 	@Override

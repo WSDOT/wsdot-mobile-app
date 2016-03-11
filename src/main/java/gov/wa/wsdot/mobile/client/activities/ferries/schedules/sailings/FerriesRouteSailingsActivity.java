@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures.Ferrie
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -56,6 +57,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 	private FerriesRouteSailingsView view;
 	private EventBus eventBus;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private WSDOTDataService dbService;
 	private static List<FerriesScheduleDateItem> scheduleDateItems = new ArrayList<FerriesScheduleDateItem>();
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
@@ -63,7 +65,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	private boolean isStarred = false;
 	private static int lastTab = 0;
-	
+
 	public FerriesRouteSailingsActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -71,6 +73,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getFerriesRouteSailingsView();
+		accessibility = clientFactory.getAccessibility();
 		dbService = clientFactory.getDbService();
 		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
@@ -85,6 +88,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 			FerriesRouteSailingsPlace ferriesRouteSchedulesDaySailingsPlace = (FerriesRouteSailingsPlace) place;
 			String routeId = ferriesRouteSchedulesDaySailingsPlace.getId();
 			createTopicsList(routeId);
+			accessibility.postNotification();
 			panel.setWidget(view);
 		}
 	}

@@ -210,6 +210,7 @@ public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 	public HasRefresh getPullPanel() {
 		return pullToRefresh;
 	}
+
 	private void accessibilityPrepare(){
 		// Add ARIA roles for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
@@ -219,5 +220,9 @@ public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 		
 		Roles.getProgressbarRole().set(progressIndicator.getElement());
 		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+
 	}
 }

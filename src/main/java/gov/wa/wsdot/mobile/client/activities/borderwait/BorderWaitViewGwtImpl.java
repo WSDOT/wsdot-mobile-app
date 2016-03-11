@@ -336,7 +336,11 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 		
 		Roles.getProgressbarRole().set(southboundProgressIndicator.getElement());
 		Roles.getProgressbarRole().setAriaLabelProperty(southboundProgressIndicator.getElement(), "loading indicator");
-		
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(northboundPullArrowHeader.getElement(), true);
+        Roles.getButtonRole().setAriaHiddenState(southboundPullArrowHeader.getElement(), true);
+
 		accessibilityShowNorth();	
 	}
 }

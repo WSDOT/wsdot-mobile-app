@@ -241,7 +241,8 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 	public String getAccountSelected() {
 		return twitterAccounts.getItemText(twitterAccounts.getSelectedIndex());
 	}
-private void accessibilityPrepare(){
+
+	private void accessibilityPrepare(){
 		
 		// Add ARIA roles for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
@@ -255,6 +256,9 @@ private void accessibilityPrepare(){
 		
 		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
 		Roles.getProgressbarRole().setAriaLiveProperty(progressIndicator.getElement(), LiveValue.ASSERTIVE);
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
 		
 	}
 }

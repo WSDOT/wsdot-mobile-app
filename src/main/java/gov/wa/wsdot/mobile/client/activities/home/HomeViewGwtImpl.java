@@ -726,9 +726,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 		Roles.getHeadingRole().set(highImpactAlertsPanel.getElement());
 
-		//Roles.getHeadingRole().set(heading.getElement());
-        Roles.getMainRole().set(heading.getElement());
-        Roles.getMainRole().setAriaLiveProperty(heading.getElement(), LiveValue.ASSERTIVE);
+        Roles.getHeadingRole().set(heading.getElement());
 
 		Roles.getTabRole().set(homeTab.getElement());
 		Roles.getTabRole().setAriaSelectedState(homeTab.getElement(), SelectedValue.TRUE);
@@ -752,7 +750,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		Roles.getHeadingRole().setAriaHiddenState(tollingTitle.getElement(), true);
 		Roles.getHeadingRole().setAriaHiddenState(borderTitle.getElement(), true);
 		Roles.getHeadingRole().setAriaHiddenState(amtrakTitle.getElement(), true);
-		
+
+        // TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+        Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+
 		accessibilityShowHome();
 	}
 }
