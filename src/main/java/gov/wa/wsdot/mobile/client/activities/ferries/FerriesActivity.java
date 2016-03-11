@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapP
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
@@ -64,7 +65,6 @@ public class FerriesActivity extends MGWTAbstractActivity implements
         if (Consts.ANALYTICS_ENABLED) {
             analytics.trackScreen("/Ferries");
         }
-
 		panel.setWidget(view);
 	}
 

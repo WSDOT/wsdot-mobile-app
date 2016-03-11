@@ -39,4 +39,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
             <when-property-is name="phonegap.env" value="yes" />
         </all>
     </replace-with>
+
+    <!-- Accessibility -->
+    <replace-with class="gov.wa.wsdot.mobile.client.plugins.accessibility.AccessibilityBrowsweImpl">
+        <when-type-is class="gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility" />
+    </replace-with>
+    <replace-with class="gov.wa.wsdot.mobile.client.plugins.accessibility.AccessibilityCordovaImpl">
+        <when-type-is class="gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility" />
+        <all>
+            <when-property-is name="phonegap.env" value="yes" />
+        </all>
+    </replace-with>
+
 </module>

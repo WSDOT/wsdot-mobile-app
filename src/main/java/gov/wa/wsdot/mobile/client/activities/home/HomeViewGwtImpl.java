@@ -407,6 +407,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	protected void onFerriesButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onFerriesButtonPressed();
+
 		}
 	}	
 	
@@ -722,13 +723,13 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		Roles.getButtonRole().set(amtrakButton.getElement());
 		
 		Roles.getButtonRole().set(aboutButton.getElement());
-		
-		// TODO High impact alerts area
-		Roles.getBannerRole().set(highImpactAlertsPanel.getElement());
-		Roles.getBannerRole().setAriaLiveProperty(highImpactAlertsPanel.getElement(), LiveValue.POLITE);
 
-		Roles.getHeadingRole().set(heading.getElement());
-		
+		Roles.getHeadingRole().set(highImpactAlertsPanel.getElement());
+
+		//Roles.getHeadingRole().set(heading.getElement());
+        Roles.getMainRole().set(heading.getElement());
+        Roles.getMainRole().setAriaLiveProperty(heading.getElement(), LiveValue.ASSERTIVE);
+
 		Roles.getTabRole().set(homeTab.getElement());
 		Roles.getTabRole().setAriaSelectedState(homeTab.getElement(), SelectedValue.TRUE);
 		Roles.getTabRole().setAriaLabelProperty(homeTab.getElement(), "home");
@@ -739,7 +740,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		
 		Roles.getProgressbarRole().set(progressIndicator.getElement());
 		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
-		
+
+		// Define flow
+		Roles.getHeadingRole().setAriaFlowtoProperty(heading.getElement(), Id.of(trafficButton.getElement()));
+
 		// Hide redundant content from VoiceOver
 		Roles.getHeadingRole().setAriaHiddenState(trafficTitle.getElement(), true);
 		Roles.getHeadingRole().setAriaHiddenState(ferriesTitle.getElement(), true);

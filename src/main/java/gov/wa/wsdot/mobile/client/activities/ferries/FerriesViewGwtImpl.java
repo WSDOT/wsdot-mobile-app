@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries;
 
+import com.google.gwt.aria.client.LiveValue;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.shared.Topic;
@@ -132,9 +133,11 @@ public class FerriesViewGwtImpl extends Composite implements FerriesView {
 
 		// Add ARIA roles and labels for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
-		Roles.getHeadingRole().set(heading.getElement());
+		//Roles.getHeadingRole().set(heading.getElement());
+        Roles.getMainRole().set(heading.getElement());
+        Roles.getMainRole().setAriaLiveProperty(heading.getElement(), LiveValue.ASSERTIVE);
 	}
 
 }

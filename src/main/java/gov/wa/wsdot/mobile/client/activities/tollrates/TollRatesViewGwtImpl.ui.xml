@@ -107,8 +107,8 @@
                                     </g:row>
                                     <g:row>
                                         <g:cell>11 PM to 11:59 PM</g:cell>
-                                        <g:cell>0</g:cell>
-                                        <g:cell>0</g:cell>
+                                        <g:cell>$0</g:cell>
+                                        <g:cell>$0</g:cell>
                                     </g:row>
                                     <g:row styleName="{style.weekend}">
                                         <g:cell>Weekends and Holidays</g:cell>

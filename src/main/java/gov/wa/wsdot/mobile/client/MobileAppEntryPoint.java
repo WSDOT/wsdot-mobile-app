@@ -57,6 +57,7 @@ import com.googlecode.mgwt.ui.client.widget.animation.AnimationWidget;
 
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMob;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions.AdPosition;
@@ -82,7 +83,13 @@ public class MobileAppEntryPoint implements EntryPoint {
         ((ClientFactoryImpl) clientFactory).setAnalytics(analytics);
         analytics.startTrackerWithId(Consts.ANALYTICS_TRACKING_ID);
 
-        final PhoneGap phoneGap = GWT.create(PhoneGap.class);
+        // Initialize MobileAccessibility
+        final Accessibility accessibility = GWT.create(Accessibility.class);
+        ((ClientFactoryImpl) clientFactory).setAccessibility(accessibility);
+        accessibility.initialize();
+
+		final PhoneGap phoneGap = GWT.create(PhoneGap.class);
+
         phoneGap.addHandler(new PhoneGapAvailableHandler() {
 
 	        @Override
@@ -108,6 +115,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 	    });
 
 		phoneGap.initializePhoneGap();
+
+        // Initialize Plugins
 
 		// Initialize and configure AdMob plugin
         final AdMob adMob = GWT.create(AdMob.class);
