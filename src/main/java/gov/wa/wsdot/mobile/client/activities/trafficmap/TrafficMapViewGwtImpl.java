@@ -658,7 +658,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		
 		// Add ARIA roles for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
 		Roles.getButtonRole().set(travelTimesButton.getElement());
 		Roles.getButtonRole().setAriaLabelProperty(travelTimesButton.getElement(), "travel times");

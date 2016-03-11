@@ -185,7 +185,7 @@ private void accessibilityPrepare(){
 		
 		// Add ARIA roles for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
 		Roles.getCheckboxRole().set(starButton.getElement());
 		Roles.getCheckboxRole().setAriaLabelProperty(starButton.getElement(), "favorite");

@@ -89,6 +89,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDe
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesViewGwtImpl;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 
 import com.google.gwt.core.client.GWT;
@@ -139,6 +140,7 @@ public class ClientFactoryImpl implements ClientFactory {
     private AmtrakCascadesSchedulesDetailsViewGwtImpl amtrakCascadesDeparturesView;
     private CalloutViewGwtImpl calloutView;
     private Analytics analytics;
+	private Accessibility accessibility;
 
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -489,4 +491,12 @@ public class ClientFactoryImpl implements ClientFactory {
         return calloutView;
     }
 
+	public void setAccessibility(Accessibility accessibility){
+		this.accessibility = accessibility;
+	}
+
+	@Override
+	public Accessibility getAccessibility() {
+		return accessibility;
+	}
 }

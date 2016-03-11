@@ -228,7 +228,7 @@ public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements Amt
 		
 		// Add ARIA roles for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
 		Roles.getButtonRole().set(checkSchedules.getElement());
 		

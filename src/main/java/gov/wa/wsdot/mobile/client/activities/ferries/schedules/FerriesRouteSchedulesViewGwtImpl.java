@@ -214,7 +214,7 @@ public class FerriesRouteSchedulesViewGwtImpl extends Composite implements
 		
 		// Add ARIA roles for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
 		Roles.getHeadingRole().set(heading.getElement());
 

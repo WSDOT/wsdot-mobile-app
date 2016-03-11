@@ -70,7 +70,7 @@
             <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
             <mgwt:header.HeaderTitle ui:field="heading">WSDOT</mgwt:header.HeaderTitle>
             <mgwt:panel.flex.FlexSpacer />
-            <mgwt:button.image.AboutImageButton ui:field="aboutButton" />
+            <mgwt:button.image.AboutImageButton ui:field="aboutButton"/>
         </mgwt:header.HeaderPanel>
 
         <mgwt:tabbar.TabPanel ui:field="tabPanel" height="100%">

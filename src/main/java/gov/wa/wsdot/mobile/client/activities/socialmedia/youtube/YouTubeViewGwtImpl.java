@@ -213,7 +213,7 @@ public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 	private void accessibilityPrepare(){
 		// Add ARIA roles for accessibility
 		Roles.getButtonRole().set(backButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "navigate back");
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
 		Roles.getHeadingRole().set(heading.getElement());
 		
