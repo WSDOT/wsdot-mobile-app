@@ -255,6 +255,7 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(twitterItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

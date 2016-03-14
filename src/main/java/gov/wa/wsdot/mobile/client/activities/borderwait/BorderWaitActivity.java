@@ -353,6 +353,7 @@ public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWa
 		view.renderNorthbound(northboundBorderWaitItems);
 		view.renderSouthbound(southboundBorderWaitItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 
 	}
 

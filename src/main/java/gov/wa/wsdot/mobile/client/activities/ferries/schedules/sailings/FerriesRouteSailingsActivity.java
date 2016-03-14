@@ -183,7 +183,7 @@ public class FerriesRouteSailingsActivity extends MGWTAbstractActivity implement
 				view.render(scheduleDateItems.get(0).getFerriesTerminalItem());
 				view.renderRouteAlerts(routeAlertItems);
 				view.refresh();			
-
+				accessibility.postScreenChangeNotification();
 			}
 		});
 

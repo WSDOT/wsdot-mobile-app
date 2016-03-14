@@ -174,6 +174,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(youTubeItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

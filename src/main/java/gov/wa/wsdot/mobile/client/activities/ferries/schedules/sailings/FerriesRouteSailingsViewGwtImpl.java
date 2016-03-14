@@ -177,16 +177,12 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	
     @UiHandler("sailingsTab")
     protected void onTimesTabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowSailings();
-    	}
     }
     
     @UiHandler("alertsTab")
     protected void onCamerasTabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowAlerts();
-    	}
     }
 	
 	@UiHandler("sailingsCellList")

@@ -127,6 +127,7 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 
                 getDistanceFromStation(latitude, longitude);
                 view.hideProgressIndicator();
+        		accessibility.postScreenChangeNotification();
             }
 
             @Override

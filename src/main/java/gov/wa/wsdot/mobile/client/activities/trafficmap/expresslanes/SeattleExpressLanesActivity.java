@@ -156,6 +156,7 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(expressLaneItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

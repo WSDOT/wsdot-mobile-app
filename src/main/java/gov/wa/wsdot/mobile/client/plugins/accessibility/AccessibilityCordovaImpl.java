@@ -1,7 +1,5 @@
 package gov.wa.wsdot.mobile.client.plugins.accessibility;
 
-import gov.wa.wsdot.mobile.client.MobileAppEntryPoint;
-
 /**
  * Created by simsl on 3/11/16.
  */
@@ -36,11 +34,11 @@ public class AccessibilityCordovaImpl implements Accessibility {
         if (!initialized) {
             throw new IllegalStateException("you have to initialize MobileAccessibility plugin before using it");
         }
-        postNotificationNative();
+        postScreenChangeNotificationNative();
     }
 
-    private native void postNotificationNative() /*-{
-        $wnd.MobileAccessibility.postScreenChangeNotification(
+    private native void postScreenChangeNotificationNative() /*-{
+        $wnd.MobileAccessibility.postNotification(
         $wnd.MobileAccessibility.MobileAccessibilityNotifications.SCREEN_CHANGED,
         '',
         function(info) {

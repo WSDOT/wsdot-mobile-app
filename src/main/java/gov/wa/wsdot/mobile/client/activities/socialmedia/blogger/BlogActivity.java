@@ -172,6 +172,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(blogItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

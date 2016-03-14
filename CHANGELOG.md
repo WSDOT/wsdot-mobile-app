@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Added Google Analytics
+- Implemented basic VoiceOver support throughout app
 
 ### Fixed
 - Added Train numbers 502 and 504
@@ -21,7 +22,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.3.0] - 2015-11-17
 ### Added
-Cameras at each terminal to Ferries schedule departure times. In some cases you can now see vehicles queued outside the tollbooths, which will subtract from the listed drive-up spaces available. 
+- Cameras at each terminal to Ferries schedule departure times. In some cases you can now see vehicles queued outside the tollbooths, which will subtract from the listed drive-up spaces available. 
 
 ### Fixed
 - The ’null’ pop-up error which would occur when viewing Ferries schedule departure times.

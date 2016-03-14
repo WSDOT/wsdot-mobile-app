@@ -24,11 +24,8 @@ import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
-<<<<<<< 2bbc4d5338d2c8ba7f7bbfb8c097950081959d08
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-=======
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
->>>>>>> Added screen change VO notification to activities.
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;

@@ -202,13 +202,9 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 		});
 
 		initWidget(uiBinder.createAndBindUi(this));
-<<<<<<< 9b88671fd0e5adfbd4d28bc0e5aa7bd776f24900
-
-=======
         
 		accessibilityPrepare();
 		
->>>>>>> WIP: scrolling with footer
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             reportScrollPanel.setBounce(false);
@@ -235,7 +231,6 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
 	    cameraScrollPanel.refresh();
 	}
 
-<<<<<<< 9b88671fd0e5adfbd4d28bc0e5aa7bd776f24900
     @UiHandler("tabPanel")
     protected void onTabSelected(SelectionEvent<Integer> event) {
         if (presenter != null) {
@@ -244,29 +239,20 @@ public class MountainPassDetailsViewGwtImpl extends Composite implements
         }
     }
 
-=======
     @UiHandler("reportTab")
     protected void onReportTabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowReport();
-    	}
     }
     
     @UiHandler("camerasTab")
     protected void onCamerasTabPressed(TapEvent event) {
-    	if (presenter != null) {
        		accessibilityShowCameras();
-    	}
     }
     @UiHandler("forecastTab")
     protected void onForecastTabPressed(TapEvent event) {
-    	if (presenter != null) {
        		accessibilityShowForcast();
-    	}
     }
 	
-	
->>>>>>> WIP: scrolling with footer
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {

@@ -439,6 +439,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 					view.showCamerasList();
 					view.renderCameras(cameraItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 					
 				} else {
 					view.hideCamerasHeader();
@@ -948,6 +949,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		view.showFerriesList();
 		view.renderFerries(ferriesRouteItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 		
 	}
 	
@@ -973,6 +975,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		view.showMountainPassesList();
 		view.renderMountainPasses(mountainPassItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 		
 	}
 	
@@ -999,6 +1002,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		view.showTravelTimesList();
 		view.renderTravelTimes(travelTimesItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 		
 	}
 	
