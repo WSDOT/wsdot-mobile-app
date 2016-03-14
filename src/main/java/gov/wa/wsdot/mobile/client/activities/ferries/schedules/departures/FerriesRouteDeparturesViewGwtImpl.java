@@ -246,7 +246,6 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     public static void refreshPanel() {
         cameraScrollPanel.refresh();
     }
-<<<<<<< ebdb337e45bf0020b65015562e7de00521cb3900
 
     @UiHandler("tabPanel")
     protected void onTabSelected(SelectionEvent<Integer> event) {
@@ -256,11 +255,6 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
         }
     }
 
-=======
-    
-
-    
-    
     @UiHandler("timesTab")
     protected void onTimesTabPressed(TapEvent event) {
     	if (presenter != null) {
@@ -276,8 +270,6 @@ public class FerriesRouteDeparturesViewGwtImpl extends Composite
     	}
     }
 
-    
->>>>>>> Added accessibility features to home activity and ferries.
 	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {

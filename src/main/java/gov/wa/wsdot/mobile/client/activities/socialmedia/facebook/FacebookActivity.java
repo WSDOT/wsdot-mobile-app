@@ -187,6 +187,7 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(facebookItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

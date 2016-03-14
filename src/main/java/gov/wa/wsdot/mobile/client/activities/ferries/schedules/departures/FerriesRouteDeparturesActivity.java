@@ -485,8 +485,8 @@ public class FerriesRouteDeparturesActivity extends
                 .get(view.getDayOfWeekSelected())
                 .getFerriesTerminalItem().get(sailingsIndex)
                 .getScheduleTimes());
-        
         view.refresh();
+		accessibility.postScreenChangeNotification();
 
     }
 	

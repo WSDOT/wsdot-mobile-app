@@ -301,6 +301,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		view.hideProgressIndicator();
 		view.render(travelTimesItems);
 		view.refresh();		
+		accessibility.postScreenChangeNotification();
 	}
 	
 	@Override

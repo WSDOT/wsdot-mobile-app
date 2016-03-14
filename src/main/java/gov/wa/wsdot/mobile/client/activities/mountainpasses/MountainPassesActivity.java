@@ -411,6 +411,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		view.hideProgressIndicator();
 		view.render(mountainPassItems);
 		view.refresh();		
+		accessibility.postScreenChangeNotification();
 	}	
 
 	private static String makeImage(ImageResource resource) {

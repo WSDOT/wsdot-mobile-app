@@ -151,7 +151,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 	}
 
     /**
-     *  exports java method initAds to javascript
+     *  exports java method initAds() to javascript
      */
     public static native void exportInitAds() /*-{
         $wnd.initAds = $entry(@gov.wa.wsdot.mobile.client.MobileAppEntryPoint::initAds(Z));
@@ -639,6 +639,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		activityManager.setDisplay(display);
 		RootPanel.get("main").add(display);
+		
+		clientFactory.getAccessibility().postScreenChangeNotification();
 	}
 
 	private void loadMapApi() {

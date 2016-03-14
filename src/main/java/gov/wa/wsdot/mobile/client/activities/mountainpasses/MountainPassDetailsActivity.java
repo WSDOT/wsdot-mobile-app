@@ -202,7 +202,7 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 	public void onCameraSelected(int index) {
 		CameraItem item = cameraItems.get(index);
 		clientFactory.getPlaceController().goTo(
-				new CameraPlace(Integer.toString(item.getCameraId())));		
+				new CameraPlace(Integer.toString(item.getCameraId())));
 	}
 
 	@Override
@@ -227,7 +227,6 @@ public class MountainPassDetailsActivity extends MGWTAbstractActivity implements
 				view.toggleStarButton(isStarred);
 			}
 		});
-		
 	}
 
     @Override

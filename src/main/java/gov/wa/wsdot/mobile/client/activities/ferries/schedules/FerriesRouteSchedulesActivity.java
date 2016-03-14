@@ -303,7 +303,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 	}
 	
 	/**
-	 * Get the lastest ferries route schedules from the database.
+	 * Get the latest ferries route schedules from the database.
 	 * 
 	 * @param view
 	 * @param result
@@ -333,6 +333,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		view.hideProgressIndicator();
 		view.render(ferriesRouteItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 		
 	}
 

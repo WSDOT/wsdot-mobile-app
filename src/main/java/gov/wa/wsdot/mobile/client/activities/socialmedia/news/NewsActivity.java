@@ -178,6 +178,7 @@ public class NewsActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(newsItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

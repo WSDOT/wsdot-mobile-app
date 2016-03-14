@@ -27,11 +27,8 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpr
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
-<<<<<<< 2bbc4d5338d2c8ba7f7bbfb8c097950081959d08
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-=======
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
->>>>>>> Added screen change VO notification to activities.
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;

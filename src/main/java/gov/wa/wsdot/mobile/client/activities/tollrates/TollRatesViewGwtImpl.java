@@ -129,32 +129,21 @@ public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
     @UiHandler("sr520Tab")
     protected void on520TabPressed(TapEvent event) {
     		accessibilityShowSr520();
-
     }
     
     @UiHandler("sr16Tab")
     protected void on16TabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowSr16();
-
-    	}
     }
     @UiHandler("sr167Tab")
     protected void on167TabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowSr167();
-    	}
     }
     
     @UiHandler("i405Tab")
     protected void on405TabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowI405();
-
-    	}
     }
-	
-	
 	
 	@Override
 	public void setPresenter(Presenter presenter) {

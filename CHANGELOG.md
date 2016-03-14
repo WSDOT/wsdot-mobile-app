@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.0.0] - 2016-03-15
 ### Added
 - Added Google Analytics
+- Implemented basic VoiceOver support throughout app
 
 ### Fixed
 - Added Train numbers 502 and 504

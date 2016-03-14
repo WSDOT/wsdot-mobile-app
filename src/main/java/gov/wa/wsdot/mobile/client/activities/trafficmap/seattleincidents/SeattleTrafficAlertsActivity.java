@@ -178,6 +178,7 @@ public class SeattleTrafficAlertsActivity extends MGWTAbstractActivity implement
 					view.hideProgressIndicator();
 					categorizeAlerts();
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

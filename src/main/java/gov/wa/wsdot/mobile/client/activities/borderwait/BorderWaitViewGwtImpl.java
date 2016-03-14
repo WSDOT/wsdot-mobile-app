@@ -220,17 +220,12 @@ public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 	
     @UiHandler("northTab")
     protected void on167TabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowNorth();
-    	}
     }
     
     @UiHandler("southTab")
     protected void on405TabPressed(TapEvent event) {
-    	if (presenter != null) {
     		accessibilityShowSouth();
-
-    	}
     }
 	
 	@Override
