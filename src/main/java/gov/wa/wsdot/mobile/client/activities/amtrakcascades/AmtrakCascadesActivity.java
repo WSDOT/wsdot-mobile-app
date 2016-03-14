@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCasc
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private InAppBrowser inAppBrowser;
 	private Analytics analytics;
-	
+	private Accessibility accessibility;
 	@SuppressWarnings("unused")
 	private EventBus eventBus;
 	
@@ -55,6 +56,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getAmtrakCascadesView();
 		this.eventBus = eventBus;
 	    this.phoneGap = clientFactory.getPhoneGap();
+		accessibility = clientFactory.getAccessibility();
 	    inAppBrowser = this.phoneGap.getInAppBrowser();
 	    analytics = clientFactory.getAnalytics();
 		view.setPresenter(this);
@@ -65,6 +67,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+		accessibility.postScreenChangeNotification();
 	}
 
 	@Override

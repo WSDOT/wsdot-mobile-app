@@ -21,6 +21,7 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -57,6 +58,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
+	private Accessibility accessibility;
 	private static List<TravelTimesItem> travelTimesItems = new ArrayList<TravelTimesItem>();
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static final String TRAVEL_TIMES_URL = Consts.HOST_URL + "/traveler/api/traveltimes";
@@ -69,6 +71,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getTravelTimesView();
 		dbService = clientFactory.getDbService();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -103,6 +106,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		createTopicsList(view);
 		panel.setWidget(view);
 
+		accessibility.postScreenChangeNotification();
 	}
 
 	private void createTopicsList(final TravelTimesView view) {
@@ -297,6 +301,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		view.hideProgressIndicator();
 		view.render(travelTimesItems);
 		view.refresh();		
+		accessibility.postScreenChangeNotification();
 	}
 	
 	@Override

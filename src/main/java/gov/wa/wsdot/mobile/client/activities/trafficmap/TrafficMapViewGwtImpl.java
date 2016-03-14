@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
@@ -79,6 +80,7 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.RefreshImageButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
@@ -97,6 +99,9 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	private static TrafficMapViewGwtImplUiBinder uiBinder = GWT
 			.create(TrafficMapViewGwtImplUiBinder.class);
 
+	@UiField
+	HeaderTitle heading;
+	
 	@UiField
 	BackImageButton backButton;
 	
@@ -149,6 +154,8 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
         }
@@ -647,5 +654,19 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 			this.setCenter(center);
 		}
 	}
-	
+	private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getButtonRole().set(travelTimesButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(travelTimesButton.getElement(), "travel times");
+		Roles.getButtonRole().set(seattleAlertsButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(seattleAlertsButton.getElement(), "seattle alerts");
+		Roles.getButtonRole().set(expressLanesButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(expressLanesButton.getElement(), "express lanes information");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+	}
 }

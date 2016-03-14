@@ -25,6 +25,7 @@ import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFe
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -75,7 +76,8 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	private Timer timer;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
-	
+	private Accessibility accessibility;
+
 	public VesselWatchMapActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -86,6 +88,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 		dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.setMapLocation(); // Set initial map location.
@@ -102,11 +105,14 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 		// Schedule vessels to update every 30 seconds (30000 millseconds).
 		timer.scheduleRepeating(30000);		
 
+
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Ferries/Vessel Watch");
 		}
 
 		panel.setWidget(view);
+
+		accessibility.postScreenChangeNotification();
 	}
 
 	private void buildFerryIcons() {

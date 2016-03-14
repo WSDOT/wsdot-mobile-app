@@ -24,6 +24,8 @@ import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SelectElement;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -35,6 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
@@ -55,6 +58,8 @@ public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements Amt
 	private static AmtrakCascadesSchedulesViewGwtImplUiBinder uiBinder = GWT
 			.create(AmtrakCascadesSchedulesViewGwtImplUiBinder.class);
 	
+	@UiField
+	HeaderTitle heading;
 
 	@UiField
 	BackImageButton backButton;
@@ -94,6 +99,8 @@ public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements Amt
 	
 		initWidget(uiBinder.createAndBindUi(this));
 
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
@@ -217,5 +224,26 @@ public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements Amt
     public void setLocationEnabled(boolean locationEnabled) {
         this.locationEnabled = locationEnabled;
     }
-
+	private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getButtonRole().set(checkSchedules.getElement());
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getMenuRole().set(daysOfWeek.getElement());
+		Roles.getMenuRole().setAriaLabelProperty(daysOfWeek.getElement(), "select a departing day");
+		Roles.getMenuRole().setTabindexExtraAttribute(daysOfWeek.getElement(), 0);	
+		
+		Roles.getMenuRole().set(fromLocation.getElement());
+		Roles.getMenuRole().setAriaLabelProperty(fromLocation.getElement(), "select an origin");
+		Roles.getMenuRole().setTabindexExtraAttribute(fromLocation.getElement(), 0);	
+		
+		Roles.getMenuRole().set(toLocation.getElement());
+		Roles.getMenuRole().setTabindexExtraAttribute(toLocation.getElement(), 0);	
+		
+	}
 }

@@ -24,6 +24,7 @@ import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 
 import java.util.ArrayList;
@@ -51,7 +52,8 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 	private Analytics analytics;
     private List<AmtrakCascadesStationItem> amtrakStationItems = new ArrayList<AmtrakCascadesStationItem>();
     private DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
-	
+    private Accessibility accessibility;
+
 	public AmtrakCascadesSchedulesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -62,6 +64,7 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 		this.eventBus = eventBus;
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+        accessibility = clientFactory.getAccessibility();
 		view.setPresenter(this);
 		
         view.showProgressIndicator();
@@ -74,6 +77,8 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 		}
 
         panel.setWidget(view);
+
+        accessibility.postScreenChangeNotification();
 	}
 
 	private void getDaysOfWeek() {
@@ -122,6 +127,7 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
 
                 getDistanceFromStation(latitude, longitude);
                 view.hideProgressIndicator();
+        		accessibility.postScreenChangeNotification();
             }
 
             @Override

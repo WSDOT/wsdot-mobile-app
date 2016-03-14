@@ -47,7 +47,7 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Mountain Pass</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Mountain Pass</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:button.image.NotimportantImageButton ui:field="starButton" />
 		</mgwt:header.HeaderPanel>
@@ -56,10 +56,10 @@
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
-						<wsdot:tabbar.ReportTabBarButton />
+						<wsdot:tabbar.ReportTabBarButton ui:field ="reportTab"/>
 					</mgwt:button>
 					<mgwt:widget>
-					    <mgwt:panel.flex.RootFlexPanel>
+					    <mgwt:panel.flex.RootFlexPanel ui:field ="report">
 				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel">
 				        	<g:HTMLPanel styleName="{style.htmlPanel}">
 				            	<g:HTMLPanel styleName="{style.title}">
@@ -112,10 +112,10 @@
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
-						<wsdot:tabbar.CameraTabBarButton />
+						<wsdot:tabbar.CameraTabBarButton ui:field ="camerasTab"/>
 					</mgwt:button>
 					<mgwt:widget>
-					    <mgwt:panel.flex.RootFlexPanel>
+					    <mgwt:panel.flex.RootFlexPanel ui:field ="cameras">
 				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
 				        	<g:FlowPanel ui:field="cameraPanel">
 			            	   <mgwt:list.celllist.CellList ui:field="cameraCellList" />
@@ -129,10 +129,10 @@
 			<mgwt:tabs>
 				<mgwt:tabbar.Tab>
 					<mgwt:button>
-						<wsdot:tabbar.ForecastTabBarButton />
+						<wsdot:tabbar.ForecastTabBarButton ui:field ="forecastTab"/>
 					</mgwt:button>
 					<mgwt:widget>
-					    <mgwt:panel.flex.RootFlexPanel>
+					    <mgwt:panel.flex.RootFlexPanel ui:field ="forecast">
 				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="forecastScrollPanel">
 				        	<g:FlowPanel ui:field="forecastPanel">
 				            	<mgwt:list.celllist.CellList ui:field="forecastCellList" />

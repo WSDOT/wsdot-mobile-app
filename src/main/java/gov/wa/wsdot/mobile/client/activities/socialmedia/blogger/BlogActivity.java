@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.BlogFeed;
 import gov.wa.wsdot.mobile.shared.BlogItem;
 
@@ -49,6 +50,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private InAppBrowser inAppBrowser;
+	private Accessibility accessibility;
 	private static ArrayList<BlogItem> blogItems = new ArrayList<BlogItem>();
 	private static final String BLOG_FEED_URL = "http://wsdotblog.blogspot.com/feeds/posts/default?alt=json&max-results=10";
 	
@@ -61,6 +63,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getBlogView();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		inAppBrowser = this.phoneGap.getInAppBrowser();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
@@ -100,6 +103,8 @@ public class BlogActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+
+		accessibility.postScreenChangeNotification();
 	}
 	
 	@Override
@@ -167,6 +172,7 @@ public class BlogActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(blogItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

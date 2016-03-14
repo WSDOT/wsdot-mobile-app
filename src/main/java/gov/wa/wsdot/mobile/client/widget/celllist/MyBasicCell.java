@@ -25,12 +25,12 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.Cell;
 
-public abstract class BasicCell<T> implements Cell<T> {
+public abstract class MyBasicCell<T> implements Cell<T> {
 
 	private static Template TEMPLATE = GWT.create(Template.class);
 
 	public interface Template extends SafeHtmlTemplates {
-		@SafeHtmlTemplates.Template("<div class=\"{0}\">{1}</div>")
+		@SafeHtmlTemplates.Template("<div role=\"button\" tabindex=0 class=\"{0}\">{1}</div>")
 		SafeHtml content(String classes, String cellContents);
 	}
 

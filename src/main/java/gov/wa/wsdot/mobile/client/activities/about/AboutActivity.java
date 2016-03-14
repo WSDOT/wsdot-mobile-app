@@ -29,6 +29,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.MGWT;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 
 public class AboutActivity extends MGWTAbstractActivity implements
 		AboutView.Presenter {
@@ -38,6 +39,7 @@ public class AboutActivity extends MGWTAbstractActivity implements
 	private final EventBus eventBus;
 	private final PhoneGap phoneGap;
 	private final Analytics analytics;
+	private Accessibility accessibility;
 
 	public AboutActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -45,6 +47,8 @@ public class AboutActivity extends MGWTAbstractActivity implements
 		eventBus = clientFactory.getEventBus();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
+
 	}
 
 	@Override
@@ -58,8 +62,10 @@ public class AboutActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/About");
 		}
+		
+		panel.setWidget(view);
 
-        panel.setWidget(view);
+		accessibility.postScreenChangeNotification();
 
 	}
 

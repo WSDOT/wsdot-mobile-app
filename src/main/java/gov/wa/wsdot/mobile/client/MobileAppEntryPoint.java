@@ -57,6 +57,7 @@ import com.googlecode.mgwt.ui.client.widget.animation.AnimationWidget;
 
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMob;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions;
 import gov.wa.wsdot.mobile.client.plugins.admob.AdMobOptions.AdPosition;
@@ -82,7 +83,13 @@ public class MobileAppEntryPoint implements EntryPoint {
         ((ClientFactoryImpl) clientFactory).setAnalytics(analytics);
         analytics.startTrackerWithId(Consts.ANALYTICS_TRACKING_ID);
 
-        final PhoneGap phoneGap = GWT.create(PhoneGap.class);
+        // Initialize MobileAccessibility
+        final Accessibility accessibility = GWT.create(Accessibility.class);
+        ((ClientFactoryImpl) clientFactory).setAccessibility(accessibility);
+        accessibility.initialize();
+
+		final PhoneGap phoneGap = GWT.create(PhoneGap.class);
+
         phoneGap.addHandler(new PhoneGapAvailableHandler() {
 
 	        @Override
@@ -98,7 +105,7 @@ public class MobileAppEntryPoint implements EntryPoint {
     	        }
 	        }
 	    });	
-	    
+
 	    phoneGap.addHandler(new PhoneGapTimeoutHandler() {
 
 	        @Override
@@ -109,18 +116,44 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		phoneGap.initializePhoneGap();
 
-		// Initialize and configure AdMob plugin
-        final AdMob adMob = GWT.create(AdMob.class);
-        adMob.initialize();
+        exportInitAds();
+        accessibility.isVoiceOverRunning();
 
-        AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
-        options.setAdId("/6499/example/banner");
-        options.setOffsetTopBar(true);
-        options.setAutoShow(true);
-        options.setPosition(AdPosition.TOP_CENTER.getPosition());
-
-        adMob.createBanner(options);
 	}
+
+    /**
+     * Callback function for MobileAccessibility.isVoiceOverRunning(callback)
+     *
+     * Changes banner position based on VoiceOverOn
+     *
+     * @param VoiceOverOn
+     */
+	public static void initAds(boolean VoiceOverOn){
+
+		// Initialize and configure AdMob plugin
+		final AdMob adMob = GWT.create(AdMob.class);
+		adMob.initialize();
+
+		AdMobOptions options = (AdMobOptions) JavaScriptObject.createObject().cast();
+		options.setAdId("/6499/example/banner");
+		options.setOffsetTopBar(true);
+		options.setAutoShow(true);
+
+        if (VoiceOverOn){
+            options.setPosition(AdPosition.BOTTOM_CENTER.getPosition());
+        }else {
+            options.setPosition(AdPosition.TOP_CENTER.getPosition());
+        }
+		adMob.createBanner(options);
+
+	}
+
+    /**
+     *  exports java method initAds() to javascript
+     */
+    public static native void exportInitAds() /*-{
+        $wnd.initAds = $entry(@gov.wa.wsdot.mobile.client.MobileAppEntryPoint::initAds(Z));
+    }-*/;
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
 
@@ -169,6 +202,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 				clientFactory.getEventBus(), new HomePlace());
 		
 		historyHandler.handleCurrentHistory();
+	
 	}
 	
 	private void createDatabaseTables(final ClientFactory clientFactory) {
@@ -603,6 +637,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		activityManager.setDisplay(display);
 		RootPanel.get("main").add(display);
+		
+		clientFactory.getAccessibility().postScreenChangeNotification();
 	}
 
 	private void loadMapApi() {

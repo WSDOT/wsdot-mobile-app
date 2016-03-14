@@ -20,6 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -29,6 +30,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
@@ -48,6 +50,9 @@ public class FerriesRouteAlertDetailsViewGwtImpl extends Composite implements
 	private static FerriesRouteAlertDetailsViewGwtImplUiBinder uiBinder = GWT
 			.create(FerriesRouteAlertDetailsViewGwtImplUiBinder.class);
 
+	@UiField
+	HeaderTitle heading;
+	
 	@UiField
 	BackImageButton backButton;
 	
@@ -71,7 +76,9 @@ public class FerriesRouteAlertDetailsViewGwtImpl extends Composite implements
 	public FerriesRouteAlertDetailsViewGwtImpl() {
 
 		initWidget(uiBinder.createAndBindUi(this));
-
+		
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
@@ -104,6 +111,15 @@ public class FerriesRouteAlertDetailsViewGwtImpl extends Composite implements
     @Override
     public void setAlertText(String content) {
         this.alertText.setHTML(content);        
+    }
+    
+    private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+	
+		Roles.getHeadingRole().set(heading.getElement());
+		
     }
 
 }

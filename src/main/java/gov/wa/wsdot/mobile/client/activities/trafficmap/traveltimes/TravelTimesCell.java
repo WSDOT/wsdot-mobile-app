@@ -32,7 +32,7 @@ public abstract class TravelTimesCell<T> implements Cell<T> {
 	private static Template TEMPLATE = GWT.create(Template.class);
 
 	public interface Template extends SafeHtmlTemplates {
-		@SafeHtmlTemplates.Template("<div class=\"{0}\"><div><div>{1}</div><div>{2}</div><div>{3}</div></div><div><span class=\"{4}\">{5}</span></div></div>")
+		@SafeHtmlTemplates.Template("<div role=\"button\" tabindex=0 class=\"{0}\"><div><div>{1}</div><div>{2}</div><div>{3}</div></div><div><span class=\"{4}\">{5}</span></div></div>")
 		SafeHtml content(String class1, String cellTitle, String cellDistanceAverageTime, String lastUpdated, String textColor, String currentTime);
 	}
 

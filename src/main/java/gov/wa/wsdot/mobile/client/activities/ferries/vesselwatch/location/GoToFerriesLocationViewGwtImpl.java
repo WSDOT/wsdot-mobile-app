@@ -18,7 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location;
 
-import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
+import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.List;
@@ -77,7 +77,7 @@ public class GoToFerriesLocationViewGwtImpl extends Composite implements
 	
 	public GoToFerriesLocationViewGwtImpl() {
 		
-		cellList = new CellList<Topic>(new BasicCell<Topic>() {
+		cellList = new CellList<Topic>(new MyBasicCell<Topic>() {
 
 			@Override
 			public String getDisplayString(Topic model) {

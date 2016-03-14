@@ -25,6 +25,8 @@ import gov.wa.wsdot.mobile.shared.NewsItem;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.LiveValue;
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -35,6 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
@@ -57,6 +60,9 @@ public class NewsViewGwtImpl extends Composite implements NewsView {
 	 */
 	private static NewsViewGwtImplUiBinder uiBinder = GWT
 			.create(NewsViewGwtImplUiBinder.class);
+	
+	@UiField
+	HeaderTitle heading;
 	
 	@UiField(provided = true)
 	CellList<NewsItem> cellList;
@@ -110,6 +116,8 @@ public class NewsViewGwtImpl extends Composite implements NewsView {
 		
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
         }
@@ -174,5 +182,18 @@ public class NewsViewGwtImpl extends Composite implements NewsView {
 	public HasRefresh getPullPanel() {
 		return pullToRefresh;
 	}
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getProgressbarRole().set(progressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+		Roles.getProgressbarRole().setAriaLiveProperty(progressIndicator.getElement(), LiveValue.ASSERTIVE);
 
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+	}
 }
