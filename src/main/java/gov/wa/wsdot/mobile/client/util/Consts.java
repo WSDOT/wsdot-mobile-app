@@ -31,7 +31,7 @@ public final class Consts {
 	/**
 	 * Current version number and build of the app.
 	 */
-	public static final String APP_VERSION = "3.4.0";
+	public static final String APP_VERSION = "4.0.0";
 
 	/**
 	 * Unique Tracking Id from Property Settings in Google Analytics
