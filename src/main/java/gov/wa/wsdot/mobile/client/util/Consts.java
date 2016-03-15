@@ -33,6 +33,11 @@ public final class Consts {
 	 */
 	public static final String APP_VERSION = "4.0.0";
 
+    /**
+     * Ad unit Id for banner
+     */
+    public static final String AD_UNIT_ID = "/6499/example/banner";
+
 	/**
 	 * Unique Tracking Id from Property Settings in Google Analytics
 	 */

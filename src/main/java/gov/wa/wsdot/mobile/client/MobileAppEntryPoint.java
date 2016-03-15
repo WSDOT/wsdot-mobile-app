@@ -114,7 +114,7 @@ public class MobileAppEntryPoint implements EntryPoint {
         adMob.initialize();
 
         AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
-        options.setAdId("/6499/example/banner");
+        options.setAdId(Consts.AD_UNIT_ID);
         options.setOffsetTopBar(true);
         options.setAutoShow(true);
         options.setPosition(AdPosition.TOP_CENTER.getPosition());
