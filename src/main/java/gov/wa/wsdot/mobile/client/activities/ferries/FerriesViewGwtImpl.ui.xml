@@ -16,7 +16,7 @@
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel" styleName="{app.css.voiceoverPage}">
         	<g:FlowPanel>
             	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>

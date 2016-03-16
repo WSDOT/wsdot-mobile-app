@@ -60,7 +60,7 @@
 					</mgwt:button>
 					<mgwt:widget>
 					    <mgwt:panel.flex.RootFlexPanel ui:field ="report">
-				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel">
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="reportScrollPanel" styleName="{app.css.voiceoverPage}">
 				        	<g:HTMLPanel styleName="{style.htmlPanel}">
 				            	<g:HTMLPanel styleName="{style.title}">
 				            	   <g:HTML ui:field="title" />
@@ -116,7 +116,7 @@
 					</mgwt:button>
 					<mgwt:widget>
 					    <mgwt:panel.flex.RootFlexPanel ui:field ="cameras">
-				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel" styleName="{app.css.voiceoverPage}">
 				        	<g:FlowPanel ui:field="cameraPanel">
 			            	   <mgwt:list.celllist.CellList ui:field="cameraCellList" />
 				            </g:FlowPanel>
@@ -133,7 +133,7 @@
 					</mgwt:button>
 					<mgwt:widget>
 					    <mgwt:panel.flex.RootFlexPanel ui:field ="forecast">
-				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="forecastScrollPanel">
+				        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="forecastScrollPanel" styleName="{app.css.voiceoverPage}">
 				        	<g:FlowPanel ui:field="forecastPanel">
 				            	<mgwt:list.celllist.CellList ui:field="forecastCellList" />
 				            </g:FlowPanel>

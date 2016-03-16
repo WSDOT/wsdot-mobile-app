@@ -17,6 +17,7 @@
             margin-right: 0px;
             padding: 30px 0 20px 0;
         }
+
     </ui:style>
     
 	<mgwt:panel.flex.RootFlexPanel>
@@ -28,15 +29,13 @@
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" styleName="{app.css.voiceoverPage}">
         	<g:FlowPanel ui:field="flowPanel">
                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
-                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" />
                 </g:HTMLPanel>
             	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>
         </mgwt:panel.pull.PullPanel>
-		
 	</mgwt:panel.flex.RootFlexPanel>
-    
 </ui:UiBinder>

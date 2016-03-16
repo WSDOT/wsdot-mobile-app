@@ -336,6 +336,7 @@ public interface AppBundle extends ClientBundle {
 		String noHighImpactAlerts();
 		
 		String ariaOnly();
+		String voiceoverPage();
 		
 		String borderButton();
 		String ferriesButton();

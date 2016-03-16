@@ -32,7 +32,7 @@
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel" styleName="{app.css.voiceoverPage}">
             <g:FlowPanel ui:field="flowPanel">
                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />

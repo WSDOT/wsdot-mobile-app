@@ -62,7 +62,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel ui:field="times">
-                            <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+                            <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" styleName="{app.css.voiceoverPage}">
                             	<g:FlowPanel>
                                    <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                                        <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
@@ -91,7 +91,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel ui:field="cameras">
-                            <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel">
+                            <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="cameraScrollPanel" styleName="{app.css.voiceoverPage}">
                                 <g:FlowPanel ui:field="cameraPanel">
                                    <mgwt:list.celllist.CellList ui:field="cameraCellList" />
                                 </g:FlowPanel>

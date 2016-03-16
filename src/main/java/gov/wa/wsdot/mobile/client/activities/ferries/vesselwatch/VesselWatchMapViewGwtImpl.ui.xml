@@ -29,6 +29,10 @@
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
+		<g:HTMLPanel>
+			<div class="{app.css.ariaOnly}">VoiceOver users, to get ferry arrival times check departure times in Route Schedules.</div>
+		</g:HTMLPanel>
+		
        	<g:FlowPanel ui:field="flowPanel">
 	        <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
 	            <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />

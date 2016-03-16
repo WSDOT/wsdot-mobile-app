@@ -60,6 +60,7 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
+		
 		view = clientFactory.getFacebookView();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();

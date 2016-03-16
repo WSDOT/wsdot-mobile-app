@@ -30,7 +30,7 @@
 		</mgwt:header.HeaderPanel>
 		
 		<g:HTMLPanel>
-			<div class="{app.css.ariaOnly}">you can dial  <a href="tel:511">5 1 1</a> and get real time traffic and weather information. 
+			<div class="{app.css.ariaOnly}">VoiceOver users, you can dial  <a href="tel:511">5 1 1</a> and get real time traffic and weather information. 
 			    Out of state travelers call <a href="tel:1-800-695-7623">1 800 6 9 5 7 6 2 3</a></div>
 		</g:HTMLPanel>
 		

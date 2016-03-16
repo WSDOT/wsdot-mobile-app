@@ -25,8 +25,6 @@ import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
 
 import java.util.List;
 
-import com.google.gwt.aria.client.GrabbedValue;
-import com.google.gwt.aria.client.LiveValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -36,7 +34,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ImageResourceRenderer;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwtphonegap.client.PhoneGap;
@@ -223,6 +220,7 @@ public class FerriesRouteSchedulesViewGwtImpl extends Composite implements
 
 		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
 		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+	
 	}
 
 }

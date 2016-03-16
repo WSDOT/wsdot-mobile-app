@@ -40,7 +40,7 @@
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel" styleName="{app.css.voiceoverPage}">
         	<g:HTMLPanel styleName="{style.htmlPanel}">
         	    <g:HTML ui:field="alertTitle" styleName="{style.alertTitle}" />
                 <g:HTML ui:field="alertText" styleName="{style.alertText}" />

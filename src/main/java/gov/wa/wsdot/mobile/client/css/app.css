@@ -265,6 +265,15 @@ so only screen readers can see it.
 	overflow: hidden;
 }
 
+/*
+Allows the 3 finger tap gesture to 
+count correct number of pages
+*/
+.voiceoverPage {
+  	overflow : auto;
+	height: 100%;
+}
+
 
 @sprite .borderButton {
 	gwt-image: "borderDefaultPNG";

@@ -47,7 +47,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel ui:field ="sailings">
-						<mgwt:panel.scroll.ScrollPanel ui:field="sailingsPanel" scrollingEnabledX="false">        	
+						<mgwt:panel.scroll.ScrollPanel ui:field="sailingsPanel" scrollingEnabledX="false" styleName="{app.css.voiceoverPage}">        	
 			        	    <g:FlowPanel>
                                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
@@ -66,11 +66,13 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel  ui:field ="alerts">
-                        <g:HTMLPanel ui:field="emptyAlerts" styleName="{style.emptyAlerts}" visible="false">
-                           	<g:HTML>No Reported Alerts</g:HTML>
-                        </g:HTMLPanel>
-                        <mgwt:panel.scroll.ScrollPanel ui:field="alertsPanel" scrollingEnabledX="false">         
-                            <mgwt:list.celllist.CellList ui:field="alertsCellList" />
+                        <mgwt:panel.scroll.ScrollPanel ui:field="alertsPanel" scrollingEnabledX="false" styleName="{app.css.voiceoverPage}">    
+							<g:FlowPanel>
+                            	<g:HTMLPanel ui:field="emptyAlerts" styleName="{style.emptyAlerts}" visible="false">
+                           			<g:HTML>No Reported Alerts</g:HTML>
+                        		</g:HTMLPanel>
+                            	<mgwt:list.celllist.CellList ui:field="alertsCellList" />
+                            </g:FlowPanel>
                         </mgwt:panel.scroll.ScrollPanel>
                         </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>

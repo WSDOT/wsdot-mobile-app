@@ -27,9 +27,9 @@
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
-        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" styleName="{app.css.voiceoverPage}">
 
-        	<g:FlowPanel ui:field="flowPanel">
+        	<g:FlowPanel ui:field="flowPanel" >
                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false"/>
                 </g:HTMLPanel>

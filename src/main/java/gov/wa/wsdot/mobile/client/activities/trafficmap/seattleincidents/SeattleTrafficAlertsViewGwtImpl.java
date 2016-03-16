@@ -271,6 +271,9 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 		// Add ARIA roles for accessibility
 		Roles.getHeadingRole().set(heading.getElement());
 
+		Roles.getProgressbarRole().set(progressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+		
 		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
 		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
 	}

@@ -41,7 +41,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr520ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr520ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
 	                            <g:Grid styleName="{style.grid}">
@@ -166,7 +166,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr16ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr16ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
                                 <g:Grid styleName="{style.grid}">
@@ -222,7 +222,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr167ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr167ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
                                 <g:HTML styleName="{style.simplePadding}">
                                     <p>Tolls are collected in both directions.</p>
@@ -251,7 +251,7 @@
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="i405ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="i405ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
                                 <g:HTML styleName="{style.simplePadding}">
 

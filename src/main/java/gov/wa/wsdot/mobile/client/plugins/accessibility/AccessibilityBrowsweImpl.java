@@ -1,7 +1,5 @@
 package gov.wa.wsdot.mobile.client.plugins.accessibility;
 
-import gov.wa.wsdot.mobile.client.MobileAppEntryPoint;
-
 /**
  * Created by simsl on 3/11/16.
  *

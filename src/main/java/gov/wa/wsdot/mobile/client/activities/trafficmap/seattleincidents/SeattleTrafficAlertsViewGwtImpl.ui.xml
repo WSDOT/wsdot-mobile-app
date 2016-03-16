@@ -33,8 +33,8 @@
 	        <mgwt:button.Button ui:field="doneButton" text="Done" />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
-            <g:FlowPanel ui:field="flowPanel">
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" styleName="{app.css.voiceoverPage}">
+            <g:FlowPanel ui:field="flowPanel" >
                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
                 </g:HTMLPanel>

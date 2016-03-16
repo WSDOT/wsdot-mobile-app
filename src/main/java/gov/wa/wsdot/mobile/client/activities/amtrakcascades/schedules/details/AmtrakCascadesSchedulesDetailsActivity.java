@@ -356,8 +356,9 @@ public class AmtrakCascadesSchedulesDetailsActivity extends MGWTAbstractActivity
                         + " and Arriving: "
                         + amtrakStations.get(toLocation));
                 view.render(serviceItems);
-                
+         
                 view.refresh();
+                accessibility.postScreenChangeNotification();
             }
         });        
     }

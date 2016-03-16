@@ -69,7 +69,7 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 	 */
 	private static FerriesRouteSailingsViewGwtImplUiBinder uiBinder = GWT
 			.create(FerriesRouteSailingsViewGwtImplUiBinder.class);	
-
+	
 	@UiField
 	HeaderTitle heading;
 	
@@ -309,7 +309,6 @@ public class FerriesRouteSailingsViewGwtImpl extends Composite
 
 		Roles.getProgressbarRole().set(progressIndicator.getElement());
 		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
-		
 		
 		accessibilityShowSailings();
 		
