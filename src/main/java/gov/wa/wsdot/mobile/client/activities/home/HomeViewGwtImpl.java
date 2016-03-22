@@ -226,7 +226,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             public boolean canBeSelected(CameraItem model) {
                 return true;
             }
-
 		});
 		
 		ferriesCellList = new CellList<FerriesRouteItem>(
@@ -267,7 +266,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
                     return "";
                 }
             }
-
 		});
 
 		mountainPassesCellList = new CellList<MountainPassItem>(
@@ -363,7 +361,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             scrollPanel.setBounce(false);
             colorOfStar.setHTML("icon to turn it white.");
         }
-
 	}
 
 	@UiHandler("tabPanel")
@@ -375,19 +372,14 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	}
 	
     @UiHandler("homeTab")
-    protected void onTimesTabPressed(TapEvent event) {
-    	if (presenter != null) {
-    		accessibilityShowHome();
-    	}
+    protected void onHomeTabPressed(TapEvent event) {
+	    accessibilityShowHome();
     }
     
     @UiHandler("favoritesTab")
-    protected void onCamerasTabPressed(TapEvent event) {
-    	if (presenter != null) {
-    		accessibilityShowFavorites();
-    	}
+    protected void onFavoritesTabPressed(TapEvent event) {
+    	accessibilityShowFavorites();
     }
-	
 	
 	@UiHandler("aboutButton")
 	protected void onAboutButtonPressed(TapEvent event) {

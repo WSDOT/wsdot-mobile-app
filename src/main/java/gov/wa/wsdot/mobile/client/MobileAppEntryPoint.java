@@ -72,10 +72,12 @@ import gov.wa.wsdot.mobile.shared.CameraItem;
 
 public class MobileAppEntryPoint implements EntryPoint {
 
+    static ClientFactory staticFactory;
+	 
 	private void start() {
 
-	    final ClientFactory clientFactory = new ClientFactoryImpl();
-
+		final ClientFactory clientFactory = new ClientFactoryImpl();
+		
         // Initialize and configure Google Analytics plugin
         final Analytics analytics = GWT.create(Analytics.class);
         analytics.initialize();
@@ -87,6 +89,8 @@ public class MobileAppEntryPoint implements EntryPoint {
         final Accessibility accessibility = GWT.create(Accessibility.class);
         ((ClientFactoryImpl) clientFactory).setAccessibility(accessibility);
         accessibility.initialize();
+        
+        staticFactory = clientFactory;
 
 		final PhoneGap phoneGap = GWT.create(PhoneGap.class);
 
@@ -116,9 +120,20 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		phoneGap.initializePhoneGap();
 
-        exportInitAds();
-        accessibility.isVoiceOverRunning();
-
+		if (MGWT.getOsDetection().isIOs()){
+			exportInitAds();
+        	accessibility.isVoiceOverRunning();
+		}else{
+			// Initialize and configure AdMob plugin
+			final AdMob adMob = GWT.create(AdMob.class);
+			adMob.initialize();
+			AdMobOptions options = (AdMobOptions) JavaScriptObject.createObject().cast();
+			options.setAdId("/6499/example/banner");
+			options.setOffsetTopBar(true);
+			options.setAutoShow(true);
+            options.setPosition(AdPosition.TOP_CENTER.getPosition());
+            adMob.createBanner(options);
+		}
 	}
 
     /**
@@ -142,6 +157,9 @@ public class MobileAppEntryPoint implements EntryPoint {
 
         if (VoiceOverOn){
             options.setPosition(AdPosition.BOTTOM_CENTER.getPosition());
+    		if (Consts.ANALYTICS_ENABLED) {
+    			staticFactory.getAnalytics().trackEvent(Consts.EVENT_ACCESSIBILITY, "VoiceOver On", null);
+    		}
         }else {
             options.setPosition(AdPosition.TOP_CENTER.getPosition());
         }

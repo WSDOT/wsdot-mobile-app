@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1052,7 +1051,6 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		clientFactory.getPlaceController()
 				.goTo(new TravelTimeDetailsPlace(Integer.toString(item
 						.getRouteId())));
-
 	}
 
     @Override
@@ -1064,7 +1062,6 @@ public class HomeActivity extends MGWTAbstractActivity implements
                 analytics.trackScreen("/Favorites");
             }
         }
-
         lastTab = currentTab;
     }
 
@@ -1155,5 +1152,4 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		
 		return matchFound;
 	}
-
 }
