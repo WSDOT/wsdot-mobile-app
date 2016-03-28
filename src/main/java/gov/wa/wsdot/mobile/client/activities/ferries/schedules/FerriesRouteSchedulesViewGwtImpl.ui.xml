@@ -32,7 +32,7 @@
         <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" styleName="{app.css.voiceoverPage}">
         	<g:FlowPanel ui:field="flowPanel">
                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
-                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" />
+                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}"/>
                 </g:HTMLPanel>
             	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>

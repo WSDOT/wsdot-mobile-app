@@ -3,11 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Accessibility: Now supports reading and accessing content with VoiceOver.
+At this time three-finger swipe gestures are not supported.
 
 ## [4.0.0] - 2016-03-15
 ### Added
 - Added Google Analytics
-- Implemented basic VoiceOver support throughout app
 
 ### Fixed
 - Added Train numbers 502 and 504

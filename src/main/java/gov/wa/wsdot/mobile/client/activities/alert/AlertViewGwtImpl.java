@@ -21,6 +21,7 @@ package gov.wa.wsdot.mobile.client.activities.alert;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
+import com.google.gwt.aria.client.LiveValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -81,9 +82,8 @@ public class AlertViewGwtImpl extends Composite implements AlertView {
 	public AlertViewGwtImpl() {
 
 		initWidget(uiBinder.createAndBindUi(this));
-        
-		// Add ARIA roles for accessibility
-		Roles.getButtonRole().set(backButton.getElement());
+
+		accessibilityPrepare();
 		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
@@ -134,5 +134,10 @@ public class AlertViewGwtImpl extends Composite implements AlertView {
     public void refresh() {
         this.scrollPanel.refresh();
     }
-
+    
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+	}
 }
