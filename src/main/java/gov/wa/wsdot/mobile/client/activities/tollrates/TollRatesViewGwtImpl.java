@@ -19,12 +19,6 @@
 package gov.wa.wsdot.mobile.client.activities.tollrates;
 
 
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.I405TabBarButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.SR167TabBarButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.SR16TabBarButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.SR520TabBarButton;
-
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
@@ -42,6 +36,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.I405TabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.SR167TabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.SR16TabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.SR520TabBarButton;
 
 public class TollRatesViewGwtImpl extends Composite implements TollRatesView {
 

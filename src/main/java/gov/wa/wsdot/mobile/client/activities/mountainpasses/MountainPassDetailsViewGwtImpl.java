@@ -21,7 +21,6 @@ package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 import java.util.List;
 
 import com.google.gwt.aria.client.CheckedValue;
-import com.google.gwt.aria.client.LiveValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
@@ -29,7 +28,6 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -51,8 +49,6 @@ import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.CameraTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.ForecastTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.ReportTabBarButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.SailingsTabBarButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.WarningTabBarButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.ForecastItem;
 

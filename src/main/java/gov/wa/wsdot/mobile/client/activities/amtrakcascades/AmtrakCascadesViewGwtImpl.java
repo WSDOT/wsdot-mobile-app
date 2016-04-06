@@ -18,14 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades;
 
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
-import gov.wa.wsdot.mobile.shared.Topic;
-
 import java.util.List;
 
 import com.google.gwt.aria.client.Roles;
-import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -39,6 +34,10 @@ import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
+import gov.wa.wsdot.mobile.shared.Topic;
 
 public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascadesView {
 

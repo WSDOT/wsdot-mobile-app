@@ -21,10 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.home;
 import java.util.List;
 
 import com.google.gwt.aria.client.Id;
-import com.google.gwt.aria.client.LiveValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

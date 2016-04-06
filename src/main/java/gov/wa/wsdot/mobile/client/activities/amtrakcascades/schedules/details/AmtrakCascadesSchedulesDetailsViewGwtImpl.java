@@ -18,17 +18,11 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
-
 import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.aria.client.Roles;
-import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.i18n.client.TimeZoneInfo;
@@ -53,6 +47,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
 
 public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 		implements AmtrakCascadesSchedulesDetailsView {
@@ -434,6 +432,7 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
     public void setSelected(int lastIndex, boolean b) {
         cellList.setSelectedIndex(lastIndex, b);
     }
+
     private void accessibilityPrepare(){
 		
 		// Add ARIA roles for accessibility
