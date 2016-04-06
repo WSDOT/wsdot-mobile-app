@@ -18,12 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.youtube;
 
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.YouTubeItem;
-
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.safehtml.shared.UriUtils;
@@ -36,6 +33,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
@@ -44,6 +42,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.YouTubeItem;
 
 public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 
@@ -59,6 +61,9 @@ public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 	 */
 	private static YouTubeViewGwtImplUiBinder uiBinder = GWT
 			.create(YouTubeViewGwtImplUiBinder.class);
+	
+	@UiField
+	HeaderTitle heading;
 	
 	@UiField(provided = true)
 	CellList<YouTubeItem> cellList;
@@ -120,6 +125,8 @@ public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
         }
@@ -203,4 +210,18 @@ public class YouTubeViewGwtImpl extends Composite implements YouTubeView {
 		return pullToRefresh;
 	}
 
+	private void accessibilityPrepare(){
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getProgressbarRole().set(progressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+
+	}
 }

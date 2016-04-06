@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -45,6 +46,7 @@ public class AlertActivity extends MGWTAbstractActivity implements
 	private WSDOTDataService dbService;
 	private String alertId;
 	private Analytics analytics;
+	private Accessibility accessibility;
 
 	public AlertActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -55,6 +57,7 @@ public class AlertActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getAlertView();
 		dbService = clientFactory.getDbService();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -86,12 +89,12 @@ public class AlertActivity extends MGWTAbstractActivity implements
 			});
 			
 		}
-
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Alerts");
 		}
 
-        panel.setWidget(view);
+		panel.setWidget(view);
+		accessibility.postScreenChangeNotification();
 	}
 
 	@Override

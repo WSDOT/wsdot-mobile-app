@@ -18,12 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.twitter;
 
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.TwitterItem;
-
 import java.util.List;
 
+import com.google.gwt.aria.client.LiveValue;
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -35,6 +33,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
@@ -44,6 +43,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.TwitterItem;
 
 public class TwitterViewGwtImpl extends Composite implements TwitterView {
 
@@ -59,6 +62,9 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 	 */
 	private static TwitterViewGwtImplUiBinder uiBinder = GWT
 			.create(TwitterViewGwtImplUiBinder.class);
+	
+	@UiField
+	HeaderTitle heading;	
 	
 	@UiField(provided = true)
 	CellList<TwitterItem> cellList;
@@ -137,6 +143,8 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 		
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
 		if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
         }
@@ -233,4 +241,23 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 		return twitterAccounts.getItemText(twitterAccounts.getSelectedIndex());
 	}
 
+	private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getMenuRole().set(twitterAccounts.getElement());
+		Roles.getMenuRole().setAriaLabelProperty(twitterAccounts.getElement(), "select a twitter account");
+		Roles.getMenuRole().setTabindexExtraAttribute(twitterAccounts.getElement(), 0);		
+		
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+		Roles.getProgressbarRole().setAriaLiveProperty(progressIndicator.getElement(), LiveValue.ASSERTIVE);
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+		
+	}
 }

@@ -28,6 +28,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPla
 import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
@@ -76,6 +77,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
@@ -95,6 +97,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.setMapLocation(); // Set initial map location.
@@ -104,6 +107,9 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+
+		accessibility.postScreenChangeNotification();
+
 	}
 
 	private void getCameras() {

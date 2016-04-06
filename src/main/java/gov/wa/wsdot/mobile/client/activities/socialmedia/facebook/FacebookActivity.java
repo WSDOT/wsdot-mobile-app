@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.FacebookFeed;
 import gov.wa.wsdot.mobile.shared.FacebookItem;
 
@@ -48,6 +49,7 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<FacebookItem> facebookItems = new ArrayList<FacebookItem>();
 	private static final String FACEBOOK_FEED_URL = "http://www.wsdot.wa.gov/news/socialroom/posts/facebook";
@@ -58,9 +60,11 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
+		
 		view = clientFactory.getFacebookView();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		inAppBrowser = phoneGap.getInAppBrowser();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
@@ -99,7 +103,9 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 			analytics.trackScreen("/Social Media/Facebook");
 		}
 
-        panel.setWidget(view);
+		panel.setWidget(view);
+
+		accessibility.postScreenChangeNotification();
 	}
 	
 	@Override
@@ -182,6 +188,7 @@ public class FacebookActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(facebookItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

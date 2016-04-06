@@ -30,6 +30,7 @@ import gov.wa.wsdot.mobile.shared.VesselWatchItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
@@ -67,6 +68,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
@@ -86,6 +88,9 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	private static TrafficMapViewGwtImplUiBinder uiBinder = GWT
 			.create(TrafficMapViewGwtImplUiBinder.class);
 
+	@UiField
+	HeaderTitle heading;
+	
 	@UiField
 	BackImageButton backButton;
 	
@@ -124,6 +129,8 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 
 		initWidget(uiBinder.createAndBindUi(this));
         
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
         }
@@ -448,5 +455,12 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 		}
 
 	}
-
+	private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+	}
 }

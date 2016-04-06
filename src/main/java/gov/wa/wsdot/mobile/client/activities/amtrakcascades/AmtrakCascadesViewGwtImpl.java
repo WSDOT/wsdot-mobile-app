@@ -18,12 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades;
 
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
-import gov.wa.wsdot.mobile.shared.Topic;
-
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -32,10 +29,15 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
+import gov.wa.wsdot.mobile.shared.Topic;
 
 public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascadesView {
 
@@ -51,6 +53,9 @@ public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascad
 	 */
 	private static AmtrakCascadesViewGwtImplUiBinder uiBinder = GWT
 			.create(AmtrakCascadesViewGwtImplUiBinder.class);
+	
+	@UiField
+	HeaderTitle heading;
 	
 	@UiField(provided = true)
 	CellList<Topic> cellList;
@@ -68,7 +73,7 @@ public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascad
 	
 	public AmtrakCascadesViewGwtImpl() {
 		
-		cellList = new CellList<Topic>(new BasicCell<Topic>() {
+		cellList = new CellList<Topic>(new MyBasicCell<Topic>() {
 
 			@Override
 			public String getDisplayString(Topic model) {
@@ -83,6 +88,8 @@ public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascad
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
@@ -118,5 +125,12 @@ public class AmtrakCascadesViewGwtImpl extends Composite implements AmtrakCascad
 	public void setSelected(int lastIndex, boolean b) {
 		cellList.setSelectedIndex(lastIndex, b);
 	}
-
+	private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+	}
 }

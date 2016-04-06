@@ -27,7 +27,7 @@ public final class Consts {
 	 * The Event Category title in Google Analytics.
 	 */
 	public static final String EVENT_TRACKING_CATEGORY = "MobileApp";
-
+	public static final String EVENT_ACCESSIBILITY = "Accessibility";
 	/**
 	 * Current version number and build of the app.
 	 */

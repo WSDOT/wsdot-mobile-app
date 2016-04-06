@@ -20,6 +20,9 @@ package gov.wa.wsdot.mobile.client.activities.home;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.Id;
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -32,6 +35,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ImageResourceRenderer;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -40,10 +44,12 @@ import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
@@ -57,7 +63,9 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesC
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
-import gov.wa.wsdot.mobile.client.widget.celllist.BasicCell;
+import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
+import gov.wa.wsdot.mobile.client.widget.tabbar.FavoritesTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.HomeTabBarButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
@@ -77,6 +85,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	 */
 	private static HomeViewGwtImplUiBinder uiBinder = GWT
 			.create(HomeViewGwtImplUiBinder.class);
+	
+	@UiField
+	HeaderTitle heading;
 	
 	@UiField
 	AboutImageButton aboutButton;
@@ -101,6 +112,27 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	Button amtrakButton;
+	
+	@UiField
+	HTMLPanel trafficTitle;
+	
+	@UiField
+	HTMLPanel ferriesTitle;
+	
+	@UiField
+	HTMLPanel passesTitle;
+	
+	@UiField
+	HTMLPanel socialTitle;
+	
+	@UiField
+	HTMLPanel tollingTitle;
+	
+	@UiField
+	HTMLPanel borderTitle;
+	
+	@UiField
+	HTMLPanel amtrakTitle;
 	
 	@UiField
 	HTMLPanel highImpactAlertsPanel;
@@ -136,6 +168,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	HTMLPanel emptyFavorites;
 	
 	@UiField
+	Image star;
+	
+	@UiField
 	HTML colorOfStar;
 	
 	@UiField(provided = true)
@@ -156,6 +191,18 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	@UiField
 	TabPanel tabPanel;
 
+	@UiField
+	HomeTabBarButton homeTab;
+	
+	@UiField
+	FavoritesTabBarButton favoritesTab;
+	
+	@UiField
+	RootFlexPanel home;
+	
+	@UiField
+	RootFlexPanel favorites;
+	
 	private Presenter presenter;
 	private PullArrowHeader pullArrowHeader;
 
@@ -163,10 +210,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	    pullToRefresh = new PullPanel();
 		pullArrowHeader = new PullArrowHeader();
 		pullToRefresh.setHeader(pullArrowHeader);
-
+		
 		alertsCarousel = new Carousel();
 		
-		camerasCellList = new CellList<CameraItem>(new BasicCell<CameraItem>() {
+		camerasCellList = new CellList<CameraItem>(new MyBasicCell<CameraItem>() {
 
 			@Override
 			public String getDisplayString(CameraItem model) {
@@ -177,7 +224,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             public boolean canBeSelected(CameraItem model) {
                 return true;
             }
-
 		});
 		
 		ferriesCellList = new CellList<FerriesRouteItem>(
@@ -218,7 +264,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
                     return "";
                 }
             }
-
 		});
 
 		mountainPassesCellList = new CellList<MountainPassItem>(
@@ -306,13 +351,14 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		
+		accessibilityPrepare();	
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFixedSpacer.setWidth("12px");
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
             colorOfStar.setHTML("icon to turn it white.");
         }
-
 	}
 
 	@UiHandler("tabPanel")
@@ -322,7 +368,17 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	        presenter.onTabSelected(index);
 	    }
 	}
-
+	
+    @UiHandler("homeTab")
+    protected void onHomeTabPressed(TapEvent event) {
+	    accessibilityShowHome();
+    }
+    
+    @UiHandler("favoritesTab")
+    protected void onFavoritesTabPressed(TapEvent event) {
+    	accessibilityShowFavorites();
+    }
+	
 	@UiHandler("aboutButton")
 	protected void onAboutButtonPressed(TapEvent event) {
 		if (presenter != null) {
@@ -341,6 +397,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	protected void onFerriesButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onFerriesButtonPressed();
+
 		}
 	}	
 	
@@ -616,5 +673,77 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	public void hideEmptyFavoritesMessage() {
 		emptyFavorites.setVisible(false);
 	}
+	
 
+	private void accessibilityShowHome(){
+		Roles.getMainRole().setAriaHiddenState(home.getElement(), false);
+		Roles.getMainRole().setAriaHiddenState(favorites.getElement(), true);
+		Roles.getTabRole().setAriaSelectedState(homeTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaSelectedState(favoritesTab.getElement(), SelectedValue.FALSE);
+	}
+
+	private void accessibilityShowFavorites(){
+		Roles.getMainRole().setAriaHiddenState(home.getElement(), true);
+		Roles.getMainRole().setAriaHiddenState(favorites.getElement(), false);
+		Roles.getTabRole().setAriaSelectedState(homeTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaSelectedState(favoritesTab.getElement(), SelectedValue.TRUE);
+	}
+	
+	private void accessibilityPrepare(){
+		
+		// Set UI labels for accessibility
+		trafficButton.setTitle("traffic Map");
+		ferriesButton.setTitle("ferries");
+		passesButton.setTitle("mountain passes");
+		socialButton.setTitle("social media");
+		tollingButton.setTitle("toll rates");
+		borderButton.setTitle("border waits");
+		amtrakButton.setTitle("amtrak cascades");
+		aboutButton.setTitle("about the app");
+		alertsCarousel.setTitle("high impact alerts");
+		star.setAltText("star");
+		
+		// Set ARIA roles for accessibility
+		Roles.getButtonRole().set(trafficButton.getElement());
+		Roles.getButtonRole().set(ferriesButton.getElement());
+		Roles.getButtonRole().set(passesButton.getElement());
+		Roles.getButtonRole().set(socialButton.getElement());
+		Roles.getButtonRole().set(tollingButton.getElement());
+		Roles.getButtonRole().set(borderButton.getElement());
+		Roles.getButtonRole().set(amtrakButton.getElement());
+		
+		Roles.getButtonRole().set(aboutButton.getElement());
+
+		Roles.getHeadingRole().set(highImpactAlertsPanel.getElement());
+
+        Roles.getHeadingRole().set(heading.getElement());
+
+		Roles.getTabRole().set(homeTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(homeTab.getElement(), SelectedValue.TRUE);
+		Roles.getTabRole().setAriaLabelProperty(homeTab.getElement(), "home");
+		
+		Roles.getTabRole().set(favoritesTab.getElement());
+		Roles.getTabRole().setAriaSelectedState(favoritesTab.getElement(), SelectedValue.FALSE);
+		Roles.getTabRole().setAriaLabelProperty(favoritesTab.getElement(), "favorites");
+		
+		Roles.getProgressbarRole().set(progressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+
+		// Define flow
+		Roles.getHeadingRole().setAriaFlowtoProperty(heading.getElement(), Id.of(trafficButton.getElement()));
+
+		// Hide redundant content from VoiceOver
+		Roles.getHeadingRole().setAriaHiddenState(trafficTitle.getElement(), true);
+		Roles.getHeadingRole().setAriaHiddenState(ferriesTitle.getElement(), true);
+		Roles.getHeadingRole().setAriaHiddenState(passesTitle.getElement(), true);
+		Roles.getHeadingRole().setAriaHiddenState(socialTitle.getElement(), true);
+		Roles.getHeadingRole().setAriaHiddenState(tollingTitle.getElement(), true);
+		Roles.getHeadingRole().setAriaHiddenState(borderTitle.getElement(), true);
+		Roles.getHeadingRole().setAriaHiddenState(amtrakTitle.getElement(), true);
+
+        // TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+        Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+
+		accessibilityShowHome();
+	}
 }

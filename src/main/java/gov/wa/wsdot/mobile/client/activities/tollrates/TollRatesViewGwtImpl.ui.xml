@@ -28,7 +28,7 @@
         <mgwt:header.HeaderPanel>
 	        <wsdot:button.image.BackImageButton ui:field="backButton" />
 	        <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-	        <mgwt:header.HeaderTitle>Toll Rates</mgwt:header.HeaderTitle>
+	        <mgwt:header.HeaderTitle ui:field="heading">Toll Rates</mgwt:header.HeaderTitle>
 	        <mgwt:panel.flex.FlexSpacer />
 	        <mgwt:panel.flex.FixedSpacer />
         </mgwt:header.HeaderPanel>
@@ -37,11 +37,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.SR520TabBarButton />
+                        <wsdot:tabbar.SR520TabBarButton ui:field="sr520Tab"/>
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr520ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr520ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
 	                            <g:Grid styleName="{style.grid}">
@@ -52,8 +52,8 @@
 	                                </g:row>
                                     <g:row>
                                         <g:cell>Midnight to 5 AM</g:cell>
-                                        <g:cell>0</g:cell>
-                                        <g:cell>0</g:cell>
+                                        <g:cell>$0</g:cell>
+                                        <g:cell>$0</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>5 AM to 6 AM</g:cell>
@@ -107,8 +107,8 @@
                                     </g:row>
                                     <g:row>
                                         <g:cell>11 PM to 11:59 PM</g:cell>
-                                        <g:cell>0</g:cell>
-                                        <g:cell>0</g:cell>
+                                        <g:cell>$0</g:cell>
+                                        <g:cell>$0</g:cell>
                                     </g:row>
                                     <g:row styleName="{style.weekend}">
                                         <g:cell>Weekends and Holidays</g:cell>
@@ -117,8 +117,8 @@
                                     </g:row>
                                     <g:row>
                                         <g:cell>Midnight to 5 AM</g:cell>
-                                        <g:cell>0</g:cell>
-                                        <g:cell>0</g:cell>
+                                        <g:cell>$0</g:cell>
+                                        <g:cell>$0</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>5 AM to 8 AM</g:cell>
@@ -147,8 +147,8 @@
                                     </g:row>
                                     <g:row>
                                         <g:cell>11 PM to 11:59 PM</g:cell>
-                                        <g:cell>0</g:cell>
-                                        <g:cell>0</g:cell>
+                                        <g:cell>$0</g:cell>
+                                        <g:cell>$0</g:cell>
                                     </g:row>
 	                            </g:Grid>
 
@@ -162,11 +162,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.SR16TabBarButton />
+                        <wsdot:tabbar.SR16TabBarButton ui:field="sr16Tab"/>
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr16ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr16ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
 
                                 <g:Grid styleName="{style.grid}">
@@ -218,11 +218,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.SR167TabBarButton />
+                        <wsdot:tabbar.SR167TabBarButton ui:field="sr167Tab"/>
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr167ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="sr167ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
                                 <g:HTML styleName="{style.simplePadding}">
                                     <p>Tolls are collected in both directions.</p>
@@ -247,11 +247,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.I405TabBarButton />
+                        <wsdot:tabbar.I405TabBarButton ui:field="i405Tab"/>
                     </mgwt:button>
                     <mgwt:widget>
                         <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="i405ScrollPanel">
+                        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="i405ScrollPanel" styleName="{app.css.voiceoverPage}">
                             <g:HTMLPanel styleName="{style.htmlPanel}">
                                 <g:HTML styleName="{style.simplePadding}">
 

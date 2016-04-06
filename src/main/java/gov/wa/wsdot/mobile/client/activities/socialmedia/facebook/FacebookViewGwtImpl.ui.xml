@@ -23,12 +23,12 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Facebook</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Facebook</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" styleName="{app.css.voiceoverPage}">
         	<g:FlowPanel ui:field="flowPanel">
                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />

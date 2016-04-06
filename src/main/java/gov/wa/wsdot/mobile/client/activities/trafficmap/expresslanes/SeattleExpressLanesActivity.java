@@ -22,6 +22,7 @@ import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
 import gov.wa.wsdot.mobile.shared.ExpressLanesFeed;
@@ -53,6 +54,7 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 	private SeattleExpressLanesView view;
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
+	private Accessibility accessibility;
 	private InAppBrowser inAppBrowser;
 
 	private static final String EXPRESS_LANES_URL = Consts.HOST_URL + "/traveler/api/expresslanes";
@@ -66,6 +68,7 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getSeattleExpressLanesView();
 		this.eventBus = eventBus;
 		this.phoneGap = this.clientFactory.getPhoneGap();
+		accessibility = clientFactory.getAccessibility();
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
 		inAppBrowser = this.phoneGap.getInAppBrowser();
@@ -102,6 +105,8 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 		createSchedulesLink();
 
 		panel.setWidget(view);
+
+		accessibility.postScreenChangeNotification();
 	}
 
     private void createPostList() {
@@ -151,6 +156,7 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 					view.hideProgressIndicator();
 					view.render(expressLaneItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 				}
 				
 			}

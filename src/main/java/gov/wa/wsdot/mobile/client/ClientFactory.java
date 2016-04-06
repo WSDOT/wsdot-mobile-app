@@ -54,6 +54,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.Seattle
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 
 import com.google.gwt.place.shared.PlaceController;
@@ -107,4 +108,5 @@ public interface ClientFactory {
 	public AmtrakCascadesSchedulesView getAmtrakCascadesSchedulesView();
     public AmtrakCascadesSchedulesDetailsView getAmtrakCascadesDeparturesView();
     public CalloutView getCalloutView();
+	public Accessibility getAccessibility();
 }

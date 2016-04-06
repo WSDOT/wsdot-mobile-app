@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 
 public class CalloutActivity extends MGWTAbstractActivity implements
 		CalloutView.Presenter {
@@ -41,6 +42,7 @@ public class CalloutActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private String url;
 	private Analytics analytics;
+	private Accessibility accessibility;
 
 	public CalloutActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
@@ -51,6 +53,7 @@ public class CalloutActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getCalloutView();
 		analytics = clientFactory.getAnalytics();
 		this.eventBus = eventBus;
+		accessibility = clientFactory.getAccessibility();
 		view.setPresenter(this);
 		
 		Place place = clientFactory.getPlaceController().getWhere();
@@ -94,6 +97,7 @@ public class CalloutActivity extends MGWTAbstractActivity implements
         }
 
 		panel.setWidget(view);
+		accessibility.postScreenChangeNotification();
 	}
 
 	@Override

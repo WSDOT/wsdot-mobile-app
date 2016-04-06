@@ -23,6 +23,7 @@ import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -74,6 +75,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	private WSDOTDataService dbService;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
+	private Accessibility accessibility;
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
 	private static HashMap<String, String[]> weatherPhrasesNight = new HashMap<String, String[]>();
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
@@ -92,6 +94,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		dbService = clientFactory.getDbService();
 		phoneGap = clientFactory.getPhoneGap();
 		analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -131,6 +134,8 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		}
 
         panel.setWidget(view);
+
+		accessibility.postScreenChangeNotification();
 	}
 	
 	@Override
@@ -406,6 +411,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		view.hideProgressIndicator();
 		view.render(mountainPassItems);
 		view.refresh();		
+		accessibility.postScreenChangeNotification();
 	}	
 
 	private static String makeImage(ImageResource resource) {

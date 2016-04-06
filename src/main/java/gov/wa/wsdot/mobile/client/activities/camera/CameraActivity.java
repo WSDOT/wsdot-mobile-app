@@ -24,9 +24,8 @@ import java.util.List;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
-import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 
@@ -51,6 +50,7 @@ public class CameraActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
 	private String cameraId;
+	private Accessibility accessibility;
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private boolean isStarred = false;
 	
@@ -62,6 +62,7 @@ public class CameraActivity extends MGWTAbstractActivity implements
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		view = clientFactory.getCameraView();
 		dbService = clientFactory.getDbService();
+		accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		
@@ -127,7 +128,8 @@ public class CameraActivity extends MGWTAbstractActivity implements
 		view.setVideoHeaderPullHandler(headerHandler2);
 		getCamera(view, cameraId);
 		panel.setWidget(view);
-		
+
+		accessibility.postScreenChangeNotification();
 	}	
 
 	private void getCamera(final CameraView view, String cameraId) {

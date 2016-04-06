@@ -32,7 +32,7 @@ public abstract class TitleDescLastUpdatedCell<T> implements Cell<T> {
 	private static Template TEMPLATE = GWT.create(Template.class);
 
 	public interface Template extends SafeHtmlTemplates {
-		@SafeHtmlTemplates.Template("<div class=\"{0}\"><div>{1}</div><div>{2}</div><div>{3}</div></div>")
+		@SafeHtmlTemplates.Template("<div role=\"button\" tabindex=0 class=\"{0}\"><div>{1}</div><div>{2}</div><div>{3}</div></div>")
 		SafeHtml content(String class1, SafeHtml title, SafeHtml description, String lastUpdated);
 	}
 

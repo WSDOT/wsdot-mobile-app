@@ -57,6 +57,7 @@ import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
@@ -83,6 +84,7 @@ public class FerriesRouteDeparturesActivity extends
 	private EventBus eventBus;
 	private PhoneGap phoneGap;
 	private Analytics analytics;
+    private Accessibility accessibility;
 	private WSDOTDataService dbService;
 	private static ArrayList<String> daysOfWeek = new ArrayList<String>();
     private static ArrayList<FerriesScheduleDateItem> scheduleDateItems = new ArrayList<FerriesScheduleDateItem>();
@@ -96,7 +98,8 @@ public class FerriesRouteDeparturesActivity extends
 	private static final String TERMINAL_SAILING_SPACE_URL = Consts.HOST_URL + "/traveler/api/ferries/terminalsailingspace";
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
 	private static int lastTab = 0;
-	
+
+
 	public FerriesRouteDeparturesActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -107,6 +110,7 @@ public class FerriesRouteDeparturesActivity extends
 		dbService = clientFactory.getDbService();
         phoneGap = clientFactory.getPhoneGap();
         analytics = clientFactory.getAnalytics();
+        accessibility = clientFactory.getAccessibility();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 
@@ -152,8 +156,8 @@ public class FerriesRouteDeparturesActivity extends
 			terminalId = ferriesRouteSchedulesDayDeparturesPlace.getTerminalId();
             view.setHeaderPullHandler(headerHandler);
 			createDepartureTimesList(routeId, 0, sailingsIndex);
-
 			panel.setWidget(view);
+			accessibility.postScreenChangeNotification();
 		}
 	}
 	
@@ -481,8 +485,8 @@ public class FerriesRouteDeparturesActivity extends
                 .get(view.getDayOfWeekSelected())
                 .getFerriesTerminalItem().get(sailingsIndex)
                 .getScheduleTimes());
-        
         view.refresh();
+		accessibility.postScreenChangeNotification();
 
     }
 	

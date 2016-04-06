@@ -11,12 +11,12 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Social Media</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Social Media</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel ui:field="scrollPanel" scrollingEnabledX="false">
+        <mgwt:panel.scroll.ScrollPanel ui:field="scrollPanel" scrollingEnabledX="false" styleName="{app.css.voiceoverPage}">
         	<g:FlowPanel ui:field="flowPanel">
             	<mgwt:list.celllist.CellList ui:field="cellList" />
             </g:FlowPanel>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,27 +16,24 @@
  *
  */
 
-package gov.wa.wsdot.mobile.shared;
+package gov.wa.wsdot.mobile.client.plugins.accessibility;
 
-import java.io.Serializable;
+import com.googlecode.gwtphonegap.client.plugins.PhoneGapPlugin;
 
-public class Topic implements Serializable {
+/**
+ * Created by simsl on 3/11/16.
+ */
+public interface Accessibility extends PhoneGapPlugin{
 
-	private static final long serialVersionUID = -134211444131752658L;
-	private String name;
 
-	public Topic() {}
+    /**
+     *  Calls MobileAccessibility.isVoiceOverRunning(callback)
+     */
+    public void isVoiceOverRunning();
 
-	public Topic(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     *  Sends a screen change notification to VoiceOver
+     */
+    public void postScreenChangeNotification();
 
 }

@@ -14,7 +14,7 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Travel Time</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Travel Time</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:button.image.NotimportantImageButton ui:field="starButton" />
 		</mgwt:header.HeaderPanel>

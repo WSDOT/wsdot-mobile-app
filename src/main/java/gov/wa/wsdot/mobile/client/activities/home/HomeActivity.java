@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2016 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +65,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
@@ -99,6 +99,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private static final String FERRIES_SCHEDULES_URL = Consts.HOST_URL + "/traveler/api/wsfschedule";
 	private static final String MOUNTAIN_PASS_URL = Consts.HOST_URL + "/traveler/api/mountainpassconditions";
 	private static final String TRAVEL_TIMES_URL = Consts.HOST_URL + "/traveler/api/traveltimes";
+	private Accessibility accessibility;
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<MountainPassItem> mountainPassItems = new ArrayList<MountainPassItem>();
@@ -123,6 +124,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
         dbService = clientFactory.getDbService();
         phoneGap = clientFactory.getPhoneGap();
         analytics = clientFactory.getAnalytics();
+		accessibility = clientFactory.getAccessibility();
 		view.getPullHeader().setHTML("pull down");
 		
 		PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
@@ -171,6 +173,8 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		}
 
 		panel.setWidget(view);
+
+		accessibility.postScreenChangeNotification();
 	}
 
 	private void createAlertsList() {
@@ -434,6 +438,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 					view.showCamerasList();
 					view.renderCameras(cameraItems);
 					view.refresh();
+					accessibility.postScreenChangeNotification();
 					
 				} else {
 					view.hideCamerasHeader();
@@ -943,6 +948,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		view.showFerriesList();
 		view.renderFerries(ferriesRouteItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 		
 	}
 	
@@ -968,6 +974,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		view.showMountainPassesList();
 		view.renderMountainPasses(mountainPassItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 		
 	}
 	
@@ -994,6 +1001,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		view.showTravelTimesList();
 		view.renderTravelTimes(travelTimesItems);
 		view.refresh();
+		accessibility.postScreenChangeNotification();
 		
 	}
 	
@@ -1043,7 +1051,6 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		clientFactory.getPlaceController()
 				.goTo(new TravelTimeDetailsPlace(Integer.toString(item
 						.getRouteId())));
-
 	}
 
     @Override
@@ -1055,7 +1062,6 @@ public class HomeActivity extends MGWTAbstractActivity implements
                 analytics.trackScreen("/Favorites");
             }
         }
-
         lastTab = currentTab;
     }
 
@@ -1146,5 +1152,4 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		
 		return matchFound;
 	}
-
 }

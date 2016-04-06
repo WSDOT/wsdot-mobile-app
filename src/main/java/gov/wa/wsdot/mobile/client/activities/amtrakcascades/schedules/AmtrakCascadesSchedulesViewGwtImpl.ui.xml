@@ -27,12 +27,12 @@
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Find Schedules</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Find Schedules</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:panel.flex.FixedSpacer />
 		</mgwt:header.HeaderPanel>
 		
-        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel" styleName="{app.css.voiceoverPage}">
             <g:FlowPanel ui:field="flowPanel">
                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />

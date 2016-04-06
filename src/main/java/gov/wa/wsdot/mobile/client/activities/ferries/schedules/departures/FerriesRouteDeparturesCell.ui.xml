@@ -102,10 +102,14 @@
     <ui:with field="progress" type="java.lang.String" />
     <ui:with field="lastUpdated" type="java.lang.String" />
     
-    <div class="{cellStyle.cellFerriesRouteDepartures}">
+    
+    <div class="{cellStyle.cellFerriesRouteDepartures}" tabindex="0">
+
         <div>
-            <div class="{cellStyle.departing}"><ui:text from="{departing}" /></div>
-            <div class="{cellStyle.arriving}"><ui:text from="{arriving}" /></div>
+            <div class="{app.css.ariaOnly}" >departing</div>
+            <div class="{cellStyle.departing}"> <ui:text from="{departing}" /></div>
+            <div class="{app.css.ariaOnly}">arriving</div>
+            <div class="{cellStyle.arriving}"> <ui:text from="{arriving}" /></div>
         </div>
         <div class="{cellStyle.annotation}"><ui:safehtml from="{annotation}" /></div>
         

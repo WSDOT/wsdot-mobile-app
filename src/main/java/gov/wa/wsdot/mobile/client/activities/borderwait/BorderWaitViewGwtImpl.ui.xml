@@ -24,7 +24,7 @@
         <mgwt:header.HeaderPanel>
 	        <wsdot:button.image.BackImageButton ui:field="backButton" />
 	        <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-	        <mgwt:header.HeaderTitle>Border Wait</mgwt:header.HeaderTitle>
+	        <mgwt:header.HeaderTitle ui:field="heading">Border Wait</mgwt:header.HeaderTitle>
 	        <mgwt:panel.flex.FlexSpacer />
 	        <mgwt:panel.flex.FixedSpacer />
         </mgwt:header.HeaderPanel>
@@ -33,11 +33,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.NorthboundTabBarButton />
+                        <wsdot:tabbar.NorthboundTabBarButton ui:field="northTab"/>
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.pull.PullPanel ui:field="northboundPullToRefresh">
+                        <mgwt:panel.flex.RootFlexPanel ui:field="northPanel">
+                        <mgwt:panel.pull.PullPanel ui:field="northboundPullToRefresh" styleName="{app.css.voiceoverPage}">
 	                        <g:FlowPanel>
                                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                                     <mgwt:progress.ProgressIndicator ui:field="northboundProgressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
@@ -53,11 +53,11 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.SouthboundTabBarButton />
+                        <wsdot:tabbar.SouthboundTabBarButton ui:field="southTab"/>
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.pull.PullPanel ui:field="southboundPullToRefresh">
+                        <mgwt:panel.flex.RootFlexPanel ui:field="southPanel">
+                        <mgwt:panel.pull.PullPanel ui:field="southboundPullToRefresh" styleName="{app.css.voiceoverPage}">
 	                        <g:FlowPanel>
                                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                                     <mgwt:progress.ProgressIndicator ui:field="southboundProgressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />

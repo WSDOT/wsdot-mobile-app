@@ -18,13 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details;
 
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
-
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
@@ -41,6 +38,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
@@ -49,6 +47,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.AmtrakCascadesServiceItem;
 
 public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 		implements AmtrakCascadesSchedulesDetailsView {
@@ -66,6 +68,8 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 	private static AmtrakCascadesSchedulesDetailsViewGwtImplUiBinder uiBinder = GWT
 			.create(AmtrakCascadesSchedulesDetailsViewGwtImplUiBinder.class);	
 
+	@UiField
+	HeaderTitle heading;
 	
 	@UiField(provided = true)
 	CellList<AmtrakCascadesServiceItem> cellList;
@@ -350,6 +354,8 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
 		
 		initWidget(uiBinder.createAndBindUi(this));
 
+		accessibilityPrepare();
+		
         if (MGWT.getOsDetection().isAndroid()) {
             leftFlexSpacer.setVisible(false);
         }
@@ -427,4 +433,18 @@ public class AmtrakCascadesSchedulesDetailsViewGwtImpl extends Composite
         cellList.setSelectedIndex(lastIndex, b);
     }
 
+    private void accessibilityPrepare(){
+		
+		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getHeadingRole().set(heading.getElement());
+		
+		Roles.getProgressbarRole().set(progressIndicator.getElement());
+		Roles.getProgressbarRole().setAriaLabelProperty(progressIndicator.getElement(), "loading indicator");
+
+		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
+        Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
+    }
 }

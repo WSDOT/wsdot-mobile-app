@@ -17,13 +17,24 @@
             margin-right: 0px;
             padding: 30px 0 20px 0;
         }
+        .emptyAlerts{
+            display: -webkit-box;
+			margin-top: 10px;
+            color: black;
+            font-weight: bold;
+            max-width: 100%;
+            text-align: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-align: top;
+            -webkit-box-pack: center;
+        }
     </ui:style>
     
 	<mgwt:panel.flex.RootFlexPanel>
 		<mgwt:header.HeaderPanel>
 			<wsdot:button.image.BackImageButton ui:field="backButton" />
 			<mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-			<mgwt:header.HeaderTitle>Sailings</mgwt:header.HeaderTitle>
+			<mgwt:header.HeaderTitle ui:field="heading">Sailings</mgwt:header.HeaderTitle>
 			<mgwt:panel.flex.FlexSpacer />
 			<mgwt:button.image.NotimportantImageButton ui:field="starButton" />
 		</mgwt:header.HeaderPanel>
@@ -32,16 +43,16 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.SailingsTabBarButton />
+                        <wsdot:tabbar.SailingsTabBarButton ui:field ="sailingsTab"/>
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:panel.flex.RootFlexPanel>
-						<mgwt:panel.scroll.ScrollPanel ui:field="sailingsPanel" scrollingEnabledX="false">        	
+                        <mgwt:panel.flex.RootFlexPanel ui:field ="sailings">
+						<mgwt:panel.scroll.ScrollPanel ui:field="sailingsPanel" scrollingEnabledX="false" styleName="{app.css.voiceoverPage}">        	
 			        	    <g:FlowPanel>
                                 <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
                                     <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
                                 </g:HTMLPanel>
-				            	<mgwt:list.celllist.CellList ui:field="sailingsCellList" />
+				            	<mgwt:list.celllist.CellList ui:field="sailingsCellList"/>
 			            	</g:FlowPanel>
 				        </mgwt:panel.scroll.ScrollPanel>
 				        </mgwt:panel.flex.RootFlexPanel>
@@ -51,20 +62,22 @@
             <mgwt:tabs>
                 <mgwt:tabbar.Tab>
                     <mgwt:button>
-                        <wsdot:tabbar.WarningTabBarButton />
+                        <wsdot:tabbar.WarningTabBarButton  ui:field ="alertsTab"/>
                     </mgwt:button>
                     <mgwt:widget>
-                        <mgwt:panel.flex.RootFlexPanel>
-                        <mgwt:panel.scroll.ScrollPanel ui:field="alertsPanel" scrollingEnabledX="false">         
-                            <mgwt:list.celllist.CellList ui:field="alertsCellList" />
+                        <mgwt:panel.flex.RootFlexPanel  ui:field ="alerts">
+                        <mgwt:panel.scroll.ScrollPanel ui:field="alertsPanel" scrollingEnabledX="false" styleName="{app.css.voiceoverPage}">    
+							<g:FlowPanel>
+                            	<g:HTMLPanel ui:field="emptyAlerts" styleName="{style.emptyAlerts}" visible="false">
+                           			<g:HTML>No Reported Alerts</g:HTML>
+                        		</g:HTMLPanel>
+                            	<mgwt:list.celllist.CellList ui:field="alertsCellList" />
+                            </g:FlowPanel>
                         </mgwt:panel.scroll.ScrollPanel>
                         </mgwt:panel.flex.RootFlexPanel>
                     </mgwt:widget>
                 </mgwt:tabbar.Tab>
-            </mgwt:tabs>
-                        
-        </mgwt:tabbar.TabPanel>
-                        
+            </mgwt:tabs>         
+        </mgwt:tabbar.TabPanel>        
 	</mgwt:panel.flex.RootFlexPanel>
-    
 </ui:UiBinder>
