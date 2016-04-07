@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+
+## [4.1.0] - 2016-04-07
 ### Added
 - Accessibility: Now supports reading and accessing content with VoiceOver.
 At this time three-finger swipe gestures are not supported.
