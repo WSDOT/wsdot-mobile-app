@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,28 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.place.shared.PlaceTokenizer;
+import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
-public class SeattleExpressLanesPlace extends Place {
+import java.util.List;
+
+import com.google.gwt.user.client.ui.IsWidget;
+
+public interface TravelTimeDetailsView extends IsWidget {
 	
-	public static class SeattleExpressLanesPlaceTokenizer implements
-			PlaceTokenizer<SeattleExpressLanesPlace> {
-
-		@Override
-		public SeattleExpressLanesPlace getPlace(String token) {
-			return new SeattleExpressLanesPlace();
-		}
-
-		@Override
-		public String getToken(SeattleExpressLanesPlace place) {
-			return "";
-		}
-
+	public void setPresenter(Presenter presenter);
+	
+	public interface Presenter {
+		
+		public void onBackButtonPressed();
+		
+		public void onStarButtonPressed();
+		
 	}
+
+	public void toggleStarButton(boolean isStarred);
+	
+	public void renderTravelTime(List<TravelTimesItem> createTravelTimeList);
+	
 }

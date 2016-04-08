@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Washington State Department of Transportation
+ * Copyright (c) 2014 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,30 +16,42 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.location;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
-import gov.wa.wsdot.mobile.shared.Topic;
+import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 import java.util.List;
 
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 
-public interface GoToLocationView extends IsWidget {
+public interface TravelTimesView extends IsWidget {
 	
 	public void setPresenter(Presenter presenter);
 	
 	public interface Presenter {
 		
-		public void onItemSelected(int index);
-		
 		public void onDoneButtonPressed();
+		
+		public void onSearchTextChanged(String filter);
+		
+		public void onTravelTimeSelected(int index);
 		
 	}
 	
-	public void render(List<Topic> createTopicsList);
-	
-	public void setSelected(int lastIndex, boolean b);
+	public void render(List<TravelTimesItem> createTopicsList);
+
+	public void showProgressIndicator();
+
+	public void hideProgressIndicator();
 
 	public void refresh();
-
+	
+	public void setHeaderPullHandler(Pullhandler pullHandler);
+	
+	public PullArrowWidget getPullHeader();
+	
+	public HasRefresh getPullPanel();
 }

@@ -16,94 +16,73 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 import java.util.List;
 
+import com.google.gwt.aria.client.CheckedValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
-import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
-import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.button.image.NotimportantImageButton;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
-import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
+import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
-import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
-import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
-import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 
-public class TravelTimesViewGwtImpl extends Composite implements
-		TravelTimesView {
+public class TravelTimeDetailsViewGwtImpl extends Composite implements
+		TravelTimeDetailsView {
 
 	/**
 	 * The UiBinder interface.
 	 */	
-	interface TravelTimesViewGwtImplUiBinder extends
-			UiBinder<Widget, TravelTimesViewGwtImpl> {
+	interface TravelTimeDetailsViewGwtImplUiBinder extends
+			UiBinder<Widget, TravelTimeDetailsViewGwtImpl> {
 	}
-	
+
 	/**
 	 * The UiBinder used to generate the view.
 	 */
-	private static TravelTimesViewGwtImplUiBinder uiBinder = GWT
-			.create(TravelTimesViewGwtImplUiBinder.class);
-	
+	private static TravelTimeDetailsViewGwtImplUiBinder uiBinder = GWT
+			.create(TravelTimeDetailsViewGwtImplUiBinder.class);
+
 	@UiField
 	HeaderTitle heading;
 	
+	@UiField
+	BackImageButton backButton;
+	
+    @UiField(provided = true)
+    NotimportantImageButton starButton;
+	
+    @UiField
+    FlexSpacer leftFlexSpacer;
+    
+    @UiField
+    ScrollPanel scrollPanel;
+    
 	@UiField(provided = true)
-	CellList<TravelTimesItem> cellList;
-	
-	@UiField
-	Button doneButton;
-	
-	@UiField
-	FixedSpacer leftFixedSpacer;
-	
-	@UiField
-	FlexSpacer leftFlexSpacer;
-	
-	@UiField(provided = true)
-	PullPanel pullToRefresh;
-	
-	@UiField
-	FlowPanel flowPanel;
-	
-	@UiField(provided = true)
-	MSearchBox searchBox;
-	
-	@UiField
-	ProgressIndicator progressIndicator;
+	CellList<TravelTimesItem> travelTimeCellList;
 	
 	private Presenter presenter;
-	private PullArrowHeader pullArrowHeader;
 	
-	public TravelTimesViewGwtImpl() {
+	public TravelTimeDetailsViewGwtImpl() {
+	    
+	    starButton = new NotimportantImageButton();
 		
-		pullToRefresh = new PullPanel();
-		pullArrowHeader = new PullArrowHeader();
-		pullToRefresh.setHeader(pullArrowHeader);
-		
-		cellList = new CellList<TravelTimesItem>(
-				new TravelTimesCell<TravelTimesItem>() {
+		travelTimeCellList = new CellList<TravelTimesItem>(new TravelTimesCell<TravelTimesItem>() {
 
 			@Override
 			public String getDisplayTitle(TravelTimesItem model) {
@@ -150,92 +129,67 @@ public class TravelTimesViewGwtImpl extends Composite implements
 	        	
 	        	return textColor;
 			}
-			
-		});
-		
-		searchBox = new MSearchBox();
-		searchBox.setPlaceHolder("Search Travel Times");
-		searchBox.addValueChangeHandler(new ValueChangeHandler<String>() {
 
 			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				if (presenter != null) {
-					presenter.onSearchTextChanged("%" + searchBox.getText() + "%");
-				}
-				
+			public boolean canBeSelected(TravelTimesItem model) {
+				return false;
 			}
+			
 		});
-		
+
 		initWidget(uiBinder.createAndBindUi(this));
         
 		accessibilityPrepare();
 		
 		if (MGWT.getOsDetection().isAndroid()) {
-            leftFixedSpacer.setWidth("12px");
             leftFlexSpacer.setVisible(false);
-        }		
+            scrollPanel.setBounce(false);
+        }
+	}
+
+	@UiHandler("backButton")
+	protected void onBackButtonPressed(TapEvent event) {
+		if (presenter != null) {
+			presenter.onBackButtonPressed();
+		}
+	}
+	
+	@UiHandler("starButton")
+	protected void onStarButtonPressed(TapEvent event) {
+		if (presenter != null) {
+			presenter.onStarButtonPressed();
+		}
 	}
 	
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
-	
-	@UiHandler("doneButton")
-	protected void onBackButtonPressed(TapEvent event) {
-		if (presenter != null) {
-			presenter.onDoneButtonPressed();
-		}
-	}
-	
-	@UiHandler("cellList")
-	protected void onTravelTimeCellSelected(CellSelectedEvent event) {
-		if (presenter != null) {
-			int index = event.getIndex();
-			presenter.onTravelTimeSelected(index);
-		}
-	}
-	
+
 	@Override
-	public void showProgressIndicator() {
-		progressIndicator.setVisible(true);
+	public void renderTravelTime(List<TravelTimesItem> createTravelTimeList) {
+		travelTimeCellList.render(createTravelTimeList);
 	}
 
 	@Override
-	public void hideProgressIndicator() {
-		progressIndicator.setVisible(false);
+	public void toggleStarButton(boolean isStarred) {
+        if (isStarred) {
+            starButton.setIcon(ImageHolder.get().important());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.TRUE);
+        } else {
+            starButton.setIcon(ImageHolder.get().notImportant());
+            Roles.getCheckboxRole().setAriaCheckedState(starButton.getElement(), CheckedValue.FALSE);
+        }		
 	}
-
-	@Override
-	public void refresh() {
-		pullToRefresh.refresh();
-	}
-
-	@Override
-	public void render(List<TravelTimesItem> createTopicsList) {
-		cellList.render(createTopicsList);
-	}
-
-	@Override
-	public void setHeaderPullHandler(Pullhandler pullHandler) {
-		pullToRefresh.setHeaderPullHandler(pullHandler);
-	}
-
-	@Override
-	public PullArrowWidget getPullHeader() {
-		return pullArrowHeader;
-	}
-
-	@Override
-	public HasRefresh getPullPanel() {
-		return pullToRefresh;
-	}
-
-	private void accessibilityPrepare(){
+private void accessibilityPrepare(){
+		
 		// Add ARIA roles for accessibility
+		Roles.getButtonRole().set(backButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+		
+		Roles.getCheckboxRole().set(starButton.getElement());
+		Roles.getCheckboxRole().setAriaLabelProperty(starButton.getElement(), "favorite");
+		
 		Roles.getHeadingRole().set(heading.getElement());
-
-		// TODO Hide pull down until we can figure out how to get VoiceOver to work with it
-		Roles.getButtonRole().setAriaHiddenState(pullArrowHeader.getElement(), true);
 	}
 }

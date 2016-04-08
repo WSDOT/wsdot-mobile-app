@@ -16,9 +16,11 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.location;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
@@ -172,8 +174,8 @@ public class GoToLocationActivity extends MGWTAbstractActivity implements
 			}
 		    storeMapLocation(46.6002534, -120.4885235, 11); // Yakima
 		}
-		
-		onDoneButtonPressed();
+
+		clientFactory.getPlaceController().goTo(new TrafficMapPlace());
 		
 	}
 	

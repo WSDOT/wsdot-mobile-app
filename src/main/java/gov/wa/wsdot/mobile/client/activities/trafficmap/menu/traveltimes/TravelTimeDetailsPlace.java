@@ -16,26 +16,35 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.location;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-public class GoToLocationPlace extends Place {
+public class TravelTimeDetailsPlace extends Place {
+	
+	private final String id;
+	
+	public TravelTimeDetailsPlace(String id) {
+		this.id = id;
+	}
+	
+	public String getId() {
+		return id;
+	}
 
-	public static class GoToLocationPlaceTokenizer implements
-			PlaceTokenizer<GoToLocationPlace> {
+	public static class TravelTimeDetailsPlaceTokenizer implements
+			PlaceTokenizer<TravelTimeDetailsPlace> {
 
 		@Override
-		public GoToLocationPlace getPlace(String token) {
-			return new GoToLocationPlace();
+		public TravelTimeDetailsPlace getPlace(String token) {
+			return new TravelTimeDetailsPlace(token);
 		}
 
 		@Override
-		public String getToken(GoToLocationPlace place) {
-			return "";
+		public String getToken(TravelTimeDetailsPlace place) {
+			return place.getId();
 		}
 
 	}
-
 }

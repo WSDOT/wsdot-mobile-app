@@ -16,26 +16,25 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-public class TravelTimesPlace extends Place {
-
-	public static class TravelTimesPlaceTokenizer implements
-			PlaceTokenizer<TravelTimesPlace> {
+public class SeattleExpressLanesPlace extends Place {
+	
+	public static class SeattleExpressLanesPlaceTokenizer implements
+			PlaceTokenizer<SeattleExpressLanesPlace> {
 
 		@Override
-		public TravelTimesPlace getPlace(String token) {
-			return new TravelTimesPlace();
+		public SeattleExpressLanesPlace getPlace(String token) {
+			return new SeattleExpressLanesPlace();
 		}
 
 		@Override
-		public String getToken(TravelTimesPlace place) {
+		public String getToken(SeattleExpressLanesPlace place) {
 			return "";
 		}
 
 	}
-
 }

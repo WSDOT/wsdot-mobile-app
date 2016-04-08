@@ -16,7 +16,7 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
 import java.util.ArrayList;
 import java.util.List;

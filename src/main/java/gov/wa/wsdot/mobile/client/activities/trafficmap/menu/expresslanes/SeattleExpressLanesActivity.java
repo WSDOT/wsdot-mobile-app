@@ -16,7 +16,7 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
@@ -177,7 +177,7 @@ public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 	}
 
 	@Override
-	public void onDoneButtonPressed() {
+	public void onBackButtonPressed() {
 		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
 	
