@@ -33,6 +33,9 @@ public class LocalImageHolderDefaultHighAppearance implements
 
         @Source("resources/ic_action_camera_hdpi.png")
         ImageResource camera();
+
+        @Source("resources/ic_action_camera_2_hdpi.png")
+        ImageResource camera2();
         
         @Source("resources/ic_action_location_hdpi.png")
         ImageResource location();

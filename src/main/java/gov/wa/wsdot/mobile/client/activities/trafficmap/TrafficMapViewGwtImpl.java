@@ -112,7 +112,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	ButtonBar buttonBar;
 	
 	@UiField
-	CameraImageButton cameraButton;
+	Camera2ImageButton cameraButton;
 	
 	@UiField
 	MenuImageButton menuButton;

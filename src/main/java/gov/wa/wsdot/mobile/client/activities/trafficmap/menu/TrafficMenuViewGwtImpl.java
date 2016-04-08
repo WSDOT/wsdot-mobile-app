@@ -9,12 +9,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.shared.Topic;
 
@@ -45,7 +45,7 @@ public class TrafficMenuViewGwtImpl extends Composite implements TrafficMenuView
     CellList<Topic> cellList;
 
     @UiField
-    BackImageButton backButton;
+    Button doneButton;
 
     @UiField
     ScrollPanel scrollPanel;
@@ -88,10 +88,10 @@ public class TrafficMenuViewGwtImpl extends Composite implements TrafficMenuView
         }
     }
 
-    @UiHandler("backButton")
-    protected void onBackButtonPressed(TapEvent event) {
+    @UiHandler("doneButton")
+    protected void onDoneButtonPressed(TapEvent event) {
         if (presenter != null) {
-            presenter.onBackButtonPressed();
+            presenter.onDoneButtonPressed();
         }
     }
 
@@ -112,8 +112,8 @@ public class TrafficMenuViewGwtImpl extends Composite implements TrafficMenuView
     private void accessibilityPrepare(){
 
         // Add ARIA roles for accessibility
-        Roles.getButtonRole().set(backButton.getElement());
-        Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
+        Roles.getButtonRole().set(doneButton.getElement());
+        Roles.getButtonRole().setAriaLabelProperty(doneButton.getElement(), "back");
 
         Roles.getHeadingRole().set(heading.getElement());
     }

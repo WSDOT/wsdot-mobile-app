@@ -68,109 +68,109 @@ public class GoToLocationActivity extends MGWTAbstractActivity implements
 	public void onItemSelected(int index) {
 		if (index == 0) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Bellingham");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Bellingham");
 			}
 			storeMapLocation(48.756302, -122.46151, 12); // Bellingham
 		}
 		if (index == 1) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Canadian Border");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Canadian Border");
 			}
 			storeMapLocation(48.991651, -122.746124, 14); // Canadian Border
 		}
 		if (index == 2) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Chehalis");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Chehalis");
 			}
 			storeMapLocation(46.635529, -122.937698, 13); // Chehalis
 		}
 		if (index == 3) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Hood Canal Area");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Hood Canal Area");
 			}
 			storeMapLocation(47.85268, -122.628365, 13); // Hood Canal Area
 		}
 		if (index == 4) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Monroe");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Monroe");
 			}
 			storeMapLocation(47.859476, -121.972446,14); // Monroe
 		}
 		if (index == 5) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Mount Vernon");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Mount Vernon");
 			}
 			storeMapLocation(48.420657, -122.334824, 13); // Mount Vernon
 		}
 		if (index == 6) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Olympia");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Olympia");
 			}
 			storeMapLocation(47.021461, -122.899933, 13); // Olympia
 		}
 		if (index == 7) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Seattle Area");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Seattle Area");
 			}
 			storeMapLocation(47.5990, -122.3350, 12); // Seattle Area
 		}
 		if (index == 8) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Snoqualmie Pass");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Snoqualmie Pass");
 			}
 		    storeMapLocation(47.3756596, -121.4195662, 11); // Snoqualmie Pass
 		}
 		if (index == 9) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Spokane Area");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Spokane Area");
 			}
 			storeMapLocation(47.658566, -117.425995, 12); // Spokane Area
 		}
 		if (index == 10) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Stanwood");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Stanwood");
 			}
 			storeMapLocation(48.22959, -122.34581, 13); // Stanwood
 		}
 		if (index == 11) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Sultan");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Sultan");
 			}
 			storeMapLocation(47.86034, -121.812286, 14); // Sultan
 		}
 		if (index == 12) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/ Tacoma");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/ Tacoma");
 			}
 			storeMapLocation(47.206275, -122.46254, 12); // Tacoma
 		}
 		if (index == 13) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Tri-Cities");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Tri-Cities");
 			}
 		    storeMapLocation(46.2225766, -119.2039748, 11); // Tri-Cities
 		}
 		if (index == 14) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/US 97 Border");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/US 97 Border");
 			}
 			storeMapLocation(48.998775, -119.462714, 15); // US 97 Border
 		}
 		if (index == 15) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Vancouver Area");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Vancouver Area");
 			}
 			storeMapLocation(45.639968, -122.610512, 12); // Vancouver Area
 		}
 		if (index == 16) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Wenatchee");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Wenatchee");
 			}
 			storeMapLocation(47.435867, -120.309563, 13); // Wenatchee
 		}
 		if (index == 17) {
 			if (Consts.ANALYTICS_ENABLED) {
-				analytics.trackScreen("/Traffic Map/Go To Location/Yakima");
+				analytics.trackScreen("/Traffic Map/Menu/Go To Location/Yakima");
 			}
 		    storeMapLocation(46.6002534, -120.4885235, 11); // Yakima
 		}

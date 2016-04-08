@@ -30,6 +30,7 @@ public class LocalImageHolder {
     public interface LocalImageHolderAppearance {
         public interface Images {
             ImageResource camera();
+            ImageResource camera2();
             ImageResource location();
             ImageResource navigation();
             ImageResource rocket();
