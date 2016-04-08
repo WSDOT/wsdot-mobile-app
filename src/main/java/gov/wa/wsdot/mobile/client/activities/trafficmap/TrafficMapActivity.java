@@ -56,7 +56,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.gwtphonegap.client.PhoneGap;
@@ -83,7 +82,6 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private static List<CalloutItem> calloutItems = new ArrayList<CalloutItem>();
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
 	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
-	private Timer timer;
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	
 	public TrafficMapActivity(ClientFactory clientFactory) {
@@ -611,8 +609,9 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 				double latitude = position.getCoordinates().getLatitude();
 				double longitude = position.getCoordinates().getLongitude();
 
-				view.setMapLocation(latitude, longitude, 12);
+				view.addMapMarker(latitude, longitude);
 
+				view.setMapLocation(latitude, longitude, 12);
 			}
 
 			@Override
