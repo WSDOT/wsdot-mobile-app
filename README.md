@@ -1,7 +1,7 @@
 wsdot-mobile-app
 ================
 
-The [WSDOT mobile app](http://mobileapp-wsdot.rhcloud.com/) is an HTML5 Web application targeting WebKit based browsers. 
+The [WSDOT mobile app](https://itunes.apple.com/us/app/wsdot/id387209224?mt=8) is an HTML5 Web application targeting WebKit based browsers. 
 It contains traffic and travel information for the state of Washington. The app includes 
 statewide traffic cameras and high priority travel alerts, mountain pass reports, northbound 
 and southbuond Canadian border wait times, ferry schedules and alerts as well as real time 
