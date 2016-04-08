@@ -62,7 +62,7 @@ import gov.wa.wsdot.mobile.client.activities.mountainpasses.MountainPassesPlace;
 import gov.wa.wsdot.mobile.client.activities.socialmedia.SocialMediaPlace;
 import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;

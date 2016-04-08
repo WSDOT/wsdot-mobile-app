@@ -59,7 +59,7 @@ import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesCell;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesCell;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesCell;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;

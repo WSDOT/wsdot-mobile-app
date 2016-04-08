@@ -16,8 +16,9 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.location;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location;
 
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.shared.Topic;
 
@@ -59,10 +60,7 @@ public class GoToLocationViewGwtImpl extends Composite implements
 	CellList<Topic> cellList;
 	
 	@UiField
-	Button doneButton;
-	
-	@UiField
-	FixedSpacer leftFixedSpacer;
+	BackImageButton backButton;
 	
 	@UiField
 	FlexSpacer leftFlexSpacer;
@@ -93,7 +91,6 @@ public class GoToLocationViewGwtImpl extends Composite implements
 		initWidget(uiBinder.createAndBindUi(this));
         
 		if (MGWT.getOsDetection().isAndroid()) {
-            leftFixedSpacer.setWidth("12px");
             leftFlexSpacer.setVisible(false);
             scrollPanel.setBounce(false);
         }		
@@ -104,7 +101,7 @@ public class GoToLocationViewGwtImpl extends Composite implements
 		this.presenter = presenter;
 	}
 	
-	@UiHandler("doneButton")
+	@UiHandler("backButton")
 	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onDoneButtonPressed();

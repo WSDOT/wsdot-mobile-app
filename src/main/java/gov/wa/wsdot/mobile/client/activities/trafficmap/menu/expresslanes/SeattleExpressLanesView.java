@@ -16,9 +16,10 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes;
 
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
+import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.List;
 
@@ -27,31 +28,34 @@ import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 
-public interface TravelTimesView extends IsWidget {
-	
+public interface SeattleExpressLanesView extends IsWidget {
+
 	public void setPresenter(Presenter presenter);
 	
 	public interface Presenter {
 		
-		public void onDoneButtonPressed();
+		public void onBackButtonPressed();
 		
-		public void onSearchTextChanged(String filter);
-		
-		public void onTravelTimeSelected(int index);
+		public void onItemSelected(int index);
 		
 	}
 	
-	public void render(List<TravelTimesItem> createTopicsList);
-
-	public void showProgressIndicator();
-
-	public void hideProgressIndicator();
-
-	public void refresh();
+	public void render(List<ExpressLaneItem> createPostList);
 	
+	public void scheduleRender(List<Topic> createPostList);
+	
+	public void showProgressIndicator();
+	
+	public void hideProgressIndicator();
+	
+	public void refresh();
+
 	public void setHeaderPullHandler(Pullhandler pullHandler);
 	
 	public PullArrowWidget getPullHeader();
 	
-	public HasRefresh getPullPanel();
+	public HasRefresh getPullPanel();	
+	
+	public void setSelected(int lastIndex, boolean b);
+	
 }

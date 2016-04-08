@@ -37,10 +37,8 @@ public interface TrafficMapView extends IsWidget {
 		public void onBackButtonPressed();
 		
 		public void onCameraButtonPressed(boolean showCameras);
-		
-		public void onTravelTimesButtonPressed();
-		
-		public void onGoToLocationButtonPressed();
+
+		public void onMenuButtonPressed();
 		
 		public void onCameraSelected(int cameraId);
 		
@@ -51,7 +49,7 @@ public interface TrafficMapView extends IsWidget {
 		public void onLocateButtonPressed();
 		
 		public void onMapIsIdle();
-		
+
 		public void onSeattleExpressLanesButtonPressed();
 		
 		public void onSeattleTrafficAlertsButtonPressed(LatLngBounds bounds);

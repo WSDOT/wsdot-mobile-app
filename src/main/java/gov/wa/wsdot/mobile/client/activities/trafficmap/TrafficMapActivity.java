@@ -23,10 +23,9 @@ import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
 import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
@@ -552,19 +551,11 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	}
 
 	@Override
-	public void onTravelTimesButtonPressed() {
-        if (Consts.ANALYTICS_ENABLED) {
-            analytics.trackScreen("/Traffic Map/Travel Times");
-        }
-	    clientFactory.getPlaceController().goTo(new TravelTimesPlace());
-	}
-
-	@Override
-	public void onGoToLocationButtonPressed() {
+	public void onMenuButtonPressed() {
 		if (Consts.ANALYTICS_ENABLED) {
-			analytics.trackScreen("/Traffic Map/Go To Location");
+			analytics.trackScreen("/Traffic Map/Menu");
 		}
-		clientFactory.getPlaceController().goTo(new GoToLocationPlace());
+		clientFactory.getPlaceController().goTo(new TrafficMenuPlace());
 	}
 
 	@Override
@@ -647,6 +638,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	}
 
 	@Override
+
 	public void onSeattleExpressLanesButtonPressed() {
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Traffic Map/Seattle Express Lanes");

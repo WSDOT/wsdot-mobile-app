@@ -48,11 +48,12 @@ import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubeDetailsV
 import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubeView;
 import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesView;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
@@ -74,6 +75,7 @@ public interface ClientFactory {
 	 */
 	public AboutView getAboutView();
 	public TrafficMapView getTrafficMapView();
+	public TrafficMenuView getTrafficMenuView();
 	public FerriesView getFerriesView();
 	public MountainPassesView getMountainPassesView();
 	public MountainPassDetailsView getMountainPassDetailsView();

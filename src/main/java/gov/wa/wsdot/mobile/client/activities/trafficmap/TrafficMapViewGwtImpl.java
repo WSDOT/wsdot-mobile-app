@@ -20,13 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.CameraImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.LocationImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.NavigationImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.RocketImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.TimeImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.WarningImageButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.*;
 import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
@@ -121,16 +115,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	CameraImageButton cameraButton;
 	
 	@UiField
-	TimeImageButton travelTimesButton;
-	
-	@UiField
-	LocationImageButton locationButton;
+	MenuImageButton menuButton;
 
 	@UiField
 	WarningImageButton seattleAlertsButton;
-	
-	@UiField
-	RocketImageButton expressLanesButton;
 	
 	@UiField
 	NavigationImageButton navigationButton;
@@ -260,17 +248,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		}
 	}
 	
-	@UiHandler("travelTimesButton")
-	protected void onTravelTimesButtonPressed(TapEvent event) {
+	@UiHandler("menuButton")
+	protected void onMenuButtonPressed(TapEvent event) {
 		if (presenter != null) {
-			presenter.onTravelTimesButtonPressed();
-		}
-	}
-	
-	@UiHandler("locationButton")
-	protected void onGoToLocationButtonPressed(TapEvent event) {
-		if (presenter != null) {
-			presenter.onGoToLocationButtonPressed();
+			presenter.onMenuButtonPressed();
 		}
 	}
 
@@ -278,13 +259,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	protected void onSeattleAlertsButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onSeattleTrafficAlertsButtonPressed(getViewportBounds());
-		}
-	}
-	
-	@UiHandler("expressLanesButton")
-	protected void onExpressLanesButtonPressed(TapEvent event) {
-		if (presenter != null) {
-			presenter.onSeattleExpressLanesButtonPressed();
 		}
 	}
 	
@@ -660,12 +634,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		Roles.getButtonRole().set(backButton.getElement());
 		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
-		Roles.getButtonRole().set(travelTimesButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(travelTimesButton.getElement(), "travel times");
+		Roles.getButtonRole().set(menuButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(menuButton.getElement(), "more options");
 		Roles.getButtonRole().set(seattleAlertsButton.getElement());
 		Roles.getButtonRole().setAriaLabelProperty(seattleAlertsButton.getElement(), "seattle alerts");
-		Roles.getButtonRole().set(expressLanesButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(expressLanesButton.getElement(), "express lanes information");
 		
 		Roles.getHeadingRole().set(heading.getElement());
 	}

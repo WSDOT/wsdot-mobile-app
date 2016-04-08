@@ -42,16 +42,12 @@
 		
        	<mgwt:buttonbar.ButtonBar ui:field="buttonBar">
        	    <wsdot:button.image.NavigationImageButton ui:field="navigationButton" />
-       	    <mgwt:panel.flex.FlexSpacer />
-            <wsdot:button.image.LocationImageButton ui:field="locationButton" />
-            <mgwt:panel.flex.FlexSpacer />
-	  	    <wsdot:button.image.TimeImageButton ui:field="travelTimesButton" />
 	  	    <mgwt:panel.flex.FlexSpacer />
 	  	    <wsdot:button.image.CameraImageButton ui:field="cameraButton" />
 	  	    <mgwt:panel.flex.FlexSpacer />
             <wsdot:button.image.WarningImageButton ui:field="seattleAlertsButton" />
             <mgwt:panel.flex.FlexSpacer />
-            <wsdot:button.image.RocketImageButton ui:field="expressLanesButton" />
+            <wsdot:button.image.MenuImageButton ui:field="menuButton" />
        	</mgwt:buttonbar.ButtonBar>
        	
 	</mgwt:panel.flex.RootFlexPanel>

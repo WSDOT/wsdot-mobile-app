@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Washington State Department of Transportation
+ * Copyright (c) 2013 Washington State Department of Transportation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,28 +16,26 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location;
 
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceTokenizer;
 
-import java.util.List;
+public class GoToLocationPlace extends Place {
 
-import com.google.gwt.user.client.ui.IsWidget;
+	public static class GoToLocationPlaceTokenizer implements
+			PlaceTokenizer<GoToLocationPlace> {
 
-public interface TravelTimeDetailsView extends IsWidget {
-	
-	public void setPresenter(Presenter presenter);
-	
-	public interface Presenter {
-		
-		public void onBackButtonPressed();
-		
-		public void onStarButtonPressed();
-		
+		@Override
+		public GoToLocationPlace getPlace(String token) {
+			return new GoToLocationPlace();
+		}
+
+		@Override
+		public String getToken(GoToLocationPlace place) {
+			return "";
+		}
+
 	}
 
-	public void toggleStarButton(boolean isStarred);
-	
-	public void renderTravelTime(List<TravelTimesItem> createTravelTimeList);
-	
 }

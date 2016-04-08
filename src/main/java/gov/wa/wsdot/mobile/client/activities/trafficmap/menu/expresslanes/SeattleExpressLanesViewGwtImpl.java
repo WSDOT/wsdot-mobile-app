@@ -16,12 +16,13 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes;
 
 import com.google.gwt.aria.client.Roles;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
 import gov.wa.wsdot.mobile.shared.Topic;
@@ -69,10 +70,7 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 	HeaderTitle heading;
 
 	@UiField
-	Button doneButton;
-	
-	@UiField
-	FixedSpacer leftFixedSpacer;
+	BackImageButton backButton;
 	
 	@UiField
 	FlexSpacer leftFlexSpacer;
@@ -145,15 +143,14 @@ public class SeattleExpressLanesViewGwtImpl extends Composite implements
 		accessibilityPrepare();
 
 		if (MGWT.getOsDetection().isAndroid()) {
-            leftFixedSpacer.setWidth("12px");
             leftFlexSpacer.setVisible(false);
         }
 	}
 
-	@UiHandler("doneButton")
-	protected void onDoneButtonPressed(TapEvent event) {
+	@UiHandler("backButton")
+	protected void onBackButtonPressed(TapEvent event) {
 		if (presenter != null) {
-			presenter.onDoneButtonPressed();
+			presenter.onBackButtonPressed();
 		}
 	}
 	
