@@ -43,7 +43,7 @@
        	<mgwt:buttonbar.ButtonBar ui:field="buttonBar">
        	    <wsdot:button.image.NavigationImageButton ui:field="navigationButton" />
 	  	    <mgwt:panel.flex.FlexSpacer />
-	  	    <wsdot:button.image.CameraImageButton ui:field="cameraButton" />
+	  	    <wsdot:button.image.Camera2ImageButton ui:field="cameraButton" />
 	  	    <mgwt:panel.flex.FlexSpacer />
             <wsdot:button.image.WarningImageButton ui:field="seattleAlertsButton" />
             <mgwt:panel.flex.FlexSpacer />

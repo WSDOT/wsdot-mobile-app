@@ -14,7 +14,7 @@ public interface TrafficMenuView extends IsWidget {
 
         public void onItemSelected(int index);
 
-        public void onBackButtonPressed();
+        public void onDoneButtonPressed();
 
     }
 

@@ -94,7 +94,7 @@ public class TrafficMenuActivity extends MGWTAbstractActivity implements
         }
 
         @Override
-        public void onBackButtonPressed() {
+        public void onDoneButtonPressed() {
             clientFactory.getPlaceController().goTo(new TrafficMapPlace());
         }
 
