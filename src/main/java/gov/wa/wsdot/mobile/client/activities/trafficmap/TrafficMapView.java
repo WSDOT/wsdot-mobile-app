@@ -93,6 +93,8 @@ public interface TrafficMapView extends IsWidget {
 	public void setMapLocation(double latitude, double longitude, int zoom);
 	
 	public void setMapLocation();
+
+    public void addMapMarker(double latitude, double longitude);
 	
 	public void refreshMap();
 	

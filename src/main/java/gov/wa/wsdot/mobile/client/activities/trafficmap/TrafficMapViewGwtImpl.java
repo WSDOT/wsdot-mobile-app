@@ -131,6 +131,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	private Marker cameraMarker;
 	private Marker alertMarker;
 	private Marker calloutMarker;
+	private Marker myLocationMarker;
 	private static List<Marker> cameraMarkers = new ArrayList<Marker>();
 	private static List<Marker> alertMarkers = new ArrayList<Marker>();
 	private static List<Marker> calloutMarkers = new ArrayList<Marker>();
@@ -457,7 +458,27 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		mapWidget.panTo(center);
 		mapWidget.setZoom(zoom);
 	}
-	
+
+	@Override
+	public void addMapMarker(double latitude, double longitude) {
+
+		if (myLocationMarker != null) {
+			myLocationMarker.setMap((MapWidget) null);
+		}
+
+		LatLng loc = LatLng.newInstance(latitude, longitude);
+		MarkerOptions options = MarkerOptions.newInstance();
+		options.setPosition(loc);
+
+		MarkerImage icon = MarkerImage.newInstance(AppBundle.INSTANCE.myLocationPNG().getSafeUri().asString());
+
+		options.setIcon(icon);
+
+		myLocationMarker = Marker.newInstance(options);
+
+		myLocationMarker.setMap(mapWidget);
+	}
+
 	@Override
 	public void hideAlerts() {
 		for (Marker marker: alertMarkers) {

@@ -248,6 +248,9 @@ public interface AppBundle extends ClientBundle {
 	
 	@Source("image_placeholder.png")
 	ImageResource imagePlaceholderPNG();
+
+	@Source(("my_location.png"))
+	ImageResource myLocationPNG();
 	
 	/**
 	 * Callout icons

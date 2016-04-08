@@ -6,8 +6,6 @@ import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.inappbrowser.InAppBrowser;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesView;
-import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace;
