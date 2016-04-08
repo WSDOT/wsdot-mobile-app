@@ -6,8 +6,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - New YouTube feed url.
 
+### Added
+- Clicking the my location button now drops a marker showing users location.
+
 ### Changed
 - Seattle Alerts feature has been removed. Replacing it is "Alerts in This Area".
+- Moved Traffic Alerts, Go To Locations and Express Lanes into menu activity.
+- Camera icon on Traffic Map toolbar. Looks more like map icons now.
 
 ## [4.2.1] - 2016-04-18
 ### Fixed
