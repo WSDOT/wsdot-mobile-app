@@ -18,6 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
+import com.google.gwt.maps.client.base.Point;
+import com.google.gwt.maps.client.overlays.*;
+import com.google.gwt.maps.client.services.*;
+import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.*;
@@ -54,9 +58,6 @@ import com.google.gwt.maps.client.layers.TrafficLayer;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleElementType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleFeatureType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyler;
-import com.google.gwt.maps.client.overlays.Marker;
-import com.google.gwt.maps.client.overlays.MarkerImage;
-import com.google.gwt.maps.client.overlays.MarkerOptions;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
@@ -132,6 +133,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	private Marker alertMarker;
 	private Marker calloutMarker;
 	private Marker myLocationMarker;
+    private Circle myLocationError;
 	private static List<Marker> cameraMarkers = new ArrayList<Marker>();
 	private static List<Marker> alertMarkers = new ArrayList<Marker>();
 	private static List<Marker> calloutMarkers = new ArrayList<Marker>();
@@ -306,7 +308,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 			final LatLng loc = LatLng.newInstance(camera.getLatitude(), camera.getLongitude());
 		    MarkerOptions options = MarkerOptions.newInstance();
 		    options.setPosition(loc);
-		    
+
 		    MarkerImage icon;
 		    
 		    if (camera.getHasVideo() == 1) {
@@ -460,23 +462,38 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	}
 
 	@Override
-	public void addMapMarker(double latitude, double longitude) {
+	public void addMapMarker(Position position) {
 
 		if (myLocationMarker != null) {
-			myLocationMarker.setMap((MapWidget) null);
+            myLocationMarker.setMap((MapWidget) null);
+        }
+
+        if (myLocationError != null){
+            myLocationError.setMap(null);
 		}
 
-		LatLng loc = LatLng.newInstance(latitude, longitude);
+        LatLng center = LatLng.newInstance(position.getCoordinates().getLatitude(), position.getCoordinates().getLongitude());
 		MarkerOptions options = MarkerOptions.newInstance();
-		options.setPosition(loc);
-
+		options.setPosition(center);
 		MarkerImage icon = MarkerImage.newInstance(AppBundle.INSTANCE.myLocationPNG().getSafeUri().asString());
-
+        icon.setAnchor(Point.newInstance(16, 16));
+        options.setOptimized(true);
 		options.setIcon(icon);
-
 		myLocationMarker = Marker.newInstance(options);
-
 		myLocationMarker.setMap(mapWidget);
+
+        // create a circle the size of the error
+        CircleOptions circleOptions = CircleOptions.newInstance();
+        circleOptions.setFillOpacity(0.1);
+        circleOptions.setFillColor("#1a75ff");
+        circleOptions.setStrokeOpacity(0.12);
+        circleOptions.setStrokeWeight(1);
+        circleOptions.setStrokeColor("#1a75ff");
+        myLocationError = Circle.newInstance(circleOptions);
+        myLocationError.setCenter(center);
+        myLocationError.setRadius(position.getCoordinates().getAccuracy());
+        myLocationError.setMap(mapWidget);
+
 	}
 
 	@Override
