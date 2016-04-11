@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
+import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
@@ -94,7 +95,7 @@ public interface TrafficMapView extends IsWidget {
 	
 	public void setMapLocation();
 
-    public void addMapMarker(double latitude, double longitude);
+    public void addMapMarker(Position position);
 	
 	public void refreshMap();
 	

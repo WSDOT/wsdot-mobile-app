@@ -609,7 +609,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 				double latitude = position.getCoordinates().getLatitude();
 				double longitude = position.getCoordinates().getLongitude();
 
-				view.addMapMarker(latitude, longitude);
+				view.addMapMarker(position);
 
 				view.setMapLocation(latitude, longitude, 12);
 			}
