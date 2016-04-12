@@ -91,7 +91,8 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		twitterScreenNames.put("WSDOT East", "WSDOT_East");
 		twitterScreenNames.put("WSDOT Southwest", "wsdot_sw");
 		twitterScreenNames.put("WSDOT Tacoma", "wsdot_tacoma");
-		twitterScreenNames.put("WSDOT Traffic", "wsdot_traffic");		
+		twitterScreenNames.put("WSDOT Traffic", "wsdot_traffic");
+		twitterScreenNames.put("WSDOT Jobs","WSDOTjobs");
 		
 		twitterProfileImages.put("wsferries", AppBundle.INSTANCE.css().wsdotFerriesIcon());
 		twitterProfileImages.put("GoodToGoWSDOT", AppBundle.INSTANCE.css().wsdotGoodToGoIcon());
@@ -103,7 +104,8 @@ public class TwitterActivity extends MGWTAbstractActivity implements
 		twitterProfileImages.put("wsdot_sw", AppBundle.INSTANCE.css().wsdotSwIcon());
 		twitterProfileImages.put("wsdot_tacoma", AppBundle.INSTANCE.css().wsdotTacomaIcon());
 		twitterProfileImages.put("wsdot_traffic", AppBundle.INSTANCE.css().wsdotTrafficIcon());		
-		
+		twitterProfileImages.put("WSDOTjobs", AppBundle.INSTANCE.css().wsdotJobsIcon());
+
 		PullArrowStandardHandler headerHandler = new PullArrowStandardHandler(
 				view.getPullHeader(), view.getPullPanel());
 		

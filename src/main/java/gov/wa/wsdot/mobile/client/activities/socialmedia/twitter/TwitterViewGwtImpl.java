@@ -106,6 +106,7 @@ public class TwitterViewGwtImpl extends Composite implements TwitterView {
 		twitterAccounts.addItem("WSDOT");
 		twitterAccounts.addItem("WSDOT 520");
 		twitterAccounts.addItem("WSDOT East");
+		twitterAccounts.addItem("WSDOT Jobs");
 		twitterAccounts.addItem("WSDOT Southwest");
 		twitterAccounts.addItem("WSDOT Tacoma");
 		twitterAccounts.addItem("WSDOT Traffic");

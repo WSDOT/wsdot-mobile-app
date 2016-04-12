@@ -762,6 +762,15 @@ count correct number of pages
     display: block;
 }
 
+@sprite .wsdotJobsIcon {
+    gwt-image: "wsdotJobsPNG";
+    background-image: no-repeat;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
 @sprite .wsdotSnoqualmiePassIcon {
     gwt-image: "wsdotSnoqualmiePassPNG";
     background-image: no-repeat;
