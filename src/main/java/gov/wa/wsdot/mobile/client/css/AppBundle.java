@@ -68,6 +68,9 @@ public interface AppBundle extends ClientBundle {
 
 	@Source("BerthaDigsSR99.png")
 	ImageResource berthaDigsSR99PNG();
+
+	@Source("wsdot_jobs.png")
+	ImageResource wsdotJobsPNG();
 	
 	@Source("wsdot_snoqualmie_pass.png")
 	ImageResource wsdotSnoqualmiePassPNG();
@@ -412,5 +415,6 @@ public interface AppBundle extends ClientBundle {
 		String wsdotEastIcon();
 		String wsdot520Icon();
 		String berthaDigsSR99Icon();
+		String wsdotJobsIcon();
 	}
 }
