@@ -20,10 +20,7 @@ package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.CameraImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.LocationImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.NavigationImageButton;
+import gov.wa.wsdot.mobile.client.widget.button.image.*;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.VesselWatchItem;
 
@@ -107,7 +104,7 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	ButtonBar buttonBar;
 	
 	@UiField
-	CameraImageButton cameraButton;
+	Camera2ImageButton cameraButton;
 	
 	@UiField
 	LocationImageButton locationButton;
