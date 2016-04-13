@@ -174,6 +174,10 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		if (oldPlace instanceof GoToLocationPlace && newPlace instanceof TrafficMenuPlace) {
 			return Animations.SLIDE_REVERSE;
 		}
+
+		if (oldPlace instanceof GoToLocationPlace && newPlace instanceof TrafficMapPlace) {
+			return Animations.SLIDE_REVERSE;
+		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof CameraPlace) {
 			return Animations.FADE;

@@ -626,7 +626,6 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 											// TODO Auto-generated method stub
 										}
 									}, "Location Services Off");
-
 						break;
 					default:
 						break;
@@ -669,7 +668,11 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
     @Override
     public void onRefreshMapButtonPressed() {
         view.refreshMap();
-        getHighwayAlerts();
+        // getViewportBounds() will return null in drawHighwayAlertsLayer()
+        // before map has loaded on screen
+        if (view.getViewportBounds() != null) {
+            getHighwayAlerts();
+        }
     }
 
     /**
@@ -692,5 +695,4 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 			});
 		}
 	}-*/;
-
 }
