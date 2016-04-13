@@ -32,6 +32,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -66,11 +67,7 @@ import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.client.widget.tabbar.FavoritesTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.HomeTabBarButton;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+import gov.wa.wsdot.mobile.shared.*;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 
@@ -151,7 +148,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	FlexSpacer leftFlexSpacer;
-	
+
+	@UiField
+	HTML locationsHeader;
+
 	@UiField
 	HTML camerasHeader;
 	
@@ -172,7 +172,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	HTML colorOfStar;
-	
+
+	@UiField(provided = true)
+	CellList<LocationItem> locationsCellList;
+
 	@UiField(provided = true)
 	CellList<CameraItem> camerasCellList;
 	
@@ -212,7 +215,18 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		pullToRefresh.setHeader(pullArrowHeader);
 		
 		alertsCarousel = new Carousel();
-		
+
+        locationsCellList = new CellList<LocationItem>(new MyBasicCell<LocationItem>() {
+            @Override
+            public String getDisplayString(LocationItem model) {
+                return model.getTitle();
+            }
+
+            @Override
+            public boolean canBeSelected(LocationItem model){ return  true; }
+        });
+
+
 		camerasCellList = new CellList<CameraItem>(new MyBasicCell<CameraItem>() {
 
 			@Override
@@ -435,6 +449,14 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             presenter.onAmtrakButtonPressed();
         }
     }
+
+	@UiHandler("locationsCellList")
+	protected void onLocationsCellSelected(CellSelectedEvent event){
+		if (presenter != null){
+			int index = event.getIndex();
+			presenter.onLocationSelected(index);
+		}
+	}
 	
 	@UiHandler("camerasCellList")
 	protected void onCameraCellSelected(CellSelectedEvent event) {
@@ -562,6 +584,31 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	@Override
 	public HasRefresh getPullPanel() {
 		return pullToRefresh;
+	}
+
+	@Override
+	public void renderLocations(List<LocationItem> createLocationList) {
+		locationsCellList.render(createLocationList);
+	}
+
+	@Override
+	public void showLocationsHeader(){
+		locationsHeader.setVisible(true);
+	}
+
+	@Override
+	public void hideLocationsHeader(){
+		locationsHeader.setVisible(false);
+	}
+
+	@Override
+	public void showLocationsList(){
+		locationsCellList.setVisible(true);
+	}
+
+	@Override
+	public void hideLocationsList(){
+		locationsCellList.setVisible(false);
 	}
 
 	@Override
