@@ -476,7 +476,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		MarkerOptions options = MarkerOptions.newInstance();
 		options.setPosition(center);
 		MarkerImage icon = MarkerImage.newInstance(AppBundle.INSTANCE.myLocationPNG().getSafeUri().asString());
-        icon.setAnchor(Point.newInstance(16, 16));
+        icon.setAnchor(Point.newInstance(11, 11));
         options.setOptimized(true);
 		options.setIcon(icon);
 		myLocationMarker = Marker.newInstance(options);
