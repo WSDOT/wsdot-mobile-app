@@ -655,7 +655,8 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 
 	/**
-	 * TODO: Finish this method
+	 * Creates a promtp dialog to collect the new favorite location name
+	 * and confirm it's addition.
 	 */
 	@Override
 	public void onStarButtonPressed(){
@@ -664,31 +665,33 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		}
 
 		// Collect Location information
-
         phoneGap.getNotification().prompt(
                 "Please enter a name for this location.",
                 new PromptCallback() {
                     @Override
                     public void onPrompt(PromptResults results) {
-                        if(results.getButtonIndex() == 0){
+                        if(results.getButtonIndex() == 2){
 
                             LatLng center = view.getMapWidget().getCenter();
                             int zoom = view.getMapWidget().getZoom();
 
-                            LocationItem locationItem = new LocationItem("", center.getLatitude(), center.getLongitude(), zoom); // TODO: Get these values
+                            LocationItem locationItem = new LocationItem(results.getInput1(), center.getLatitude(), center.getLongitude(), zoom);
 
                             // Add location item to Database
-                            dbService.insertLocation(locationItem, new VoidCallback() { // TODO: Should use VoidCallback here?
-
+                            dbService.insertLocation(locationItem, new VoidCallback() {
                                 @Override
                                 public void onFailure(DataServiceException error) {
-                                    // TODO: Display failure message
-
+                                    phoneGap.getNotification().alert(
+                                            "Location was not added to favorites",
+                                            new AlertCallback() {
+                                                @Override
+                                                public void onOkButtonClicked() {
+                                                    // TODO Auto-generated method stub
+                                                }
+                                            }, "Failed");
                                 }
-
                                 @Override
-                                public void onSuccess() {
-                                    // TODO: Display success message
+                                public void onSuccess(){
 
                                 }
                             });

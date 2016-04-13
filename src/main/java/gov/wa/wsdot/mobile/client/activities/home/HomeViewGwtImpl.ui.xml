@@ -170,6 +170,8 @@
                         <mgwt:panel.flex.RootFlexPanel ui:field="favorites">
 				        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh" styleName="{app.css.voiceoverPage}">
 				            <g:FlowPanel ui:field="flowPanel">
+                                <g:HTML ui:field="locationsHeader" styleName="{style.sectionHeader}" visible="false">Locations</g:HTML>
+                                <mgwt:list.celllist.CellList ui:field="locationsCellList" visible="false" />
 				                <g:HTML ui:field="camerasHeader" styleName="{style.sectionHeader}" visible="false">Cameras</g:HTML>
 				                <mgwt:list.celllist.CellList ui:field="camerasCellList" visible="false" />
                                 <g:HTML ui:field="ferriesHeader" styleName="{style.sectionHeader}" visible="false">Ferries Route Schedules</g:HTML>

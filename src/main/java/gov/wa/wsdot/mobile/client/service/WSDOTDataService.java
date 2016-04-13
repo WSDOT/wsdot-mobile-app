@@ -161,7 +161,7 @@ public interface WSDOTDataService extends DataService {
 			+ LocationColumns.LOCATION_LAT + " INTEGER,"
 			+ LocationColumns.LOCATION_LONG + " INTEGER,"
 			+ LocationColumns.LOCATION_ZOOM + " INTEGER);")
-	void createLocationTable(VoidCallback callback);
+	void createLocationsTable(VoidCallback callback);
 
 	/**
 	 * Initialize cache table.
@@ -698,5 +698,12 @@ public interface WSDOTDataService extends DataService {
             + "VALUES "
             + "({locationItem.getLatitude()}, {locationItem.getLongitude()}, {locationItem.getTitle()}, {locationItem.getZoom()})")
     void insertLocation(LocationItem locationItem, VoidCallback callback);
+
+	/**
+	 * Gets all favorite locations
+	 */
+	@Select("SELECT * FROM " + Tables.MAP_LOCATION)
+	void getLocations(ListCallback<GenericRow> callback);
+
 
 }

@@ -38,6 +38,7 @@ import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -66,7 +67,9 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelT
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.LocationColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
@@ -75,17 +78,8 @@ import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteFeed;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlerts;
-import gov.wa.wsdot.mobile.shared.MountainPassConditions;
+import gov.wa.wsdot.mobile.shared.*;
 import gov.wa.wsdot.mobile.shared.MountainPassConditions.Forecast;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-import gov.wa.wsdot.mobile.shared.TravelTimes;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 public class HomeActivity extends MGWTAbstractActivity implements
 		HomeView.Presenter {
@@ -100,6 +94,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private static final String MOUNTAIN_PASS_URL = Consts.HOST_URL + "/traveler/api/mountainpassconditions";
 	private static final String TRAVEL_TIMES_URL = Consts.HOST_URL + "/traveler/api/traveltimes";
 	private Accessibility accessibility;
+    private static List<LocationItem> locationItems = new ArrayList<LocationItem>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<MountainPassItem> mountainPassItems = new ArrayList<MountainPassItem>();
@@ -110,7 +105,8 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
 	private static HashMap<String, String[]> weatherPhrasesNight = new HashMap<String, String[]>();
-	private static int lastTab = 0;
+    private static Storage localStorage = Storage.getLocalStorageIfSupported();
+    private static int lastTab = 0;
 
 	
 	public HomeActivity(ClientFactory clientFactory) {
@@ -408,7 +404,54 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	}
 	
 	private void createFavoritesList() {
-		
+
+        dbService.getLocations(new ListCallback<GenericRow>() {
+
+            @Override
+            public void onFailure(DataServiceException error) {
+            }
+
+            @Override
+            public void onSuccess(List<GenericRow> result) {
+
+                if (!result.isEmpty()) {
+                    locationItems.clear();
+                    LocationItem l;
+
+                    for (GenericRow location: result) {
+                        l = new LocationItem(location.getString(LocationColumns.LOCATION_TITLE),
+                                location.getDouble(LocationColumns.LOCATION_LAT),
+                                location.getDouble(LocationColumns.LOCATION_LONG),
+                                location.getInt(LocationColumns.LOCATION_ZOOM));
+
+                        locationItems.add(l);
+                    }
+
+                    view.hideEmptyFavoritesMessage();
+                    view.showLocationsHeader();
+                    view.showLocationsList();
+                    view.renderLocations(locationItems);
+                    view.refresh();
+                    accessibility.postScreenChangeNotification();
+
+                } else {
+
+                    phoneGap.getNotification().alert(
+                            "no items",
+                            new AlertCallback() {
+                                @Override
+                                public void onOkButtonClicked() {
+                                    // TODO Auto-generated method stub
+                                }
+                            }, "");
+
+                    view.hideLocationsHeader();
+                    view.hideLocationsList();
+                }
+
+            }
+        });
+
 		dbService.getStarredCameras(new ListCallback<GenericRow>() {
 
 			@Override
@@ -1004,7 +1047,19 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		accessibility.postScreenChangeNotification();
 		
 	}
-	
+
+    @Override
+    public void onLocationSelected(int index){
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Favorites/Location");
+        }
+        LocationItem item = locationItems.get(index);
+        storeMapLocation(item.getLatitude(), item.getLongitude(), item.getZoom());
+        clientFactory.getPlaceController().goTo(
+                new TrafficMapPlace());
+
+    }
+
 	@Override
 	public void onCameraSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
@@ -1152,4 +1207,12 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		
 		return matchFound;
 	}
+
+    private void storeMapLocation(double latitude, double longitude, int zoom) {
+        if (localStorage != null) {
+            localStorage.setItem("KEY_MAP_LAT", String.valueOf(latitude));
+            localStorage.setItem("KEY_MAP_LON", String.valueOf(longitude));
+            localStorage.setItem("KEY_MAP_ZOOM", String.valueOf(zoom));
+        }
+    }
 }
