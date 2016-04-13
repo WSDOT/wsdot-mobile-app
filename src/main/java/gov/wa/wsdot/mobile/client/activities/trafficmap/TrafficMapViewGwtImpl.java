@@ -123,6 +123,9 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	
 	@UiField
 	NavigationImageButton navigationButton;
+
+	@UiField
+	StarImageButton starButton;
 	
 	@UiField
 	RefreshImageButton refreshButton;
@@ -269,6 +272,13 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	protected void onLocateButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onLocateButtonPressed();
+		}
+	}
+
+	@UiHandler("starButton")
+	protected void onStarButtonPressed(TapEvent event) {
+		if (presenter != null) {
+			presenter.onStarButtonPressed();
 		}
 	}
 	

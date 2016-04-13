@@ -38,6 +38,7 @@ public class LocalImageHolder {
             ImageResource warning();
             ImageResource menu();
             ImageResource back();
+            ImageResource star();
             ImageResource backAndroid();
         }
         

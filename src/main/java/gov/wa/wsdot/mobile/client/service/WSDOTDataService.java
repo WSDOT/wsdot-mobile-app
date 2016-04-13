@@ -26,14 +26,8 @@ import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesTerminalSailingSp
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
-import gov.wa.wsdot.mobile.shared.BorderWaitItem;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-import gov.wa.wsdot.mobile.shared.FerriesTerminalSailingSpaceItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.LocationColumns;
+import gov.wa.wsdot.mobile.shared.*;
 
 import java.util.List;
 
@@ -59,6 +53,7 @@ public interface WSDOTDataService extends DataService {
         String FERRIES_SCHEDULES = "ferries_schedules";
         String FERRIES_TERMINAL_SAILING_SPACE = "ferries_terminal_sailing_space";
         String BORDER_WAIT  = "border_wait";
+		String MAP_LOCATION = "map_location";
     }
 	
 	/**
@@ -159,7 +154,15 @@ public interface WSDOTDataService extends DataService {
 		+ BorderWaitColumns.BORDER_WAIT_TIME + " INTEGER,"
 		+ BorderWaitColumns.BORDER_WAIT_IS_STARRED + " INTEGER NOT NULL default 0)")
 	void createBorderWaitTable(VoidCallback callback);
-	
+
+	@Update("CREATE TABLE IF NOT EXISTS " + Tables.MAP_LOCATION + " ("
+			+ LocationColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+ LocationColumns.LOCATION_TITLE + " TEXT,"
+			+ LocationColumns.LOCATION_LAT + " INTEGER,"
+			+ LocationColumns.LOCATION_LONG + " INTEGER,"
+			+ LocationColumns.LOCATION_ZOOM + " INTEGER);")
+	void createLocationTable(VoidCallback callback);
+
 	/**
 	 * Initialize cache table.
 	 * 
@@ -674,12 +677,26 @@ public interface WSDOTDataService extends DataService {
 	/**
 	 * Retrieve individual camera.
 	 * 
-	 * @param routeId
+	 * @param cameraId
 	 * @param callback
 	 */
 	@Select("SELECT * FROM " + Tables.CAMERAS
 			+ " WHERE " + CamerasColumns.CAMERA_ID
 			+ " = {cameraId}")
 	void getCamera(String cameraId, ListCallback<GenericRow> callback);
-	
+
+    /**
+     * Insert location into table.
+     *  @param locationItem
+     * @param callback
+	 */
+    @Update(sql="INSERT INTO " + Tables.MAP_LOCATION + " ("
+            + LocationColumns.LOCATION_LAT + ", "
+            + LocationColumns.LOCATION_LONG + ", "
+            + LocationColumns.LOCATION_TITLE + ", "
+            + LocationColumns.LOCATION_ZOOM + ") "
+            + "VALUES "
+            + "({locationItem.getLatitude()}, {locationItem.getLongitude()}, {locationItem.getTitle()}, {locationItem.getZoom()})")
+    void insertLocation(LocationItem locationItem, VoidCallback callback);
+
 }

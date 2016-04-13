@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
+import com.googlecode.gwtphonegap.client.notification.PromptCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptResults;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
 import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
@@ -34,13 +36,7 @@ import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CalloutItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.CamerasFeed;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlerts;
-import gov.wa.wsdot.mobile.shared.LatLonItem;
+import gov.wa.wsdot.mobile.shared.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -656,7 +652,54 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 					.goTo(new TrafficAlertsPlace(bounds));
 		}
 	}
-	
+
+
+	/**
+	 * TODO: Finish this method
+	 */
+	@Override
+	public void onStarButtonPressed(){
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Star Location");
+		}
+
+		// Collect Location information
+
+        phoneGap.getNotification().prompt(
+                "Please enter a name for this location.",
+                new PromptCallback() {
+                    @Override
+                    public void onPrompt(PromptResults results) {
+                        if(results.getButtonIndex() == 0){
+
+                            LatLng center = view.getMapWidget().getCenter();
+                            int zoom = view.getMapWidget().getZoom();
+
+                            LocationItem locationItem = new LocationItem("", center.getLatitude(), center.getLongitude(), zoom); // TODO: Get these values
+
+                            // Add location item to Database
+                            dbService.insertLocation(locationItem, new VoidCallback() { // TODO: Should use VoidCallback here?
+
+                                @Override
+                                public void onFailure(DataServiceException error) {
+                                    // TODO: Display failure message
+
+                                }
+
+                                @Override
+                                public void onSuccess() {
+                                    // TODO: Display success message
+
+                                }
+                            });
+                        }
+                    }
+                },
+                "New Favorite Location",
+                "",
+                new String[]{"Cancel","Ok"});
+	}
+
 	@Override
 	public void onMapIsIdle() {
 		captureClickEvents();
