@@ -46,9 +46,11 @@
 	  	    <wsdot:button.image.Camera2ImageButton ui:field="cameraButton" />
 	  	    <mgwt:panel.flex.FlexSpacer />
             <wsdot:button.image.WarningImageButton ui:field="seattleAlertsButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<wsdot:button.image.StarImageButton ui:field="starButton" />
             <mgwt:panel.flex.FlexSpacer />
             <wsdot:button.image.MenuImageButton ui:field="menuButton" />
-       	</mgwt:buttonbar.ButtonBar>
+      	</mgwt:buttonbar.ButtonBar>
        	
 	</mgwt:panel.flex.RootFlexPanel>
 

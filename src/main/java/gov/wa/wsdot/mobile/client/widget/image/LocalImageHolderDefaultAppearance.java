@@ -57,7 +57,10 @@ public class LocalImageHolderDefaultAppearance implements
         
         @Source("resources/ic_action_previous_item_mdpi.png")
         ImageResource back();
-        
+
+        @Source("resources/ic_action_star_mdpi.png")
+        ImageResource star();
+
         @Source("resources/ic_action_back_mdpi.png")
         ImageResource backAndroid();
     }

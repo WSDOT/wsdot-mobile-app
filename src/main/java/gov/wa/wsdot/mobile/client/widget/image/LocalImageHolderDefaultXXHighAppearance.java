@@ -57,7 +57,10 @@ public class LocalImageHolderDefaultXXHighAppearance implements
         
         @Source("resources/ic_action_previous_item_xxhdpi.png")
         ImageResource back();
-        
+
+        @Source("resources/ic_action_star_xxhdpi.png")
+        ImageResource star();
+
         @Source("resources/ic_action_back_xxhdpi.png")
         ImageResource backAndroid();
     }

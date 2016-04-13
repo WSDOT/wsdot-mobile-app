@@ -213,7 +213,6 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
             phoneGap.getNotification().alert(
                     "Please select a point of origin from the selection box.",
                     new AlertCallback() {
-
                         @Override
                         public void onOkButtonClicked() {
                             // TODO Auto-generated method stub
