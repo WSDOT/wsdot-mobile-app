@@ -32,29 +32,33 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.ImageResourceRenderer;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.dom.client.recognizer.longtap.LongTapEvent;
+import com.googlecode.mgwt.dom.client.recognizer.longtap.LongTapHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
 import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.BeforeScrollEndEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
@@ -174,7 +178,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	HTML colorOfStar;
 
 	@UiField(provided = true)
-	CellList<LocationItem> locationsCellList;
+    WidgetList locationsWidgetList;
 
 	@UiField(provided = true)
 	CellList<CameraItem> camerasCellList;
@@ -216,15 +220,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		
 		alertsCarousel = new Carousel();
 
-        locationsCellList = new CellList<LocationItem>(new MyBasicCell<LocationItem>() {
-            @Override
-            public String getDisplayString(LocationItem model) {
-                return model.getTitle();
-            }
-
-            @Override
-            public boolean canBeSelected(LocationItem model){ return  true; }
-        });
+        locationsWidgetList = new WidgetList();
 
 
 		camerasCellList = new CellList<CameraItem>(new MyBasicCell<CameraItem>() {
@@ -450,14 +446,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
         }
     }
 
-	@UiHandler("locationsCellList")
-	protected void onLocationsCellSelected(CellSelectedEvent event){
-		if (presenter != null){
-			int index = event.getIndex();
-			presenter.onLocationSelected(index);
-		}
-	}
-	
 	@UiHandler("camerasCellList")
 	protected void onCameraCellSelected(CellSelectedEvent event) {
 		if (presenter != null) {
@@ -588,7 +576,51 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 	@Override
 	public void renderLocations(List<LocationItem> createLocationList) {
-		locationsCellList.render(createLocationList);
+        locationsWidgetList.clear();
+        int i = 0;
+
+        for (LocationItem item : createLocationList) {
+
+            HorizontalPanel panel = new HorizontalPanel();
+
+            panel.setWidth("100%");
+
+            final int index = i;
+
+            panel.sinkEvents(Event.ONCLICK);
+            panel.addHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    // handle the click event
+                    if (presenter != null){
+                        presenter.onLocationSelected(index);
+                    }
+                }
+            }, ClickEvent.getType());
+
+            Label l = new Label(item.getTitle());
+            l.setTitle(item.getTitle());
+            panel.add(l);
+
+            panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+
+            Button b = new Button();
+
+            b.setStyleName(AppBundle.INSTANCE.css().cancelIcon());
+            b.addTapHandler(new TapHandler() {
+                @Override
+                public void onTap(TapEvent event) {
+                    // handle the click event
+                    if (presenter != null){
+                        presenter.onLocationRemove(index);
+                    }
+                }
+            });
+
+            panel.add(b);
+
+            locationsWidgetList.add(panel);
+            i++;
+        }
 	}
 
 	@Override
@@ -603,12 +635,12 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 
 	@Override
 	public void showLocationsList(){
-		locationsCellList.setVisible(true);
+		locationsWidgetList.setVisible(true);
 	}
 
 	@Override
 	public void hideLocationsList(){
-		locationsCellList.setVisible(false);
+		locationsWidgetList.setVisible(false);
 	}
 
 	@Override
@@ -720,7 +752,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	public void hideEmptyFavoritesMessage() {
 		emptyFavorites.setVisible(false);
 	}
-	
 
 	private void accessibilityShowHome(){
 		Roles.getMainRole().setAriaHiddenState(home.getElement(), false);
