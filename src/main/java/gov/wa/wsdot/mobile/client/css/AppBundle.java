@@ -249,8 +249,11 @@ public interface AppBundle extends ClientBundle {
 	@Source("image_placeholder.png")
 	ImageResource imagePlaceholderPNG();
 
-	@Source(("my_location.png"))
+	@Source("my_location.png")
 	ImageResource myLocationPNG();
+
+	@Source("cancel.png")
+	ImageResource cancelPNG();
 	
 	/**
 	 * Callout icons
@@ -340,7 +343,9 @@ public interface AppBundle extends ClientBundle {
 		String homeButton();
 		String highImpactAlert();
 		String noHighImpactAlerts();
-		
+
+        String cancelIcon();
+
 		String ariaOnly();
 		String voiceoverPage();
 		

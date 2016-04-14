@@ -705,5 +705,13 @@ public interface WSDOTDataService extends DataService {
 	@Select("SELECT * FROM " + Tables.MAP_LOCATION)
 	void getLocations(ListCallback<GenericRow> callback);
 
+    /**
+     *  Removes a favorite location
+     */
+    @Update("DELETE FROM " + Tables.MAP_LOCATION
+            + " WHERE " + LocationColumns._ID
+            + " = {locationItem.getId()}")
+    void removeLocation(LocationItem locationItem, VoidCallback callback);
+
 
 }

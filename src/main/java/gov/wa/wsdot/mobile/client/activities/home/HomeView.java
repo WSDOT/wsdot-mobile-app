@@ -53,6 +53,8 @@ public interface HomeView extends IsWidget {
 
 		public void onLocationSelected(int index);
 
+		public void onLocationRemove(int index);
+
 		public void onCameraSelected(int index);
 
 		public void onFerriesSelected(int index);

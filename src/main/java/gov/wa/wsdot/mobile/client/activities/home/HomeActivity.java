@@ -419,7 +419,8 @@ public class HomeActivity extends MGWTAbstractActivity implements
                     LocationItem l;
 
                     for (GenericRow location: result) {
-                        l = new LocationItem(location.getString(LocationColumns.LOCATION_TITLE),
+                        l = new LocationItem(location.getInt(LocationColumns._ID),
+                                location.getString(LocationColumns.LOCATION_TITLE),
                                 location.getDouble(LocationColumns.LOCATION_LAT),
                                 location.getDouble(LocationColumns.LOCATION_LONG),
                                 location.getInt(LocationColumns.LOCATION_ZOOM));
@@ -435,16 +436,6 @@ public class HomeActivity extends MGWTAbstractActivity implements
                     accessibility.postScreenChangeNotification();
 
                 } else {
-
-                    phoneGap.getNotification().alert(
-                            "no items",
-                            new AlertCallback() {
-                                @Override
-                                public void onOkButtonClicked() {
-                                    // TODO Auto-generated method stub
-                                }
-                            }, "");
-
                     view.hideLocationsHeader();
                     view.hideLocationsList();
                 }
@@ -1038,14 +1029,14 @@ public class HomeActivity extends MGWTAbstractActivity implements
 			
 			travelTimesItems.add(t);
 		}
-		
+
 		view.hideEmptyFavoritesMessage();
 		view.showTravelTimesHeader();
 		view.showTravelTimesList();
 		view.renderTravelTimes(travelTimesItems);
 		view.refresh();
 		accessibility.postScreenChangeNotification();
-		
+
 	}
 
     @Override
@@ -1057,10 +1048,30 @@ public class HomeActivity extends MGWTAbstractActivity implements
         storeMapLocation(item.getLatitude(), item.getLongitude(), item.getZoom());
         clientFactory.getPlaceController().goTo(
                 new TrafficMapPlace());
-
     }
 
-	@Override
+    @Override
+    public void onLocationRemove(final int index) {
+        LocationItem item = locationItems.get(index);
+        dbService.removeLocation(item, new VoidCallback() {
+            @Override
+            public void onFailure(DataServiceException error) {}
+            @Override
+            public void onSuccess(){
+                // update view
+                locationItems.remove(index);
+
+                if (locationItems.size() == 0){
+                    view.hideLocationsHeader();
+                    createFavoritesList();
+                }else{
+                    view.renderLocations(locationItems);
+                }
+            }
+        });
+    }
+
+    @Override
 	public void onCameraSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Cameras");
