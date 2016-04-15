@@ -35,6 +35,7 @@ import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
+import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
@@ -46,6 +47,8 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptResults;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
@@ -67,7 +70,6 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelT
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.LocationColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
@@ -405,50 +407,13 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	
 	private void createFavoritesList() {
 
-        dbService.getLocations(new ListCallback<GenericRow>() {
-
-            @Override
-            public void onFailure(DataServiceException error) {
-            }
-
-            @Override
-            public void onSuccess(List<GenericRow> result) {
-
-                if (!result.isEmpty()) {
-                    locationItems.clear();
-                    LocationItem l;
-
-                    for (GenericRow location: result) {
-                        l = new LocationItem(location.getInt(LocationColumns._ID),
-                                location.getString(LocationColumns.LOCATION_TITLE),
-                                location.getDouble(LocationColumns.LOCATION_LAT),
-                                location.getDouble(LocationColumns.LOCATION_LONG),
-                                location.getInt(LocationColumns.LOCATION_ZOOM));
-
-                        locationItems.add(l);
-                    }
-
-                    view.hideEmptyFavoritesMessage();
-                    view.showLocationsHeader();
-                    view.showLocationsList();
-                    view.renderLocations(locationItems);
-                    view.refresh();
-                    accessibility.postScreenChangeNotification();
-
-                } else {
-                    view.hideLocationsHeader();
-                    view.hideLocationsList();
-                }
-
-            }
-        });
+        getFavoriteLocations();
 
 		dbService.getStarredCameras(new ListCallback<GenericRow>() {
 
 			@Override
 			public void onFailure(DataServiceException error) {
-				
-				
+                
 			}
 			
 			@Override
@@ -960,6 +925,46 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		
 	}
 
+    private void getFavoriteLocations(){
+        dbService.getLocations(new ListCallback<GenericRow>() {
+
+            @Override
+            public void onFailure(DataServiceException error) {
+            }
+
+            @Override
+            public void onSuccess(List<GenericRow> result) {
+
+                if (!result.isEmpty()) {
+                    locationItems.clear();
+                    LocationItem l;
+
+                    for (GenericRow location: result) {
+                        l = new LocationItem(location.getInt(LocationColumns._ID),
+                                location.getString(LocationColumns.LOCATION_TITLE),
+                                location.getDouble(LocationColumns.LOCATION_LAT),
+                                location.getDouble(LocationColumns.LOCATION_LONG),
+                                location.getInt(LocationColumns.LOCATION_ZOOM));
+
+                        locationItems.add(l);
+                    }
+
+                    view.hideEmptyFavoritesMessage();
+                    view.showLocationsHeader();
+                    view.showLocationsList();
+                    view.renderLocations(locationItems);
+                    view.refresh();
+                    accessibility.postScreenChangeNotification();
+
+                } else {
+                    view.hideLocationsHeader();
+                    view.hideLocationsList();
+                }
+
+            }
+        });
+    }
+
 	private void getFerriesSchedules(List<GenericRow> result) {
 		
 		ferriesRouteItems.clear();
@@ -1062,16 +1067,55 @@ public class HomeActivity extends MGWTAbstractActivity implements
                 locationItems.remove(index);
 
                 if (locationItems.size() == 0){
-                    view.hideLocationsHeader();
+                    // TODO: Better way of displaying empty favorites when Location is only item
                     createFavoritesList();
-                }else{
-                    view.renderLocations(locationItems);
                 }
+                view.renderLocations(locationItems);
             }
         });
     }
 
-    @Override
+	@Override
+	public void onLocationEdit(final int index) {
+
+		phoneGap.getNotification().prompt(
+				"Enter new a name for this location.",
+				new PromptCallback() {
+					@Override
+					public void onPrompt(PromptResults results) {
+						if(results.getButtonIndex() == 2){
+
+							int id = locationItems.get(index).getId();
+
+							// Add location item to Database
+							dbService.editLocation(id, results.getInput1(), new VoidCallback() {
+								@Override
+								public void onFailure(DataServiceException error) {
+									phoneGap.getNotification().alert(
+											"Name could not be edited",
+											new AlertCallback() {
+												@Override
+												public void onOkButtonClicked() {
+													// TODO Auto-generated method stub
+												}
+											}, "Failed");
+								}
+								@Override
+								public void onSuccess(){
+                                    getFavoriteLocations();
+                                    view.renderLocations(locationItems);
+								}
+							});
+						}
+					}
+				},
+				"Edit Name",
+				locationItems.get(index).getTitle(),
+				new String[]{"Cancel","Ok"});
+
+	}
+
+	@Override
 	public void onCameraSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Cameras");

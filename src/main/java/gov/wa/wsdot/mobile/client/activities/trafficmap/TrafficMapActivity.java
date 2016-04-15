@@ -26,7 +26,6 @@ import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
@@ -632,17 +631,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	}
 
 	@Override
-
-	public void onSeattleExpressLanesButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			analytics.trackScreen("/Traffic Map/Seattle Express Lanes");
-		}
-        clientFactory.getPlaceController().goTo(new SeattleExpressLanesPlace());
-	}
-
-	@Override
-	public void onSeattleTrafficAlertsButtonPressed(LatLngBounds bounds) {
-
+	public void onTrafficAlertsButtonPressed(LatLngBounds bounds) {
         // Check if map has loaded
 		if (bounds != null) {
 			if (Consts.ANALYTICS_ENABLED) {
@@ -652,7 +641,6 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 					.goTo(new TrafficAlertsPlace(bounds));
 		}
 	}
-
 
 	/**
 	 * Creates a promtp dialog to collect the new favorite location name
@@ -666,7 +654,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 		// Collect Location information
         phoneGap.getNotification().prompt(
-                "Please enter a name for this location.",
+                "Enter a name for this location.",
                 new PromptCallback() {
                     @Override
                     public void onPrompt(PromptResults results) {

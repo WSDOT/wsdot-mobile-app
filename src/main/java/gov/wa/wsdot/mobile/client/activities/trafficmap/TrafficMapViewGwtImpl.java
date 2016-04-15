@@ -20,7 +20,6 @@ package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
 import com.google.gwt.maps.client.base.Point;
 import com.google.gwt.maps.client.overlays.*;
-import com.google.gwt.maps.client.services.*;
 import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
@@ -119,7 +118,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	MenuImageButton menuButton;
 
 	@UiField
-	WarningImageButton seattleAlertsButton;
+	WarningImageButton alertsButton;
 	
 	@UiField
 	NavigationImageButton navigationButton;
@@ -261,10 +260,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		}
 	}
 
-	@UiHandler("seattleAlertsButton")
-	protected void onSeattleAlertsButtonPressed(TapEvent event) {
+	@UiHandler("alertsButton")
+	protected void onAlertsButtonPressed(TapEvent event) {
 		if (presenter != null) {
-			presenter.onSeattleTrafficAlertsButtonPressed(getViewportBounds());
+			presenter.onTrafficAlertsButtonPressed(getViewportBounds());
 		}
 	}
 	
@@ -684,8 +683,8 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		
 		Roles.getButtonRole().set(menuButton.getElement());
 		Roles.getButtonRole().setAriaLabelProperty(menuButton.getElement(), "more options");
-		Roles.getButtonRole().set(seattleAlertsButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(seattleAlertsButton.getElement(), "seattle alerts");
+		Roles.getButtonRole().set(alertsButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(alertsButton.getElement(), "alerts");
 		
 		Roles.getHeadingRole().set(heading.getElement());
 	}

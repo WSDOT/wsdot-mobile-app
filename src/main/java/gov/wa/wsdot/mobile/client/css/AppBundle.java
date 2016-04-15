@@ -254,6 +254,9 @@ public interface AppBundle extends ClientBundle {
 
 	@Source("cancel.png")
 	ImageResource cancelPNG();
+
+	@Source("gear.png")
+	ImageResource gearPNG();
 	
 	/**
 	 * Callout icons
@@ -345,6 +348,10 @@ public interface AppBundle extends ClientBundle {
 		String noHighImpactAlerts();
 
         String cancelIcon();
+		String gearIcon();
+
+		String cellLocation();
+		String cellLocationTitle();
 
 		String ariaOnly();
 		String voiceoverPage();
