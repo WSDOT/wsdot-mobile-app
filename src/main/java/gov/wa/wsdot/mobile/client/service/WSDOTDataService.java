@@ -705,6 +705,14 @@ public interface WSDOTDataService extends DataService {
 	@Select("SELECT * FROM " + Tables.MAP_LOCATION)
 	void getLocations(ListCallback<GenericRow> callback);
 
+	/**
+	 * Edits a location name
+	 */
+	@Select("UPDATE " + Tables.MAP_LOCATION
+			+ " SET " + LocationColumns.LOCATION_TITLE + " = {newName}"
+			+ " WHERE " + LocationColumns._ID + " = {id} ")
+	void editLocation(int id, String newName, VoidCallback callback);
+
     /**
      *  Removes a favorite location
      */

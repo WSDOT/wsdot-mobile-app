@@ -106,6 +106,7 @@ video {
 	color: #7d7d7d;
 }
 
+
 /**
  * Styles for travel times cell.
  */
@@ -250,6 +251,29 @@ video {
     font-weight: bold;
 }
 
+/*
+Style for favorite location cells
+*/
+.cellLocation {
+    width : 100%;
+}
+
+.cellLocationTitle {
+    font-size: medium;
+    color: black;
+    word-wrap: break-word;
+    width : 90%;
+    float: left;
+}
+
+@sprite .gearIcon {
+    gwt-image: "gearPNG";
+    background-image: no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+    float: right;
+}
 /*
 Style for accessibility
 Used to hide labels for content
@@ -770,6 +794,8 @@ count correct number of pages
     height: 24px;
     display: block;
 }
+
+
 
 @sprite .wsdotJobsIcon {
     gwt-image: "wsdotJobsPNG";
