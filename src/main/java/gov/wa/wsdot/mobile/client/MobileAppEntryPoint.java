@@ -48,6 +48,8 @@ import com.googlecode.gwtphonegap.client.PhoneGapTimeoutEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapTimeoutHandler;
 import com.googlecode.gwtphonegap.client.event.BackButtonPressedEvent;
 import com.googlecode.gwtphonegap.client.event.BackButtonPressedHandler;
+import com.googlecode.mgwt.dom.client.event.orientation.OrientationChangeEvent;
+import com.googlecode.mgwt.dom.client.event.orientation.OrientationChangeHandler;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.history.MGWTPlaceHistoryHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
@@ -73,11 +75,13 @@ import gov.wa.wsdot.mobile.shared.CameraItem;
 public class MobileAppEntryPoint implements EntryPoint {
 
     static ClientFactory staticFactory;
-	 
-	private void start() {
+    final static AdMob adMob = GWT.create(AdMob.class);
+    static boolean voEventSent = false;
+
+    private void start() {
 
 		final ClientFactory clientFactory = new ClientFactoryImpl();
-		
+
         // Initialize and configure Google Analytics plugin
         final Analytics analytics = GWT.create(Analytics.class);
         analytics.initialize();
@@ -120,6 +124,15 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		phoneGap.initializePhoneGap();
 
+        MGWT.addOrientationChangeHandler(new OrientationChangeHandler() {
+            @Override
+            public void onOrientationChanged(OrientationChangeEvent event) {
+                accessibility.isVoiceOverRunning();
+            }
+        });
+
+        adMob.initialize();
+
 		if (MGWT.getOsDetection().isIOs()){
 			exportInitAds();
         	accessibility.isVoiceOverRunning();
@@ -146,9 +159,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 	public static void initAds(boolean VoiceOverOn){
 
 		// Initialize and configure AdMob plugin
-		final AdMob adMob = GWT.create(AdMob.class);
-		adMob.initialize();
-
+        adMob.removeBanner();
         AdMobOptions options = (AdMobOptions)JavaScriptObject.createObject().cast();
         options.setAdId(Consts.AD_UNIT_ID);
         options.setOffsetTopBar(true);
@@ -157,15 +168,16 @@ public class MobileAppEntryPoint implements EntryPoint {
 
         if (VoiceOverOn){
             options.setPosition(AdPosition.BOTTOM_CENTER.getPosition());
-    		if (Consts.ANALYTICS_ENABLED) {
-    			staticFactory.getAnalytics().trackEvent(Consts.EVENT_ACCESSIBILITY, "VoiceOver On", null);
-    		}
-        }else {
-            options.setPosition(AdPosition.TOP_CENTER.getPosition());
+
+            // Only track VO event on first load.
+            if (Consts.ANALYTICS_ENABLED) {
+                if (!voEventSent){
+                    staticFactory.getAnalytics().trackEvent(Consts.EVENT_ACCESSIBILITY, "VoiceOver On", null);
+                    voEventSent = true;
+                }
+            }
         }
-
 		adMob.createBanner(options);
-
 	}
 
     /**
