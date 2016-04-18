@@ -29,7 +29,7 @@ public interface Accessibility extends PhoneGapPlugin{
     /**
      *  Calls MobileAccessibility.isVoiceOverRunning(callback)
      */
-    public void isVoiceOverRunning();
+    public void isVoiceOverRunning(boolean analytics);
 
     /**
      *  Sends a screen change notification to VoiceOver

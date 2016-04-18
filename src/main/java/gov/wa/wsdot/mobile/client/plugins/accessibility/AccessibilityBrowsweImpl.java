@@ -29,7 +29,7 @@ public class AccessibilityBrowsweImpl implements Accessibility {
     public void initialize() {}
 
     @Override
-    public void isVoiceOverRunning() {}
+    public void isVoiceOverRunning(boolean analytics) {}
 
     @Override
     public void postScreenChangeNotification() {}
