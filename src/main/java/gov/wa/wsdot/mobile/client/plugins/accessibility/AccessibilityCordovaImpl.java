@@ -54,7 +54,7 @@ public class AccessibilityCordovaImpl implements Accessibility {
         function callback(isVoiceOverRunning){
             $wnd.initAds(isVoiceOverRunning);
             if (analytics){
-                $wnd.voiceOverEvent();
+                $wnd.voiceOverEvent(isVoiceOverRunning);
             }
         }
 
