@@ -42,10 +42,24 @@ public class AccessibilityCordovaImpl implements Accessibility {
 
 
     @Override
-    public native void isVoiceOverRunning() /*-{
-        $wnd.MobileAccessibility.isVoiceOverRunning($wnd.initAds);
-    }-*/;
+    public void isVoiceOverRunning(boolean analytics){
+        if (!initialized) {
+            throw new IllegalStateException("you have to initialize MobileAccessibility plugin before using it");
+        }
+        isVoiceOverRunningNative(analytics);
+    }
 
+    private native void isVoiceOverRunningNative(boolean analytics) /*-{
+
+        function callback(isVoiceOverRunning){
+            $wnd.initAds(isVoiceOverRunning);
+            if (analytics){
+                $wnd.voiceOverEvent();
+            }
+        }
+
+        $wnd.MobileAccessibility.isVoiceOverRunning(callback);
+    }-*/;
 
     @Override
     public void postScreenChangeNotification() {

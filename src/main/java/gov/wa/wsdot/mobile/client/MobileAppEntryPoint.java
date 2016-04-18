@@ -76,7 +76,6 @@ public class MobileAppEntryPoint implements EntryPoint {
 
     static ClientFactory staticFactory;
     final static AdMob adMob = GWT.create(AdMob.class);
-    static boolean voEventSent = false;
 
     private void start() {
 
@@ -127,7 +126,7 @@ public class MobileAppEntryPoint implements EntryPoint {
         MGWT.addOrientationChangeHandler(new OrientationChangeHandler() {
             @Override
             public void onOrientationChanged(OrientationChangeEvent event) {
-                accessibility.isVoiceOverRunning();
+                accessibility.isVoiceOverRunning(false);
             }
         });
 
@@ -135,7 +134,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 
 		if (MGWT.getOsDetection().isIOs()){
 			exportInitAds();
-        	accessibility.isVoiceOverRunning();
+            exportVoiceOverEvent();
+        	accessibility.isVoiceOverRunning(true);
 		}else{
 			// Initialize and configure AdMob plugin
 			final AdMob adMob = GWT.create(AdMob.class);
@@ -168,14 +168,6 @@ public class MobileAppEntryPoint implements EntryPoint {
 
         if (VoiceOverOn){
             options.setPosition(AdPosition.BOTTOM_CENTER.getPosition());
-
-            // Only track VO event on first load.
-            if (Consts.ANALYTICS_ENABLED) {
-                if (!voEventSent){
-                    staticFactory.getAnalytics().trackEvent(Consts.EVENT_ACCESSIBILITY, "VoiceOver On", null);
-                    voEventSent = true;
-                }
-            }
         }
 		adMob.createBanner(options);
 	}
@@ -185,6 +177,24 @@ public class MobileAppEntryPoint implements EntryPoint {
      */
     public static native void exportInitAds() /*-{
         $wnd.initAds = $entry(@gov.wa.wsdot.mobile.client.MobileAppEntryPoint::initAds(Z));
+    }-*/;
+
+
+    /**
+     * Sends VoiceOver event to GA
+     *
+     * @param voiceOverOn
+     */
+    public static void voiceOverEvent(boolean voiceOverOn){
+        if (voiceOverOn){
+            if (Consts.ANALYTICS_ENABLED) {
+                staticFactory.getAnalytics().trackEvent(Consts.EVENT_ACCESSIBILITY, "VoiceOver On", null);
+            }
+        }
+    }
+
+    public static native void exportVoiceOverEvent() /*-{
+        $wnd.voiceOverEvent = $entry(@gov.wa.wsdot.mobile.client.MobileAppEntryPoint::voiceOverEvent(Z));
     }-*/;
 
 	private void buildDisplay(final ClientFactory clientFactory, final PhoneGap phoneGap) {
