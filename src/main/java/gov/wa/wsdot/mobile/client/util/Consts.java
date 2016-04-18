@@ -31,7 +31,7 @@ public final class Consts {
 	/**
 	 * Current version number and build of the app.
 	 */
-	public static final String APP_VERSION = "4.2.0";
+	public static final String APP_VERSION = "4.2.1";
 
     /**
      * Ad unit Id for banner
