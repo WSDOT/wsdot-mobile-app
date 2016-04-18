@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Ad banner covers toolbar on orientation change.
 
 ## [4.2.0] - 2016-04-12
 ### Added 
