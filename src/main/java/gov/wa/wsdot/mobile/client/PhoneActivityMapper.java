@@ -99,6 +99,8 @@ public class PhoneActivityMapper implements ActivityMapper {
 
 	private final ClientFactory clientFactory;
 
+	private HomeActivity homeActivity;
+
 	public PhoneActivityMapper(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -106,7 +108,10 @@ public class PhoneActivityMapper implements ActivityMapper {
 	@Override
 	public Activity getActivity(Place place) {
 		if (place instanceof HomePlace) {
-			return new HomeActivity(clientFactory);
+			if (homeActivity == null){
+				homeActivity = new HomeActivity(clientFactory);
+			}
+			return homeActivity;
 		}
 		
 		if (place instanceof AboutPlace) {
