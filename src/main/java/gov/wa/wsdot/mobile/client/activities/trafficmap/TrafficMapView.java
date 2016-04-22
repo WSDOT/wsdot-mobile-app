@@ -54,7 +54,7 @@ public interface TrafficMapView extends IsWidget {
 		
 		public void onSeattleExpressLanesButtonPressed();
 		
-		public void onSeattleTrafficAlertsButtonPressed();
+		public void onSeattleTrafficAlertsButtonPressed(LatLngBounds bounds);
 		
 		public void onRefreshMapButtonPressed();
 		

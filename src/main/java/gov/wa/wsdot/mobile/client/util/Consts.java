@@ -31,6 +31,7 @@ public final class Consts {
 	/**
 	 * Current version number and build of the app.
 	 */
+
 	public static final String APP_VERSION = "4.2.1";
 
     /**
@@ -43,6 +44,16 @@ public final class Consts {
 	 */
 	public static final String ANALYTICS_TRACKING_ID = "UA-XXXXXX-XX";
 
+	/**
+	 * IDs for the different alert types for TrafficAlertsActivity
+	 */
+	public static final int BLOCKING = 0;
+	public static final int CONSTRUCTION = 1;
+	public static final int CLOSURES = 2;
+
+	public static final int SPECIAL = 3;
+	public static final int AMBER = 24;
+	
 	/**
 	 * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,
 	 * and so on. Thus, the caller should be prevented from constructing objects of

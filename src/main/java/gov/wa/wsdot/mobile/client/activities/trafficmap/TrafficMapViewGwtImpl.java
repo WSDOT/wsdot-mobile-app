@@ -277,7 +277,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	@UiHandler("seattleAlertsButton")
 	protected void onSeattleAlertsButtonPressed(TapEvent event) {
 		if (presenter != null) {
-			presenter.onSeattleTrafficAlertsButtonPressed();
+			presenter.onSeattleTrafficAlertsButtonPressed(getViewportBounds());
 		}
 	}
 	

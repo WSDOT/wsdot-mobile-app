@@ -50,7 +50,7 @@ import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace.TollRatesP
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace.TrafficMapPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace.SeattleExpressLanesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace.GoToLocationPlaceTokenizer;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsPlace.SeattleTrafficAlertsPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace.TrafficAlertsPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace.TravelTimeDetailsPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace.TravelTimesPlaceTokenizer;
 
@@ -70,7 +70,7 @@ import com.google.gwt.place.shared.WithTokenizers;
         FerriesRouteSailingsPlaceTokenizer.class,
         FerriesRouteDeparturesPlaceTokenizer.class, CameraPlaceTokenizer.class,
         AlertPlaceTokenizer.class, SeattleExpressLanesPlaceTokenizer.class,
-        SeattleTrafficAlertsPlaceTokenizer.class,
+        TrafficAlertsPlaceTokenizer.class,
         GoToFerriesLocationPlaceTokenizer.class,
         VesselWatchMapPlaceTokenizer.class, NewsDetailsPlaceTokenizer.class,
         VesselDetailsPlaceTokenizer.class, BlogDetailsPlaceTokenizer.class,

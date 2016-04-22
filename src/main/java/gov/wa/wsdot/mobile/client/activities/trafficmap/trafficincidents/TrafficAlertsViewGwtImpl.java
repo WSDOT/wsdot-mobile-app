@@ -16,13 +16,14 @@
  *
  */
 
-package gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents;
+package gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents;
 
 import com.google.gwt.aria.client.Roles;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.SimpleListItem;
-import gov.wa.wsdot.mobile.shared.SeattleIncidentItem;
+import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+import gov.wa.wsdot.mobile.client.util.Consts;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
+import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
@@ -47,21 +49,21 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 
-public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
-		SeattleTrafficAlertsView {
+public class TrafficAlertsViewGwtImpl extends Composite implements
+		TrafficAlertsView {
 
 	/**
 	 * The UiBinder interface.
 	 */	
-	interface SeattleTrafficAlertsViewGwtImplUiBinder extends
-			UiBinder<Widget, SeattleTrafficAlertsViewGwtImpl> {
+	interface TrafficAlertsViewGwtImplUiBinder extends
+			UiBinder<Widget, TrafficAlertsViewGwtImpl> {
 	}
 
 	/**
 	 * The UiBinder used to generate the view.
 	 */
-	private static SeattleTrafficAlertsViewGwtImplUiBinder uiBinder = GWT
-			.create(SeattleTrafficAlertsViewGwtImplUiBinder.class);
+	private static TrafficAlertsViewGwtImplUiBinder uiBinder = GWT
+			.create(TrafficAlertsViewGwtImplUiBinder.class);
 
 	@UiField
 	HeaderTitle heading;
@@ -79,16 +81,19 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 	HTML amberAlertsHeader;
 	
 	@UiField(provided = true)
-	CellList<SeattleIncidentItem> amberAlertsCellList;
+	CellList<HighwayAlertItem> amberAlertsCellList;
 	
 	@UiField(provided = true)
-	CellList<SeattleIncidentItem> blockingCellList;
+	CellList<HighwayAlertItem> blockingCellList;
 
 	@UiField(provided = true)
-	CellList<SeattleIncidentItem> constructionCellList;
+	CellList<HighwayAlertItem> constructionCellList;
 
 	@UiField(provided = true)
-	CellList<SeattleIncidentItem> specialCellList;
+	CellList<HighwayAlertItem> closureCellList;
+	
+	@UiField(provided = true)
+	CellList<HighwayAlertItem> specialCellList;
 	
 	@UiField(provided = true)
 	PullPanel pullToRefresh;
@@ -102,21 +107,21 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 	private Presenter presenter;
 	private PullArrowHeader pullArrowHeader;
 	
-	public SeattleTrafficAlertsViewGwtImpl() {
+	public TrafficAlertsViewGwtImpl() {
 		
 		pullToRefresh = new PullPanel();
 		pullArrowHeader = new PullArrowHeader();
 		pullToRefresh.setHeader(pullArrowHeader);
 		
-		amberAlertsCellList = new CellList<SeattleIncidentItem>(new SimpleListItem<SeattleIncidentItem>() {
+		amberAlertsCellList = new CellList<HighwayAlertItem>(new SimpleListItem<HighwayAlertItem>() {
 
             @Override
-            public String getDisplayDescription(SeattleIncidentItem model) {
-                return model.getDescription();
+            public String getDisplayDescription(HighwayAlertItem model) {
+                return model.getHeadlineDescription();
             }
 
             @Override
-            public String getDisplayLastUpdated(SeattleIncidentItem model) {
+            public String getDisplayLastUpdated(HighwayAlertItem model) {
                 if (model.getLastUpdatedTime() == null) {
                     return "";
                 } else {
@@ -126,15 +131,15 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
             }
         });
 		
-		blockingCellList = new CellList<SeattleIncidentItem>(new SimpleListItem<SeattleIncidentItem>() {
+		blockingCellList = new CellList<HighwayAlertItem>(new SimpleListItem<HighwayAlertItem>() {
 
 			@Override
-			public String getDisplayDescription(SeattleIncidentItem model) {
-				return model.getDescription();
+			public String getDisplayDescription(HighwayAlertItem model) {
+				return model.getHeadlineDescription();
 			}
 
 			@Override
-			public String getDisplayLastUpdated(SeattleIncidentItem model) {
+			public String getDisplayLastUpdated(HighwayAlertItem model) {
 			    if (model.getLastUpdatedTime() == null) {
 			        return "";
 			    } else {
@@ -145,15 +150,15 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 
 		});
 
-		constructionCellList = new CellList<SeattleIncidentItem>(new SimpleListItem<SeattleIncidentItem>() {
+		constructionCellList = new CellList<HighwayAlertItem>(new SimpleListItem<HighwayAlertItem>() {
 
 			@Override
-			public String getDisplayDescription(SeattleIncidentItem model) {
-				return model.getDescription();
+			public String getDisplayDescription(HighwayAlertItem model) {
+				return model.getHeadlineDescription();
 			}
 
 			@Override
-			public String getDisplayLastUpdated(SeattleIncidentItem model) {
+			public String getDisplayLastUpdated(HighwayAlertItem model) {
 			    if (model.getLastUpdatedTime() == null) {
 			        return "";
 			    } else {
@@ -164,15 +169,34 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 
 		});
 		
-		specialCellList = new CellList<SeattleIncidentItem>(new SimpleListItem<SeattleIncidentItem>() {
+		closureCellList = new CellList<HighwayAlertItem>(new SimpleListItem<HighwayAlertItem>() {
 
 			@Override
-			public String getDisplayDescription(SeattleIncidentItem model) {
-				return model.getDescription();
+			public String getDisplayDescription(HighwayAlertItem model) {
+				return model.getHeadlineDescription();
 			}
 
 			@Override
-			public String getDisplayLastUpdated(SeattleIncidentItem model) {
+			public String getDisplayLastUpdated(HighwayAlertItem model) {
+				if (model.getLastUpdatedTime() == null) {
+				    return "";
+				} else {
+    			    return ParserUtils.relativeTime(model.getLastUpdatedTime(),
+                            "MMMM d, yyyy h:mm a", false);
+				}
+			}
+
+		});
+		
+		specialCellList = new CellList<HighwayAlertItem>(new SimpleListItem<HighwayAlertItem>() {
+
+			@Override
+			public String getDisplayDescription(HighwayAlertItem model) {
+				return model.getHeadlineDescription();
+			}
+
+			@Override
+			public String getDisplayLastUpdated(HighwayAlertItem model) {
 				if (model.getLastUpdatedTime() == null) {
 				    return "";
 				} else {
@@ -193,6 +217,37 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
         }
 	}
 
+	
+	@UiHandler("blockingCellList")
+	protected void onBlockingPressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.BLOCKING, index);
+		}
+	}
+	@UiHandler("constructionCellList")
+	protected void onconstructionPressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.CONSTRUCTION, index);
+		}
+	}
+	@UiHandler("closureCellList")
+	protected void onClosurePressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.CLOSURES, index);
+		}
+	}
+	@UiHandler("specialCellList")
+	protected void onSpecialPressed(CellSelectedEvent event) {
+		if (presenter != null) {
+			int index = event.getIndex();
+			presenter.onItemSelected(Consts.SPECIAL, index);
+		}
+	}
+	
+	
 	@UiHandler("doneButton")
 	protected void onDoneButtonPressed(TapEvent event) {
 		if (presenter != null) {
@@ -206,22 +261,27 @@ public class SeattleTrafficAlertsViewGwtImpl extends Composite implements
 	}
 
     @Override
-    public void renderAmberAlerts(List<SeattleIncidentItem> amberAlertsList) {
+    public void renderAmberAlerts(List<HighwayAlertItem> amberAlertsList) {
         amberAlertsCellList.render(amberAlertsList);
     }
 	
 	@Override
-	public void renderBlocking(List<SeattleIncidentItem> blockingList) {
+	public void renderBlocking(List<HighwayAlertItem> blockingList) {
 		blockingCellList.render(blockingList);
 	}
 
 	@Override
-	public void renderConstruction(List<SeattleIncidentItem> constructionList) {
+	public void renderConstruction(List<HighwayAlertItem> constructionList) {
 		constructionCellList.render(constructionList);
 	}
 
 	@Override
-	public void renderSpecial(List<SeattleIncidentItem> specialList) {
+	public void renderClosure(List<HighwayAlertItem> closureList) {
+		closureCellList.render(closureList);
+	}
+	
+	@Override
+	public void renderSpecial(List<HighwayAlertItem> specialList) {
 		specialCellList.render(specialList);
 	}
 	

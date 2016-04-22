@@ -25,7 +25,7 @@ import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.seattleincidents.SeattleTrafficAlertsPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
@@ -655,12 +655,16 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	}
 
 	@Override
-	public void onSeattleTrafficAlertsButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			analytics.trackScreen("/Traffic Map/Seattle Alerts");
+	public void onSeattleTrafficAlertsButtonPressed(LatLngBounds bounds) {
+
+        // Check if map has loaded
+		if (bounds != null) {
+			if (Consts.ANALYTICS_ENABLED) {
+				analytics.trackScreen("/Traffic Map/Alerts In This Area");
+			}
+			clientFactory.getPlaceController()
+					.goTo(new TrafficAlertsPlace(bounds));
 		}
-        clientFactory.getPlaceController()
-                .goTo(new SeattleTrafficAlertsPlace());
 	}
 	
 	@Override
