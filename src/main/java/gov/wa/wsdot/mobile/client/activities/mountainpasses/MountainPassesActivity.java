@@ -115,7 +115,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 
 					@Override
 					public void run() {
-						createTopicsList();							
+						createTopicsList(true);
 						view.refresh();
 						callback.onSuccess(null);
 					}
@@ -127,7 +127,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 
 		view.setHeaderPullHandler(headerHandler);
 		buildWeatherPhrases();
-		createTopicsList();
+		createTopicsList(false);
 
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Mountain Passes");
@@ -161,7 +161,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		ActionEvent.fire(eventBus, ActionNames.BACK);		
 	}
 
-	private void createTopicsList() {
+	private void createTopicsList(final boolean forceUpdate) {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -185,7 +185,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 
 				view.showProgressIndicator();
 				
-				if (shouldUpdate) {
+				if (shouldUpdate || forceUpdate) {
 					/**
 					 * Check the mountain passes table for any starred entries. If we find some,
 					 * save them to a list so we can re-star those after we flush the database.
@@ -385,8 +385,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	
 	/**
 	 * Get the lastest mountain pass conditions from the database.
-	 * 
-	 * @param view
+	 *
 	 * @param result
 	 */
 	private void getMountainPasses(List<GenericRow> result) {

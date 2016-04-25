@@ -102,7 +102,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 					@Override
 					public void run() {
-						createTopicsList();							
+						createTopicsList(true);
 						view.refresh();
 						callback.onSuccess(null);
 					}
@@ -113,7 +113,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		});
 		
 		view.setHeaderPullHandler(headerHandler);
-		createTopicsList();
+		createTopicsList(false);
 
 		if (Consts.ANALYTICS_ENABLED) {
             analytics.trackScreen("/Ferries/Schedules");
@@ -138,7 +138,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 						.getRouteID())));
 	}
 	
-	private void createTopicsList() {
+	private void createTopicsList(final boolean forceUpdate) {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -162,7 +162,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 				view.showProgressIndicator();
 				
-				if (shouldUpdate) {
+				if (shouldUpdate || forceUpdate) {
 					/**
 					 * Check the ferry schedules table for any starred entries. If we find some,
 					 * save them to a list so we can re-star those after we flush the database.
@@ -304,8 +304,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 	
 	/**
 	 * Get the latest ferries route schedules from the database.
-	 * 
-	 * @param view
+	 *
 	 * @param result
 	 */
 	private void getFerriesSchedules(List<GenericRow> result) {
