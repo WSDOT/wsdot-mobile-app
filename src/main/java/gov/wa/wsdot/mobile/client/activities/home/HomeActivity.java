@@ -35,7 +35,6 @@ import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
-import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
@@ -141,7 +140,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 					@Override
 					public void run() {
-						createFavoritesList();					
+						createFavoritesList();
 						view.refresh();
 						callback.onSuccess(null);
 					}
@@ -155,7 +154,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		buildWeatherPhrases();
 		createAlertsList();
 		createFavoritesList();
-		
+
 		timer = new Timer() {
 			@Override
 			public void run() {
@@ -562,7 +561,17 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 																@Override
 																public void onSuccess() {
-																	getFerriesSchedules(starredFerriesSchedules);
+
+                                                                    dbService.getStarredFerriesSchedules(new ListCallback<GenericRow>() {
+
+                                                                        @Override
+                                                                        public void onFailure(DataServiceException error) {}
+
+                                                                        @Override
+                                                                        public void onSuccess(final List<GenericRow> starredMountainPassRows) {
+                                                                            getFerriesSchedules(starredFerriesSchedules);
+                                                                        }
+                                                                    });
 																}
 															});
 														}
@@ -759,7 +768,18 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 																@Override
 																public void onSuccess() {
-																	getMountainPasses(starredMountainPassRows);
+
+                                                                    dbService.getStarredMountainPasses(new ListCallback<GenericRow>() {
+
+                                                                        @Override
+                                                                        public void onFailure(DataServiceException error) {}
+
+                                                                        @Override
+                                                                        public void onSuccess(final List<GenericRow> starredMountainPassRows) {
+                                                                            getMountainPasses(starredMountainPassRows);
+                                                                        }
+                                                                    });
+
 																}
 															});
 														}
@@ -896,7 +916,17 @@ public class HomeActivity extends MGWTAbstractActivity implements
 			
 																@Override
 																public void onSuccess() {
-																	getTravelTimes(starredTravelTimesRows);
+
+                                                                    dbService.getStarredTravelTimes(new ListCallback<GenericRow>() {
+
+                                                                        @Override
+                                                                        public void onFailure(DataServiceException error) {}
+
+                                                                        @Override
+                                                                        public void onSuccess(final List<GenericRow> starredMountainPassRows) {
+                                                                            getTravelTimes(starredTravelTimesRows);
+                                                                        }
+                                                                    });
 																}
 															});
 														}
@@ -920,9 +950,8 @@ public class HomeActivity extends MGWTAbstractActivity implements
 				}
 			}
 		});
-		
+
 		view.showEmptyFavoritesMessage();
-		
 	}
 
     private void getFavoriteLocations(){
@@ -992,7 +1021,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	}
 	
 	private void getMountainPasses(List<GenericRow> result) {
-		
+
 		mountainPassItems.clear();
 		MountainPassItem m;
 		

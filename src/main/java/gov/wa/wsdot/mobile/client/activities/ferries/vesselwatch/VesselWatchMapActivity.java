@@ -468,6 +468,8 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 				double latitude = position.getCoordinates().getLatitude();
 				double longitude = position.getCoordinates().getLongitude();
 
+				view.addMapMarker(position);
+
 				view.setMapLocation(latitude, longitude, 12);
 
 			}

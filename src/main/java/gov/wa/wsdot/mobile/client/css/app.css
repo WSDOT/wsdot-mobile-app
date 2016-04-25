@@ -262,7 +262,7 @@ Style for favorite location cells
     font-size: medium;
     color: black;
     word-wrap: break-word;
-    width : 90%;
+    width : 80%;
     float: left;
 }
 
@@ -272,6 +272,7 @@ Style for favorite location cells
     background-size: 24px 24px;
     width: 24px;
     height: 24px;
+    padding-right: 14px;
     float: right;
 }
 /*
@@ -785,17 +786,6 @@ count correct number of pages
     height: 32px;
     display: block;
 }
-
-@sprite .cancelIcon {
-    gwt-image: "cancelPNG";
-    background-image: no-repeat;
-    background-size: 24px 24px;
-    width: 24px;
-    height: 24px;
-    display: block;
-}
-
-
 
 @sprite .wsdotJobsIcon {
     gwt-image: "wsdotJobsPNG";

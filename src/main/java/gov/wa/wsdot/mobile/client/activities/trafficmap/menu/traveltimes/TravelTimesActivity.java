@@ -93,7 +93,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 
 					@Override
 					public void run() {
-						createTopicsList(view);							
+						createTopicsList(view, true);
 						view.refresh();
 						callback.onSuccess(null);
 					}
@@ -103,13 +103,13 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		});
 		
 		view.setHeaderPullHandler(headerHandler);
-		createTopicsList(view);
+		createTopicsList(view, true);
 		panel.setWidget(view);
 
 		accessibility.postScreenChangeNotification();
 	}
 
-	private void createTopicsList(final TravelTimesView view) {
+	private void createTopicsList(final TravelTimesView view, final boolean forceUpdate) {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -133,7 +133,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 
 				view.showProgressIndicator();
 				
-				if (shouldUpdate) {
+				if (shouldUpdate || forceUpdate) {
 					/**
 					 * Check the travel times table for any starred entries. If we find some,
 					 * save them to a list so we can re-star those after we flush the database.

@@ -18,6 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
+import com.google.gwt.maps.client.base.Point;
+import com.google.gwt.maps.client.overlays.*;
+import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.*;
@@ -49,9 +52,6 @@ import com.google.gwt.maps.client.layers.TrafficLayer;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleElementType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleFeatureType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyler;
-import com.google.gwt.maps.client.overlays.Marker;
-import com.google.gwt.maps.client.overlays.MarkerImage;
-import com.google.gwt.maps.client.overlays.MarkerOptions;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.storage.client.StorageMap;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -116,6 +116,8 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	private MyMapWidget mapWidget;
 	private Marker cameraMarker;
 	private Marker vesselMarker;
+	private Marker myLocationMarker;
+	private Circle myLocationError;
 	private static ArrayList<Marker> cameraMarkers = new ArrayList<Marker>();
 	private static ArrayList<Marker> vesselMarkers = new ArrayList<Marker>();
 	
@@ -254,6 +256,39 @@ public class VesselWatchMapViewGwtImpl extends Composite implements
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+
+	@Override
+	public void addMapMarker(Position position) {
+		if (myLocationMarker != null) {
+			myLocationMarker.setMap((MapWidget) null);
+		}
+
+		if (myLocationError != null){
+			myLocationError.setMap(null);
+		}
+
+		LatLng center = LatLng.newInstance(position.getCoordinates().getLatitude(), position.getCoordinates().getLongitude());
+		MarkerOptions options = MarkerOptions.newInstance();
+		options.setPosition(center);
+		MarkerImage icon = MarkerImage.newInstance(AppBundle.INSTANCE.myLocationPNG().getSafeUri().asString());
+		icon.setAnchor(Point.newInstance(11, 11));
+		options.setOptimized(true);
+		options.setIcon(icon);
+		myLocationMarker = Marker.newInstance(options);
+		myLocationMarker.setMap(mapWidget);
+
+		// create a circle the size of the error
+		CircleOptions circleOptions = CircleOptions.newInstance();
+		circleOptions.setFillOpacity(0.1);
+		circleOptions.setFillColor("#1a75ff");
+		circleOptions.setStrokeOpacity(0.12);
+		circleOptions.setStrokeWeight(1);
+		circleOptions.setStrokeColor("#1a75ff");
+		myLocationError = Circle.newInstance(circleOptions);
+		myLocationError.setCenter(center);
+		myLocationError.setRadius(position.getCoordinates().getAccuracy());
+		myLocationError.setMap(mapWidget);
 	}
 
 	@Override

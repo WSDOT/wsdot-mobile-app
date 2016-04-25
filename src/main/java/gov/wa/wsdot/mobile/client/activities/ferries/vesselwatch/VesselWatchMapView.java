@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
+import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.VesselWatchItem;
 
@@ -30,7 +31,9 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface VesselWatchMapView extends IsWidget {
 	
 	public void setPresenter(Presenter presenter);
-	
+
+	void addMapMarker(Position position);
+
 	public interface Presenter {
 		
 		public void onBackButtonPressed();

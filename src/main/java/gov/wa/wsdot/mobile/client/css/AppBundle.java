@@ -252,9 +252,6 @@ public interface AppBundle extends ClientBundle {
 	@Source("my_location.png")
 	ImageResource myLocationPNG();
 
-	@Source("cancel.png")
-	ImageResource cancelPNG();
-
 	@Source("gear.png")
 	ImageResource gearPNG();
 	
@@ -347,7 +344,6 @@ public interface AppBundle extends ClientBundle {
 		String highImpactAlert();
 		String noHighImpactAlerts();
 
-        String cancelIcon();
 		String gearIcon();
 
 		String cellLocation();
