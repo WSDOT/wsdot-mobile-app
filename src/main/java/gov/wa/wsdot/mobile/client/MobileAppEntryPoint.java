@@ -475,6 +475,7 @@ public class MobileAppEntryPoint implements EntryPoint {
                                                 @Override
                                                 public void onTransactionSuccess() {
                                                     GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                                                    resetCachesTable(clientFactory);
                                                 }
 
                                                 @Override
@@ -563,6 +564,7 @@ public class MobileAppEntryPoint implements EntryPoint {
                                         @Override
                                         public void onTransactionSuccess() {
                                             GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                                            resetCachesTable(clientFactory);
                                         }
 
                                         @Override
@@ -616,6 +618,7 @@ public class MobileAppEntryPoint implements EntryPoint {
                                 @Override
                                 public void onTransactionSuccess() {
                                     GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                                    resetCachesTable(clientFactory);
                                 }
 
                                 @Override
@@ -651,6 +654,7 @@ public class MobileAppEntryPoint implements EntryPoint {
                  @Override
                  public void onTransactionSuccess() {
                      GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                     resetCachesTable(clientFactory);
                  }
 
                  @Override
@@ -685,7 +689,33 @@ public class MobileAppEntryPoint implements EntryPoint {
 		});
 
 	}
-	
+
+    private void resetCachesTable(ClientFactory clientFactory) {
+
+        List<CacheItem> cacheItems = new ArrayList<CacheItem>();
+        cacheItems.add(new CacheItem("cameras", 0));
+        cacheItems.add(new CacheItem("highway_alerts", 0));
+        cacheItems.add(new CacheItem("mountain_passes", 0));
+        cacheItems.add(new CacheItem("travel_times", 0));
+        cacheItems.add(new CacheItem("ferries_schedules", 0));
+        cacheItems.add(new CacheItem("ferries_terminal_sailing_space", 0));
+        cacheItems.add(new CacheItem("border_wait", 0));
+
+        clientFactory.getDbService().updateCachesTable(cacheItems, new VoidCallback() {
+
+            @Override
+            public void onFailure(DataServiceException error) {
+            }
+
+            @Override
+            public void onSuccess() {
+            }
+
+        });
+
+    }
+
+
 	private void initCamerasTable(ClientFactory clientFactory) {
 		
 		List<CameraItem> cameraItems = new ArrayList<CameraItem>();
@@ -850,5 +880,4 @@ public class MobileAppEntryPoint implements EntryPoint {
 		}.schedule(1);
 
 	}
-
 }
