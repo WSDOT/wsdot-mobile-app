@@ -63,30 +63,24 @@ public class TrafficMenuActivity extends MGWTAbstractActivity implements
 
         @Override
         public void onItemSelected(int index) {
-            if (index == 0) { // Travel Times
-
-                if (Consts.ANALYTICS_ENABLED) {
-                    analytics.trackScreen("/Traffic Map/Menu/Travel Times");
-                }
-                clientFactory.getPlaceController().goTo(new TravelTimesPlace());
-
-                return;
-            }
-            if (index == 1) { // GoTo
-
+            if (index == 0) {
                 if (Consts.ANALYTICS_ENABLED) {
                     analytics.trackScreen("/Traffic Map/Menu/Go To Location");
                 }
                 clientFactory.getPlaceController().goTo(new GoToLocationPlace());
-
                 return;
             }
-            if (index == 2){ // Express Lanes
-
+            if (index == 1) {
                 if (Consts.ANALYTICS_ENABLED) {
                     analytics.trackScreen("/Traffic Map/Menu/Seattle Express Lanes");}
                 clientFactory.getPlaceController().goTo(new SeattleExpressLanesPlace());
-
+                return;
+            }
+            if (index == 2){
+                if (Consts.ANALYTICS_ENABLED) {
+                    analytics.trackScreen("/Traffic Map/Menu/Travel Times");
+                }
+                clientFactory.getPlaceController().goTo(new TravelTimesPlace());
                 return;
             }
         }
@@ -98,10 +92,9 @@ public class TrafficMenuActivity extends MGWTAbstractActivity implements
 
         private List<Topic> createTopicsList() {
             ArrayList<Topic> list = new ArrayList<Topic>();
-
-            list.add(new Topic("Travel Times"));
             list.add(new Topic("Go To Location"));
-            list.add(new Topic("Express Lanes"));
+            list.add(new Topic("Seattle Express Lanes"));
+            list.add(new Topic("Travel Times"));
 
             return list;
         }
