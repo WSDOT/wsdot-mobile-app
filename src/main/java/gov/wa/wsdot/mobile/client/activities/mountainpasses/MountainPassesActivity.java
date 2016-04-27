@@ -76,6 +76,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private Accessibility accessibility;
+	private static boolean alertShowing = false;
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
 	private static HashMap<String, String[]> weatherPhrasesNight = new HashMap<String, String[]>();
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
@@ -216,14 +217,17 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 								@Override
 								public void onFailure(Throwable caught) {
 									view.hideProgressIndicator();
-									phoneGap.getNotification()
-									.alert("Can't load data. Check your connection.",
-											new AlertCallback() {
-												@Override
-												public void onOkButtonClicked() {
-													// TODO Auto-generated method stub
-												}
-											}, "Connection Error");
+									if (!alertShowing){
+										alertShowing = true;
+										phoneGap.getNotification()
+												.alert("Can't load data. Check your connection.",
+														new AlertCallback() {
+															@Override
+															public void onOkButtonClicked() {
+																alertShowing = false;
+															}
+														}, "Connection Error");
+									}
 								}
 
 								@Override
