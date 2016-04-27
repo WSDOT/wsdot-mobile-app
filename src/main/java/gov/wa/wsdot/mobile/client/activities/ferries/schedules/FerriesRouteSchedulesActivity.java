@@ -65,6 +65,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private Accessibility accessibility;
+    private static boolean alertShowing = false;
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
@@ -193,14 +194,17 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 								@Override
 								public void onFailure(Throwable caught) {
 									view.hideProgressIndicator();
-									phoneGap.getNotification()
-									.alert("Can't load data. Check your connection.",
-											new AlertCallback() {
-												@Override
-												public void onOkButtonClicked() {
-													// TODO Auto-generated method stub
-												}
-											}, "Connection Error");
+                                    if (!alertShowing){
+                                        alertShowing = true;
+                                        phoneGap.getNotification()
+                                                .alert("Can't load data. Check your connection.",
+                                                        new AlertCallback() {
+                                                            @Override
+                                                            public void onOkButtonClicked() {
+                                                                alertShowing = false;
+                                                            }
+                                                        }, "Connection Error");
+                                    }
 								}
 								
 								@Override
