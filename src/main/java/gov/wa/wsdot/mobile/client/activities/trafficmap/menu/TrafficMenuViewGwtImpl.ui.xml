@@ -10,7 +10,7 @@
         <mgwt:header.HeaderPanel>
             <mgwt:panel.flex.FixedSpacer ui:field="leftFixedSpacer"/>
             <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
-            <mgwt:header.HeaderTitle ui:field="heading">Traveler Information</mgwt:header.HeaderTitle>
+            <mgwt:header.HeaderTitle ui:field="heading">More Options</mgwt:header.HeaderTitle>
             <mgwt:panel.flex.FlexSpacer />
             <mgwt:button.Button ui:field="doneButton" text="Done"/>
         </mgwt:header.HeaderPanel>
