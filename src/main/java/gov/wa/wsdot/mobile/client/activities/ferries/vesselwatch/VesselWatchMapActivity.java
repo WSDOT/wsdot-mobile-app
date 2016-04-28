@@ -24,6 +24,8 @@ import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
@@ -428,7 +430,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onBackButtonPressed() {
-		clientFactory.getPlaceController().goTo(new FerriesPlace());
+		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
 
 	@Override

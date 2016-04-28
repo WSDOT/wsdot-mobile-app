@@ -10,6 +10,8 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
@@ -87,7 +89,7 @@ public class TrafficMenuActivity extends MGWTAbstractActivity implements
 
         @Override
         public void onDoneButtonPressed() {
-            clientFactory.getPlaceController().goTo(new TrafficMapPlace());
+            ActionEvent.fire(eventBus, ActionNames.BACK);
         }
 
         private List<Topic> createTopicsList() {

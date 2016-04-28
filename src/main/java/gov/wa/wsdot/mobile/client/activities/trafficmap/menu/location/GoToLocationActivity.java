@@ -19,8 +19,6 @@
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location;
 
 import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
@@ -43,7 +41,9 @@ public class GoToLocationActivity extends MGWTAbstractActivity implements
 	private EventBus eventBus;
 	private Analytics analytics;
 	private static Storage localStorage = Storage.getLocalStorageIfSupported();
-	
+
+    private boolean goTo = false;
+
 	public GoToLocationActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
@@ -61,6 +61,9 @@ public class GoToLocationActivity extends MGWTAbstractActivity implements
 
 	@Override
 	public void onStop() {
+        // Step back again to take user to map after selecting a location
+        if (goTo)
+            ActionEvent.fire(eventBus, ActionNames.BACK);
 		view.setPresenter(null);
 	}
 
@@ -175,10 +178,13 @@ public class GoToLocationActivity extends MGWTAbstractActivity implements
 		    storeMapLocation(46.6002534, -120.4885235, 11); // Yakima
 		}
 
-		clientFactory.getPlaceController().goTo(new TrafficMapPlace());
-		
+        //clientFactory.getPlaceController().goTo(new TrafficMapPlace());
+        goTo = true;
+        ActionEvent.fire(eventBus, ActionNames.BACK);
+
 	}
-	
+
+
 	@Override
 	public void onDoneButtonPressed() {
 		ActionEvent.fire(eventBus, ActionNames.BACK);

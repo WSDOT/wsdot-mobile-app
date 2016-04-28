@@ -39,6 +39,7 @@ import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.storage.client.Storage;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -112,7 +113,12 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	
 	public HomeActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
-		view = clientFactory.getHomeView();
+        view = clientFactory.getHomeView();
+        if (clientFactory.getPlaceController().getWhere() instanceof HomePlace) {
+            HomePlace homePlace = (HomePlace) clientFactory.getPlaceController().getWhere();
+            view.getTabPanel().setSelectedChild(homePlace.tabIndex);
+        }
+
 	}
 
 	@Override
@@ -359,7 +365,6 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onAboutButtonPressed() {
-
 		clientFactory.getPlaceController().goTo(new AboutPlace());
 	}
 
@@ -1078,6 +1083,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
         if (Consts.ANALYTICS_ENABLED) {
             analytics.trackScreen("/Favorites/Location");
         }
+
         LocationItem item = locationItems.get(index);
         storeMapLocation(item.getLatitude(), item.getLongitude(), item.getZoom());
         clientFactory.getPlaceController().goTo(
@@ -1149,6 +1155,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Cameras");
 		}
+
 		CameraItem item = cameraItems.get(index);
 		
 		clientFactory.getPlaceController().goTo(
@@ -1160,11 +1167,12 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Ferries");
 		}
-		FerriesRouteItem item = ferriesRouteItems.get(index);
-		
+
+        FerriesRouteItem item = ferriesRouteItems.get(index);
+
 		clientFactory.getPlaceController().goTo(
 				new FerriesRouteSailingsPlace(Integer.toString(item
-						.getRouteID())));
+                        .getRouteID())));
 	}
 
 	@Override
@@ -1172,6 +1180,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Mountain Passes");
 		}
+
 		MountainPassItem item = mountainPassItems.get(index);
 
 		clientFactory.getPlaceController().goTo(
@@ -1185,6 +1194,9 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Travel Times");
 		}
+
+
+
 		TravelTimesItem item = travelTimesItems.get(index);
 		
 		clientFactory.getPlaceController()
@@ -1196,11 +1208,17 @@ public class HomeActivity extends MGWTAbstractActivity implements
     public void onTabSelected(int index) {
         int currentTab = index;
 
+        if (clientFactory.getPlaceController().getWhere() instanceof HomePlace){
+            HomePlace homePlace = (HomePlace) clientFactory.getPlaceController().getWhere();
+            homePlace.tabIndex = index;
+        }
+
         if ((currentTab != lastTab) && (currentTab == 1)){
             if (Consts.ANALYTICS_ENABLED) {
                 analytics.trackScreen("/Favorites");
             }
         }
+
         lastTab = currentTab;
     }
 

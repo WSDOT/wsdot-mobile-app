@@ -29,6 +29,7 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -357,11 +358,21 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	        	
 	        	return textColor;
 			}
-			
+
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
+		tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>() {
+			@Override
+			public void onSelection(SelectionEvent<Integer> event) {
+				if (presenter != null) {
+					int index = event.getSelectedItem();
+					presenter.onTabSelected(index);
+				}
+			}
+		});
+
 		accessibilityPrepare();	
 		
         if (MGWT.getOsDetection().isAndroid()) {
@@ -370,14 +381,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             scrollPanel.setBounce(false);
             colorOfStar.setHTML("icon to turn it white.");
         }
-	}
-
-	@UiHandler("tabPanel")
-	protected void onTabSelected(SelectionEvent<Integer> event) {
-	    if (presenter != null) {
-	        int index = event.getSelectedItem();
-	        presenter.onTabSelected(index);
-	    }
 	}
 	
     @UiHandler("homeTab")
@@ -574,6 +577,9 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	public HasRefresh getPullPanel() {
 		return pullToRefresh;
 	}
+
+	@Override
+	public TabPanel getTabPanel() { return this.tabPanel; }
 
 	@Override
 	public void renderLocations(List<LocationItem> createLocationList) {

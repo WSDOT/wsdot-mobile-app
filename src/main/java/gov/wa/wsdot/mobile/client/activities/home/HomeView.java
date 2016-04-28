@@ -18,6 +18,7 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import gov.wa.wsdot.mobile.shared.*;
 
 import java.util.List;
@@ -138,5 +139,7 @@ public interface HomeView extends IsWidget {
 	public PullArrowWidget getPullHeader();
 	
 	public HasRefresh getPullPanel();
+
+	public TabPanel getTabPanel();
 
 }

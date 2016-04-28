@@ -21,6 +21,8 @@ package gov.wa.wsdot.mobile.client.activities.amtrakcascades;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.AmtrakCascadesSchedulesPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
@@ -97,7 +99,7 @@ public class AmtrakCascadesActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onBackButtonPressed() {
-		clientFactory.getPlaceController().goTo(new HomePlace());
+		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
 	
 	private List<Topic> createTopicsList() {
