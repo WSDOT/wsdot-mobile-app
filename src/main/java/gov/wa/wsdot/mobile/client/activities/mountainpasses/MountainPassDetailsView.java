@@ -28,13 +28,13 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface MountainPassDetailsView extends IsWidget {
 	
 	public void setPresenter(Presenter presenter);
-	
+
 	public interface Presenter {
-		
+
 		public void onCameraSelected(int index);
-		
+
 		public void onBackButtonPressed();
-		
+
 		public void onStarButtonPressed();
 
 		public void onTabSelected(int index);

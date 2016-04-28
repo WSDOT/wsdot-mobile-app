@@ -27,6 +27,8 @@ import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
@@ -540,7 +542,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onBackButtonPressed() {
-		clientFactory.getPlaceController().goTo(new HomePlace());
+        ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
 
 	@Override

@@ -241,7 +241,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 				historyMapper, historyObserver);
 		
 		historyHandler.register(clientFactory.getPlaceController(),
-				clientFactory.getEventBus(), new HomePlace());
+				clientFactory.getEventBus(), new HomePlace("home"));
 		
 		historyHandler.handleCurrentHistory();
 	

@@ -32,12 +32,10 @@ import com.googlecode.mgwt.mvp.client.history.HistoryObserver;
 public class AppHistoryObserver implements HistoryObserver {
 
 	@Override
-	public void onPlaceChange(Place place, HistoryHandler handler) {
-	}
+	public void onPlaceChange(Place place, HistoryHandler handler) {}
 
 	@Override
-	public void onHistoryChanged(Place place, HistoryHandler handler) {
-	}
+	public void onHistoryChanged(Place place, HistoryHandler handler) {}
 
 	@Override
 	public void onAppStarted(Place place, HistoryHandler historyHandler) {
@@ -49,10 +47,10 @@ public class AppHistoryObserver implements HistoryObserver {
 		
 		HandlerRegistration backButtonRegistration = ActionEvent.register(
 				eventBus, ActionNames.BACK, new ActionEvent.Handler() {
-
 					@Override
 					public void onAction(ActionEvent event) {
 						History.back();
+                        History.back();
 					}
 				});
 

@@ -279,11 +279,15 @@ public class PhoneAnimationMapper implements AnimationMapper {
         if (oldPlace instanceof AlertPlace && newPlace instanceof TrafficAlertsPlace) {
             return Animations.SLIDE_REVERSE;
         }
-        
+
+        if (oldPlace instanceof HomePlace && newPlace instanceof HomePlace){
+            return null;
+        }
+
 		if (oldPlace == null && newPlace instanceof HomePlace) {
 			return Animations.FADE;
 		}
-		
+
 		return Animations.SLIDE;
 	}
 

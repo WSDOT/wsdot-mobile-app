@@ -105,6 +105,7 @@ public class PhoneActivityMapper implements ActivityMapper {
 
 	@Override
 	public Activity getActivity(Place place) {
+
 		if (place instanceof HomePlace) {
 			return new HomeActivity(clientFactory);
 		}
