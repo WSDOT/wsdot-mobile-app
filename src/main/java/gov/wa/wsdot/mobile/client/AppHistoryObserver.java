@@ -50,7 +50,6 @@ public class AppHistoryObserver implements HistoryObserver {
 					@Override
 					public void onAction(ActionEvent event) {
 						History.back();
-                        History.back();
 					}
 				});
 
