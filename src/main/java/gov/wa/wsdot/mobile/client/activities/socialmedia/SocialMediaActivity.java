@@ -18,6 +18,13 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia;
 
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.socialmedia.blogger.BlogPlace;
 import gov.wa.wsdot.mobile.client.activities.socialmedia.facebook.FacebookPlace;
@@ -27,21 +34,13 @@ import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubePlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.shared.TopicWithImage;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.web.bindery.event.shared.EventBus;
-import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
 public class SocialMediaActivity extends MGWTAbstractActivity implements
 		SocialMediaView.Presenter {

@@ -18,14 +18,13 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.youtube;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
 
 public class YouTubeDetailsActivity extends MGWTAbstractActivity implements
 		YouTubeDetailsView.Presenter {

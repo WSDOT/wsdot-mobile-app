@@ -18,17 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.youtube;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.shared.YouTubeFeed;
-import gov.wa.wsdot.mobile.shared.YouTubeItem;
-
-import java.util.ArrayList;
-
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -40,6 +29,16 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.YouTubeFeed;
+import gov.wa.wsdot.mobile.shared.YouTubeItem;
+
+import java.util.ArrayList;
 
 public class YouTubeActivity extends MGWTAbstractActivity implements
 		YouTubeView.Presenter {

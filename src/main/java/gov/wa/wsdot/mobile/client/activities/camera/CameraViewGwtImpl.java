@@ -18,11 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.camera;
 
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-
-import java.util.List;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -41,6 +36,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.CameraItem;
+
+import java.util.List;
 
 public class CameraViewGwtImpl extends Composite implements CameraView {
 

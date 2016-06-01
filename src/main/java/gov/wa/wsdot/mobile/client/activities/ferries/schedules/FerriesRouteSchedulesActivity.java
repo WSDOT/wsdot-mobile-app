@@ -18,25 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsPlace;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteFeed;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -54,6 +35,24 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.CacheItem;
+import gov.wa.wsdot.mobile.shared.FerriesRouteFeed;
+import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		implements FerriesRouteSchedulesView.Presenter {

@@ -18,9 +18,6 @@
 
 package gov.wa.wsdot.mobile.client;
 
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.History;
 import com.google.web.bindery.event.shared.EventBus;
@@ -28,6 +25,8 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.mgwt.dom.client.event.mouse.HandlerRegistrationCollection;
 import com.googlecode.mgwt.mvp.client.history.HistoryHandler;
 import com.googlecode.mgwt.mvp.client.history.HistoryObserver;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
 
 public class AppHistoryObserver implements HistoryObserver {
 

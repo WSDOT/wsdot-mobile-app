@@ -265,7 +265,6 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 						}
 					});
 				}
-				
 			}
 		});
 

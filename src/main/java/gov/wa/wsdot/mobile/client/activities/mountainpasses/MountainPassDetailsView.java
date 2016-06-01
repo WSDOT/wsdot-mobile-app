@@ -18,12 +18,11 @@
 
 package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.ForecastItem;
 
 import java.util.List;
-
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface MountainPassDetailsView extends IsWidget {
 	

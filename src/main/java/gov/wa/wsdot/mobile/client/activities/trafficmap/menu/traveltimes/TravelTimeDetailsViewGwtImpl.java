@@ -18,13 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
-
-import java.util.List;
-
 import com.google.gwt.aria.client.CheckedValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
@@ -41,6 +34,12 @@ import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+
+import java.util.List;
 
 public class TravelTimeDetailsViewGwtImpl extends Composite implements
 		TravelTimeDetailsView {

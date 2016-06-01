@@ -18,20 +18,15 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -47,8 +42,8 @@ import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.ButtonType;
-import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.OptionsDialogEntry;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.OptionCallback;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.OptionsDialogEntry;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
@@ -63,7 +58,6 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
-
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesCell;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesCell;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
@@ -73,6 +67,9 @@ import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.client.widget.tabbar.FavoritesTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.HomeTabBarButton;
 import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 

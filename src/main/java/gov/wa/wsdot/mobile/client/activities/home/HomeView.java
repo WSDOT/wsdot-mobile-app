@@ -18,15 +18,14 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
-import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
-import gov.wa.wsdot.mobile.shared.*;
-
-import java.util.List;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.List;
 
 public interface HomeView extends IsWidget {
 	

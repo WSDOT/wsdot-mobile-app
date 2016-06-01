@@ -18,6 +18,10 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.place.shared.Place;
+import com.googlecode.mgwt.mvp.client.AnimationMapper;
+import com.googlecode.mgwt.ui.client.widget.animation.Animation;
+import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace;
@@ -51,14 +55,9 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace;
-
-import com.google.gwt.place.shared.Place;
-import com.googlecode.mgwt.mvp.client.AnimationMapper;
-import com.googlecode.mgwt.ui.client.widget.animation.Animation;
-import com.googlecode.mgwt.ui.client.widget.animation.Animations;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 
 public class PhoneAnimationMapper implements AnimationMapper {
 

@@ -18,17 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -37,6 +26,16 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TravelTimeDetailsActivity extends MGWTAbstractActivity implements
 		TravelTimeDetailsView.Presenter {

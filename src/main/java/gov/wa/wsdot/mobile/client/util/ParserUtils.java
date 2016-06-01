@@ -18,14 +18,14 @@
 
 package gov.wa.wsdot.mobile.client.util;
 
-import java.util.Date;
-
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Window;
 import com.googlecode.mgwt.ui.client.MGWT;
+
+import java.util.Date;
 
 
 public class ParserUtils {

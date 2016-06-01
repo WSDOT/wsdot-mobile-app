@@ -18,6 +18,9 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.place.shared.PlaceController;
+import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.gwtphonegap.client.PhoneGap;
 import gov.wa.wsdot.mobile.client.activities.about.AboutView;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertView;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesView;
@@ -51,16 +54,12 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesView;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-
-import com.google.gwt.place.shared.PlaceController;
-import com.google.web.bindery.event.shared.EventBus;
-import com.googlecode.gwtphonegap.client.PhoneGap;
 
 
 public interface ClientFactory {

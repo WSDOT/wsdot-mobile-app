@@ -18,28 +18,12 @@
 
 package gov.wa.wsdot.mobile.client.service;
 
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.BorderWaitColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesTerminalSailingSpaceColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.LocationColumns;
+import com.google.code.gwt.database.client.GenericRow;
+import com.google.code.gwt.database.client.service.*;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.*;
 import gov.wa.wsdot.mobile.shared.*;
 
 import java.util.List;
-
-import com.google.code.gwt.database.client.GenericRow;
-import com.google.code.gwt.database.client.service.Connection;
-import com.google.code.gwt.database.client.service.DataService;
-import com.google.code.gwt.database.client.service.ListCallback;
-import com.google.code.gwt.database.client.service.RowIdListCallback;
-import com.google.code.gwt.database.client.service.ScalarCallback;
-import com.google.code.gwt.database.client.service.Select;
-import com.google.code.gwt.database.client.service.Update;
-import com.google.code.gwt.database.client.service.VoidCallback;
 
 @Connection(name="wsdot", version="", description="WSDOT Mobile App Database", maxsize=2000000)
 public interface WSDOTDataService extends DataService {

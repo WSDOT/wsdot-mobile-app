@@ -18,25 +18,23 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace;
-import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapPlace;
-import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.shared.Topic;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.inappbrowser.InAppBrowser;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesPlace;
+import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.VesselWatchMapPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.Topic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FerriesActivity extends MGWTAbstractActivity implements
 		FerriesView.Presenter {

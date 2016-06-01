@@ -1,9 +1,8 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder
-    xmlns:ui="urn:ui:com.google.gwt.uibinder"
-    xmlns:g="urn:import:com.google.gwt.user.client.ui"
-    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
+		xmlns:ui="urn:ui:com.google.gwt.uibinder"
+		xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+		xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 

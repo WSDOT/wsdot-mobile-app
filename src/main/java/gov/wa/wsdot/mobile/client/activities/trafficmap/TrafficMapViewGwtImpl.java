@@ -18,23 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
-import com.google.gwt.maps.client.base.Point;
-import com.google.gwt.maps.client.overlays.*;
-import com.googlecode.gwtphonegap.client.geolocation.Position;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.*;
-import gov.wa.wsdot.mobile.shared.CalloutItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -44,6 +27,7 @@ import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
+import com.google.gwt.maps.client.base.Point;
 import com.google.gwt.maps.client.controls.MapTypeStyle;
 import com.google.gwt.maps.client.events.MapEventType;
 import com.google.gwt.maps.client.events.MapHandlerRegistration;
@@ -57,6 +41,7 @@ import com.google.gwt.maps.client.layers.TrafficLayer;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleElementType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleFeatureType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyler;
+import com.google.gwt.maps.client.overlays.*;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
@@ -70,6 +55,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.gwtphonegap.client.geolocation.Position;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.RefreshImageButton;
@@ -77,6 +63,15 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.*;
+import gov.wa.wsdot.mobile.shared.CalloutItem;
+import gov.wa.wsdot.mobile.shared.CameraItem;
+import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 

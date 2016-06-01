@@ -18,11 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.widget.image;
 
-import gov.wa.wsdot.mobile.client.widget.image.LocalImageHolder.LocalImageHolderAppearance;
-
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
+import gov.wa.wsdot.mobile.client.widget.image.LocalImageHolder.LocalImageHolderAppearance;
 
 public class LocalImageHolderDefaultXXHighAppearance implements
         LocalImageHolderAppearance {

@@ -18,11 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.List;
-
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface GoToLocationView extends IsWidget {
 	

@@ -18,31 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
-import com.googlecode.gwtphonegap.client.notification.PromptCallback;
-import com.googlecode.gwtphonegap.client.notification.PromptResults;
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
-import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
-import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
-import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.*;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -60,7 +35,30 @@ import com.googlecode.gwtphonegap.client.geolocation.GeolocationCallback;
 import com.googlecode.gwtphonegap.client.geolocation.Position;
 import com.googlecode.gwtphonegap.client.geolocation.PositionError;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptResults;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
+import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class TrafficMapActivity extends MGWTAbstractActivity implements
 		TrafficMapView.Presenter {
@@ -645,7 +643,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	}
 
 	/**
-	 * Creates a promtp dialog to collect the new favorite location name
+	 * Creates a prompt dialog to collect the new favorite location name
 	 * and confirm it's addition.
 	 */
 	@Override
