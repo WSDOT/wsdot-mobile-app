@@ -18,13 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -35,11 +28,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.i18n.client.TimeZoneInfo;
 import com.google.gwt.i18n.client.constants.TimeZoneConstants;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONBoolean;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.json.client.*;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.Timer;
@@ -51,13 +40,12 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
-
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
 import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
@@ -65,15 +53,9 @@ import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesTerminalSailingSp
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.CamerasFeed;
-import gov.wa.wsdot.mobile.shared.FerriesAnnotationsItem;
-import gov.wa.wsdot.mobile.shared.FerriesScheduleDateItem;
-import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
-import gov.wa.wsdot.mobile.shared.FerriesTerminalItem;
-import gov.wa.wsdot.mobile.shared.FerriesTerminalSailingSpaceFeed;
-import gov.wa.wsdot.mobile.shared.FerriesTerminalSailingSpaceItem;
+import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.*;
 
 public class FerriesRouteDeparturesActivity extends
 		MGWTAbstractActivity implements

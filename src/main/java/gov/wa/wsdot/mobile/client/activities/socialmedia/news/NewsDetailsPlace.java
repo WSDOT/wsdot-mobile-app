@@ -18,10 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.news;
 
-import gov.wa.wsdot.mobile.shared.NewsItem;
-
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import gov.wa.wsdot.mobile.shared.NewsItem;
 
 public class NewsDetailsPlace extends Place {
 	

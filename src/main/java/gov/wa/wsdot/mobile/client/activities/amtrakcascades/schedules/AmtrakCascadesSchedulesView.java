@@ -18,11 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
 
 import java.util.List;
-
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface AmtrakCascadesSchedulesView extends IsWidget {
 	

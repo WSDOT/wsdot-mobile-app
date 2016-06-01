@@ -18,12 +18,11 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
 import gov.wa.wsdot.mobile.shared.FerriesTerminalItem;
 
 import java.util.List;
-
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface FerriesRouteSailingsView extends IsWidget {
 	

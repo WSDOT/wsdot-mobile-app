@@ -18,19 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
-import gov.wa.wsdot.mobile.shared.ExpressLanesFeed;
-import gov.wa.wsdot.mobile.shared.Topic;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -46,6 +33,18 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
+import gov.wa.wsdot.mobile.shared.ExpressLanesFeed;
+import gov.wa.wsdot.mobile.shared.Topic;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SeattleExpressLanesActivity extends MGWTAbstractActivity implements
 		SeattleExpressLanesView.Presenter {

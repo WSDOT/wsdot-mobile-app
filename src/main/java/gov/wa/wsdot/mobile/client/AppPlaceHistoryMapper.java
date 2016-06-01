@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.place.shared.PlaceHistoryMapper;
+import com.google.gwt.place.shared.WithTokenizers;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace.AboutPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace.AlertPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace.AmtrakCascadesPlaceTokenizer;
@@ -51,12 +53,9 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace.TrafficM
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace.TrafficMenuPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace.SeattleExpressLanesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace.GoToLocationPlaceTokenizer;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace.TrafficAlertsPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace.TravelTimeDetailsPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace.TravelTimesPlaceTokenizer;
-
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace.TrafficAlertsPlaceTokenizer;
 
 @WithTokenizers({ HomePlaceTokenizer.class, AboutPlaceTokenizer.class,
         FerriesPlaceTokenizer.class, SocialMediaPlaceTokenizer.class,

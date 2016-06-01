@@ -18,10 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.widget.button.image;
 
-import gov.wa.wsdot.mobile.client.widget.image.LocalImageHolder;
-
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
+import gov.wa.wsdot.mobile.client.widget.image.LocalImageHolder;
 
 public class BackImageButton extends ImageButton {
 

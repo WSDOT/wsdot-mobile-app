@@ -18,6 +18,11 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.place.shared.PlaceController;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.googlecode.gwtphonegap.client.PhoneGap;
 import gov.wa.wsdot.mobile.client.activities.about.AboutView;
 import gov.wa.wsdot.mobile.client.activities.about.AboutViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertView;
@@ -84,21 +89,15 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.Seattl
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationViewGwtImpl;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesViewGwtImpl;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.place.shared.PlaceController;
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.googlecode.gwtphonegap.client.PhoneGap;
 
 public class ClientFactoryImpl implements ClientFactory {
 

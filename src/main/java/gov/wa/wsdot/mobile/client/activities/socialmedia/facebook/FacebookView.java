@@ -18,14 +18,13 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.facebook;
 
-import gov.wa.wsdot.mobile.shared.FacebookItem;
-
-import java.util.List;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import gov.wa.wsdot.mobile.shared.FacebookItem;
+
+import java.util.List;
 
 public interface FacebookView extends IsWidget {
 	

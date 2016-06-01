@@ -18,10 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.widget.tabbar.resources;
 
-import gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalTabBarImageHolder.Appearance.Images;
-
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ImageResource;
+import gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalTabBarImageHolder.Appearance.Images;
 
 public class LocalTabBarImageHolder {
     private static final Appearance APPEARANCE = GWT.create(Appearance.class);

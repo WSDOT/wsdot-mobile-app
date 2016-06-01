@@ -10,7 +10,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Can now favorite locations on traffic map. Can delete and edit names from favorites list.
 - Clicking the my location button now drops a marker showing users location.
 - Navigating back from a favorites list item now takes users back to the favorites list.
-- Location icon now displays at users location.
 
 ### Changed
 - Seattle Alerts feature has been removed. Replacing it is "Alerts in This Area". Displays a list of alerts on screen.

@@ -18,14 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.borderwait;
 
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.NorthboundTabBarButton;
-import gov.wa.wsdot.mobile.client.widget.tabbar.SouthboundTabBarButton;
-import gov.wa.wsdot.mobile.shared.BorderWaitItem;
-
-import java.util.List;
-
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
@@ -48,6 +40,13 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.NorthboundTabBarButton;
+import gov.wa.wsdot.mobile.client.widget.tabbar.SouthboundTabBarButton;
+import gov.wa.wsdot.mobile.shared.BorderWaitItem;
+
+import java.util.List;
 
 public class BorderWaitViewGwtImpl extends Composite implements BorderWaitView {
 

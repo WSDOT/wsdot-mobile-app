@@ -18,16 +18,15 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
+import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.base.LatLngBounds;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
 
 import java.util.List;
-
-import com.google.gwt.maps.client.MapWidget;
-import com.google.gwt.maps.client.base.LatLngBounds;
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface TrafficMapView extends IsWidget {
 	

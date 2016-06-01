@@ -18,15 +18,14 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes;
 
-import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
-import gov.wa.wsdot.mobile.shared.Topic;
-
-import java.util.List;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import gov.wa.wsdot.mobile.shared.ExpressLaneItem;
+import gov.wa.wsdot.mobile.shared.Topic;
+
+import java.util.List;
 
 public interface SeattleExpressLanesView extends IsWidget {
 

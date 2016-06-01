@@ -18,11 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 
 import java.util.List;
-
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface TravelTimeDetailsView extends IsWidget {
 	
