@@ -18,6 +18,21 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes;
 
+import com.google.code.gwt.database.client.GenericRow;
+import com.google.code.gwt.database.client.service.DataServiceException;
+import com.google.code.gwt.database.client.service.ListCallback;
+import com.google.code.gwt.database.client.service.RowIdListCallback;
+import com.google.code.gwt.database.client.service.VoidCallback;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.jsonp.client.JsonpRequestBuilder;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.googlecode.gwtphonegap.client.PhoneGap;
+import com.googlecode.gwtphonegap.client.notification.AlertCallback;
+import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
@@ -34,22 +49,6 @@ import gov.wa.wsdot.mobile.shared.TravelTimesItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.code.gwt.database.client.GenericRow;
-import com.google.code.gwt.database.client.service.DataServiceException;
-import com.google.code.gwt.database.client.service.ListCallback;
-import com.google.code.gwt.database.client.service.RowIdListCallback;
-import com.google.code.gwt.database.client.service.VoidCallback;
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.jsonp.client.JsonpRequestBuilder;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.googlecode.gwtphonegap.client.PhoneGap;
-import com.googlecode.gwtphonegap.client.notification.AlertCallback;
-import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
-
 public class TravelTimesActivity extends MGWTAbstractActivity implements
 		TravelTimesView.Presenter {
 
@@ -57,7 +56,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 	private TravelTimesView view;
 	private EventBus eventBus;
 	private WSDOTDataService dbService;
-	private PhoneGap phoneGap;
+    private PhoneGap phoneGap;
 	private Accessibility accessibility;
 	private static List<TravelTimesItem> travelTimesItems = new ArrayList<TravelTimesItem>();
 	private static List<Integer> starred = new ArrayList<Integer>();
@@ -72,6 +71,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		view = clientFactory.getTravelTimesView();
 		dbService = clientFactory.getDbService();
 		accessibility = clientFactory.getAccessibility();
+        phoneGap = clientFactory.getPhoneGap();
 		this.eventBus = eventBus;
 		view.setPresenter(this);
 		view.getPullHeader().setHTML("pull down");
@@ -119,6 +119,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 
 			@Override
 			public void onFailure(DataServiceException error) {
+                view.hideProgressIndicator();
 			}
 
 			@Override
@@ -143,6 +144,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 
 						@Override
 						public void onFailure(DataServiceException error) {
+                            view.hideProgressIndicator();
 						}
 
 						@Override
@@ -162,16 +164,16 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		
 								@Override
 								public void onFailure(Throwable caught) {
-									view.hideProgressIndicator();
-									phoneGap.getNotification()
-									.alert("Can't load data. Check your connection.",
-											new AlertCallback() {
-												@Override
-												public void onOkButtonClicked() {
-													// TODO Auto-generated method stub
-												}
-											}, "Connection Error");				
-								}
+                                    view.hideProgressIndicator();
+                                    phoneGap.getNotification()
+                                            .alert("Can't load data. Check your connection.",
+                                                    new AlertCallback() {
+                                                        @Override
+                                                        public void onOkButtonClicked() {
+                                                            // TODO Auto-generated method stub
+                                                        }
+                                                    }, "Connection Error");
+                                }
 		
 								@Override
 								public void onSuccess(TravelTimes result) {
@@ -204,6 +206,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		
 											@Override
 											public void onFailure(DataServiceException error) {
+                                                view.hideProgressIndicator();
 											}
 		
 											@Override
@@ -213,6 +216,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		
 													@Override
 													public void onFailure(DataServiceException error) {
+                                                        view.hideProgressIndicator();
 													}
 		
 													@Override
@@ -225,6 +229,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		
 															@Override
 															public void onFailure(DataServiceException error) {
+                                                                view.hideProgressIndicator();
 															}
 		
 															@Override
@@ -233,6 +238,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 		
 																	@Override
 																	public void onFailure(DataServiceException error) {
+                                                                        view.hideProgressIndicator();
 																	}
 		
 																	@Override
@@ -257,6 +263,7 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 
 						@Override
 						public void onFailure(DataServiceException error) {
+                            view.hideProgressIndicator();
 						}
 
 						@Override
@@ -265,7 +272,9 @@ public class TravelTimesActivity extends MGWTAbstractActivity implements
 						}
 					});
 				}
+
 			}
+
 		});
 
 	}
