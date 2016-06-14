@@ -52,7 +52,7 @@ public class YouTubeActivity extends MGWTAbstractActivity implements
 	private Accessibility accessibility;
 	private InAppBrowser inAppBrowser;
 	private static ArrayList<YouTubeItem> youTubeItems = new ArrayList<YouTubeItem>();
-	private static final String YOUTUBE_FEED_URL = "http://mobileapp-wsdot.rhcloud.com/traveler/api/socialmedia/youtube";
+	private static final String YOUTUBE_FEED_URL = Consts.HOST_URL + "/traveler/api/socialmedia/youtube";
 	public YouTubeActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
