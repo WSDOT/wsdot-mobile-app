@@ -1,10 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder
-    xmlns:ui="urn:ui:com.google.gwt.uibinder"
-    xmlns:g="urn:import:com.google.gwt.user.client.ui"
-    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
-    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget"
-    xmlns:maps="urn:import:com.google.gwt.maps.client">
+		xmlns:ui="urn:ui:com.google.gwt.uibinder"
+		xmlns:g="urn:import:com.google.gwt.user.client.ui"
+		xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+		xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget"
+>
     
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
@@ -42,17 +42,15 @@
 		
        	<mgwt:buttonbar.ButtonBar ui:field="buttonBar">
        	    <wsdot:button.image.NavigationImageButton ui:field="navigationButton" />
-       	    <mgwt:panel.flex.FlexSpacer />
-            <wsdot:button.image.LocationImageButton ui:field="locationButton" />
-            <mgwt:panel.flex.FlexSpacer />
-	  	    <wsdot:button.image.TimeImageButton ui:field="travelTimesButton" />
 	  	    <mgwt:panel.flex.FlexSpacer />
-	  	    <wsdot:button.image.CameraImageButton ui:field="cameraButton" />
+	  	    <wsdot:button.image.Camera2ImageButton ui:field="cameraButton" />
 	  	    <mgwt:panel.flex.FlexSpacer />
-            <wsdot:button.image.WarningImageButton ui:field="seattleAlertsButton" />
+            <wsdot:button.image.WarningImageButton ui:field="alertsButton" />
+			<mgwt:panel.flex.FlexSpacer />
+			<wsdot:button.image.StarImageButton ui:field="starButton" />
             <mgwt:panel.flex.FlexSpacer />
-            <wsdot:button.image.RocketImageButton ui:field="expressLanesButton" />
-       	</mgwt:buttonbar.ButtonBar>
+            <wsdot:button.image.MenuImageButton ui:field="menuButton" />
+      	</mgwt:buttonbar.ButtonBar>
        	
 	</mgwt:panel.flex.RootFlexPanel>
 

@@ -18,6 +18,10 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.place.shared.Place;
+import com.googlecode.mgwt.mvp.client.AnimationMapper;
+import com.googlecode.mgwt.ui.client.widget.animation.Animation;
+import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace;
@@ -48,16 +52,12 @@ import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubeDetailsP
 import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubePlace;
 import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
-
-import com.google.gwt.place.shared.Place;
-import com.googlecode.mgwt.mvp.client.AnimationMapper;
-import com.googlecode.mgwt.ui.client.widget.animation.Animation;
-import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 
 public class PhoneAnimationMapper implements AnimationMapper {
 
@@ -154,24 +154,28 @@ public class PhoneAnimationMapper implements AnimationMapper {
 			return Animations.SLIDE_REVERSE;
 		}
 		
-		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof TravelTimesPlace) {
+		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof TrafficMenuPlace) {
 			return Animations.SLIDE_UP;
 		}
 
-		if (oldPlace instanceof TravelTimesPlace && newPlace instanceof TrafficMapPlace) {
+		if (oldPlace instanceof TrafficMenuPlace && newPlace instanceof TrafficMapPlace) {
 			return Animations.SLIDE_UP_REVERSE;
+		}
+
+		if (oldPlace instanceof TravelTimesPlace && newPlace instanceof TrafficMenuPlace) {
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TravelTimeDetailsPlace && newPlace instanceof TravelTimesPlace) {
 			return Animations.SLIDE_REVERSE;
 		}
 		
-		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof GoToLocationPlace) {
-			return Animations.SLIDE_UP;
+		if (oldPlace instanceof GoToLocationPlace && newPlace instanceof TrafficMenuPlace) {
+			return Animations.SLIDE_REVERSE;
 		}
-		
+
 		if (oldPlace instanceof GoToLocationPlace && newPlace instanceof TrafficMapPlace) {
-			return Animations.SLIDE_UP_REVERSE;
+			return Animations.SLIDE_REVERSE;
 		}
 		
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof CameraPlace) {
@@ -193,13 +197,9 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		if (oldPlace instanceof AlertPlace && newPlace instanceof TrafficMapPlace) {
 			return Animations.FADE_REVERSE;
 		}
-
-		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof SeattleExpressLanesPlace) {
-			return Animations.SLIDE_UP;
-		}
 		
-		if (oldPlace instanceof SeattleExpressLanesPlace && newPlace instanceof TrafficMapPlace) {
-			return Animations.SLIDE_UP_REVERSE;
+		if (oldPlace instanceof SeattleExpressLanesPlace && newPlace instanceof TrafficMenuPlace) {
+			return Animations.SLIDE_REVERSE;
 		}
 
 		if (oldPlace instanceof TrafficMapPlace && newPlace instanceof TrafficAlertsPlace) {
@@ -278,11 +278,15 @@ public class PhoneAnimationMapper implements AnimationMapper {
         if (oldPlace instanceof AlertPlace && newPlace instanceof TrafficAlertsPlace) {
             return Animations.SLIDE_REVERSE;
         }
-        
+
+        if (oldPlace instanceof HomePlace && newPlace instanceof HomePlace){
+            return null;
+        }
+
 		if (oldPlace == null && newPlace instanceof HomePlace) {
 			return Animations.FADE;
 		}
-		
+
 		return Animations.SLIDE;
 	}
 

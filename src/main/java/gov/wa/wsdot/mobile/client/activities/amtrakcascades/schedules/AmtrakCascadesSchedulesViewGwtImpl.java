@@ -18,9 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SelectElement;
@@ -38,9 +35,11 @@ import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
-
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
+
+import java.util.Collections;
+import java.util.List;
 
 public class AmtrakCascadesSchedulesViewGwtImpl extends Composite implements AmtrakCascadesSchedulesView {
 

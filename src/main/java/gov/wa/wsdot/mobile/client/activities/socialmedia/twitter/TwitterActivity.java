@@ -18,21 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.twitter;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.shared.TwitterFeed;
-import gov.wa.wsdot.mobile.shared.TwitterFeed.Media;
-import gov.wa.wsdot.mobile.shared.TwitterFeed.Urls;
-import gov.wa.wsdot.mobile.shared.TwitterItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.resources.client.ImageResource;
@@ -49,6 +34,20 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.TwitterFeed;
+import gov.wa.wsdot.mobile.shared.TwitterFeed.Media;
+import gov.wa.wsdot.mobile.shared.TwitterFeed.Urls;
+import gov.wa.wsdot.mobile.shared.TwitterItem;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TwitterActivity extends MGWTAbstractActivity implements
 		TwitterView.Presenter {

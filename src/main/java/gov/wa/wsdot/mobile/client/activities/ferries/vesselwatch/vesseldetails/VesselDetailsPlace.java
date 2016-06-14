@@ -18,10 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails;
 
-import gov.wa.wsdot.mobile.shared.VesselWatchItem;
-
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import gov.wa.wsdot.mobile.shared.VesselWatchItem;
 
 public class VesselDetailsPlace extends Place {
 	

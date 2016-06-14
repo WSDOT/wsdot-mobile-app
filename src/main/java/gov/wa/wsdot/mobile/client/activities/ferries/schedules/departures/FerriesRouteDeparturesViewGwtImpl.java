@@ -18,9 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.departures;
 
-import java.util.Date;
-import java.util.List;
-
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
 import com.google.gwt.core.client.GWT;
@@ -54,7 +51,6 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
-
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
@@ -62,6 +58,9 @@ import gov.wa.wsdot.mobile.client.widget.tabbar.CameraTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.TimeTabBarButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.FerriesScheduleTimesItem;
+
+import java.util.Date;
+import java.util.List;
 
 public class FerriesRouteDeparturesViewGwtImpl extends Composite
 		implements FerriesRouteDeparturesView {

@@ -18,10 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.youtube;
 
-import gov.wa.wsdot.mobile.shared.YouTubeItem;
-
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import gov.wa.wsdot.mobile.shared.YouTubeItem;
 
 public class YouTubeDetailsPlace extends Place {
 	

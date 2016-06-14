@@ -18,25 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.borderwait;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.BorderWaitColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.BorderCrossings;
-import gov.wa.wsdot.mobile.shared.BorderWaitItem;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -56,6 +37,24 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.BorderWaitColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.BorderCrossings;
+import gov.wa.wsdot.mobile.shared.BorderWaitItem;
+import gov.wa.wsdot.mobile.shared.CacheItem;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class BorderWaitActivity extends MGWTAbstractActivity implements BorderWaitView.Presenter {
 

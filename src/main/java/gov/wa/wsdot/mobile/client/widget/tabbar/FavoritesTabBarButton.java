@@ -18,13 +18,12 @@
 
 package gov.wa.wsdot.mobile.client.widget.tabbar;
 
-import gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalTabBarImageHolder;
-
 import com.google.gwt.dom.client.Style.Unit;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarAppearance;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+import gov.wa.wsdot.mobile.client.widget.tabbar.resources.LocalTabBarImageHolder;
 
 public class FavoritesTabBarButton extends TabBarButton {
 

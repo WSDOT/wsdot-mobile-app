@@ -18,8 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
-import java.util.List;
-
 import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
@@ -27,26 +25,29 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.ImageResourceRenderer;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.*;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.ButtonType;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.OptionCallback;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.OptionsDialogEntry;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
@@ -57,20 +58,18 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
-
 import gov.wa.wsdot.mobile.client.activities.ferries.schedules.FerriesRouteSchedulesCell;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesCell;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesCell;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.client.widget.celllist.MyBasicCell;
 import gov.wa.wsdot.mobile.client.widget.tabbar.FavoritesTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.HomeTabBarButton;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeViewGwtImpl extends Composite implements HomeView {
 
@@ -151,7 +150,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	FlexSpacer leftFlexSpacer;
-	
+
+	@UiField
+	HTML locationsHeader;
+
 	@UiField
 	HTML camerasHeader;
 	
@@ -172,7 +174,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	HTML colorOfStar;
-	
+
+	@UiField(provided = true)
+    WidgetList locationsWidgetList;
+
 	@UiField(provided = true)
 	CellList<CameraItem> camerasCellList;
 	
@@ -202,7 +207,8 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	
 	@UiField
 	RootFlexPanel favorites;
-	
+
+
 	private Presenter presenter;
 	private PullArrowHeader pullArrowHeader;
 
@@ -212,7 +218,10 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 		pullToRefresh.setHeader(pullArrowHeader);
 		
 		alertsCarousel = new Carousel();
-		
+
+        locationsWidgetList = new WidgetList();
+
+
 		camerasCellList = new CellList<CameraItem>(new MyBasicCell<CameraItem>() {
 
 			@Override
@@ -346,11 +355,21 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	        	
 	        	return textColor;
 			}
-			
+
 		});
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
+		tabPanel.tabContainer.addSelectionHandler(new SelectionHandler<Integer>() {
+			@Override
+			public void onSelection(SelectionEvent<Integer> event) {
+				if (presenter != null) {
+					int index = event.getSelectedItem();
+					presenter.onTabSelected(index);
+				}
+			}
+		});
+
 		accessibilityPrepare();	
 		
         if (MGWT.getOsDetection().isAndroid()) {
@@ -359,14 +378,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             scrollPanel.setBounce(false);
             colorOfStar.setHTML("icon to turn it white.");
         }
-	}
-
-	@UiHandler("tabPanel")
-	protected void onTabSelected(SelectionEvent<Integer> event) {
-	    if (presenter != null) {
-	        int index = event.getSelectedItem();
-	        presenter.onTabSelected(index);
-	    }
 	}
 	
     @UiHandler("homeTab")
@@ -435,7 +446,7 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
             presenter.onAmtrakButtonPressed();
         }
     }
-	
+
 	@UiHandler("camerasCellList")
 	protected void onCameraCellSelected(CellSelectedEvent event) {
 		if (presenter != null) {
@@ -565,6 +576,90 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	}
 
 	@Override
+	public TabPanel getTabPanel() { return this.tabPanel; }
+
+	@Override
+	public void renderLocations(List<LocationItem> createLocationList) {
+        locationsWidgetList.clear();
+        int i = 0;
+
+        for (LocationItem item : createLocationList) {
+
+			FlowPanel cellPanel = new FlowPanel();
+			cellPanel.setStyleName(AppBundle.INSTANCE.css().cellLocation());
+
+            HTML html = new HTML(item.getTitle());
+
+			html.setWordWrap(true);
+			html.setStyleName(AppBundle.INSTANCE.css().cellLocationTitle());
+
+            final int index = i;
+            cellPanel.sinkEvents(Event.ONCLICK);
+            cellPanel.addHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    // handle the click event
+                    if (presenter != null){
+                        presenter.onLocationSelected(index);
+                    }
+                }
+            }, ClickEvent.getType());
+
+            Button b = new Button();
+            b.setStyleName(AppBundle.INSTANCE.css().gearIcon());
+            b.addTapHandler(new TapHandler() {
+				@Override
+				public void onTap(TapEvent event) {
+					List<OptionsDialogEntry> list = new ArrayList<>();
+                    list.add(new OptionsDialogEntry("Delete Location", ButtonType.IMPORTANT));
+					list.add(new OptionsDialogEntry("Edit Name", ButtonType.NORMAL));
+					list.add(new OptionsDialogEntry("Cancel", ButtonType.NORMAL));
+					Dialogs.options(list, new OptionCallback() {
+						@Override
+						public void onOptionSelected(int position) {
+							switch(position){
+								case 1:
+									presenter.onLocationRemove(index);
+									break;
+								case 2:
+                                    presenter.onLocationEdit(index);
+									break;
+								default:
+									break;
+							}
+						}
+					});
+				}
+            });
+
+			cellPanel.add(html);
+			cellPanel.add(b);
+
+            locationsWidgetList.add(cellPanel);
+            i++;
+        }
+	}
+
+	@Override
+	public void showLocationsHeader(){
+		locationsHeader.setVisible(true);
+	}
+
+	@Override
+	public void hideLocationsHeader(){
+		locationsHeader.setVisible(false);
+	}
+
+	@Override
+	public void showLocationsList(){
+		locationsWidgetList.setVisible(true);
+	}
+
+	@Override
+	public void hideLocationsList(){
+		locationsWidgetList.setVisible(false);
+	}
+
+	@Override
 	public void renderCameras(List<CameraItem> createCameraList) {
 		camerasCellList.render(createCameraList);	
 	}
@@ -673,7 +768,6 @@ public class HomeViewGwtImpl extends Composite implements HomeView {
 	public void hideEmptyFavoritesMessage() {
 		emptyFavorites.setVisible(false);
 	}
-	
 
 	private void accessibilityShowHome(){
 		Roles.getMainRole().setAriaHiddenState(home.getElement(), false);

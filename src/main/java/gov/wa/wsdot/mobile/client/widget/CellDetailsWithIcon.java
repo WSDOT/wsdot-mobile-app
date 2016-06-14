@@ -18,14 +18,13 @@
 
 package gov.wa.wsdot.mobile.client.widget;
 
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.Cell;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
 
 public abstract class CellDetailsWithIcon<T> implements Cell<T> {
 

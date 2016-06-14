@@ -21,7 +21,6 @@ package gov.wa.wsdot.mobile.client.widget.image;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
-
 import gov.wa.wsdot.mobile.client.widget.image.LocalImageHolder.LocalImageHolderAppearance;
 
 public class LocalImageHolderDefaultAppearance implements
@@ -33,6 +32,9 @@ public class LocalImageHolderDefaultAppearance implements
 
         @Source("resources/ic_action_camera_mdpi.png")
         ImageResource camera();
+
+        @Source("resources/ic_action_camera_2_mdpi.png")
+        ImageResource camera2();
         
         @Source("resources/ic_action_location_mdpi.png")
         ImageResource location();
@@ -54,7 +56,10 @@ public class LocalImageHolderDefaultAppearance implements
         
         @Source("resources/ic_action_previous_item_mdpi.png")
         ImageResource back();
-        
+
+        @Source("resources/ic_action_star_mdpi.png")
+        ImageResource star();
+
         @Source("resources/ic_action_back_mdpi.png")
         ImageResource backAndroid();
     }

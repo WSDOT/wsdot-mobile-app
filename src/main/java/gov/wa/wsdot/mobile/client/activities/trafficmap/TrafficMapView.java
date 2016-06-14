@@ -18,15 +18,15 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
+import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.base.LatLngBounds;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
 
 import java.util.List;
-
-import com.google.gwt.maps.client.MapWidget;
-import com.google.gwt.maps.client.base.LatLngBounds;
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface TrafficMapView extends IsWidget {
 	
@@ -37,10 +37,8 @@ public interface TrafficMapView extends IsWidget {
 		public void onBackButtonPressed();
 		
 		public void onCameraButtonPressed(boolean showCameras);
-		
-		public void onTravelTimesButtonPressed();
-		
-		public void onGoToLocationButtonPressed();
+
+		public void onMenuButtonPressed();
 		
 		public void onCameraSelected(int cameraId);
 		
@@ -51,10 +49,10 @@ public interface TrafficMapView extends IsWidget {
 		public void onLocateButtonPressed();
 		
 		public void onMapIsIdle();
-		
-		public void onSeattleExpressLanesButtonPressed();
-		
-		public void onSeattleTrafficAlertsButtonPressed(LatLngBounds bounds);
+
+		public void onTrafficAlertsButtonPressed(LatLngBounds bounds);
+
+		public void onStarButtonPressed();
 		
 		public void onRefreshMapButtonPressed();
 		
@@ -95,6 +93,8 @@ public interface TrafficMapView extends IsWidget {
 	public void setMapLocation(double latitude, double longitude, int zoom);
 	
 	public void setMapLocation();
+
+    public void addMapMarker(Position position);
 	
 	public void refreshMap();
 	

@@ -18,14 +18,13 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.blogger;
 
-import gov.wa.wsdot.mobile.shared.BlogItem;
-
-import java.util.List;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import gov.wa.wsdot.mobile.shared.BlogItem;
+
+import java.util.List;
 
 public interface BlogView extends IsWidget {
 	

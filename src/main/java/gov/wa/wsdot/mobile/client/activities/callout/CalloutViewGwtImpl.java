@@ -18,8 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.callout;
 
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,6 +35,7 @@ import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
 public class CalloutViewGwtImpl extends Composite implements CalloutView {
 

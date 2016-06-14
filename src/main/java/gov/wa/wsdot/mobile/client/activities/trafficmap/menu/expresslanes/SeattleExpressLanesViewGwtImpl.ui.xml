@@ -1,0 +1,67 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .about {
+            display: -webkit-box;
+            text-align: justify;
+            max-width: 100%;
+            margin: 12px;
+        }
+        .progressIndicatorPanel {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            max-width: 100%;
+        }
+        .progressIndicator {
+            margin-right: 0px;
+            padding: 30px 0 20px 0;
+        }
+        .scheduleLink {
+            color: black;
+            font-size: medium;
+            font-weight: normal;
+            margin: 6px 0px 6px 0px;
+        }
+    </ui:style>
+    
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+            <wsdot:button.image.BackImageButton ui:field="backButton" />
+            <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
+			<mgwt:header.HeaderTitle ui:field="heading">Express Lanes</mgwt:header.HeaderTitle>
+            <mgwt:panel.flex.FlexSpacer />
+            <mgwt:panel.flex.FixedSpacer />
+        </mgwt:header.HeaderPanel>
+		
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+            <g:FlowPanel ui:field="flowPanel">
+                <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+                </g:HTMLPanel>
+                <mgwt:list.celllist.CellList ui:field="cellList" />
+                
+                <mgwt:list.celllist.CellList ui:field="schedules" styleName="{style.scheduleLink}" />
+                
+                <g:HTMLPanel styleName="{style.about}">
+                    <g:HTML>
+                        <p>WSDOT uses the I-5 and I-90 express lanes to assist the flow of 
+                        traffic during busy travel times. These lanes are scheduled to 
+                        move in the direction that will relieve the most congestion from 
+                        the transportation system. We operate the lanes on a typical 
+                        daily schedule that changes on the weekends and occasionally 
+                        for major events.</p>
+                    </g:HTML>
+                </g:HTMLPanel>
+            </g:FlowPanel>
+        </mgwt:panel.pull.PullPanel>
+		
+	</mgwt:panel.flex.RootFlexPanel>
+    
+</ui:UiBinder>

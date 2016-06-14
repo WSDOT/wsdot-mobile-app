@@ -18,30 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
-import gov.wa.wsdot.mobile.client.activities.ferries.FerriesPlace;
-import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationPlace;
-import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsPlace;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.CamerasFeed;
-import gov.wa.wsdot.mobile.shared.LatLonItem;
-import gov.wa.wsdot.mobile.shared.VesselWatchFeed;
-import gov.wa.wsdot.mobile.shared.VesselWatchItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -61,6 +37,25 @@ import com.googlecode.gwtphonegap.client.geolocation.Position;
 import com.googlecode.gwtphonegap.client.geolocation.PositionError;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
+import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location.GoToFerriesLocationPlace;
+import gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails.VesselDetailsPlace;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class VesselWatchMapActivity extends MGWTAbstractActivity implements
         VesselWatchMapView.Presenter {
@@ -428,7 +423,7 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onBackButtonPressed() {
-		clientFactory.getPlaceController().goTo(new FerriesPlace());
+		ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
 
 	@Override
@@ -467,6 +462,8 @@ public class VesselWatchMapActivity extends MGWTAbstractActivity implements
 			public void onSuccess(Position position) {
 				double latitude = position.getCoordinates().getLatitude();
 				double longitude = position.getCoordinates().getLongitude();
+
+				view.addMapMarker(position);
 
 				view.setMapLocation(latitude, longitude, 12);
 

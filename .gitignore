@@ -7,3 +7,5 @@ target/
 .buildpath
 bin/
 /target
+.idea/*
+MobileApp.iml

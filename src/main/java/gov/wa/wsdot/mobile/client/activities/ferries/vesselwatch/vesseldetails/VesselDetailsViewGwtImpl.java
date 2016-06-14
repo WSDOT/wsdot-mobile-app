@@ -18,11 +18,8 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.vesseldetails;
 
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-
-import java.util.Date;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -35,8 +32,9 @@ import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
+import java.util.Date;
 
 
 public class VesselDetailsViewGwtImpl extends Composite implements

@@ -18,6 +18,8 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.place.shared.PlaceHistoryMapper;
+import com.google.gwt.place.shared.WithTokenizers;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace.AboutPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace.AlertPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.amtrakcascades.AmtrakCascadesPlace.AmtrakCascadesPlaceTokenizer;
@@ -48,20 +50,19 @@ import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubeDetailsP
 import gov.wa.wsdot.mobile.client.activities.socialmedia.youtube.YouTubePlace.YouTubePlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace.TollRatesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace.TrafficMapPlaceTokenizer;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace.SeattleExpressLanesPlaceTokenizer;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace.GoToLocationPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace.TrafficMenuPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace.SeattleExpressLanesPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace.GoToLocationPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace.TravelTimeDetailsPlaceTokenizer;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace.TravelTimesPlaceTokenizer;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace.TrafficAlertsPlaceTokenizer;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace.TravelTimeDetailsPlaceTokenizer;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace.TravelTimesPlaceTokenizer;
-
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
 
 @WithTokenizers({ HomePlaceTokenizer.class, AboutPlaceTokenizer.class,
         FerriesPlaceTokenizer.class, SocialMediaPlaceTokenizer.class,
         MountainPassesPlaceTokenizer.class,
         MountainPassDetailsPlaceTokenizer.class,
         TrafficMapPlaceTokenizer.class, TollRatesPlaceTokenizer.class,
+        TrafficMenuPlaceTokenizer.class,
         BorderWaitPlaceTokenizer.class, TravelTimesPlaceTokenizer.class,
         GoToLocationPlaceTokenizer.class, BlogPlaceTokenizer.class,
         FacebookPlaceTokenizer.class, TwitterPlaceTokenizer.class,

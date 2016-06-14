@@ -18,16 +18,15 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.util.Consts;
-
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
 public class FerriesRouteAlertDetailsActivity extends MGWTAbstractActivity implements
 		FerriesRouteAlertDetailsView.Presenter {

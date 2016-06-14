@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+    xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
+    
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .searchBox {
+            background-color: #C9C9CE;
+            background-image: none;
+        }
+        .progressIndicatorPanel {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            max-width: 100%;
+        }
+        .progressIndicator {
+            margin-right: 0px;
+            padding: 30px 0 20px 0;
+        }
+    </ui:style>
+    
+	<mgwt:panel.flex.RootFlexPanel>
+		<mgwt:header.HeaderPanel>
+            <wsdot:button.image.BackImageButton ui:field="backButton" />
+            <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
+            <mgwt:header.HeaderTitle ui:field="heading">Travel Times</mgwt:header.HeaderTitle>
+            <mgwt:panel.flex.FlexSpacer />
+            <mgwt:panel.flex.FixedSpacer />
+		</mgwt:header.HeaderPanel>
+		
+        <mgwt:panel.pull.PullPanel ui:field="pullToRefresh">
+        	<g:FlowPanel ui:field="flowPanel">
+        	    <mgwt:input.search.MSearchBox ui:field="searchBox" addStyleNames="{style.searchBox}" />
+                <g:HTMLPanel styleName="{style.progressIndicatorPanel}">
+                    <mgwt:progress.ProgressIndicator ui:field="progressIndicator" visible="false" addStyleNames="{style.progressIndicator}" />
+                </g:HTMLPanel>
+            	<mgwt:list.celllist.CellList ui:field="cellList" />
+            </g:FlowPanel>
+        </mgwt:panel.pull.PullPanel>
+		
+	</mgwt:panel.flex.RootFlexPanel>
+    
+</ui:UiBinder>

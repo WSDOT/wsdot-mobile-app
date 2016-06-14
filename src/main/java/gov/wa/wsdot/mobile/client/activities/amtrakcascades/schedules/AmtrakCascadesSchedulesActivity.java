@@ -18,20 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -41,6 +27,19 @@ import com.googlecode.gwtphonegap.client.geolocation.Position;
 import com.googlecode.gwtphonegap.client.geolocation.PositionError;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.amtrakcascades.schedules.details.AmtrakCascadesSchedulesDetailsPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.AmtrakCascadesStationItem;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implements
     AmtrakCascadesSchedulesView.Presenter {
@@ -213,7 +212,6 @@ public class AmtrakCascadesSchedulesActivity extends MGWTAbstractActivity implem
             phoneGap.getNotification().alert(
                     "Please select a point of origin from the selection box.",
                     new AlertCallback() {
-
                         @Override
                         public void onOkButtonClicked() {
                             // TODO Auto-generated method stub

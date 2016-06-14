@@ -18,6 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.vesselwatch.location;
 
+import com.google.gwt.storage.client.Storage;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
@@ -27,11 +31,6 @@ import gov.wa.wsdot.mobile.shared.Topic;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gwt.storage.client.Storage;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.web.bindery.event.shared.EventBus;
-import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
 public class GoToFerriesLocationActivity extends MGWTAbstractActivity implements
 		GoToFerriesLocationView.Presenter {
