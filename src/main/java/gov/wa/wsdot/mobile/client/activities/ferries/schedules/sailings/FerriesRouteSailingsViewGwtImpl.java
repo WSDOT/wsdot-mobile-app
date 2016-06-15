@@ -18,8 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
-import java.util.List;
-
 import com.google.gwt.aria.client.CheckedValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
@@ -43,7 +41,6 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
-
 import gov.wa.wsdot.mobile.client.util.ParserUtils;
 import gov.wa.wsdot.mobile.client.widget.TitleLastUpdatedCell;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
@@ -52,6 +49,8 @@ import gov.wa.wsdot.mobile.client.widget.tabbar.SailingsTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.WarningTabBarButton;
 import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
 import gov.wa.wsdot.mobile.shared.FerriesTerminalItem;
+
+import java.util.List;
 
 public class FerriesRouteSailingsViewGwtImpl extends Composite
 		implements FerriesRouteSailingsView {

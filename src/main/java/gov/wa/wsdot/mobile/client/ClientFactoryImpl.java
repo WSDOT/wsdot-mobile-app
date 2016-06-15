@@ -18,6 +18,11 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.place.shared.PlaceController;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.googlecode.gwtphonegap.client.PhoneGap;
 import gov.wa.wsdot.mobile.client.activities.about.AboutView;
 import gov.wa.wsdot.mobile.client.activities.about.AboutViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertView;
@@ -78,25 +83,21 @@ import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesView;
 import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapViewGwtImpl;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesViewGwtImpl;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsViewGwtImpl;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsViewGwtImpl;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesView;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesViewGwtImpl;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.place.shared.PlaceController;
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.googlecode.gwtphonegap.client.PhoneGap;
 
 public class ClientFactoryImpl implements ClientFactory {
 
@@ -113,6 +114,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private TollRatesViewGwtImpl tollRatesView;
 	private BorderWaitViewGwtImpl borderWaitView;
 	private TravelTimesViewGwtImpl travelTimesView;
+	private TrafficMenuView trafficMenuView;
 	private GoToLocationViewGwtImpl goToLocationView;
 	private BlogViewGwtImpl blogView;
 	private FacebookViewGwtImpl facebookView;
@@ -247,6 +249,14 @@ public class ClientFactoryImpl implements ClientFactory {
 			trafficMapView = new TrafficMapViewGwtImpl();
 		}
 		return trafficMapView;
+	}
+
+	@Override
+	public TrafficMenuView getTrafficMenuView() {
+		if (trafficMenuView == null) {
+			trafficMenuView = new TrafficMenuViewGwtImpl();
+		}
+		return trafficMenuView;
 	}
 
 	@Override

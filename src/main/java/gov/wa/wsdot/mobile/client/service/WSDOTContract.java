@@ -114,4 +114,11 @@ public interface WSDOTContract {
 		String BORDER_WAIT_IS_STARRED = "is_starred";
 	}
 
+	interface LocationColumns {
+        String _ID = "_ID";
+		String LOCATION_TITLE = "title";
+		String LOCATION_LAT = "latitude";
+		String LOCATION_LONG = "longitude";
+		String LOCATION_ZOOM = "zoom";
+	}
 }

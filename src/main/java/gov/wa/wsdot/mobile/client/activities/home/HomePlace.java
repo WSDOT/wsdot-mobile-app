@@ -23,16 +23,33 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class HomePlace extends Place {
 
+	public int tabIndex = 0;
+
+	public HomePlace(String token){
+        if (token.equals("favorites")){
+            tabIndex = 1;
+        }else{
+            tabIndex = 0;
+        }
+	}
+
+    public int getTabIndex(){
+        return this.tabIndex;
+    }
+
 	public static class HomePlaceTokenizer implements PlaceTokenizer<HomePlace> {
 
 		@Override
 		public HomePlace getPlace(String token) {
-			return new HomePlace();
+            return new HomePlace(token);
 		}
 
 		@Override
 		public String getToken(HomePlace place) {
-			return "";
+			if (place.tabIndex == 1){
+				return "favorites";
+			}
+			return "home";
 		}
 
 	}

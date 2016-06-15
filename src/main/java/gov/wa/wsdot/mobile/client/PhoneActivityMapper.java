@@ -18,6 +18,9 @@
 
 package gov.wa.wsdot.mobile.client;
 
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.activity.shared.ActivityMapper;
+import com.google.gwt.place.shared.Place;
 import gov.wa.wsdot.mobile.client.activities.about.AboutActivity;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertActivity;
@@ -78,20 +81,18 @@ import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesActivity;
 import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapActivity;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesActivity;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationActivity;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuActivity;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesActivity;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.SeattleExpressLanesPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationActivity;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsActivity;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesActivity;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsActivity;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsActivity;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesActivity;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
-
-import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.activity.shared.ActivityMapper;
-import com.google.gwt.place.shared.Place;
 
 public class PhoneActivityMapper implements ActivityMapper {
 
@@ -103,6 +104,7 @@ public class PhoneActivityMapper implements ActivityMapper {
 
 	@Override
 	public Activity getActivity(Place place) {
+
 		if (place instanceof HomePlace) {
 			return new HomeActivity(clientFactory);
 		}
@@ -150,7 +152,11 @@ public class PhoneActivityMapper implements ActivityMapper {
 		if (place instanceof BorderWaitPlace) {
 			return new BorderWaitActivity(clientFactory);
 		}
-		
+
+		if (place instanceof TrafficMenuPlace) {
+			return new TrafficMenuActivity(clientFactory);
+		}
+
 		if (place instanceof TravelTimesPlace) {
 			return new TravelTimesActivity(clientFactory);
 		}

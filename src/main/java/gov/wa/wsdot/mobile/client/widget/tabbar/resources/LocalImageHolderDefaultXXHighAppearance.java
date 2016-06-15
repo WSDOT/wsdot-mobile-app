@@ -40,7 +40,7 @@ public class LocalImageHolderDefaultXXHighAppearance implements
         @Source("note_xxhdpi.png")
         ImageResource note();
         
-        @Source("camera_xxhdpi.png")
+        @Source("camera_2_xxhdpi.png")
         ImageResource camera();
         
         @Source("video_xxhdpi.png")

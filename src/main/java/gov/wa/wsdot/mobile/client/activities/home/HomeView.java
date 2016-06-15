@@ -18,23 +18,19 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
-
-import java.util.List;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel.Pullhandler;
+import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
+import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.List;
 
 public interface HomeView extends IsWidget {
 	
 	public void setPresenter(Presenter presenter);
-	
+
 	public interface Presenter {
 		
 		public void onAboutButtonPressed();
@@ -54,7 +50,13 @@ public interface HomeView extends IsWidget {
 		public void onAmtrakButtonPressed();
 		
 		public void onHighImpactAlertSelected(int alertId);
-		
+
+		public void onLocationSelected(int index);
+
+		public void onLocationRemove(int index);
+
+		public void onLocationEdit(int index);
+
 		public void onCameraSelected(int index);
 
 		public void onFerriesSelected(int index);
@@ -68,7 +70,9 @@ public interface HomeView extends IsWidget {
 	}
 	
 	public void render(List<HighwayAlertItem> createAlertsList);
-	
+
+	public void renderLocations(List<LocationItem> createLocationList);
+
 	public void renderCameras(List<CameraItem> createCameraList);
 	
 	public void renderFerries(List<FerriesRouteItem> createFerriesList);
@@ -76,6 +80,14 @@ public interface HomeView extends IsWidget {
 	public void renderMountainPasses(List<MountainPassItem> createMountainPassList);
 	
 	public void renderTravelTimes(List<TravelTimesItem> createTravelTimesList);
+
+	public void showLocationsHeader();
+
+	public void hideLocationsHeader();
+
+	public void showLocationsList();
+
+	public void hideLocationsList();
 
 	public void showCamerasHeader();
 	
@@ -126,5 +138,7 @@ public interface HomeView extends IsWidget {
 	public PullArrowWidget getPullHeader();
 	
 	public HasRefresh getPullPanel();
+
+	public TabPanel getTabPanel();
 
 }

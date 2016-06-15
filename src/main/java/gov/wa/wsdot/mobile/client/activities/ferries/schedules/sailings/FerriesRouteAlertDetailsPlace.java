@@ -18,10 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings;
 
-import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
-
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import gov.wa.wsdot.mobile.shared.FerriesRouteAlertItem;
 
 public class FerriesRouteAlertDetailsPlace extends Place {
 	

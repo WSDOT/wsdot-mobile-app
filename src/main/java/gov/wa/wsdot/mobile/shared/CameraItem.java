@@ -18,10 +18,10 @@
 
 package gov.wa.wsdot.mobile.shared;
 
+import com.google.gwt.safehtml.shared.SafeHtml;
+
 import java.io.Serializable;
 import java.util.Comparator;
-
-import com.google.gwt.safehtml.shared.SafeHtml;
 
 public class CameraItem implements Serializable {
 	private static final long serialVersionUID = 7852844361445836316L;

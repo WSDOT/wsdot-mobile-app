@@ -95,7 +95,7 @@ public class MobileAppEntryPoint implements EntryPoint {
         
         staticFactory = clientFactory;
 
-		final PhoneGap phoneGap = GWT.create(PhoneGap.class);
+        final PhoneGap phoneGap = GWT.create(PhoneGap.class);
 
         phoneGap.addHandler(new PhoneGapAvailableHandler() {
 
@@ -241,7 +241,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 				historyMapper, historyObserver);
 		
 		historyHandler.register(clientFactory.getPlaceController(),
-				clientFactory.getEventBus(), new HomePlace());
+				clientFactory.getEventBus(), new HomePlace("home"));
 		
 		historyHandler.handleCurrentHistory();
 	
@@ -253,7 +253,8 @@ public class MobileAppEntryPoint implements EntryPoint {
 	    final String VER_2 = "1.1";
 	    final String VER_3 = "3";
 	    final String VER_4 = "4";
-	    final String DATABASE_VERSION = VER_4;
+        final String VER_5 = "5";
+	    final String DATABASE_VERSION = VER_5;
 
 	    if (clientFactory.getDbService().getDatabase().getVersion().equals("")) {
 	        clientFactory.getDbService().getDatabase()
@@ -284,7 +285,17 @@ public class MobileAppEntryPoint implements EntryPoint {
                         }
                     
                     });
-                    
+
+                    clientFactory.getDbService().createLocationsTable(new VoidCallback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onFailure(DataServiceException error) {
+                        }
+                    });
+
                     clientFactory.getDbService().createCamerasTable(new VoidCallback() {
 
                         @Override
@@ -446,6 +457,32 @@ public class MobileAppEntryPoint implements EntryPoint {
                                 @Override
                                 public void onTransactionSuccess() {
                                     GWT.log("Successfully upgraded database from version " + VER_3 + " to " + VER_4);
+                                    clientFactory.getDbService().getDatabase()
+                                            .changeVersion(VER_4, VER_5, new TransactionCallback() {
+
+                                                @Override
+                                                public void onTransactionStart(SQLTransaction transaction) {
+                                                    clientFactory.getDbService().createLocationsTable(new VoidCallback() {
+                                                        @Override
+                                                        public void onFailure(DataServiceException error) {
+                                                        }
+                                                        @Override
+                                                        public void onSuccess() {
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onTransactionSuccess() {
+                                                    GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                                                    resetCachesTable(clientFactory);
+                                                }
+
+                                                @Override
+                                                public void onTransactionFailure(SQLError error) {
+                                                }
+
+                                            });
                                 }
                 
                                 @Override
@@ -508,6 +545,33 @@ public class MobileAppEntryPoint implements EntryPoint {
                         @Override
                         public void onTransactionSuccess() {
                             GWT.log("Successfully upgraded database from version " + VER_3 + " to " + VER_4);
+
+                            clientFactory.getDbService().getDatabase()
+                                    .changeVersion(VER_4, VER_5, new TransactionCallback() {
+
+                                        @Override
+                                        public void onTransactionStart(SQLTransaction transaction) {
+                                            clientFactory.getDbService().createLocationsTable(new VoidCallback() {
+                                                @Override
+                                                public void onFailure(DataServiceException error) {
+                                                }
+                                                @Override
+                                                public void onSuccess() {
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onTransactionSuccess() {
+                                            GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                                            resetCachesTable(clientFactory);
+                                        }
+
+                                        @Override
+                                        public void onTransactionFailure(SQLError error) {
+                                        }
+
+                                    });
                         }
         
                         @Override
@@ -536,14 +600,69 @@ public class MobileAppEntryPoint implements EntryPoint {
                 @Override
                 public void onTransactionSuccess() {
                     GWT.log("Successfully upgraded database from version " + VER_3 + " to " + VER_4);
+                    clientFactory.getDbService().getDatabase()
+                            .changeVersion(VER_4, VER_5, new TransactionCallback() {
+
+                                @Override
+                                public void onTransactionStart(SQLTransaction transaction) {
+                                    clientFactory.getDbService().createLocationsTable(new VoidCallback() {
+                                        @Override
+                                        public void onFailure(DataServiceException error) {
+                                        }
+                                        @Override
+                                        public void onSuccess() {
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onTransactionSuccess() {
+                                    GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                                    resetCachesTable(clientFactory);
+                                }
+
+                                @Override
+                                public void onTransactionFailure(SQLError error) {
+                                }
+
+                            });
                 }
         
                 @Override
                 public void onTransactionFailure(SQLError error) {
                 }
             });
+
 	    }
 
+        if (clientFactory.getDbService().getDatabase().getVersion().equals(VER_4)) {
+            clientFactory.getDbService().getDatabase()
+                    .changeVersion(VER_4, VER_5, new TransactionCallback() {
+
+                @Override
+                public void onTransactionStart(SQLTransaction transaction) {
+                    clientFactory.getDbService().createLocationsTable(new VoidCallback() {
+                        @Override
+                        public void onFailure(DataServiceException error) {
+                        }
+                        @Override
+                        public void onSuccess() {
+                        }
+                    });
+                }
+
+                 @Override
+                 public void onTransactionSuccess() {
+                     GWT.log("Successfully upgraded database from version " + VER_4 + " to " + VER_5);
+                     resetCachesTable(clientFactory);
+                 }
+
+                 @Override
+                    public void onTransactionFailure(SQLError error) {
+                 }
+
+            });
+        }
 	}
 	
 	private void initCachesTable(ClientFactory clientFactory) {
@@ -570,7 +689,33 @@ public class MobileAppEntryPoint implements EntryPoint {
 		});
 
 	}
-	
+
+    private void resetCachesTable(ClientFactory clientFactory) {
+
+        List<CacheItem> cacheItems = new ArrayList<CacheItem>();
+        cacheItems.add(new CacheItem("cameras", 0));
+        cacheItems.add(new CacheItem("highway_alerts", 0));
+        cacheItems.add(new CacheItem("mountain_passes", 0));
+        cacheItems.add(new CacheItem("travel_times", 0));
+        cacheItems.add(new CacheItem("ferries_schedules", 0));
+        cacheItems.add(new CacheItem("ferries_terminal_sailing_space", 0));
+        cacheItems.add(new CacheItem("border_wait", 0));
+
+        clientFactory.getDbService().updateCachesTable(cacheItems, new VoidCallback() {
+
+            @Override
+            public void onFailure(DataServiceException error) {
+            }
+
+            @Override
+            public void onSuccess() {
+            }
+
+        });
+
+    }
+
+
 	private void initCamerasTable(ClientFactory clientFactory) {
 		
 		List<CameraItem> cameraItems = new ArrayList<CameraItem>();
@@ -735,5 +880,4 @@ public class MobileAppEntryPoint implements EntryPoint {
 		}.schedule(1);
 
 	}
-
 }

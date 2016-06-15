@@ -17,14 +17,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.home;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -38,6 +30,7 @@ import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -45,10 +38,11 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptResults;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
-
 import gov.wa.wsdot.mobile.client.ClientFactory;
 import gov.wa.wsdot.mobile.client.activities.about.AboutPlace;
 import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
@@ -62,30 +56,19 @@ import gov.wa.wsdot.mobile.client.activities.mountainpasses.MountainPassesPlace;
 import gov.wa.wsdot.mobile.client.activities.socialmedia.SocialMediaPlace;
 import gov.wa.wsdot.mobile.client.activities.tollrates.TollRatesPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.TrafficMapPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimeDetailsPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.TravelTimesColumns;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.*;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
 import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteFeed;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlerts;
-import gov.wa.wsdot.mobile.shared.MountainPassConditions;
+import gov.wa.wsdot.mobile.shared.*;
 import gov.wa.wsdot.mobile.shared.MountainPassConditions.Forecast;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-import gov.wa.wsdot.mobile.shared.TravelTimes;
-import gov.wa.wsdot.mobile.shared.TravelTimesItem;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class HomeActivity extends MGWTAbstractActivity implements
 		HomeView.Presenter {
@@ -100,6 +83,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private static final String MOUNTAIN_PASS_URL = Consts.HOST_URL + "/traveler/api/mountainpassconditions";
 	private static final String TRAVEL_TIMES_URL = Consts.HOST_URL + "/traveler/api/traveltimes";
 	private Accessibility accessibility;
+    private static List<LocationItem> locationItems = new ArrayList<LocationItem>();
 	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<MountainPassItem> mountainPassItems = new ArrayList<MountainPassItem>();
@@ -110,12 +94,18 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
 	private static HashMap<String, String[]> weatherPhrasesNight = new HashMap<String, String[]>();
-	private static int lastTab = 0;
+    private static Storage localStorage = Storage.getLocalStorageIfSupported();
+    private static int lastTab = 0;
 
 	
 	public HomeActivity(ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
-		view = clientFactory.getHomeView();
+        view = clientFactory.getHomeView();
+        if (clientFactory.getPlaceController().getWhere() instanceof HomePlace) {
+            HomePlace homePlace = (HomePlace) clientFactory.getPlaceController().getWhere();
+            view.getTabPanel().setSelectedChild(homePlace.tabIndex);
+        }
+
 	}
 
 	@Override
@@ -143,7 +133,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 					@Override
 					public void run() {
-						createFavoritesList();					
+						createFavoritesList();
 						view.refresh();
 						callback.onSuccess(null);
 					}
@@ -157,7 +147,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		buildWeatherPhrases();
 		createAlertsList();
 		createFavoritesList();
-		
+
 		timer = new Timer() {
 			@Override
 			public void run() {
@@ -362,7 +352,6 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onAboutButtonPressed() {
-
 		clientFactory.getPlaceController().goTo(new AboutPlace());
 	}
 
@@ -408,13 +397,14 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	}
 	
 	private void createFavoritesList() {
-		
+
+        getFavoriteLocations();
+
 		dbService.getStarredCameras(new ListCallback<GenericRow>() {
 
 			@Override
 			public void onFailure(DataServiceException error) {
-				
-				
+                
 			}
 			
 			@Override
@@ -563,7 +553,17 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 																@Override
 																public void onSuccess() {
-																	getFerriesSchedules(starredFerriesSchedules);
+
+                                                                    dbService.getStarredFerriesSchedules(new ListCallback<GenericRow>() {
+
+                                                                        @Override
+                                                                        public void onFailure(DataServiceException error) {}
+
+                                                                        @Override
+                                                                        public void onSuccess(final List<GenericRow> starredMountainPassRows) {
+                                                                            getFerriesSchedules(starredFerriesSchedules);
+                                                                        }
+                                                                    });
 																}
 															});
 														}
@@ -760,7 +760,18 @@ public class HomeActivity extends MGWTAbstractActivity implements
 
 																@Override
 																public void onSuccess() {
-																	getMountainPasses(starredMountainPassRows);
+
+                                                                    dbService.getStarredMountainPasses(new ListCallback<GenericRow>() {
+
+                                                                        @Override
+                                                                        public void onFailure(DataServiceException error) {}
+
+                                                                        @Override
+                                                                        public void onSuccess(final List<GenericRow> starredMountainPassRows) {
+                                                                            getMountainPasses(starredMountainPassRows);
+                                                                        }
+                                                                    });
+
 																}
 															});
 														}
@@ -897,7 +908,17 @@ public class HomeActivity extends MGWTAbstractActivity implements
 			
 																@Override
 																public void onSuccess() {
-																	getTravelTimes(starredTravelTimesRows);
+
+                                                                    dbService.getStarredTravelTimes(new ListCallback<GenericRow>() {
+
+                                                                        @Override
+                                                                        public void onFailure(DataServiceException error) {}
+
+                                                                        @Override
+                                                                        public void onSuccess(final List<GenericRow> starredMountainPassRows) {
+                                                                            getTravelTimes(starredTravelTimesRows);
+                                                                        }
+                                                                    });
 																}
 															});
 														}
@@ -921,10 +942,49 @@ public class HomeActivity extends MGWTAbstractActivity implements
 				}
 			}
 		});
-		
+
 		view.showEmptyFavoritesMessage();
-		
 	}
+
+    private void getFavoriteLocations(){
+        dbService.getLocations(new ListCallback<GenericRow>() {
+
+            @Override
+            public void onFailure(DataServiceException error) {
+            }
+
+            @Override
+            public void onSuccess(List<GenericRow> result) {
+
+                if (!result.isEmpty()) {
+                    locationItems.clear();
+                    LocationItem l;
+
+                    for (GenericRow location: result) {
+                        l = new LocationItem(location.getInt(LocationColumns._ID),
+                                location.getString(LocationColumns.LOCATION_TITLE),
+                                location.getDouble(LocationColumns.LOCATION_LAT),
+                                location.getDouble(LocationColumns.LOCATION_LONG),
+                                location.getInt(LocationColumns.LOCATION_ZOOM));
+
+                        locationItems.add(l);
+                    }
+
+                    view.hideEmptyFavoritesMessage();
+                    view.showLocationsHeader();
+                    view.showLocationsList();
+                    view.renderLocations(locationItems);
+                    view.refresh();
+                    accessibility.postScreenChangeNotification();
+
+                } else {
+                    view.hideLocationsHeader();
+                    view.hideLocationsList();
+                }
+
+            }
+        });
+    }
 
 	private void getFerriesSchedules(List<GenericRow> result) {
 		
@@ -953,7 +1013,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 	}
 	
 	private void getMountainPasses(List<GenericRow> result) {
-		
+
 		mountainPassItems.clear();
 		MountainPassItem m;
 		
@@ -995,21 +1055,94 @@ public class HomeActivity extends MGWTAbstractActivity implements
 			
 			travelTimesItems.add(t);
 		}
-		
+
 		view.hideEmptyFavoritesMessage();
 		view.showTravelTimesHeader();
 		view.showTravelTimesList();
 		view.renderTravelTimes(travelTimesItems);
 		view.refresh();
 		accessibility.postScreenChangeNotification();
-		
+
 	}
-	
+
+    @Override
+    public void onLocationSelected(int index){
+        if (Consts.ANALYTICS_ENABLED) {
+            analytics.trackScreen("/Favorites/Location");
+        }
+
+        LocationItem item = locationItems.get(index);
+        storeMapLocation(item.getLatitude(), item.getLongitude(), item.getZoom());
+        clientFactory.getPlaceController().goTo(
+                new TrafficMapPlace());
+    }
+
+    @Override
+    public void onLocationRemove(final int index) {
+        LocationItem item = locationItems.get(index);
+        dbService.removeLocation(item, new VoidCallback() {
+            @Override
+            public void onFailure(DataServiceException error) {}
+            @Override
+            public void onSuccess(){
+                // update view
+                locationItems.remove(index);
+
+                if (locationItems.size() == 0){
+                    // TODO: Better way of displaying empty favorites when Location is only item
+                    createFavoritesList();
+                }
+                view.renderLocations(locationItems);
+            }
+        });
+    }
+
+	@Override
+	public void onLocationEdit(final int index) {
+
+		phoneGap.getNotification().prompt(
+				"Enter new a name for this location.",
+				new PromptCallback() {
+					@Override
+					public void onPrompt(PromptResults results) {
+						if(results.getButtonIndex() == 2){
+
+							int id = locationItems.get(index).getId();
+
+							// Add location item to Database
+							dbService.editLocation(id, results.getInput1(), new VoidCallback() {
+								@Override
+								public void onFailure(DataServiceException error) {
+									phoneGap.getNotification().alert(
+											"Name could not be edited",
+											new AlertCallback() {
+												@Override
+												public void onOkButtonClicked() {
+													// TODO Auto-generated method stub
+												}
+											}, "Failed");
+								}
+								@Override
+								public void onSuccess(){
+                                    getFavoriteLocations();
+                                    view.renderLocations(locationItems);
+								}
+							});
+						}
+					}
+				},
+				"Edit Name",
+				locationItems.get(index).getTitle(),
+				new String[]{"Cancel","Ok"});
+
+	}
+
 	@Override
 	public void onCameraSelected(int index) {
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Cameras");
 		}
+
 		CameraItem item = cameraItems.get(index);
 		
 		clientFactory.getPlaceController().goTo(
@@ -1021,11 +1154,12 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Ferries");
 		}
-		FerriesRouteItem item = ferriesRouteItems.get(index);
-		
+
+        FerriesRouteItem item = ferriesRouteItems.get(index);
+
 		clientFactory.getPlaceController().goTo(
 				new FerriesRouteSailingsPlace(Integer.toString(item
-						.getRouteID())));
+                        .getRouteID())));
 	}
 
 	@Override
@@ -1033,6 +1167,7 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Mountain Passes");
 		}
+
 		MountainPassItem item = mountainPassItems.get(index);
 
 		clientFactory.getPlaceController().goTo(
@@ -1046,6 +1181,9 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Favorites/Travel Times");
 		}
+
+
+
 		TravelTimesItem item = travelTimesItems.get(index);
 		
 		clientFactory.getPlaceController()
@@ -1057,11 +1195,17 @@ public class HomeActivity extends MGWTAbstractActivity implements
     public void onTabSelected(int index) {
         int currentTab = index;
 
+        if (clientFactory.getPlaceController().getWhere() instanceof HomePlace){
+            HomePlace homePlace = (HomePlace) clientFactory.getPlaceController().getWhere();
+            homePlace.tabIndex = index;
+        }
+
         if ((currentTab != lastTab) && (currentTab == 1)){
             if (Consts.ANALYTICS_ENABLED) {
                 analytics.trackScreen("/Favorites");
             }
         }
+
         lastTab = currentTab;
     }
 
@@ -1152,4 +1296,12 @@ public class HomeActivity extends MGWTAbstractActivity implements
 		
 		return matchFound;
 	}
+
+    private void storeMapLocation(double latitude, double longitude, int zoom) {
+        if (localStorage != null) {
+            localStorage.setItem("KEY_MAP_LAT", String.valueOf(latitude));
+            localStorage.setItem("KEY_MAP_LON", String.valueOf(longitude));
+            localStorage.setItem("KEY_MAP_ZOOM", String.valueOf(zoom));
+        }
+    }
 }

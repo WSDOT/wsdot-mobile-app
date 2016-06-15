@@ -18,25 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.ferries.schedules;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsPlace;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.FerriesRouteFeed;
-import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -54,6 +35,24 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.ferries.schedules.sailings.FerriesRouteSailingsPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.FerriesSchedulesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.CacheItem;
+import gov.wa.wsdot.mobile.shared.FerriesRouteFeed;
+import gov.wa.wsdot.mobile.shared.FerriesRouteItem;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		implements FerriesRouteSchedulesView.Presenter {
@@ -65,6 +64,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private Accessibility accessibility;
+    private static boolean alertShowing = false;
 	private static List<FerriesRouteItem> ferriesRouteItems = new ArrayList<FerriesRouteItem>();
 	private static List<Integer> starred = new ArrayList<Integer>();
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
@@ -102,7 +102,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 					@Override
 					public void run() {
-						createTopicsList();							
+						createTopicsList(true);
 						view.refresh();
 						callback.onSuccess(null);
 					}
@@ -113,7 +113,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 		});
 		
 		view.setHeaderPullHandler(headerHandler);
-		createTopicsList();
+		createTopicsList(false);
 
 		if (Consts.ANALYTICS_ENABLED) {
             analytics.trackScreen("/Ferries/Schedules");
@@ -138,7 +138,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 						.getRouteID())));
 	}
 	
-	private void createTopicsList() {
+	private void createTopicsList(final boolean forceUpdate) {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -162,7 +162,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 
 				view.showProgressIndicator();
 				
-				if (shouldUpdate) {
+				if (shouldUpdate || forceUpdate) {
 					/**
 					 * Check the ferry schedules table for any starred entries. If we find some,
 					 * save them to a list so we can re-star those after we flush the database.
@@ -193,14 +193,17 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 								@Override
 								public void onFailure(Throwable caught) {
 									view.hideProgressIndicator();
-									phoneGap.getNotification()
-									.alert("Can't load data. Check your connection.",
-											new AlertCallback() {
-												@Override
-												public void onOkButtonClicked() {
-													// TODO Auto-generated method stub
-												}
-											}, "Connection Error");
+                                    if (!alertShowing){
+                                        alertShowing = true;
+                                        phoneGap.getNotification()
+                                                .alert("Can't load data. Check your connection.",
+                                                        new AlertCallback() {
+                                                            @Override
+                                                            public void onOkButtonClicked() {
+                                                                alertShowing = false;
+                                                            }
+                                                        }, "Connection Error");
+                                    }
 								}
 								
 								@Override
@@ -304,8 +307,7 @@ public class FerriesRouteSchedulesActivity extends MGWTAbstractActivity
 	
 	/**
 	 * Get the latest ferries route schedules from the database.
-	 * 
-	 * @param view
+	 *
 	 * @param result
 	 */
 	private void getFerriesSchedules(List<GenericRow> result) {

@@ -18,26 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.util.ParserUtils;
-import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.CameraImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.LocationImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.NavigationImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.RocketImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.TimeImageButton;
-import gov.wa.wsdot.mobile.client.widget.button.image.WarningImageButton;
-import gov.wa.wsdot.mobile.shared.CalloutItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -47,6 +27,7 @@ import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
+import com.google.gwt.maps.client.base.Point;
 import com.google.gwt.maps.client.controls.MapTypeStyle;
 import com.google.gwt.maps.client.events.MapEventType;
 import com.google.gwt.maps.client.events.MapHandlerRegistration;
@@ -60,9 +41,7 @@ import com.google.gwt.maps.client.layers.TrafficLayer;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleElementType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyleFeatureType;
 import com.google.gwt.maps.client.maptypes.MapTypeStyler;
-import com.google.gwt.maps.client.overlays.Marker;
-import com.google.gwt.maps.client.overlays.MarkerImage;
-import com.google.gwt.maps.client.overlays.MarkerOptions;
+import com.google.gwt.maps.client.overlays.*;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.resources.client.ImageResource;
@@ -76,6 +55,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.gwtphonegap.client.geolocation.Position;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.image.RefreshImageButton;
@@ -83,6 +63,15 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.util.ParserUtils;
+import gov.wa.wsdot.mobile.client.widget.button.image.*;
+import gov.wa.wsdot.mobile.shared.CalloutItem;
+import gov.wa.wsdot.mobile.shared.CameraItem;
+import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
@@ -118,22 +107,19 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	ButtonBar buttonBar;
 	
 	@UiField
-	CameraImageButton cameraButton;
+	Camera2ImageButton cameraButton;
 	
 	@UiField
-	TimeImageButton travelTimesButton;
-	
-	@UiField
-	LocationImageButton locationButton;
+	MenuImageButton menuButton;
 
 	@UiField
-	WarningImageButton seattleAlertsButton;
-	
-	@UiField
-	RocketImageButton expressLanesButton;
+	WarningImageButton alertsButton;
 	
 	@UiField
 	NavigationImageButton navigationButton;
+
+	@UiField
+	StarImageButton starButton;
 	
 	@UiField
 	RefreshImageButton refreshButton;
@@ -143,6 +129,8 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	private Marker cameraMarker;
 	private Marker alertMarker;
 	private Marker calloutMarker;
+	private Marker myLocationMarker;
+    private Circle myLocationError;
 	private static List<Marker> cameraMarkers = new ArrayList<Marker>();
 	private static List<Marker> alertMarkers = new ArrayList<Marker>();
 	private static List<Marker> calloutMarkers = new ArrayList<Marker>();
@@ -260,31 +248,17 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		}
 	}
 	
-	@UiHandler("travelTimesButton")
-	protected void onTravelTimesButtonPressed(TapEvent event) {
+	@UiHandler("menuButton")
+	protected void onMenuButtonPressed(TapEvent event) {
 		if (presenter != null) {
-			presenter.onTravelTimesButtonPressed();
-		}
-	}
-	
-	@UiHandler("locationButton")
-	protected void onGoToLocationButtonPressed(TapEvent event) {
-		if (presenter != null) {
-			presenter.onGoToLocationButtonPressed();
+			presenter.onMenuButtonPressed();
 		}
 	}
 
-	@UiHandler("seattleAlertsButton")
-	protected void onSeattleAlertsButtonPressed(TapEvent event) {
+	@UiHandler("alertsButton")
+	protected void onAlertsButtonPressed(TapEvent event) {
 		if (presenter != null) {
-			presenter.onSeattleTrafficAlertsButtonPressed(getViewportBounds());
-		}
-	}
-	
-	@UiHandler("expressLanesButton")
-	protected void onExpressLanesButtonPressed(TapEvent event) {
-		if (presenter != null) {
-			presenter.onSeattleExpressLanesButtonPressed();
+			presenter.onTrafficAlertsButtonPressed(getViewportBounds());
 		}
 	}
 	
@@ -292,6 +266,13 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	protected void onLocateButtonPressed(TapEvent event) {
 		if (presenter != null) {
 			presenter.onLocateButtonPressed();
+		}
+	}
+
+	@UiHandler("starButton")
+	protected void onStarButtonPressed(TapEvent event) {
+		if (presenter != null) {
+			presenter.onStarButtonPressed();
 		}
 	}
 	
@@ -331,7 +312,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 			final LatLng loc = LatLng.newInstance(camera.getLatitude(), camera.getLongitude());
 		    MarkerOptions options = MarkerOptions.newInstance();
 		    options.setPosition(loc);
-		    
+
 		    MarkerImage icon;
 		    
 		    if (camera.getHasVideo() == 1) {
@@ -483,7 +464,42 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		mapWidget.panTo(center);
 		mapWidget.setZoom(zoom);
 	}
-	
+
+	@Override
+	public void addMapMarker(Position position) {
+
+		if (myLocationMarker != null) {
+            myLocationMarker.setMap((MapWidget) null);
+        }
+
+        if (myLocationError != null){
+            myLocationError.setMap(null);
+		}
+
+        LatLng center = LatLng.newInstance(position.getCoordinates().getLatitude(), position.getCoordinates().getLongitude());
+		MarkerOptions options = MarkerOptions.newInstance();
+		options.setPosition(center);
+		MarkerImage icon = MarkerImage.newInstance(AppBundle.INSTANCE.myLocationPNG().getSafeUri().asString());
+        icon.setAnchor(Point.newInstance(11, 11));
+        options.setOptimized(true);
+		options.setIcon(icon);
+		myLocationMarker = Marker.newInstance(options);
+		myLocationMarker.setMap(mapWidget);
+
+        // create a circle the size of the error
+        CircleOptions circleOptions = CircleOptions.newInstance();
+        circleOptions.setFillOpacity(0.1);
+        circleOptions.setFillColor("#1a75ff");
+        circleOptions.setStrokeOpacity(0.12);
+        circleOptions.setStrokeWeight(1);
+        circleOptions.setStrokeColor("#1a75ff");
+        myLocationError = Circle.newInstance(circleOptions);
+        myLocationError.setCenter(center);
+        myLocationError.setRadius(position.getCoordinates().getAccuracy());
+        myLocationError.setMap(mapWidget);
+
+	}
+
 	@Override
 	public void hideAlerts() {
 		for (Marker marker: alertMarkers) {
@@ -660,12 +676,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 		Roles.getButtonRole().set(backButton.getElement());
 		Roles.getButtonRole().setAriaLabelProperty(backButton.getElement(), "back");
 		
-		Roles.getButtonRole().set(travelTimesButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(travelTimesButton.getElement(), "travel times");
-		Roles.getButtonRole().set(seattleAlertsButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(seattleAlertsButton.getElement(), "seattle alerts");
-		Roles.getButtonRole().set(expressLanesButton.getElement());
-		Roles.getButtonRole().setAriaLabelProperty(expressLanesButton.getElement(), "express lanes information");
+		Roles.getButtonRole().set(menuButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(menuButton.getElement(), "more options");
+		Roles.getButtonRole().set(alertsButton.getElement());
+		Roles.getButtonRole().setAriaLabelProperty(alertsButton.getElement(), "alerts");
 		
 		Roles.getHeadingRole().set(heading.getElement());
 	}

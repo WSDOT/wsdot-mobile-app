@@ -6,8 +6,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - New YouTube feed url.
 
+### Added
+- Can now favorite locations on traffic map. Can delete and edit names from favorites list.
+- Clicking the my location button now drops a marker showing users location.
+- Navigating back from a favorites list item now takes users back to the favorites list.
+
 ### Changed
-- Seattle Alerts feature has been removed. Replacing it is "Alerts in This Area".
+- Seattle Alerts feature has been removed. Replacing it is "Alerts in This Area". Displays a list of alerts on screen.
+- Moved Traffic Alerts, Go To Locations and Express Lanes into overflow menu activity.
+- Camera icon on Traffic Map toolbar looks more like map icons now.
+
+### Fixed
+- Refreshing map before it has loaded caused a null pointer exception.
+- Pull refresh in ferries, mountain passes and travel times activities will now refresh data even if cache time isn't up.
 
 ## [4.2.1] - 2016-04-18
 ### Fixed

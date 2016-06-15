@@ -18,35 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.trafficmap;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
-import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
-import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
-import gov.wa.wsdot.mobile.client.activities.home.HomePlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.expresslanes.SeattleExpressLanesPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.location.GoToLocationPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
-import gov.wa.wsdot.mobile.client.activities.trafficmap.traveltimes.TravelTimesPlace;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.CalloutItem;
-import gov.wa.wsdot.mobile.shared.CameraItem;
-import gov.wa.wsdot.mobile.shared.CamerasFeed;
-import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
-import gov.wa.wsdot.mobile.shared.HighwayAlerts;
-import gov.wa.wsdot.mobile.shared.LatLonItem;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -57,7 +28,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.gwtphonegap.client.PhoneGap;
@@ -65,7 +35,30 @@ import com.googlecode.gwtphonegap.client.geolocation.GeolocationCallback;
 import com.googlecode.gwtphonegap.client.geolocation.Position;
 import com.googlecode.gwtphonegap.client.geolocation.PositionError;
 import com.googlecode.gwtphonegap.client.notification.AlertCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptCallback;
+import com.googlecode.gwtphonegap.client.notification.PromptResults;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
+import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
+import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CamerasColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.HighwayAlertsColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class TrafficMapActivity extends MGWTAbstractActivity implements
 		TrafficMapView.Presenter {
@@ -84,7 +77,6 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private static List<CalloutItem> calloutItems = new ArrayList<CalloutItem>();
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
 	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
-	private Timer timer;
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
 	
 	public TrafficMapActivity(ClientFactory clientFactory) {
@@ -548,23 +540,15 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	
 	@Override
 	public void onBackButtonPressed() {
-		clientFactory.getPlaceController().goTo(new HomePlace());
+        ActionEvent.fire(eventBus, ActionNames.BACK);
 	}
 
 	@Override
-	public void onTravelTimesButtonPressed() {
-        if (Consts.ANALYTICS_ENABLED) {
-            analytics.trackScreen("/Traffic Map/Travel Times");
-        }
-	    clientFactory.getPlaceController().goTo(new TravelTimesPlace());
-	}
-
-	@Override
-	public void onGoToLocationButtonPressed() {
+	public void onMenuButtonPressed() {
 		if (Consts.ANALYTICS_ENABLED) {
-			analytics.trackScreen("/Traffic Map/Go To Location");
+			analytics.trackScreen("/Traffic Map/Menu");
 		}
-		clientFactory.getPlaceController().goTo(new GoToLocationPlace());
+		clientFactory.getPlaceController().goTo(new TrafficMenuPlace());
 	}
 
 	@Override
@@ -620,8 +604,9 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 				double latitude = position.getCoordinates().getLatitude();
 				double longitude = position.getCoordinates().getLongitude();
 
-				view.setMapLocation(latitude, longitude, 12);
+				view.addMapMarker(position);
 
+				view.setMapLocation(latitude, longitude, 12);
 			}
 
 			@Override
@@ -636,7 +621,6 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 											// TODO Auto-generated method stub
 										}
 									}, "Location Services Off");
-
 						break;
 					default:
 						break;
@@ -647,16 +631,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	}
 
 	@Override
-	public void onSeattleExpressLanesButtonPressed() {
-		if (Consts.ANALYTICS_ENABLED) {
-			analytics.trackScreen("/Traffic Map/Seattle Express Lanes");
-		}
-        clientFactory.getPlaceController().goTo(new SeattleExpressLanesPlace());
-	}
-
-	@Override
-	public void onSeattleTrafficAlertsButtonPressed(LatLngBounds bounds) {
-
+	public void onTrafficAlertsButtonPressed(LatLngBounds bounds) {
         // Check if map has loaded
 		if (bounds != null) {
 			if (Consts.ANALYTICS_ENABLED) {
@@ -666,7 +641,56 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 					.goTo(new TrafficAlertsPlace(bounds));
 		}
 	}
-	
+
+	/**
+	 * Creates a prompt dialog to collect the new favorite location name
+	 * and confirm it's addition.
+	 */
+	@Override
+	public void onStarButtonPressed(){
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Star Location");
+		}
+
+		// Collect Location information
+        phoneGap.getNotification().prompt(
+                "Enter a name for this location.",
+                new PromptCallback() {
+                    @Override
+                    public void onPrompt(PromptResults results) {
+                        if(results.getButtonIndex() == 2){
+
+                            LatLng center = view.getMapWidget().getCenter();
+                            int zoom = view.getMapWidget().getZoom();
+
+                            LocationItem locationItem = new LocationItem(results.getInput1(), center.getLatitude(), center.getLongitude(), zoom);
+
+                            // Add location item to Database
+                            dbService.insertLocation(locationItem, new VoidCallback() {
+                                @Override
+                                public void onFailure(DataServiceException error) {
+                                    phoneGap.getNotification().alert(
+                                            "Location was not added to favorites",
+                                            new AlertCallback() {
+                                                @Override
+                                                public void onOkButtonClicked() {
+                                                    // TODO Auto-generated method stub
+                                                }
+                                            }, "Failed");
+                                }
+                                @Override
+                                public void onSuccess(){
+
+                                }
+                            });
+                        }
+                    }
+                },
+                "New Favorite Location",
+                "",
+                new String[]{"Cancel","Ok"});
+	}
+
 	@Override
 	public void onMapIsIdle() {
 		captureClickEvents();
@@ -678,7 +702,11 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
     @Override
     public void onRefreshMapButtonPressed() {
         view.refreshMap();
-        getHighwayAlerts();
+        // getViewportBounds() will return null in drawHighwayAlertsLayer()
+        // before map has loaded on screen
+        if (view.getViewportBounds() != null) {
+            getHighwayAlerts();
+        }
     }
 
     /**
@@ -701,5 +729,4 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 			});
 		}
 	}-*/;
-
 }

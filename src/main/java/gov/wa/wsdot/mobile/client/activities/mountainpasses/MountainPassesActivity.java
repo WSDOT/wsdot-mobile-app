@@ -18,30 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 
-import gov.wa.wsdot.mobile.client.ClientFactory;
-import gov.wa.wsdot.mobile.client.css.AppBundle;
-import gov.wa.wsdot.mobile.client.event.ActionEvent;
-import gov.wa.wsdot.mobile.client.event.ActionNames;
-import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
-import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
-import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
-import gov.wa.wsdot.mobile.client.util.Consts;
-import gov.wa.wsdot.mobile.shared.CacheItem;
-import gov.wa.wsdot.mobile.shared.MountainPassConditions;
-import gov.wa.wsdot.mobile.shared.MountainPassConditions.Forecast;
-import gov.wa.wsdot.mobile.shared.MountainPassItem;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import com.google.code.gwt.database.client.GenericRow;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
@@ -65,6 +41,24 @@ import com.googlecode.gwtphonegap.client.notification.AlertCallback;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
+import gov.wa.wsdot.mobile.client.ClientFactory;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
+import gov.wa.wsdot.mobile.client.event.ActionEvent;
+import gov.wa.wsdot.mobile.client.event.ActionNames;
+import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
+import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.CachesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTContract.MountainPassesColumns;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
+import gov.wa.wsdot.mobile.client.service.WSDOTDataService.Tables;
+import gov.wa.wsdot.mobile.client.util.Consts;
+import gov.wa.wsdot.mobile.shared.CacheItem;
+import gov.wa.wsdot.mobile.shared.MountainPassConditions;
+import gov.wa.wsdot.mobile.shared.MountainPassConditions.Forecast;
+import gov.wa.wsdot.mobile.shared.MountainPassItem;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class MountainPassesActivity extends MGWTAbstractActivity implements
 		MountainPassesView.Presenter {
@@ -76,6 +70,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private Accessibility accessibility;
+	private static boolean alertShowing = false;
 	private static HashMap<String, String[]> weatherPhrases = new HashMap<String, String[]>();
 	private static HashMap<String, String[]> weatherPhrasesNight = new HashMap<String, String[]>();
 	private static DateTimeFormat parseDateFormat = DateTimeFormat.getFormat("yyyy,M,d,H,m"); //e.g. [2010, 11, 2, 8, 22]
@@ -115,7 +110,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 
 					@Override
 					public void run() {
-						createTopicsList();							
+						createTopicsList(true);
 						view.refresh();
 						callback.onSuccess(null);
 					}
@@ -127,7 +122,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 
 		view.setHeaderPullHandler(headerHandler);
 		buildWeatherPhrases();
-		createTopicsList();
+		createTopicsList(false);
 
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Mountain Passes");
@@ -161,7 +156,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 		ActionEvent.fire(eventBus, ActionNames.BACK);		
 	}
 
-	private void createTopicsList() {
+	private void createTopicsList(final boolean forceUpdate) {
 		
 		/** 
 		 * Check the cache table for the last time data was downloaded. If we are within
@@ -185,7 +180,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 
 				view.showProgressIndicator();
 				
-				if (shouldUpdate) {
+				if (shouldUpdate || forceUpdate) {
 					/**
 					 * Check the mountain passes table for any starred entries. If we find some,
 					 * save them to a list so we can re-star those after we flush the database.
@@ -216,14 +211,17 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 								@Override
 								public void onFailure(Throwable caught) {
 									view.hideProgressIndicator();
-									phoneGap.getNotification()
-									.alert("Can't load data. Check your connection.",
-											new AlertCallback() {
-												@Override
-												public void onOkButtonClicked() {
-													// TODO Auto-generated method stub
-												}
-											}, "Connection Error");
+									if (!alertShowing){
+										alertShowing = true;
+										phoneGap.getNotification()
+												.alert("Can't load data. Check your connection.",
+														new AlertCallback() {
+															@Override
+															public void onOkButtonClicked() {
+																alertShowing = false;
+															}
+														}, "Connection Error");
+									}
 								}
 
 								@Override
@@ -385,8 +383,7 @@ public class MountainPassesActivity extends MGWTAbstractActivity implements
 	
 	/**
 	 * Get the lastest mountain pass conditions from the database.
-	 * 
-	 * @param view
+	 *
 	 * @param result
 	 */
 	private void getMountainPasses(List<GenericRow> result) {

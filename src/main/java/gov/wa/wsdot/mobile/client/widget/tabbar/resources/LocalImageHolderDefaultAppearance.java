@@ -40,7 +40,7 @@ public class LocalImageHolderDefaultAppearance implements
         @Source("note_mdpi.png")
         ImageResource note();
         
-        @Source("camera_mdpi.png")
+        @Source("camera_2_mdpi.png")
         ImageResource camera();
         
         @Source("video_mdpi.png")

@@ -18,8 +18,6 @@
 
 package gov.wa.wsdot.mobile.client.activities.mountainpasses;
 
-import java.util.List;
-
 import com.google.gwt.aria.client.CheckedValue;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.aria.client.SelectedValue;
@@ -42,7 +40,6 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
-
 import gov.wa.wsdot.mobile.client.activities.camera.CameraCell;
 import gov.wa.wsdot.mobile.client.widget.CellDetailsWithIcon;
 import gov.wa.wsdot.mobile.client.widget.button.image.BackImageButton;
@@ -51,6 +48,8 @@ import gov.wa.wsdot.mobile.client.widget.tabbar.ForecastTabBarButton;
 import gov.wa.wsdot.mobile.client.widget.tabbar.ReportTabBarButton;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.ForecastItem;
+
+import java.util.List;
 
 public class MountainPassDetailsViewGwtImpl extends Composite implements
 		MountainPassDetailsView {

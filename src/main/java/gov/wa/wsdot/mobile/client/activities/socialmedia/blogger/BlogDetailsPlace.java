@@ -18,10 +18,9 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia.blogger;
 
-import gov.wa.wsdot.mobile.shared.BlogItem;
-
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import gov.wa.wsdot.mobile.shared.BlogItem;
 
 public class BlogDetailsPlace extends Place {
 	

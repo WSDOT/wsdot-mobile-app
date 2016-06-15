@@ -18,11 +18,10 @@
 
 package gov.wa.wsdot.mobile.client.activities.socialmedia;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import gov.wa.wsdot.mobile.shared.TopicWithImage;
 
 import java.util.List;
-
-import com.google.gwt.user.client.ui.IsWidget;
 
 public interface SocialMediaView extends IsWidget {
 	
