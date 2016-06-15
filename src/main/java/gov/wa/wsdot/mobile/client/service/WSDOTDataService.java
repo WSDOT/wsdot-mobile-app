@@ -671,7 +671,8 @@ public interface WSDOTDataService extends DataService {
 
     /**
      * Insert location into table.
-     *  @param locationItem
+     * 
+     * @param locationItem
      * @param callback
 	 */
     @Update(sql="INSERT INTO " + Tables.MAP_LOCATION + " ("
