@@ -269,7 +269,10 @@ public class FerriesRouteDeparturesActivity extends
 				int numItems = scheduleDateItems.size();
 				
 				for (int i=0; i < numItems; i++) {
-					daysOfWeek.add(scheduleDateItems.get(i).getDate());
+                    // Don't display date in picker if there are no sailings.
+                    if (!scheduleDateItems.get(i).getFerriesTerminalItem().isEmpty()) {
+                        daysOfWeek.add(scheduleDateItems.get(i).getDate());
+                    }
 		        }
 				
 				view.setTitle(terminalTitle);
