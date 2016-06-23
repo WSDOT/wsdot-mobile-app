@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gov.wa.wsdot.mobile</groupId>
 	<artifactId>MobileApp</artifactId>
-	<version>4.3.0</version>
+	<version>4.3.1</version>
 	<packaging>war</packaging>
 	<name>WSDOT Mobile App</name>
 	<description>A GWT based HTML5 Web application targeting WebKit based browsers</description>

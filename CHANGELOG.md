@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [4.3.1] - 2016-06-22
+### Fixed
+- Google Map Api fails to load. As of 2016-06-22 google maps API now requires an API key.
 
 ## [4.3.0] - 2016-06-17
 ### Added

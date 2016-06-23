@@ -23,6 +23,8 @@ public final class Consts {
 	public static final String HOST_URL = "http://www.wsdot.wa.gov";
 	public static final boolean ANALYTICS_ENABLED = false;
 
+	public static final String MAPS_API_KEY = "key=INSERT_MAPS_KEY";
+
 	/**
 	 * The Event Category title in Google Analytics.
 	 */
@@ -31,7 +33,7 @@ public final class Consts {
 	 * Current version number and build of the app.
 	 */
 
-	public static final String APP_VERSION = "4.3.0";
+	public static final String APP_VERSION = "4.3.1";
 
     /**
      * Ad unit Id for banner

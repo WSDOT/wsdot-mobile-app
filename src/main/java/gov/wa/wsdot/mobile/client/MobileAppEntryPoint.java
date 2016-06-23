@@ -846,7 +846,7 @@ public class MobileAppEntryPoint implements EntryPoint {
 			}
 		};
 
-		LoadApi.go(onLoad, loadLibraries, sensor);
+		LoadApi.go(onLoad, loadLibraries, sensor, Consts.MAPS_API_KEY);
 	}	
 	
 	@Override
