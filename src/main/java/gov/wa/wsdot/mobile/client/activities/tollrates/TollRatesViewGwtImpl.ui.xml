@@ -57,53 +57,53 @@
                                     </g:row>
                                     <g:row>
                                         <g:cell>5 AM to 6 AM</g:cell>
-                                        <g:cell>$1.80</g:cell>
-                                        <g:cell>$3.45</g:cell>
+                                        <g:cell>$1.90</g:cell>
+                                        <g:cell>$3.90</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>6 AM to 7 AM</g:cell>
-                                        <g:cell>$3.10</g:cell>
-                                        <g:cell>$4.70</g:cell>
+                                        <g:cell>$3.25</g:cell>
+                                        <g:cell>$5.25</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>7 AM to 9 AM</g:cell>
-                                        <g:cell>$3.90</g:cell>
-                                        <g:cell>$5.55</g:cell>
+                                        <g:cell>$4.10</g:cell>
+                                        <g:cell>$6.10</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>9 AM to 10 AM</g:cell>
-                                        <g:cell>$3.10</g:cell>
-                                        <g:cell>$4.70</g:cell>
+                                        <g:cell>$3.25</g:cell>
+                                        <g:cell>$5.25</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>10 AM to 2 PM</g:cell>
-                                        <g:cell>$2.45</g:cell>
-                                        <g:cell>$4.15</g:cell>
+                                        <g:cell>$2.55</g:cell>
+                                        <g:cell>$4.55</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>2 PM to 3 PM</g:cell>
-                                        <g:cell>$3.10</g:cell>
-                                        <g:cell>$4.70</g:cell>
+                                        <g:cell>$3.25</g:cell>
+                                        <g:cell>$5.25</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>3 PM to 6 PM</g:cell>
-                                        <g:cell>$3.90</g:cell>
-                                        <g:cell>$5.55</g:cell>
+                                        <g:cell>$4.10</g:cell>
+                                        <g:cell>$6.10</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>6 PM to 7 PM</g:cell>
-                                        <g:cell>$3.10</g:cell>
-                                        <g:cell>$4.70</g:cell>
+                                        <g:cell>$3.25</g:cell>
+                                        <g:cell>$5.25</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>7 PM to 9 PM</g:cell>
-                                        <g:cell>$2.45</g:cell>
-                                        <g:cell>$4.15</g:cell>
+                                        <g:cell>$2.55</g:cell>
+                                        <g:cell>$4.55</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>9 PM to 11 PM</g:cell>
-                                        <g:cell>$1.80</g:cell>
-                                        <g:cell>$3.45</g:cell>
+                                        <g:cell>$1.90</g:cell>
+                                        <g:cell>$3.90</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>11 PM to 11:59 PM</g:cell>
@@ -122,28 +122,28 @@
                                     </g:row>
                                     <g:row>
                                         <g:cell>5 AM to 8 AM</g:cell>
-                                        <g:cell>$1.25</g:cell>
-                                        <g:cell>$2.85</g:cell>
+                                        <g:cell>$1.30</g:cell>
+                                        <g:cell>$3.30</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>8 AM to 11 AM</g:cell>
-                                        <g:cell>$1.85</g:cell>
-                                        <g:cell>$3.50</g:cell>
+                                        <g:cell>$1.95</g:cell>
+                                        <g:cell>$3.95</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>11 AM to 6 PM</g:cell>
-                                        <g:cell>$2.40</g:cell>
-                                        <g:cell>$4.10</g:cell>
+                                        <g:cell>$2.50</g:cell>
+                                        <g:cell>$4.50</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>6 PM to 9 PM</g:cell>
-                                        <g:cell>$1.85</g:cell>
-                                        <g:cell>$3.50</g:cell>
+                                        <g:cell>$1.95</g:cell>
+                                        <g:cell>$3.95</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>9 PM to 11 PM</g:cell>
-                                        <g:cell>$1.25</g:cell>
-                                        <g:cell>$2.85</g:cell>
+                                        <g:cell>$1.30</g:cell>
+                                        <g:cell>$3.30</g:cell>
                                     </g:row>
                                     <g:row>
                                         <g:cell>11 PM to 11:59 PM</g:cell>
