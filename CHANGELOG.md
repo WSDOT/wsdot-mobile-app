@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [4.3.2] - 2016-07-06
+## Changed
+- Added new toll rates for July 1, 2016.
+
 ## [4.3.1] - 2016-06-22
 ### Fixed
 - Google Map Api fails to load. As of 2016-06-22 google maps API now requires an API key.
