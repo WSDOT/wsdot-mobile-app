@@ -69,6 +69,7 @@ import gov.wa.wsdot.mobile.client.widget.button.image.*;
 import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+import gov.wa.wsdot.mobile.shared.RestAreaItem;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -128,11 +129,13 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	private MyMapWidget mapWidget;
 	private Marker cameraMarker;
 	private Marker alertMarker;
+    private Marker restAreaMarker;
 	private Marker calloutMarker;
 	private Marker myLocationMarker;
     private Circle myLocationError;
 	private static List<Marker> cameraMarkers = new ArrayList<Marker>();
 	private static List<Marker> alertMarkers = new ArrayList<Marker>();
+    private static List<Marker> restAreaMarkers = new ArrayList<Marker>();
 	private static List<Marker> calloutMarkers = new ArrayList<Marker>();
 	
 	private static Storage localStorage = Storage.getLocalStorageIfSupported();
@@ -153,7 +156,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 			if (!storageMap.containsKey("KEY_SHOW_CAMERAS")) {
 				localStorage.setItem("KEY_SHOW_CAMERAS", "true"); // Set initial default value
 			}
-			
+            if (!storageMap.containsKey("KEY_SHOW_RESTAREAS")) {
+                localStorage.setItem("KEY_SHOW_RESTAREAS", "true"); // Set initial default value
+            }
+
 			// Set initial default location and zoom to Seattle area.
 			if (!storageMap.containsKey("KEY_MAP_LAT")) {
 				localStorage.setItem("KEY_MAP_LAT", "47.5990");
@@ -385,6 +391,38 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 	}
 
     @Override
+    public void drawRestAreas(List<RestAreaItem> restAreas) {
+
+        ImageResource noDumpSiteIcon = AppBundle.INSTANCE.restAreaPNG();
+        ImageResource dumpSiteIcon = AppBundle.INSTANCE.restAreaDumpPNG();
+
+        deleteRestAreas();
+
+        for (final RestAreaItem restArea: restAreas) {
+            LatLng loc = LatLng.newInstance(Double.valueOf(restArea.getLatitude()), Double.valueOf(restArea.getLongitude()));
+            MarkerOptions options = MarkerOptions.newInstance();
+            options.setPosition(loc);
+
+            // Determine correct icon for restarea type
+            ImageResource imageResource = restArea.hasDump() ? dumpSiteIcon : noDumpSiteIcon;
+
+            MarkerImage icon = MarkerImage.newInstance(imageResource.getSafeUri().asString());
+            options.setIcon(icon);
+
+            restAreaMarker = Marker.newInstance(options);
+            restAreaMarker.addClickHandler(new ClickMapHandler() {
+                @Override
+                public void onEvent(ClickMapEvent event) {
+                    presenter.onRestAreaSelected(restArea.getId());
+                }
+            });
+            restAreaMarkers.add(restAreaMarker);
+        }
+        showRestAreas();
+    }
+
+
+    @Override
     public void drawCallouts(List<CalloutItem> callouts) {
         deleteCallouts();
         
@@ -430,6 +468,24 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
 		localStorage.setItem("KEY_SHOW_CAMERAS", "true");
 	}
+
+    @Override
+    public void hideRestAreas() {
+        for (Marker marker: restAreaMarkers) {
+            marker.setMap((MapWidget)null);
+        }
+
+        localStorage.setItem("KEY_SHOW_RESTAREAS", "false");
+    }
+
+    @Override
+    public void showRestAreas() {
+        for (Marker marker: restAreaMarkers) {
+            marker.setMap(mapWidget);
+        }
+
+        localStorage.setItem("KEY_SHOW_RESTAREAS", "true");
+    }
 
 	@Override
 	public MapWidget getMapWidget() {
@@ -522,6 +578,15 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
 		alertMarkers.clear();
 	}
+
+    @Override
+    public void deleteRestAreas() {
+        for (Marker marker: restAreaMarkers) {
+            marker.setMap((MapWidget)null);
+        }
+
+        restAreaMarkers.clear();
+    }
 
     @Override
     public void deleteCallouts() {

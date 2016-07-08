@@ -57,6 +57,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.Seattl
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.restarea.RestAreaPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 
 public class PhoneAnimationMapper implements AnimationMapper {
@@ -278,6 +279,10 @@ public class PhoneAnimationMapper implements AnimationMapper {
         if (oldPlace instanceof AlertPlace && newPlace instanceof TrafficAlertsPlace) {
             return Animations.SLIDE_REVERSE;
         }
+
+		if (oldPlace instanceof RestAreaPlace && newPlace instanceof TrafficAlertsPlace) {
+			return Animations.SLIDE_REVERSE;
+		}
 
         if (oldPlace instanceof HomePlace && newPlace instanceof HomePlace){
             return null;

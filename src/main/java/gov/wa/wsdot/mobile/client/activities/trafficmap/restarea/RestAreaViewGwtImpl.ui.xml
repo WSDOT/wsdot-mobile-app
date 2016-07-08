@@ -1,0 +1,61 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+        xmlns:ui="urn:ui:com.google.gwt.uibinder"
+        xmlns:g="urn:import:com.google.gwt.user.client.ui"
+        xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+        xmlns:wsdot="urn:import:gov.wa.wsdot.mobile.client.widget">
+
+    <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
+
+    <ui:style>
+        .htmlPanel {
+        background-color: white;
+        padding: 12px;
+        }
+
+        .headlineDescription {
+        font-size: small;
+        font-weight: normal;
+        padding-bottom: 6px;
+        }
+
+        .lastUpdatedTime {
+        font-size: small;
+        font-weight: normal;
+        color: #7d7d7d;
+        }
+
+        .mapPanel {
+        padding: 10px 0 10px 0;
+        }
+
+        .staticMapImage {
+        max-width: 100%;
+        }
+    </ui:style>
+
+    <mgwt:panel.flex.RootFlexPanel>
+        <mgwt:header.HeaderPanel>
+            <wsdot:button.image.BackImageButton ui:field="backButton" />
+            <mgwt:panel.flex.FlexSpacer ui:field="leftFlexSpacer" />
+            <mgwt:header.HeaderTitle ui:field="title" />
+            <mgwt:panel.flex.FlexSpacer />
+            <mgwt:panel.flex.FixedSpacer />
+        </mgwt:header.HeaderPanel>
+
+        <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel">
+            <g:HTMLPanel styleName="{style.htmlPanel}">
+                <g:HTMLPanel styleName="{style.headlineDescription}">
+                    <g:HTML ui:field="headlineDescription" />
+                </g:HTMLPanel>
+                <g:HTMLPanel styleName="{style.lastUpdatedTime}">
+                    <g:HTML ui:field="lastUpdatedTime" />
+                </g:HTMLPanel>
+                <g:HTMLPanel ui:field="mapPanel" styleName="{style.mapPanel}">
+                    <g:Image ui:field="staticMapImage" styleName="{style.staticMapImage}" />
+                </g:HTMLPanel>
+            </g:HTMLPanel>
+        </mgwt:panel.scroll.ScrollPanel>
+    </mgwt:panel.flex.RootFlexPanel>
+
+</ui:UiBinder>
