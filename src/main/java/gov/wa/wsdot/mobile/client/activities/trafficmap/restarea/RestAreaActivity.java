@@ -23,6 +23,8 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import gov.wa.wsdot.mobile.client.ClientFactory;
@@ -34,6 +36,7 @@ import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
 import gov.wa.wsdot.mobile.client.service.WSDOTDataService;
 import gov.wa.wsdot.mobile.client.util.Consts;
 import gov.wa.wsdot.mobile.shared.RestAreaFeed;
+import gov.wa.wsdot.mobile.shared.RestAreaItem;
 
 public class RestAreaActivity extends MGWTAbstractActivity implements
         RestAreaView.Presenter {
@@ -66,7 +69,38 @@ public class RestAreaActivity extends MGWTAbstractActivity implements
             String jsonString = AppBundle.INSTANCE.restAreaData().getText();
             RestAreaFeed restAreas = JsonUtils.safeEval(jsonString);
 
-            view.setTitle(restAreas.getRestAreas().get(restAreaId).getLocation());
+            view.setTitle("Safety Rest Area");
+
+
+            SafeHtmlBuilder detailsHTMLBuilder = new SafeHtmlBuilder();
+
+            detailsHTMLBuilder.appendEscaped(restAreas.getRestAreas().get(restAreaId).getRoute() + " - "
+                    + restAreas.getRestAreas().get(restAreaId).getLocation());
+
+            detailsHTMLBuilder.appendHtmlConstant("<br>");
+
+            detailsHTMLBuilder.appendEscaped("Milepost: " + restAreas.getRestAreas().get(restAreaId).getMilepost() + " - "
+                    + restAreas.getRestAreas().get(restAreaId).getDirection());
+
+            view.setDetails(detailsHTMLBuilder.toSafeHtml());
+
+            view.setNotes(restAreas.getRestAreas().get(restAreaId).getNotes());
+
+            SafeHtmlBuilder amenitiesHTMLBuilder = new SafeHtmlBuilder();
+
+            amenitiesHTMLBuilder.appendHtmlConstant("<ul>");
+            for (int i = 0; i < restAreas.getRestAreas().get(restAreaId).getAmenities().length; i++){
+                amenitiesHTMLBuilder.appendHtmlConstant("<li>");
+                    amenitiesHTMLBuilder.appendEscaped(restAreas.getRestAreas().get(restAreaId).getAmenities()[i]);
+                amenitiesHTMLBuilder.appendHtmlConstant("</li>");
+            }
+            amenitiesHTMLBuilder.appendHtmlConstant("</ul>");
+
+            view.setAmenities(amenitiesHTMLBuilder.toSafeHtml());
+
+            view.setLatLon(Double.valueOf(restAreas.getRestAreas().get(restAreaId).getLatitude()),
+                    Double.valueOf(restAreas.getRestAreas().get(restAreaId).getLongitude()));
+
 
             view.refresh();
 

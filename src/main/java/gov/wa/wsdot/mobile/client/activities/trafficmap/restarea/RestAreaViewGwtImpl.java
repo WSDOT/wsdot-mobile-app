@@ -1,6 +1,7 @@
 package gov.wa.wsdot.mobile.client.activities.trafficmap.restarea;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -44,7 +45,10 @@ public class RestAreaViewGwtImpl extends Composite implements RestAreaView {
     HTML headlineDescription;
 
     @UiField
-    HTML lastUpdatedTime;
+    HTML amenities;
+
+    @UiField
+    HTML notes;
 
     @UiField
     HTMLPanel mapPanel;
@@ -84,14 +88,18 @@ public class RestAreaViewGwtImpl extends Composite implements RestAreaView {
     }
 
     @Override
-    public void setHeadlineDescription(String headineDescription) {
-        this.headlineDescription.setText(headineDescription);
+    public void setDetails(SafeHtml details) {
+        this.headlineDescription.setHTML(details);
     }
 
     @Override
-    public void setLastUpdatedTime(String lastUpdatedTime) {
-        this.lastUpdatedTime.setText(ParserUtils.relativeTime(lastUpdatedTime,
-                "MMMM d, yyyy h:mm a", false));
+    public void setAmenities(SafeHtml amenities){
+        this.amenities.setHTML(amenities);
+    }
+
+    @Override
+    public void setNotes(String notes){
+        this.notes.setText(notes);
     }
 
     @Override
