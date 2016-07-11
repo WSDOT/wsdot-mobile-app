@@ -94,6 +94,11 @@ public class RestAreaActivity extends MGWTAbstractActivity implements
                     amenitiesHTMLBuilder.appendEscaped(restAreas.getRestAreas().get(restAreaId).getAmenities()[i]);
                 amenitiesHTMLBuilder.appendHtmlConstant("</li>");
             }
+
+            if (restAreas.getRestAreas().get(restAreaId).getAmenities().length == 0){
+                view.hideAmenitiesHeading();
+            }
+
             amenitiesHTMLBuilder.appendHtmlConstant("</ul>");
 
             view.setAmenities(amenitiesHTMLBuilder.toSafeHtml());

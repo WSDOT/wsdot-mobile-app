@@ -22,6 +22,8 @@ public interface RestAreaView extends IsWidget {
 
     public void setLatLon(double latitude, double longitude);
 
+    public void hideAmenitiesHeading();
+
     public void refresh();
 
 }

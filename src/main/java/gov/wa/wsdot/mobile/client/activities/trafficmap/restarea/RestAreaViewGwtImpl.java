@@ -45,6 +45,9 @@ public class RestAreaViewGwtImpl extends Composite implements RestAreaView {
     HTML headlineDescription;
 
     @UiField
+    HTMLPanel amenitiesHeading;
+
+    @UiField
     HTML amenities;
 
     @UiField
@@ -111,6 +114,11 @@ public class RestAreaViewGwtImpl extends Composite implements RestAreaView {
                 + Double.toString(latitude) + "," + Double.toString(longitude)
                 + "&sensor=false");
 
+    }
+
+    @Override
+    public void hideAmenitiesHeading(){
+        this.amenitiesHeading.setVisible(false);
     }
 
     @Override

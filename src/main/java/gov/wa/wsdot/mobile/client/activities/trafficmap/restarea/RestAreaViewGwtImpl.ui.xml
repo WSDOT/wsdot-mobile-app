@@ -63,7 +63,7 @@
                     <g:HTML ui:field="headlineDescription" />
                 </g:HTMLPanel>
 
-                <g:HTMLPanel styleName="{style.subHeading}">
+                <g:HTMLPanel ui:field="amenitiesHeading" styleName="{style.subHeading}">
                     <g:HTML>
                         Amenities:
                     </g:HTML>
