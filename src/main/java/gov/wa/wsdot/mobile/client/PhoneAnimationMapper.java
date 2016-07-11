@@ -280,7 +280,7 @@ public class PhoneAnimationMapper implements AnimationMapper {
             return Animations.SLIDE_REVERSE;
         }
 
-		if (oldPlace instanceof RestAreaPlace && newPlace instanceof TrafficAlertsPlace) {
+		if (oldPlace instanceof RestAreaPlace && newPlace instanceof TrafficMapPlace) {
 			return Animations.SLIDE_REVERSE;
 		}
 

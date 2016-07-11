@@ -418,7 +418,10 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
             });
             restAreaMarkers.add(restAreaMarker);
         }
-        showRestAreas();
+
+        if (Boolean.valueOf(localStorage.getItem("KEY_SHOW_RESTAREAS"))) {
+            showRestAreas();
+        }
     }
 
 
@@ -438,7 +441,6 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 
             calloutMarker = Marker.newInstance(options);
             calloutMarker.addClickHandler(new ClickMapHandler() {
-
                 @Override
                 public void onEvent(ClickMapEvent event) {
                     presenter.onCalloutSelected(callout.getImageUrl());

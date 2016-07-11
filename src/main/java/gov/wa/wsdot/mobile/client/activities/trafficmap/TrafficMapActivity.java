@@ -107,6 +107,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 		accessibility.postScreenChangeNotification();
 
+		view.refreshMap();
 	}
 
 	private void getCameras() {

@@ -6,6 +6,15 @@
 
     <ui:with field="app" type="gov.wa.wsdot.mobile.client.css.AppBundle" />
 
+    <ui:style>
+        .sectionHeader {
+        color: black;
+        font-size: medium;
+        font-weight: bold;
+        margin: 20px 12px 6px 12px;
+        }
+    </ui:style>
+
     <mgwt:panel.flex.RootFlexPanel>
         <mgwt:header.HeaderPanel>
             <mgwt:panel.flex.FixedSpacer ui:field="leftFixedSpacer"/>
@@ -18,6 +27,9 @@
         <mgwt:panel.scroll.ScrollPanel scrollingEnabledX="false" ui:field="scrollPanel" styleName="{app.css.voiceoverPage}">
             <g:FlowPanel>
                 <mgwt:list.celllist.CellList ui:field="cellList" />
+                <g:HTML styleName="{style.sectionHeader}">Map Features</g:HTML>
+                <mgwt:list.widgetlist.WidgetList ui:field="mapLayersList" />
+
             </g:FlowPanel>
         </mgwt:panel.scroll.ScrollPanel>
 
