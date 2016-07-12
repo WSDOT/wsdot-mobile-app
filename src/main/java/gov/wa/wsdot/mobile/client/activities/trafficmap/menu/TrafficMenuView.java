@@ -17,7 +17,7 @@ public interface TrafficMenuView extends IsWidget {
 
     }
 
-    public void render(List<Topic> createTopicsList);
+    public void render(List<Topic> createTopicsList, List<Topic> layersList);
 
     public void setSelected(int lastIndex, boolean b);
 

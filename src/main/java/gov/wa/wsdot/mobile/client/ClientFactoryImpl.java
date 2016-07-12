@@ -93,6 +93,8 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelT
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesViewGwtImpl;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.restarea.RestAreaView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.restarea.RestAreaViewGwtImpl;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsViewGwtImpl;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
@@ -111,6 +113,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private MountainPassesViewGwtImpl mountainPassesView;
 	private MountainPassDetailsViewGwtImpl mountainPassDetailsView;
 	private TrafficMapViewGwtImpl trafficMapView;
+	private RestAreaViewGwtImpl restAreaView;
 	private TollRatesViewGwtImpl tollRatesView;
 	private BorderWaitViewGwtImpl borderWaitView;
 	private TravelTimesViewGwtImpl travelTimesView;
@@ -249,6 +252,14 @@ public class ClientFactoryImpl implements ClientFactory {
 			trafficMapView = new TrafficMapViewGwtImpl();
 		}
 		return trafficMapView;
+	}
+
+	@Override
+	public RestAreaView getRestAreaView() {
+		if (restAreaView == null) {
+			restAreaView = new RestAreaViewGwtImpl();
+		}
+		return restAreaView;
 	}
 
 	@Override

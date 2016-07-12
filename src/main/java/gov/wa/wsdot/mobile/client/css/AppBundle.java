@@ -22,6 +22,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.TextResource;
+import com.google.gwt.user.client.ui.Image;
 
 public interface AppBundle extends ClientBundle {
 	
@@ -29,7 +31,10 @@ public interface AppBundle extends ClientBundle {
 	
 	@Source("app.css")
 	public Styles css();
-	
+
+	@Source("restareas.json")
+	public TextResource restAreaData();
+
 	/**
 	 * Social media icons
 	 */
@@ -290,6 +295,15 @@ public interface AppBundle extends ClientBundle {
 	
 	@Source("construction_low.png")
 	ImageResource constructionLowPNG();
+
+	/**
+	 * Rest Area Icons
+	 */
+	@Source("restarea.png")
+	ImageResource restAreaPNG();
+
+	@Source("restarea_trailerdump.png")
+	ImageResource restAreaDumpPNG();
 	
 	/**
 	 * Ferry vesselwatch icons

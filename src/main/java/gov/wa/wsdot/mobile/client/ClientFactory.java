@@ -56,6 +56,7 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.expresslanes.Seattl
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.location.GoToLocationView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesView;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.restarea.RestAreaView;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsView;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
 import gov.wa.wsdot.mobile.client.plugins.analytics.Analytics;
@@ -74,6 +75,7 @@ public interface ClientFactory {
 	 */
 	public AboutView getAboutView();
 	public TrafficMapView getTrafficMapView();
+	public RestAreaView getRestAreaView();
 	public TrafficMenuView getTrafficMenuView();
 	public FerriesView getFerriesView();
 	public MountainPassesView getMountainPassesView();

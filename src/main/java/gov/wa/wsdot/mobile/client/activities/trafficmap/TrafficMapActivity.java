@@ -23,12 +23,14 @@ import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
 import com.google.code.gwt.database.client.service.RowIdListCallback;
 import com.google.code.gwt.database.client.service.VoidCallback;
+import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.core.java.lang.Double_CustomFieldSerializer;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.geolocation.GeolocationCallback;
@@ -43,7 +45,9 @@ import gov.wa.wsdot.mobile.client.activities.alert.AlertPlace;
 import gov.wa.wsdot.mobile.client.activities.callout.CalloutPlace;
 import gov.wa.wsdot.mobile.client.activities.camera.CameraPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.TrafficMenuPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.restarea.RestAreaPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
+import gov.wa.wsdot.mobile.client.css.AppBundle;
 import gov.wa.wsdot.mobile.client.event.ActionEvent;
 import gov.wa.wsdot.mobile.client.event.ActionNames;
 import gov.wa.wsdot.mobile.client.plugins.accessibility.Accessibility;
@@ -71,10 +75,11 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 	private PhoneGap phoneGap;
 	private Analytics analytics;
 	private Accessibility accessibility;
-	private static List<Integer> starred = new ArrayList<Integer>();
-	private static List<CameraItem> cameraItems = new ArrayList<CameraItem>();
-	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<HighwayAlertItem>();
-	private static List<CalloutItem> calloutItems = new ArrayList<CalloutItem>();
+	private static List<Integer> starred = new ArrayList<>();
+	private static List<CameraItem> cameraItems = new ArrayList<>();
+	private static List<HighwayAlertItem> highwayAlertItems = new ArrayList<>();
+	private static List<RestAreaItem> restAreaItems = new ArrayList<>();
+	private static List<CalloutItem> calloutItems = new ArrayList<>();
 	private static final String CAMERAS_URL = Consts.HOST_URL + "/traveler/api/cameras";
 	private static final String HIGHWAY_ALERTS_URL = Consts.HOST_URL + "/traveler/api/highwayalerts";
 	private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("MMMM d, yyyy h:mm a");
@@ -102,6 +107,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 
 		accessibility.postScreenChangeNotification();
 
+		view.refreshMap();
 	}
 
 	private void getCameras() {
@@ -451,6 +457,60 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		});
 	}
 
+
+	private void getRestAreas() {
+		String jsonString = AppBundle.INSTANCE.restAreaData().getText();
+		RestAreaFeed restAreas = JsonUtils.safeEval(jsonString);
+		RestAreaItem item;
+
+		for (int i = 0; i < restAreas.getRestAreas().length(); i++){
+			item = new RestAreaItem();
+			item.setId(i);
+			item.setRoute(restAreas.getRestAreas().get(i).getRoute());
+			item.setLocation(restAreas.getRestAreas().get(i).getLocation());
+			item.setDescription(restAreas.getRestAreas().get(i).getDescription());
+			item.setMilepost(restAreas.getRestAreas().get(i).getMilepost());
+			item.setDirection(restAreas.getRestAreas().get(i).getDirection());
+			item.setLatitude(restAreas.getRestAreas().get(i).getLatitude());
+			item.setLongitude(restAreas.getRestAreas().get(i).getLongitude());
+			item.setNotes(restAreas.getRestAreas().get(i).getNotes());
+			item.setHasDump(restAreas.getRestAreas().get(i).hasDump());
+			item.setOpen(restAreas.getRestAreas().get(i).isOpen());
+			item.setAmenities(restAreas.getRestAreas().get(i).getAmenities());
+			restAreaItems.add(item);
+		}
+		drawRestAreasLayer();
+	}
+
+	private void drawRestAreasLayer(){
+
+		LatLngBounds bounds = view.getViewportBounds();
+		LatLng swPoint = bounds.getSouthWest();
+		LatLng nePoint = bounds.getNorthEast();
+
+		ArrayList<LatLonItem> viewableMapArea = new ArrayList<LatLonItem>();
+		viewableMapArea.add(new LatLonItem(nePoint.getLatitude(), swPoint.getLongitude()));
+		viewableMapArea.add(new LatLonItem(nePoint.getLatitude(), nePoint.getLongitude()));
+		viewableMapArea.add(new LatLonItem(swPoint.getLatitude(), nePoint.getLongitude()));
+		viewableMapArea.add(new LatLonItem(swPoint.getLatitude(), swPoint.getLongitude()));
+
+		List<RestAreaItem> visibleRestAreas = new ArrayList<>();
+
+		for (RestAreaItem restArea: restAreaItems) {
+			if (inPolygon(
+					viewableMapArea,
+					Double.valueOf(restArea.getLatitude()),
+					Double.valueOf(restArea.getLongitude()))) {
+
+				visibleRestAreas.add(restArea);
+			}
+		}
+
+		if (!visibleRestAreas.isEmpty()) {
+			view.drawRestAreas(visibleRestAreas);
+		}
+	}
+
 	/**
 	 * 
 	 */
@@ -582,9 +642,18 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		}
         clientFactory.getPlaceController().goTo(
                 new AlertPlace(Integer.toString(alertId)));
-	}	
+	}
 
-    @Override
+	@Override
+	public void onRestAreaSelected(int restAreaId) {
+		if (Consts.ANALYTICS_ENABLED) {
+			analytics.trackScreen("/Traffic Map/Rest Area");
+		}
+		clientFactory.getPlaceController().goTo(
+				new RestAreaPlace(Integer.toString(restAreaId)));
+	}
+
+	@Override
     public void onCalloutSelected(String url) {
 		if (Consts.ANALYTICS_ENABLED) {
 			analytics.trackScreen("/Traffic Map/Callout");
@@ -696,6 +765,7 @@ public class TrafficMapActivity extends MGWTAbstractActivity implements
 		captureClickEvents();
 		getCameras();
         getHighwayAlerts();
+		getRestAreas();
         getCallouts();
 	}
 

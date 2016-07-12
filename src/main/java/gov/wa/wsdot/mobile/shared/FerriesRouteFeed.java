@@ -43,19 +43,15 @@ public class FerriesRouteFeed extends JavaScriptObject {
 	/* Date Array */
 	static public class Date extends JavaScriptObject {
 		protected Date() {}
-		
 	}
 	
 	/* RouteAlert Array */
 	static public class RouteAlert extends JavaScriptObject {
 		protected RouteAlert() {}
-		
 		//public final native int getBulletinID() /*-{ return this.BulletinID }-*/;
 		//public final native String getPublishDate() /*-{ return this.PublishDate }-*/;
 		//public final native String getAlertDescription() /*-{ return this.AlertDescription }-*/;
 		//public final native String getAlertFullTitle() /*-{ return this.AlertFullTitle }-*/;
 		//public final native String getAlertFullText() /*-{ return this.AlertFullText }-*/;
-
 	}
-	
 }

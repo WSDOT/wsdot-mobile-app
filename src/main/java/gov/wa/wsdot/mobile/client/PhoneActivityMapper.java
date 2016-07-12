@@ -91,6 +91,8 @@ import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelT
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimeDetailsPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesActivity;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.menu.traveltimes.TravelTimesPlace;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.restarea.RestAreaActivity;
+import gov.wa.wsdot.mobile.client.activities.trafficmap.restarea.RestAreaPlace;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsActivity;
 import gov.wa.wsdot.mobile.client.activities.trafficmap.trafficincidents.TrafficAlertsPlace;
 
@@ -116,7 +118,11 @@ public class PhoneActivityMapper implements ActivityMapper {
 		if (place instanceof TrafficMapPlace) {
 			return new TrafficMapActivity(clientFactory);
 		}
-		
+
+		if (place instanceof RestAreaPlace) {
+			return new RestAreaActivity(clientFactory);
+		}
+
 		if (place instanceof FerriesPlace) {
 			return new FerriesActivity(clientFactory);
 		}

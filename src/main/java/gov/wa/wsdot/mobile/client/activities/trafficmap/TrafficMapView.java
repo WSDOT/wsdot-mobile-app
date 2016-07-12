@@ -25,6 +25,7 @@ import com.googlecode.gwtphonegap.client.geolocation.Position;
 import gov.wa.wsdot.mobile.shared.CalloutItem;
 import gov.wa.wsdot.mobile.shared.CameraItem;
 import gov.wa.wsdot.mobile.shared.HighwayAlertItem;
+import gov.wa.wsdot.mobile.shared.RestAreaItem;
 
 import java.util.List;
 
@@ -43,6 +44,8 @@ public interface TrafficMapView extends IsWidget {
 		public void onCameraSelected(int cameraId);
 		
 		public void onAlertSelected(int alertId);
+
+		public void onRestAreaSelected(int restAreaId);
 		
 		public void onCalloutSelected(String url);
 		
@@ -77,7 +80,13 @@ public interface TrafficMapView extends IsWidget {
 	public void showAlerts();
 	
 	public void deleteAlerts();
-	
+
+	public void showRestAreas();
+
+	public void hideRestAreas();
+
+	public void deleteRestAreas();
+
 	public void deleteCallouts();
 	
 	public void showCallouts();
@@ -85,7 +94,9 @@ public interface TrafficMapView extends IsWidget {
 	public void drawCameras(List<CameraItem> cameras);
 
 	public void drawAlerts(List<HighwayAlertItem> alerts);
-	
+
+	public void drawRestAreas(List<RestAreaItem> restAreas);
+
 	public void drawCallouts(List<CalloutItem> callouts);
 	
 	public void setTitle(String title);
