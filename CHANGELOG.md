@@ -4,8 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Safety rest areas to the traffic map.
+
+### Fixed
+- App crashes when viewing ferry departures from a new schedule. No longer lets users select a day with no data. See this [issue](https://github.com/WSDOT/wsdot-wsf-schedule/issues/2) in our wsdot-wsf-schedule repo.
+
 ## [4.3.2] - 2016-07-06
-## Changed
+### Changed
 - Added new toll rates for July 1, 2016.
 
 ## [4.3.1] - 2016-06-22

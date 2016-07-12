@@ -157,7 +157,7 @@ public class TrafficMapViewGwtImpl extends Composite implements TrafficMapView {
 				localStorage.setItem("KEY_SHOW_CAMERAS", "true"); // Set initial default value
 			}
             if (!storageMap.containsKey("KEY_SHOW_RESTAREAS")) {
-                localStorage.setItem("KEY_SHOW_RESTAREAS", "true"); // Set initial default value
+                localStorage.setItem("KEY_SHOW_RESTAREAS", "false"); // Set initial default value
             }
 
 			// Set initial default location and zoom to Seattle area.
