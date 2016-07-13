@@ -48,6 +48,9 @@ public class RestAreaViewGwtImpl extends Composite implements RestAreaView {
     HTMLPanel amenitiesHeading;
 
     @UiField
+    HTMLPanel notesHeading;
+
+    @UiField
     HTML amenities;
 
     @UiField
@@ -117,8 +120,23 @@ public class RestAreaViewGwtImpl extends Composite implements RestAreaView {
     }
 
     @Override
+    public void showAmenitiesHeading(){
+        this.amenitiesHeading.setVisible(true);
+    }
+
+    @Override
     public void hideAmenitiesHeading(){
         this.amenitiesHeading.setVisible(false);
+    }
+
+    @Override
+    public void showNotesHeading(){
+        this.notesHeading.setVisible(true);
+    }
+
+    @Override
+    public void hideNotesHeading(){
+        this.notesHeading.setVisible(false);
     }
 
     @Override
