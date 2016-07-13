@@ -71,7 +71,6 @@ public class RestAreaActivity extends MGWTAbstractActivity implements
 
             view.setTitle("Safety Rest Area");
 
-
             SafeHtmlBuilder detailsHTMLBuilder = new SafeHtmlBuilder();
 
             detailsHTMLBuilder.appendEscaped(restAreas.getRestAreas().get(restAreaId).getRoute() + " - "
@@ -84,7 +83,13 @@ public class RestAreaActivity extends MGWTAbstractActivity implements
 
             view.setDetails(detailsHTMLBuilder.toSafeHtml());
 
-            view.setNotes(restAreas.getRestAreas().get(restAreaId).getNotes());
+            if (restAreas.getRestAreas().get(restAreaId).getNotes() == null) {
+                view.hideNotesHeading();
+                view.setNotes("");
+            } else {
+                view.showNotesHeading();
+                view.setNotes(restAreas.getRestAreas().get(restAreaId).getNotes());
+            }
 
             SafeHtmlBuilder amenitiesHTMLBuilder = new SafeHtmlBuilder();
 
@@ -97,6 +102,8 @@ public class RestAreaActivity extends MGWTAbstractActivity implements
 
             if (restAreas.getRestAreas().get(restAreaId).getAmenities().length == 0){
                 view.hideAmenitiesHeading();
+            }else {
+                view.showAmenitiesHeading();
             }
 
             amenitiesHTMLBuilder.appendHtmlConstant("</ul>");

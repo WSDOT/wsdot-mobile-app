@@ -73,7 +73,7 @@
                     <g:HTML ui:field="amenities"/>
                 </g:HTMLPanel>
 
-                <g:HTMLPanel styleName="{style.subHeading}">
+                <g:HTMLPanel ui:field="notesHeading" styleName="{style.subHeading}">
                     <g:HTML>
                         Special Notes:
                     </g:HTML>

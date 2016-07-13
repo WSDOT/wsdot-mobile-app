@@ -24,6 +24,12 @@ public interface RestAreaView extends IsWidget {
 
     public void hideAmenitiesHeading();
 
+    public void showAmenitiesHeading();
+
+    public void hideNotesHeading();
+
+    public void showNotesHeading();
+
     public void refresh();
 
 }
