@@ -439,26 +439,32 @@ public class FerriesRouteDeparturesActivity extends
                 
                 for (int j=0; j < spaceForArrivalTerminals.size(); j++) {
                     JSONObject terminals = spaceForArrivalTerminals.get(j).isObject();
-                    if (Integer.parseInt(terminals.get("TerminalID")
-                            .toString()) != scheduleDateItems
-                                    .get(view.getDayOfWeekSelected())
-                                    .getFerriesTerminalItem().get(sailingsIndex)
-                                    .getArrivingTerminalID()) {
-                        continue;
-                    } else {
-                        JSONBoolean displayDriveUpSpace = terminals.get("DisplayDriveUpSpace").isBoolean();
-                        boolean showIndicator = displayDriveUpSpace.booleanValue();
-                        if (showIndicator) {
-                            int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
-                            int maxSpaceCount = Integer.parseInt(terminals.get("MaxSpaceCount").toString());
 
-                            for (FerriesScheduleTimesItem time: times) {
-                                if (dateFormat.format(new Date(Long.parseLong(time.getDepartingTime()))).equals(departure)) {
-                                    time.setDriveUpSpaceCount(driveUpSpaceCount);
-                                    time.setMaxSpaceCount(maxSpaceCount);
-                                    time.setLastUpdated(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED));
+                    JSONArray arrivalTerminalIDs = terminals.get("ArrivalTerminalIDs").isArray();
+
+                    for (int k=0; k < arrivalTerminalIDs.size(); k++) {
+                        if (Integer.parseInt(arrivalTerminalIDs.get(k)
+                                .toString()) != scheduleDateItems
+                                .get(view.getDayOfWeekSelected())
+                                .getFerriesTerminalItem().get(sailingsIndex)
+                                .getArrivingTerminalID()) {
+                            continue;
+                        } else {
+                            JSONBoolean displayDriveUpSpace = terminals.get("DisplayDriveUpSpace").isBoolean();
+                            boolean showIndicator = displayDriveUpSpace.booleanValue();
+                            if (showIndicator) {
+                                int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
+                                int maxSpaceCount = Integer.parseInt(terminals.get("MaxSpaceCount").toString());
+
+                                for (FerriesScheduleTimesItem time : times) {
+                                    if (dateFormat.format(new Date(Long.parseLong(time.getDepartingTime()))).equals(departure)) {
+                                        time.setDriveUpSpaceCount(driveUpSpaceCount);
+                                        time.setMaxSpaceCount(maxSpaceCount);
+                                        time.setLastUpdated(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED));
+                                    }
                                 }
                             }
+                            k = arrivalTerminalIDs.size();
                         }
                     }
                 }
