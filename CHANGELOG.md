@@ -4,8 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [4.4.1] - 2016-08-17
-- Fixed issue casuing sailing spaces for some Anacortes routes to be unavailable.
+## [4.4.2] - 2016-08-17
+### Fixed
+- Fixed issue causing sailing spaces for some Anacortes routes to be unavailable.
 
 ## [4.4.0] - 2016-07-18
 ### Added
@@ -125,4 +126,8 @@ At this time three-finger swipe gestures are not supported.
 ### Fixed
 - Crashes and not being able to view all Mountain Pass cameras.
 
-[Unreleased]: 
+## [Unreleased]:
+
+## [4.4.1]
+### Fixed
+- ~~Fixed issue causing sailing spaces for some Anacortes routes to be unavailable.~~ Was not completely fixed.
