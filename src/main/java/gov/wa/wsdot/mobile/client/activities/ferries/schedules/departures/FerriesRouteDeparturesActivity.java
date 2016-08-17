@@ -442,6 +442,29 @@ public class FerriesRouteDeparturesActivity extends
 
                     JSONArray arrivalTerminalIDs = terminals.get("ArrivalTerminalIDs").isArray();
 
+
+                    if (Integer.parseInt(terminals.get("TerminalID").toString()) == scheduleDateItems
+                                                                .get(view.getDayOfWeekSelected())
+                                                                .getFerriesTerminalItem().get(sailingsIndex)
+                                                                .getArrivingTerminalID()) {
+
+                        JSONBoolean displayDriveUpSpace = terminals.get("DisplayDriveUpSpace").isBoolean();
+
+                        boolean showIndicator = displayDriveUpSpace.booleanValue();
+                        if (showIndicator) {
+                            int driveUpSpaceCount = Integer.parseInt(terminals.get("DriveUpSpaceCount").toString());
+                            int maxSpaceCount = Integer.parseInt(terminals.get("MaxSpaceCount").toString());
+
+                            for (FerriesScheduleTimesItem time : times) {
+                                if (dateFormat.format(new Date(Long.parseLong(time.getDepartingTime()))).equals(departure)) {
+                                    time.setDriveUpSpaceCount(driveUpSpaceCount);
+                                    time.setMaxSpaceCount(maxSpaceCount);
+                                    time.setLastUpdated(result.get(0).getString(FerriesTerminalSailingSpaceColumns.TERMINAL_LAST_UPDATED));
+                                }
+                            }
+                        }
+                    }
+
                     for (int k=0; k < arrivalTerminalIDs.size(); k++) {
                         if (Integer.parseInt(arrivalTerminalIDs.get(k)
                                 .toString()) != scheduleDateItems
