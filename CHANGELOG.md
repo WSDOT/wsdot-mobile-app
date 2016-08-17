@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [4.4.1] - 2016-08-17
+- Fixed issue casuing sailing spaces for some Anacortes routes to be unavailable.
+
 ## [4.4.0] - 2016-07-18
 ### Added
 - Safety rest areas to the traffic map.
