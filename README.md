@@ -1,3 +1,5 @@
+NOTICE: Check out the new [WSDOT iOS App Repo.](https://github.com/WSDOT/wsdot-ios-app)
+
 wsdot-mobile-app
 ================
 
